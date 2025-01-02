@@ -6,25 +6,36 @@
 package tictactoe;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
+import tictactoe.homescreen.FXMLHomeScreenController;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.layout.StackPane;
+import javafx.stage.StageStyle;
 
 /**
  *
  * @author Youssif
  */
 public class TicTacToe extends Application {
-    
+
+    private double xOffset = 0.0;
+    private double yOffset = 0.0;
+
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
+
+        Parent root = new FXMLHomeScreenController();
+        
         
         Scene scene = new Scene(root);
-        
+
+       //stage.initStyle(StageStyle.DECORATED.UNDECORATED);
         stage.setScene(scene);
         stage.show();
+        stage.setResizable(false);
     }
 
     /**
@@ -33,5 +44,5 @@ public class TicTacToe extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    
+
 }
