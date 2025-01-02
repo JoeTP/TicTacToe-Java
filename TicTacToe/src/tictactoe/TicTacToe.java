@@ -25,8 +25,8 @@ public class TicTacToe extends Application {
 
        // Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
        // Parent root = new FXMLSigninController();       
-       // Parent root = new FXMLPlayerVsCompController();
-       Parent root = new FXMLPlayerVsPlayerController();        
+        Parent root = new FXMLPlayerVsCompController();
+       //Parent root = new FXMLPlayerVsPlayerController();        
         Scene scene = new Scene(root);
         stage.setTitle("TicTacToe");
         stage.setScene(scene);
