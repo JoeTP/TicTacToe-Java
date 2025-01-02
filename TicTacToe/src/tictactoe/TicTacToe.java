@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import tictactoe.signin.FXMLSigninController;
 import tictactoe.playervscomp.FXMLPlayerVsCompController;
+import tictactoe.playervsplayer.FXMLPlayerVsPlayerController;
 
 /**
  *
@@ -24,9 +25,10 @@ public class TicTacToe extends Application {
 
        // Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
        // Parent root = new FXMLSigninController();       
-        Parent root = new FXMLPlayerVsCompController();        
+       // Parent root = new FXMLPlayerVsCompController();
+       Parent root = new FXMLPlayerVsPlayerController();        
         Scene scene = new Scene(root);
-        
+        stage.setTitle("TicTacToe");
         stage.setScene(scene);
         stage.show();
     }
