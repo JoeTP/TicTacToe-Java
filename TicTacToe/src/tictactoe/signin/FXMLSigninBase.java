@@ -26,7 +26,6 @@ public abstract class FXMLSigninBase extends BorderPane {
     protected final Text text;
     protected final Button signupBtn;
     protected final TextField usernameTextField;
-    protected final Text usernameText;
     protected final PasswordField passwordField;
 
     public FXMLSigninBase() {
@@ -42,7 +41,6 @@ public abstract class FXMLSigninBase extends BorderPane {
         text = new Text();
         signupBtn = new Button();
         usernameTextField = new TextField();
-        usernameText = new Text();
         passwordField = new PasswordField();
 
         setPrefHeight(552.0);
@@ -81,7 +79,7 @@ public abstract class FXMLSigninBase extends BorderPane {
         userImg.setLayoutY(14.0);
         userImg.setPickOnBounds(true);
         userImg.setPreserveRatio(true);
-       userImg.setImage(new Image(getClass().getResource("/assets/icons/robot.png").toExternalForm()));
+        userImg.setImage(new Image(getClass().getResource("/assets/icons/robot.png").toExternalForm()));
 
         signinBtn.setLayoutX(141.0);
         signinBtn.setLayoutY(288.0);
@@ -107,12 +105,6 @@ public abstract class FXMLSigninBase extends BorderPane {
         usernameTextField.setPrefWidth(276.0);
         usernameTextField.setPromptText("User Name");
 
-        usernameText.setLayoutX(163.0);
-        usernameText.setLayoutY(124.0);
-        usernameText.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
-        usernameText.setStrokeWidth(0.0);
-        usernameText.setText("User Name");
-
         passwordField.setLayoutX(60.0);
         passwordField.setLayoutY(213.0);
         passwordField.setPrefHeight(48.0);
@@ -128,7 +120,6 @@ public abstract class FXMLSigninBase extends BorderPane {
         anchorPane0.getChildren().add(text);
         anchorPane0.getChildren().add(signupBtn);
         anchorPane0.getChildren().add(usernameTextField);
-        anchorPane0.getChildren().add(usernameText);
         anchorPane0.getChildren().add(passwordField);
         vBox.getChildren().add(anchorPane0);
 
