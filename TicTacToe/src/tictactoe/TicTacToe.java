@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import tictactoe.signin.FXMLSigninController;
 
 /**
  *
@@ -19,8 +20,9 @@ public class TicTacToe extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
-        
+       // Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
+        Parent root = new FXMLSigninController();
+         
         Scene scene = new Scene(root);
         
         stage.setScene(scene);
