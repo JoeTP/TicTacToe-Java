@@ -34,6 +34,9 @@
     -fx-border-radius: 5;
     -fx-background-radius: 5;
 }
+.serverStartBtn:hover{
+    -fx-background-color: #13f803;
+}
 .button:hover {
     -fx-background-color: #ff1a1a;
 }
@@ -147,5 +150,8 @@
     -fx-border-color: #000000;
     -fx-border-width: 2px; 
     -fx-background-radius: 0 0 50 50;
+}
+.serverStartBtn:hover{
+    -fx-background-color: #13f803;
 }
 */

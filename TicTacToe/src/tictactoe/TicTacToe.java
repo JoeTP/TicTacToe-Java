@@ -20,6 +20,7 @@ import tictactoe.homescreen.FXMLHomeScreenController;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.layout.StackPane;
 import javafx.stage.StageStyle;
+import tictactoe.server.FXMLServerController;
 
 
 public class TicTacToe extends Application {
@@ -31,15 +32,15 @@ public class TicTacToe extends Application {
     public void start(Stage stage) throws Exception {
 
   
- Parent root = new FXMLGameBoardOnlineBase();
-
-         //   Parent root = new FXMLHomeScreenController();
+     //   Parent root = new FXMLGameBoardOnlineBase();
+    Parent root = new FXMLServerController();
+    //   Parent root = new FXMLHomeScreenController();
      
-               Scene scene = new Scene(root);
+        Scene scene = new Scene(root);
         //String css = this.getClass().getResource().
+        //scene.getStylesheets().add(getClass().getResource("styles/serverstylesheet.css").toExternalForm());
         scene.getStylesheets().add(getClass().getResource("onlinegmaeboard/style.css").toExternalForm());
-
-    
+       
  
         stage.setTitle("TicTacToe");
 
