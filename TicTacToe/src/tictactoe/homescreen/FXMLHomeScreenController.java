@@ -8,9 +8,14 @@ package tictactoe.homescreen;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Circle;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -20,18 +25,23 @@ import javafx.scene.shape.Circle;
 public class FXMLHomeScreenController extends FXMLHomeScreenBase {
 
     boolean isOffline;
+    Stage stage;
+    private double xOffset;
+    private double yOffset;
 
-    public FXMLHomeScreenController(boolean isOffline) {
+    public FXMLHomeScreenController(Stage stage,boolean isOffline) {
         this.isOffline = isOffline;
-
+        this.stage = stage;
+        
+        
         setLogo();
         checkConnection();
         exitApp();
+        dragWindow();
     }
 
     void setLogo() {
-        Image logo = new Image(getClass().getResourceAsStream("/assets/icons/logo.png"));
-        logoImageViewer.setImage(logo);
+        logoImageViewer.setImage(new Image(getClass().getResourceAsStream("/assets/icons/logo.png")));
     }
 
     void checkConnection() {
@@ -41,10 +51,13 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
             imgPath = "/assets/icons/offline.png";
             chatBtn.setDisable(isOffline);
             connectionLabel.setText("Offline");
+            profileImageView.setImage(new Image(getClass().getResourceAsStream("/assets/icons/profile.png")));
         } else {
             imgPath = "/assets/icons/online.png";
             chatBtn.setDisable(isOffline);
             connectionLabel.setText("Online");
+            ///TODO: get the user profile image from server
+            profileImageView.setImage(new Image(getClass().getResourceAsStream("/assets/icons/profile.png")));
         }
         image = new Image(getClass().getResourceAsStream(imgPath));
 
@@ -55,4 +68,16 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
         exitBtn.setOnAction((event) -> Platform.exit());
     }
 
+    void dragWindow() {
+
+        header.setOnMousePressed((event)->{
+            xOffset = event.getSceneX();
+            yOffset = event.getSceneY();
+        });
+
+        header.setOnMouseDragged((event) -> {
+            stage.setX(event.getScreenX() - xOffset);
+            stage.setY(event.getScreenY() - yOffset);
+        });
+    }
 }
