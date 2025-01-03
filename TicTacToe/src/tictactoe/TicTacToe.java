@@ -30,7 +30,7 @@ public class TicTacToe extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        Parent root = new FXMLHomeScreenController();
+        Parent root = new FXMLHomeScreenController(false);
         
         
         Scene scene = new Scene(root);

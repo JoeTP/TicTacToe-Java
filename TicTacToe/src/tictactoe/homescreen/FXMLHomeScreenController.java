@@ -7,6 +7,7 @@ package tictactoe.homescreen;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
 import javafx.scene.shape.Circle;
@@ -16,18 +17,42 @@ import javafx.scene.shape.Circle;
  *
  * @author Youssif
  */
-public class FXMLHomeScreenController extends FXMLHomeScreenBase implements Initializable {
+public class FXMLHomeScreenController extends FXMLHomeScreenBase {
 
-    void setLogo(){
-        Image logo = new Image(getClass().getResourceAsStream(""));
+    boolean isOffline;
+
+    public FXMLHomeScreenController(boolean isOffline) {
+        this.isOffline = isOffline;
+
+        setLogo();
+        checkConnection();
+        exitApp();
+    }
+
+    void setLogo() {
+        Image logo = new Image(getClass().getResourceAsStream("/assets/icons/logo.png"));
         logoImageViewer.setImage(logo);
     }
-    
-    
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        setLogo();
-        
-    }    
-    
+
+    void checkConnection() {
+        Image image;
+        String imgPath;
+        if (isOffline) {
+            imgPath = "/assets/icons/offline.png";
+            chatBtn.setDisable(isOffline);
+            connectionLabel.setText("Offline");
+        } else {
+            imgPath = "/assets/icons/online.png";
+            chatBtn.setDisable(isOffline);
+            connectionLabel.setText("Online");
+        }
+        image = new Image(getClass().getResourceAsStream(imgPath));
+
+        connectionIndicatorImageView.setImage(image);
+    }
+
+    void exitApp() {
+        exitBtn.setOnAction((event) -> Platform.exit());
+    }
+
 }
