@@ -22,13 +22,9 @@ import javafx.stage.Stage;
  *
  * @author Ayat Gamal
  */
-public class FXMLSigninController extends FXMLSigninBase implements Initializable {
+public class FXMLSigninController extends FXMLSigninBase  {
     
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        System.out.println("IM HEREEEE!");
-    }    
-
+ 
     @FXML 
     public void goToSignup(ActionEvent event) throws IOException{
     

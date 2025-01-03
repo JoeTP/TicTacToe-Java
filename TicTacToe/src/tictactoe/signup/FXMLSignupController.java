@@ -23,7 +23,7 @@ import javafx.stage.Stage;
  *
  * @author Ayat Gamal
  */
-public class FXMLSignupController extends FXMLSignupBase implements Initializable {
+public class FXMLSignupController extends FXMLSignupBase   {
 
     Parent singingParent;
 
@@ -35,9 +35,7 @@ public class FXMLSignupController extends FXMLSignupBase implements Initializabl
         }
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-    }
+   
 
     @FXML
     public void goToSignin() throws IOException {
