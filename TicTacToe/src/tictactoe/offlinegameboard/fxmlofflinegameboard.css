@@ -1,9 +1,7 @@
-/* General Layout */
-.root {
-    -fx-font-family: "Arial";
-    -fx-padding: 10;
-    -fx-spacing: 10;
-    -fx-background-color: #f5f5f5;
+
+
+.mainFxmlClass {
+
 }
 
 /* Top Bar (First HBox) */
@@ -70,77 +68,10 @@
     -fx-cursor: hand;
 -fx-font-size: 70px; 
 }
-
-/* Chat Section */
-
-
-/* Chat Messages*/
-.vbox {
--fx-background-color:  #3E5879;
-  -fx-border-radius: 20;
-    -fx-background-radius: 20;
-    -fx-spacing: 30px; /* Space between chat messages */
-   -fx-pref-height: 500px;
- -fx-pref-width: 300;
-  
-}
-
-
-/* Chat Text */
-
-
-
-.transparent-background{
--fx-background-color: rgba(0,0,0,0); 
-}
-.incoming-bubble{
--fx-padding: 10px 15px;
- -fx-background-color:  #3E5879; 
--fx-background-radius: 70px; 
-fx-font-size: 15px;
-    -fx-text-fill: white; /* Text color */
- -fx-spacing: 10px;
-
-}
-.outcoming-bubble{
--fx-padding: 10px 15px;
- -fx-background-color: #D8C4B6;
--fx-background-radius: 70px; 
-fx-font-size: 15px;
-    -fx-text-fill:  #3E5879;/* Text color */
- -fx-spacing: 10px;
-
-
-
-}
-
-
-
-.text-area {
-    -fx-pref-height: 300px;
-    -fx-background-color: #fff;
-    -fx-font-size: 14px;
-    -fx-border-color: #d2b79c;
-}
-
-.text-field {
-    -fx-background-color: #fff;
-    -fx-font-size: 14px;
-    -fx-border-color: #d2b79c;
- -fx-border-radius: 20px;
- -fx-background-radius:20px;
-  -fx-pref-height: 30px;
-    -fx-pref-width: 200px;
- -fx-border-color: #3E5879;
-}
-
-
-
 .label{
     
-       x-font-size: 30px;
-   -fx-background-color:  #3E5879;
+       x-font-size: 35px;
      -fx-font-weight: bold;
-     
+       -fx-color: #3E5879;
        
 }
