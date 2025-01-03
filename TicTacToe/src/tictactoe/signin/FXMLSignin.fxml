@@ -12,8 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<BorderPane prefHeight="552.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="552.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.signin.FXMLSigninController">
    <top>
       <HBox spacing="120.0" BorderPane.alignment="CENTER">
          <children>
@@ -41,7 +40,7 @@
                   <ImageView fx:id="userImg" fitHeight="84.0" fitWidth="84.0" layoutX="155.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
                   <Button fx:id="signinBtn" layoutX="141.0" layoutY="288.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="112.0" text="Sign-in" />
                   <Text layoutX="60.0" layoutY="372.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Don’t you have an account?" />
-                  <Button fx:id="signupBtn" layoutX="263.0" layoutY="351.0" mnemonicParsing="false" text="Sign-up" />
+                  <Button fx:id="signupBtn" layoutX="263.0" layoutY="351.0" mnemonicParsing="false" onAction="#goToSignup" text="Sign-up" />
                   <TextField fx:id="usernameTextField" layoutX="60.0" layoutY="143.0" prefHeight="48.0" prefWidth="276.0" promptText="User Name" />
                   <PasswordField fx:id="passwordField" layoutX="60.0" layoutY="213.0" prefHeight="48.0" prefWidth="276.0" promptText="Passoword" />
                </children>
