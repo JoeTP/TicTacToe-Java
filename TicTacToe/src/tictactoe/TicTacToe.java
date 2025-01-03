@@ -15,6 +15,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.layout.StackPane;
 import javafx.stage.StageStyle;
 import tictactoe.offlinegameboard.FXMLOfflineGameBoardBase;
+import tictactoe.setting.FXMLSettingController;
 
 import tictactoe.signup.FXMLSignupController;
 
@@ -25,8 +26,9 @@ public class TicTacToe extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        Parent root = new FXMLSettingController();
+        //Parent root = new FXMLSignupController();
 
-        Parent root = new FXMLSignupController();
         //  Parent root = new FXMLOfflineGameBoardBase();
         // Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
         //Parent root = new FXMLSigninController();       
@@ -49,7 +51,7 @@ public class TicTacToe extends Application {
 //        Parent root = new FXMLHomeScreenController(stage,false);
         //      Scene scene = new Scene(root);
         stage.setTitle("TicTacToe");
-        stage.initStyle(StageStyle.DECORATED.UNDECORATED);
+       // stage.initStyle(StageStyle.DECORATED.UNDECORATED);
         stage.setScene(scene);
         stage.show();
         stage.setResizable(false);

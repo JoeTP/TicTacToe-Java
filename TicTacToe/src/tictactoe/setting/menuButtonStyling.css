@@ -1,0 +1,49 @@
+/* Style the MenuButton */
+.menu-button {
+    -fx-background-color: transparent; /* Transparent background */
+    -fx-border-color: #ccc; /* Optional border for structure */
+    -fx-border-width: 1px;
+    -fx-border-radius: 10px;
+    -fx-padding: 8 12;
+    -fx-font-size: 14px;
+    -fx-text-fill: #333;
+    -fx-cursor: hand;
+}
+
+/* Hover effect for the MenuButton */
+.menu-button:hover {
+    -fx-background-color: rgba(0, 0, 0, 0.05); /* Subtle hover effect with transparency */
+}
+
+/* Style the MenuItems */
+.menu-item {
+    -fx-background-color: transparent; /* Transparent background */
+    -fx-padding: 10 15;
+    -fx-font-size: 13px;
+    -fx-text-fill: #444;
+}
+
+/* Hover effect for MenuItems */
+.menu-item:hover {
+    -fx-background-color: rgba(0, 0, 0, 0.05); /* Subtle hover highlight */
+    -fx-text-fill: #000;
+    -fx-border-radius: 5px;
+}
+
+/* Icon size in MenuItem */
+.menu-item .graphic {
+    -fx-fit-width: 24px;
+    -fx-fit-height: 24px;
+    -fx-padding: 0 5 0 0;
+}
+
+/* Remove the arrow from the MenuButton */
+.menu-button .arrow {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-shape: null;
+    -fx-min-width: 0;
+    -fx-max-width: 0;
+    -fx-min-height: 0;
+    -fx-max-height: 0;
+}

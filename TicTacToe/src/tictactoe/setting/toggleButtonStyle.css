@@ -1,0 +1,45 @@
+/* Circular toggle button */
+.toggle-button {
+    -fx-background-color: transparent;
+    -fx-border-color: #ddd;
+    -fx-border-width: 2;
+    -fx-border-radius: 50%;
+    -fx-background-radius: 50%;
+    -fx-padding: 10;
+    -fx-cursor: hand;
+}
+
+/* Hover effect */
+.toggle-button:hover {
+    -fx-border-color: #aaa;
+}
+
+
+#sound-toggle {
+    -fx-background-color: transparent;
+    -fx-graphic: url('../../../resources/assets/icons/sound.png'); /* Path to sound icon */
+}
+
+/* Mute icon when selected */
+#sound-toggle:selected {
+    -fx-graphic: url('../../../resources/assets/icons/mute.png'); /* Path to mute icon */
+}
+
+#theme-toggle {
+    -fx-background-color: transparent;
+    -fx-graphic: url('../../../resources/assets/icons/dark-theme.png'); /* Path to sound icon */
+}
+
+/* Mute icon when selected */
+#theme-toggle:selected {
+    -fx-graphic: url('../../../resources/assets/icons/light-theme.png'); /* Path to mute icon */
+}
+#lang-toggle {
+    -fx-background-color: transparent;
+    -fx-graphic: url('../../../resources/assets/icons/arabic.png'); /* Path to sound icon */
+}
+
+/* Mute icon when selected */
+#lang-toggle:selected {
+    -fx-graphic: url('../../../resources/assets/icons/english.png'); /* Path to mute icon */
+}

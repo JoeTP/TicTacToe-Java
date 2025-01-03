@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane prefHeight="720.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.setting.FXMLSettingController">
+   <top>
+      <HBox spacing="120.0" BorderPane.alignment="CENTER">
+         <children>
+            <AnchorPane HBox.hgrow="ALWAYS">
+               <children>
+                  <Button fx:id="backBtn" layoutX="23.0" layoutY="44.0" mnemonicParsing="false" text="Back" AnchorPane.leftAnchor="23.0" />
+                  <Text fx:id="signinTitle" layoutX="281.0" layoutY="82.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Setting">
+                     <font>
+                        <Font size="48.0" />
+                     </font>
+                  </Text>
+               </children>
+            </AnchorPane>
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="10.0" />
+         </BorderPane.margin>
+      </HBox>
+   </top>
+   <center>
+      <VBox fx:id="accountHeaderVBox" prefHeight="200.0" prefWidth="100.0" spacing="20.0" stylesheets="@toggleButtonStyle.css" BorderPane.alignment="CENTER">
+         <children>
+            <AnchorPane accessibleRole="TOGGLE_BUTTON" stylesheets="@toggleButtonStyle.css" VBox.vgrow="ALWAYS">
+               <children>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="375.0" layoutX="171.0" layoutY="88.0" stroke="BLACK" strokeType="INSIDE" width="360.0" />
+                  <Separator layoutX="171.0" layoutY="183.0" prefHeight="6.0" prefWidth="361.0" />
+                  <ToggleButton id="sound-toggle" fx:id="soundToggleBtn" layoutX="418.0" layoutY="205.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="89.0" stylesheets="@toggleButtonStyle.css">
+                     <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../resources/assets/icons/sound.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </ToggleButton>
+                  <Label layoutX="202.0" layoutY="215.0" text="Sound">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <ToggleButton id="theme-toggle" fx:id="themeToggleBtn" layoutX="418.0" layoutY="286.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="89.0">
+                     <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../resources/assets/icons/dark-theme.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </ToggleButton>
+                  <Label layoutX="200.0" layoutY="290.0" text="Theme">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <ToggleButton id="lang-toggle" fx:id="langToggleBtn" layoutX="420.0" layoutY="376.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="89.0">
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="93.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../resources/assets/icons/english.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </ToggleButton>
+                  <Label layoutX="200.0" layoutY="380.0" text="Language">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="182.0" layoutY="120.0" text="Account Information">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <MenuButton fx:id="menuBtn" contentDisplay="CENTER" graphicTextGap="9.0" layoutX="419.0" layoutY="107.0" mnemonicParsing="false" popupSide="RIGHT" prefHeight="47.0" prefWidth="62.0" stylesheets="@menuButtonStyling.css">
+                    <items>
+                        <MenuItem fx:id="userNameMenuItem" mnemonicParsing="false">
+                           <graphic>
+                              <Text fx:id="userNameText" strokeType="OUTSIDE" strokeWidth="0.0" text="Ayat Gamal" />
+                           </graphic>
+                        </MenuItem>
+                        <MenuItem fx:id="iconMenuItem" mnemonicParsing="false">
+                           <graphic>
+                              <ImageView fx:id="userIconImage" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../resources/assets/icons/dinosaur.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </MenuItem>
+                        <MenuItem fx:id="emailMenuItem" mnemonicParsing="false">
+                           <graphic>
+                              <Text fx:id="emailText" strokeType="OUTSIDE" strokeWidth="0.0" text="AyatGa@gmail.com" />
+                           </graphic>
+                        </MenuItem>
+                    </items>
+                     <graphic>
+                        <ImageView fx:id="menuBtnIcon" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../resources/assets/icons/down.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </MenuButton>
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>
