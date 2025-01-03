@@ -21,6 +21,8 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.layout.StackPane;
 import javafx.stage.StageStyle;
 import tictactoe.offlinegameboard.FXMLOfflineGameBoardBase;
+import tictactoe.splashscreengui.FXMLsplashScreenBase;
+import tictactoe.splashscreengui.FXMLsplashScreenController;
 
 
 public class TicTacToe extends Application {
@@ -32,12 +34,12 @@ public class TicTacToe extends Application {
     public void start(Stage stage) throws Exception {
 
   
- Parent root = new FXMLOfflineGameBoardBase();
-
-         //   Parent root = new FXMLHomeScreenController();
+ Parent root = new FXMLsplashScreenController();
+       // Parent root = new  FXMLOfflineGameBoardBase();
+         //  Parent root = new FXMLHomeScreenController();
      
                Scene scene = new Scene(root);
-                scene.getStylesheets().add(getClass().getResource("offlinegameboard/fxmlofflinegameboard.css").toExternalForm());
+              //  scene.getStylesheets().add(getClass().getResource("offlinegameboard/fxmlofflinegameboard.css").toExternalForm());
         //String css = this.getClass().getResource().
       //  scene.getStylesheets().add(getClass().getResource("onlinegmaeboard/style.css").toExternalForm());
 

@@ -5,7 +5,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -20,97 +19,97 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 
-public  class FXMLGameBoardOnlineBase extends VBox {
+public abstract class FXMLGameBoardOnlineBase extends VBox {
 
-    protected final HBox hBox;
+    protected final HBox hboxTop;
     protected final AnchorPane anchorPane;
-    protected final HBox hBox0;
-    protected final ImageView imageView;
-    protected final Label label;
+    protected final HBox hboxTurn;
+    protected final ImageView player1Img;
+    protected final Label player1Label;
     protected final Line line;
-    protected final Label label0;
-    protected final ImageView imageView0;
+    protected final Label player2Label;
+    protected final ImageView player2Img;
     protected final Region region;
     protected final AnchorPane anchorPane0;
-    protected final Button button;
-    protected final HBox hBox1;
+    protected final Button leaveBtn;
+    protected final HBox hBox;
     protected final AnchorPane anchorPane1;
-    protected final GridPane gridPane;
+    protected final GridPane gameBoardGridPane;
     protected final ColumnConstraints columnConstraints;
     protected final ColumnConstraints columnConstraints0;
     protected final ColumnConstraints columnConstraints1;
     protected final RowConstraints rowConstraints;
     protected final RowConstraints rowConstraints0;
     protected final RowConstraints rowConstraints1;
-    protected final Button button0;
-    protected final Button button1;
-    protected final Button button2;
-    protected final Button button3;
-    protected final Button button4;
-    protected final Button button5;
-    protected final Button button6;
-    protected final Button button7;
-    protected final Button button8;
+    protected final Button btn00;
+    protected final Button btn02;
+    protected final Button btn01;
+    protected final Button btn10;
+    protected final Button btn11;
+    protected final Button btn12;
+    protected final Button btn20;
+    protected final Button btn21;
+    protected final Button btn22;
     protected final AnchorPane anchorPane2;
     protected final VBox vBox;
     protected final BorderPane borderPane;
-    protected final HBox hBox2;
+    protected final HBox hBox0;
     protected final Text text;
     protected final ScrollPane scrollPane;
     protected final Pane pane;
-    protected final Label label1;
-    protected final Label label2;
+    protected final Label incomingLabel;
+    protected final Label outcomingLabel;
     protected final FlowPane flowPane;
-    protected final TextField textField;
-    protected final Button button9;
+    protected final TextField messageTextField;
+    protected final Button sendBtn;
     protected final AnchorPane anchorPane3;
-    protected final Label label3;
+    protected final Label timerLabel;
 
     public FXMLGameBoardOnlineBase() {
 
-        hBox = new HBox();
+        hboxTop = new HBox();
         anchorPane = new AnchorPane();
-        hBox0 = new HBox();
-        imageView = new ImageView();
-        label = new Label();
+        hboxTurn = new HBox();
+        player1Img = new ImageView();
+        player1Label = new Label();
         line = new Line();
-        label0 = new Label();
-        imageView0 = new ImageView();
+        player2Label = new Label();
+        player2Img = new ImageView();
         region = new Region();
         anchorPane0 = new AnchorPane();
-        button = new Button();
-        hBox1 = new HBox();
+        leaveBtn = new Button();
+        hBox = new HBox();
         anchorPane1 = new AnchorPane();
-        gridPane = new GridPane();
+        gameBoardGridPane = new GridPane();
         columnConstraints = new ColumnConstraints();
         columnConstraints0 = new ColumnConstraints();
         columnConstraints1 = new ColumnConstraints();
         rowConstraints = new RowConstraints();
         rowConstraints0 = new RowConstraints();
         rowConstraints1 = new RowConstraints();
-        button0 = new Button();
-        button1 = new Button();
-        button2 = new Button();
-        button3 = new Button();
-        button4 = new Button();
-        button5 = new Button();
-        button6 = new Button();
-        button7 = new Button();
-        button8 = new Button();
+        btn00 = new Button();
+        btn02 = new Button();
+        btn01 = new Button();
+        btn10 = new Button();
+        btn11 = new Button();
+        btn12 = new Button();
+        btn20 = new Button();
+        btn21 = new Button();
+        btn22 = new Button();
         anchorPane2 = new AnchorPane();
         vBox = new VBox();
         borderPane = new BorderPane();
-        hBox2 = new HBox();
+        hBox0 = new HBox();
         text = new Text();
         scrollPane = new ScrollPane();
         pane = new Pane();
-        label1 = new Label();
-        label2 = new Label();
+        incomingLabel = new Label();
+        outcomingLabel = new Label();
         flowPane = new FlowPane();
-        textField = new TextField();
-        button9 = new Button();
+        messageTextField = new TextField();
+        sendBtn = new Button();
         anchorPane3 = new AnchorPane();
-        label3 = new Label();
+        timerLabel = new Label();
 
         setMaxHeight(USE_PREF_SIZE);
         setMaxWidth(USE_PREF_SIZE);
@@ -120,54 +119,52 @@ public  class FXMLGameBoardOnlineBase extends VBox {
         setPrefWidth(1000.0);
         getStyleClass().add("scrollBane");
 
-        hBox.setPrefHeight(100.0);
-        hBox.setPrefWidth(1000.0);
+        hboxTop.setPrefHeight(100.0);
+        hboxTop.setPrefWidth(1000.0);
 
-        AnchorPane.setLeftAnchor(hBox0, 100.0);
-        AnchorPane.setTopAnchor(hBox0, 0.0);
-        hBox0.setPrefHeight(75.0);
-        hBox0.setPrefWidth(459.14);
-        hBox0.getStyleClass().add("hbox");
+        AnchorPane.setLeftAnchor(hboxTurn, 100.0);
+        AnchorPane.setTopAnchor(hboxTurn, 0.0);
+        hboxTurn.setPrefHeight(75.0);
+        hboxTurn.setPrefWidth(459.14);
+        hboxTurn.getStyleClass().add("hbox");
 
-        imageView.setFitHeight(54.6);
-        imageView.setFitWidth(44.26);
-        imageView.setPickOnBounds(true);
-        imageView.setPreserveRatio(true);
-        imageView.setImage(new Image(getClass().getResource("assets/gamer.png").toExternalForm()));
+        player1Img.setFitHeight(54.6);
+        player1Img.setFitWidth(44.26);
+        player1Img.setPickOnBounds(true);
+        player1Img.setPreserveRatio(true);
 
-        label.setId("textId");
-        label.setText("Player1");
+        player1Label.setId("textId");
+        player1Label.setText("Player1");
 
         line.setEndX(-65.70710754394531);
         line.setEndY(-0.41418302059173584);
         line.setStartX(-100.0);
         line.setStroke(javafx.scene.paint.Color.valueOf("#3e5879"));
 
-        label0.setId("textId");
-        label0.setText("Player2");
+        player2Label.setId("textId");
+        player2Label.setText("Player2");
 
-        imageView0.setFitHeight(54.6);
-        imageView0.setFitWidth(44.26);
-        imageView0.setPickOnBounds(true);
-        imageView0.setPreserveRatio(true);
-        imageView0.setImage(new Image(getClass().getResource("assets/gamer.png").toExternalForm()));
+        player2Img.setFitHeight(54.6);
+        player2Img.setFitWidth(44.26);
+        player2Img.setPickOnBounds(true);
+        player2Img.setPreserveRatio(true);
         HBox.setMargin(anchorPane, new Insets(20.0, 0.0, 0.0, 0.0));
 
         region.setPrefHeight(200.0);
         region.setPrefWidth(230.0);
 
-        button.setId("textId");
-        button.setLayoutY(6.0);
-        button.setMnemonicParsing(false);
-        button.setText("Leave");
+        leaveBtn.setId("textId");
+        leaveBtn.setLayoutY(6.0);
+        leaveBtn.setMnemonicParsing(false);
+        leaveBtn.setText("Leave");
         HBox.setMargin(anchorPane0, new Insets(20.0, 0.0, 0.0, 0.0));
 
-        hBox1.setPrefHeight(100.0);
-        hBox1.setPrefWidth(200.0);
+        hBox.setPrefHeight(100.0);
+        hBox.setPrefWidth(200.0);
 
-        AnchorPane.setLeftAnchor(gridPane, 100.0);
-        AnchorPane.setRightAnchor(gridPane, 0.0);
-        gridPane.getStyleClass().add("grid-pane");
+        AnchorPane.setLeftAnchor(gameBoardGridPane, 100.0);
+        AnchorPane.setRightAnchor(gameBoardGridPane, 0.0);
+        gameBoardGridPane.getStyleClass().add("grid-pane");
 
         columnConstraints.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
         columnConstraints.setMinWidth(10.0);
@@ -193,35 +190,35 @@ public  class FXMLGameBoardOnlineBase extends VBox {
         rowConstraints1.setPrefHeight(30.0);
         rowConstraints1.setVgrow(javafx.scene.layout.Priority.SOMETIMES);
 
-        button0.setMnemonicParsing(false);
+        btn00.setMnemonicParsing(false);
 
-        GridPane.setRowIndex(button1, 2);
-        button1.setMnemonicParsing(false);
+        GridPane.setRowIndex(btn02, 2);
+        btn02.setMnemonicParsing(false);
 
-        GridPane.setRowIndex(button2, 1);
-        button2.setMnemonicParsing(false);
+        GridPane.setRowIndex(btn01, 1);
+        btn01.setMnemonicParsing(false);
 
-        GridPane.setColumnIndex(button3, 1);
-        button3.setMnemonicParsing(false);
+        GridPane.setColumnIndex(btn10, 1);
+        btn10.setMnemonicParsing(false);
 
-        GridPane.setColumnIndex(button4, 1);
-        GridPane.setRowIndex(button4, 1);
-        button4.setMnemonicParsing(false);
+        GridPane.setColumnIndex(btn11, 1);
+        GridPane.setRowIndex(btn11, 1);
+        btn11.setMnemonicParsing(false);
 
-        GridPane.setColumnIndex(button5, 1);
-        GridPane.setRowIndex(button5, 2);
-        button5.setMnemonicParsing(false);
+        GridPane.setColumnIndex(btn12, 1);
+        GridPane.setRowIndex(btn12, 2);
+        btn12.setMnemonicParsing(false);
 
-        GridPane.setColumnIndex(button6, 2);
-        button6.setMnemonicParsing(false);
+        GridPane.setColumnIndex(btn20, 2);
+        btn20.setMnemonicParsing(false);
 
-        GridPane.setColumnIndex(button7, 2);
-        GridPane.setRowIndex(button7, 1);
-        button7.setMnemonicParsing(false);
+        GridPane.setColumnIndex(btn21, 2);
+        GridPane.setRowIndex(btn21, 1);
+        btn21.setMnemonicParsing(false);
 
-        GridPane.setColumnIndex(button8, 2);
-        GridPane.setRowIndex(button8, 2);
-        button8.setMnemonicParsing(false);
+        GridPane.setColumnIndex(btn22, 2);
+        GridPane.setRowIndex(btn22, 2);
+        btn22.setMnemonicParsing(false);
 
         HBox.setMargin(anchorPane2, new Insets(0.0, 0.0, 0.0, 40.0));
 
@@ -231,10 +228,10 @@ public  class FXMLGameBoardOnlineBase extends VBox {
         borderPane.setPrefHeight(500.0);
         borderPane.setPrefWidth(200.0);
 
-        BorderPane.setAlignment(hBox2, javafx.geometry.Pos.CENTER);
-        hBox2.setAlignment(javafx.geometry.Pos.TOP_CENTER);
-        hBox2.setPrefHeight(60.0);
-        hBox2.setPrefWidth(200.0);
+        BorderPane.setAlignment(hBox0, javafx.geometry.Pos.CENTER);
+        hBox0.setAlignment(javafx.geometry.Pos.TOP_CENTER);
+        hBox0.setPrefHeight(60.0);
+        hBox0.setPrefWidth(200.0);
 
         text.setFill(javafx.scene.paint.Color.WHITE);
         text.setId("textId");
@@ -243,7 +240,7 @@ public  class FXMLGameBoardOnlineBase extends VBox {
         text.setText("Chat");
         text.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         HBox.setMargin(text, new Insets(10.0, 0.0, 0.0, 0.0));
-        borderPane.setTop(hBox2);
+        borderPane.setTop(hBox0);
 
         BorderPane.setAlignment(scrollPane, javafx.geometry.Pos.CENTER);
         scrollPane.setPrefHeight(400.0);
@@ -253,17 +250,17 @@ public  class FXMLGameBoardOnlineBase extends VBox {
         pane.setPrefHeight(400.0);
         pane.setPrefWidth(300.0);
 
-        label1.setAlignment(javafx.geometry.Pos.CENTER);
-        label1.setLayoutX(14.0);
-        label1.setLayoutY(23.0);
-        label1.getStyleClass().add("incoming-bubble");
-        label1.setText("Can i play with you again ?");
+        incomingLabel.setAlignment(javafx.geometry.Pos.CENTER);
+        incomingLabel.setLayoutX(14.0);
+        incomingLabel.setLayoutY(23.0);
+        incomingLabel.getStyleClass().add("incoming-bubble");
+        incomingLabel.setText("Can i play with you again ?");
 
-        label2.setAlignment(javafx.geometry.Pos.CENTER);
-        label2.setLayoutX(212.0);
-        label2.setLayoutY(75.0);
-        label2.getStyleClass().add("outcoming-bubble");
-        label2.setText("Sure !");
+        outcomingLabel.setAlignment(javafx.geometry.Pos.CENTER);
+        outcomingLabel.setLayoutX(212.0);
+        outcomingLabel.setLayoutY(75.0);
+        outcomingLabel.getStyleClass().add("outcoming-bubble");
+        outcomingLabel.setText("Sure !");
         scrollPane.setContent(pane);
         borderPane.setCenter(scrollPane);
 
@@ -271,58 +268,58 @@ public  class FXMLGameBoardOnlineBase extends VBox {
         flowPane.setPrefHeight(60.0);
         flowPane.setPrefWidth(200.0);
 
-        textField.setPromptText("Message");
-        textField.setPadding(new Insets(0.0, 0.0, 0.0, 20.0));
-        FlowPane.setMargin(textField, new Insets(12.0, 0.0, 0.0, 15.0));
+        messageTextField.setPromptText("Message");
+        messageTextField.setPadding(new Insets(0.0, 0.0, 0.0, 20.0));
+        FlowPane.setMargin(messageTextField, new Insets(12.0, 0.0, 0.0, 15.0));
 
-        button9.setMnemonicParsing(false);
-        button9.setText("Send");
-        FlowPane.setMargin(button9, new Insets(10.0, 0.0, 0.0, 10.0));
+        sendBtn.setMnemonicParsing(false);
+        sendBtn.setText("Send");
+        FlowPane.setMargin(sendBtn, new Insets(10.0, 0.0, 0.0, 10.0));
         borderPane.setBottom(flowPane);
-        VBox.setMargin(hBox1, new Insets(0.0));
+        VBox.setMargin(hBox, new Insets(0.0));
 
-        AnchorPane.setLeftAnchor(label3, 100.0);
-        label3.setId("textId");
-        label3.setText("7:00");
+        AnchorPane.setLeftAnchor(timerLabel, 100.0);
+        timerLabel.setId("textId");
+        timerLabel.setText("7:00");
 
-        hBox0.getChildren().add(imageView);
-        hBox0.getChildren().add(label);
-        hBox0.getChildren().add(line);
-        hBox0.getChildren().add(label0);
-        hBox0.getChildren().add(imageView0);
-        anchorPane.getChildren().add(hBox0);
-        hBox.getChildren().add(anchorPane);
-        hBox.getChildren().add(region);
-        anchorPane0.getChildren().add(button);
-        hBox.getChildren().add(anchorPane0);
-        getChildren().add(hBox);
-        gridPane.getColumnConstraints().add(columnConstraints);
-        gridPane.getColumnConstraints().add(columnConstraints0);
-        gridPane.getColumnConstraints().add(columnConstraints1);
-        gridPane.getRowConstraints().add(rowConstraints);
-        gridPane.getRowConstraints().add(rowConstraints0);
-        gridPane.getRowConstraints().add(rowConstraints1);
-        gridPane.getChildren().add(button0);
-        gridPane.getChildren().add(button1);
-        gridPane.getChildren().add(button2);
-        gridPane.getChildren().add(button3);
-        gridPane.getChildren().add(button4);
-        gridPane.getChildren().add(button5);
-        gridPane.getChildren().add(button6);
-        gridPane.getChildren().add(button7);
-        gridPane.getChildren().add(button8);
-        anchorPane1.getChildren().add(gridPane);
-        hBox1.getChildren().add(anchorPane1);
-        hBox2.getChildren().add(text);
-        pane.getChildren().add(label1);
-        pane.getChildren().add(label2);
-        flowPane.getChildren().add(textField);
-        flowPane.getChildren().add(button9);
+        hboxTurn.getChildren().add(player1Img);
+        hboxTurn.getChildren().add(player1Label);
+        hboxTurn.getChildren().add(line);
+        hboxTurn.getChildren().add(player2Label);
+        hboxTurn.getChildren().add(player2Img);
+        anchorPane.getChildren().add(hboxTurn);
+        hboxTop.getChildren().add(anchorPane);
+        hboxTop.getChildren().add(region);
+        anchorPane0.getChildren().add(leaveBtn);
+        hboxTop.getChildren().add(anchorPane0);
+        getChildren().add(hboxTop);
+        gameBoardGridPane.getColumnConstraints().add(columnConstraints);
+        gameBoardGridPane.getColumnConstraints().add(columnConstraints0);
+        gameBoardGridPane.getColumnConstraints().add(columnConstraints1);
+        gameBoardGridPane.getRowConstraints().add(rowConstraints);
+        gameBoardGridPane.getRowConstraints().add(rowConstraints0);
+        gameBoardGridPane.getRowConstraints().add(rowConstraints1);
+        gameBoardGridPane.getChildren().add(btn00);
+        gameBoardGridPane.getChildren().add(btn02);
+        gameBoardGridPane.getChildren().add(btn01);
+        gameBoardGridPane.getChildren().add(btn10);
+        gameBoardGridPane.getChildren().add(btn11);
+        gameBoardGridPane.getChildren().add(btn12);
+        gameBoardGridPane.getChildren().add(btn20);
+        gameBoardGridPane.getChildren().add(btn21);
+        gameBoardGridPane.getChildren().add(btn22);
+        anchorPane1.getChildren().add(gameBoardGridPane);
+        hBox.getChildren().add(anchorPane1);
+        hBox0.getChildren().add(text);
+        pane.getChildren().add(incomingLabel);
+        pane.getChildren().add(outcomingLabel);
+        flowPane.getChildren().add(messageTextField);
+        flowPane.getChildren().add(sendBtn);
         vBox.getChildren().add(borderPane);
         anchorPane2.getChildren().add(vBox);
-        hBox1.getChildren().add(anchorPane2);
-        getChildren().add(hBox1);
-        anchorPane3.getChildren().add(label3);
+        hBox.getChildren().add(anchorPane2);
+        getChildren().add(hBox);
+        anchorPane3.getChildren().add(timerLabel);
         getChildren().add(anchorPane3);
 
     }
