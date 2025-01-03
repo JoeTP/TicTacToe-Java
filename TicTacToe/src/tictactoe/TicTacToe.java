@@ -1,37 +1,55 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package tictactoe;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-/**
- *
- * @author Youssif
- */
+//import tictactoe.onlinegmaeboard.FXMLGameBoardOnlineBase;
+import tictactoe.onlinegmaeboard.*;
+
+
+
+
+import tictactoe.signin.FXMLSigninController;
+import tictactoe.playervscomp.FXMLPlayerVsCompController;
+import tictactoe.playervsplayer.FXMLPlayerVsPlayerController;
+import tictactoe.homescreen.FXMLHomeScreenController;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.layout.StackPane;
+import javafx.stage.StageStyle;
+
+
 public class TicTacToe extends Application {
-    
+
+    private double xOffset = 0.0;
+    private double yOffset = 0.0;
+
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
-        
-        Scene scene = new Scene(root);
-        
+
+  
+ Parent root = new FXMLGameBoardOnlineBase();
+
+         //   Parent root = new FXMLHomeScreenController();
+     
+               Scene scene = new Scene(root);
+        //String css = this.getClass().getResource().
+        scene.getStylesheets().add(getClass().getResource("onlinegmaeboard/style.css").toExternalForm());
+
+    
+ 
+        stage.setTitle("TicTacToe");
+
         stage.setScene(scene);
         stage.show();
+        stage.setResizable(false);
     }
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
         launch(args);
     }
-    
+
 }
