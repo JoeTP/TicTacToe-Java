@@ -5,7 +5,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-
 //import tictactoe.onlinegmaeboard.FXMLGameBoardOnlineBase;
 import tictactoe.onlinegmaeboard.*;
 
@@ -18,6 +17,8 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.StageStyle;
 import tictactoe.offlinegameboard.FXMLOfflineGameBoardBase;
 
+import tictactoe.signup.FXMLSignupController;
+
 public class TicTacToe extends Application {
 
     private double xOffset = 0.0;
@@ -27,15 +28,27 @@ public class TicTacToe extends Application {
     public void start(Stage stage) throws Exception {
 
 // Parent root = new FXMLOfflineGameBoardBase();
-        //   Parent root = new FXMLHomeScreenController();
-        //     Scene scene = new Scene(root);
-        //    scene.getStylesheets().add(getClass().getResource("offlinegameboard/fxmlofflinegameboard.css").toExternalForm());
+        //Parent root = new FXMLHomeScreenController();
+        //Scene scene = new Scene(root);
+        //scene.getStylesheets().add(getClass().getResource("offlinegameboard/fxmlofflinegameboard.css").toExternalForm());
         //String css = this.getClass().getResource().
-        //  scene.getStylesheets().add(getClass().getResource("onlinegmaeboard/style.css").toExternalForm());
-        //   stage.setTitle("TicTacToe");
+        //scene.getStylesheets().add(getClass().getResource("onlinegmaeboard/style.css").toExternalForm());
+        //stage.setTitle("TicTacToe");
         Parent root = new FXMLHomeScreenController(stage, false);
 
         Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("offlinegameboard/fxmlofflinegameboard.css").toExternalForm());
+        stage.setTitle("TicTacToe");
+
+        //Parent root = new FXMLOfflineGameBoardBase();
+        //Parent root = new FXMLHomeScreenController();
+        //Scene scene = new Scene(root);
+        //scene.getStylesheets().add(getClass().getResource("offlinegameboard/fxmlofflinegameboard.css").toExternalForm());
+        //String css = this.getClass().getResource().
+        //scene.getStylesheets().add(getClass().getResource("onlinegmaeboard/style.css").toExternalForm());
+        //stage.setTitle("TicTacToe");
+        //Parent root = new FXMLHomeScreenController(stage,false);
+        //Scene scene = new Scene(root);
         stage.setTitle("TicTacToe");
         stage.initStyle(StageStyle.DECORATED.UNDECORATED);
         stage.setScene(scene);

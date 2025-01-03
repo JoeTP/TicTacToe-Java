@@ -5,24 +5,39 @@
  */
 package tictactoe.signin;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
  *
  * @author Ayat Gamal
  */
-public class FXMLSigninController extends FXMLSigninBase implements Initializable {
-
-    /**
-     * Initializes the controller class.
-     */
+public class FXMLSigninController extends FXMLSigninBase  {
     
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        System.out.println("IM HEREEEE!");
-    }    
+ 
+    @FXML 
+    public void goToSignup(ActionEvent event) throws IOException{
+    
+    System.out.println("im here in scener FSITSt" );
+        Parent singingParent = FXMLLoader.load(getClass().getResource("/tictactoe/signup/FXMLSignup.fxml"));
+        Scene signinScene = new Scene(singingParent);
+        Stage signinStage = (Stage)((Node) event.getSource()).getScene().getWindow();
+        System.out.println("im here in scener");
+        signinStage.setScene(signinScene);
+        signinStage.show();
+    
+    }
+   
+
     
 }
