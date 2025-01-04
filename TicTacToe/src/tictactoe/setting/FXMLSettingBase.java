@@ -87,6 +87,7 @@ public abstract class FXMLSettingBase extends BorderPane {
         backBtn.setLayoutX(23.0);
         backBtn.setLayoutY(44.0);
         backBtn.setMnemonicParsing(false);
+        backBtn.setOnAction(this::handleBackBtn);
         backBtn.setText("Back");
 
         signinTitle.setLayoutX(281.0);
@@ -135,7 +136,7 @@ public abstract class FXMLSettingBase extends BorderPane {
         imageView.setFitWidth(32.0);
         imageView.setPickOnBounds(true);
         imageView.setPreserveRatio(true);
-        imageView.setImage(new Image(getClass().getResource("/assets/icons/sound.png").toExternalForm()));
+         imageView.setImage(new Image(getClass().getResource("/assets/icons/sound.png").toExternalForm()));
         soundToggleBtn.setGraphic(imageView);
 
         label.setLayoutX(202.0);
@@ -154,7 +155,7 @@ public abstract class FXMLSettingBase extends BorderPane {
         imageView0.setFitWidth(32.0);
         imageView0.setPickOnBounds(true);
         imageView0.setPreserveRatio(true);
-        imageView0.setImage(new Image(getClass().getResource("/assets/icons/dark-theme.png").toExternalForm()));
+             imageView0.setImage(new Image(getClass().getResource("/assets/icons/dark-theme.png").toExternalForm()));
         themeToggleBtn.setGraphic(imageView0);
 
         label0.setLayoutX(200.0);
@@ -173,7 +174,7 @@ public abstract class FXMLSettingBase extends BorderPane {
         imageView1.setFitWidth(93.0);
         imageView1.setPickOnBounds(true);
         imageView1.setPreserveRatio(true);
-        imageView1.setImage(new Image(getClass().getResource("/assets/icons/english.png").toExternalForm()));
+           imageView1.setImage(new Image(getClass().getResource("/assets/icons/english.png").toExternalForm()));
         langToggleBtn.setGraphic(imageView1);
 
         label1.setLayoutX(200.0);
@@ -247,4 +248,7 @@ public abstract class FXMLSettingBase extends BorderPane {
         accountHeaderVBox.getChildren().add(anchorPane0);
 
     }
+
+    protected abstract void handleBackBtn(javafx.event.ActionEvent actionEvent);
+
 }

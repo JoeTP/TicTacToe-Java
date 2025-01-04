@@ -8,14 +8,14 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-public abstract class FXMLsplashScreenBase extends StackPane {
+public abstract class FXMLSplashScreenBase extends StackPane {
 
     protected final ImageView foreground;
     protected final VBox vbox;
     protected final ImageView icon;
     protected final Text texttictactoe;
 
-    public FXMLsplashScreenBase() {
+    public FXMLSplashScreenBase() {
 
         foreground = new ImageView();
         vbox = new VBox();

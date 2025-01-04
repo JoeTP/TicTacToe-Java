@@ -5,17 +5,31 @@
  */
 package tictactoe.homescreen;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import shared.AppFunctions;
+import shared.AppString;
+import tictactoe.TicTacToe;
+import tictactoe.setting.FXMLSettingBase;
+import tictactoe.setting.FXMLSettingController;
 
 /**
  * FXML Controller class
@@ -29,15 +43,23 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
     private double xOffset;
     private double yOffset;
 
-    public FXMLHomeScreenController(Stage stage,boolean isOffline) {
+    public FXMLHomeScreenController(Stage stage) {
+        this.stage = stage;
+        //stage.initStyle(StageStyle.DECORATED.UNDECORATED);
+
+        dragWindow();
+        checkConnection();
+        setLogo();
+    }
+
+    public FXMLHomeScreenController(Stage stage, boolean isOffline) {
         this.isOffline = isOffline;
         this.stage = stage;
-        
-        
-        setLogo();
-        checkConnection();
-        exitApp();
+       // stage.initStyle(StageStyle.DECORATED.UNDECORATED);
+
         dragWindow();
+        checkConnection();
+        setLogo();
     }
 
     void setLogo() {
@@ -50,12 +72,12 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
         if (isOffline) {
             imgPath = "/assets/icons/offline.png";
             chatBtn.setDisable(isOffline);
-            connectionLabel.setText("Offline");
+            connectionLabel.setText(AppString.OFFLINE);
             profileImageView.setImage(new Image(getClass().getResourceAsStream("/assets/icons/profile.png")));
         } else {
             imgPath = "/assets/icons/online.png";
             chatBtn.setDisable(isOffline);
-            connectionLabel.setText("Online");
+            connectionLabel.setText(AppString.ONLINE);
             ///TODO: get the user profile image from server
             profileImageView.setImage(new Image(getClass().getResourceAsStream("/assets/icons/profile.png")));
         }
@@ -64,13 +86,9 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
         connectionIndicatorImageView.setImage(image);
     }
 
-    void exitApp() {
-        exitBtn.setOnAction((event) -> Platform.exit());
-    }
-
     void dragWindow() {
 
-        header.setOnMousePressed((event)->{
+        header.setOnMousePressed((event) -> {
             xOffset = event.getSceneX();
             yOffset = event.getSceneY();
         });
@@ -80,4 +98,30 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
             stage.setY(event.getScreenY() - yOffset);
         });
     }
+
+    @Override
+    protected void exitApp(ActionEvent actionEvent) {
+        Platform.exit();
+    }
+
+    @Override
+    protected void openChat(ActionEvent actionEvent) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    protected void openSettingsScreen(ActionEvent actionEvent) {
+        AppFunctions.goTo(actionEvent, new FXMLSettingController(stage));
+    }
+
+    @Override
+    protected void openPlayerVsComputerPopup(ActionEvent actionEvent) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    protected void openPlayerVsPlayerPopup(ActionEvent actionEvent) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

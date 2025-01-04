@@ -21,7 +21,7 @@ public abstract class FXMLHomeScreenBase extends BorderPane {
     protected final Button chatBtn;
     protected final HBox header;
     protected final Region region0;
-    protected final Button SettingsBtn;
+    protected final Button settingsBtn;
     protected final Button exitBtn;
     protected final AnchorPane anchorPane;
     protected final VBox vBox;
@@ -42,7 +42,7 @@ public abstract class FXMLHomeScreenBase extends BorderPane {
         chatBtn = new Button();
         header = new HBox();
         region0 = new Region();
-        SettingsBtn = new Button();
+        settingsBtn = new Button();
         exitBtn = new Button();
         anchorPane = new AnchorPane();
         vBox = new VBox();
@@ -78,6 +78,7 @@ public abstract class FXMLHomeScreenBase extends BorderPane {
         HBox.setHgrow(region, javafx.scene.layout.Priority.ALWAYS);
 
         chatBtn.setMnemonicParsing(false);
+        chatBtn.setOnAction(this::openChat);
         chatBtn.setText("Chat");
         HBox.setMargin(chatBtn, new Insets(0.0, 20.0, 20.0, 0.0));
         setBottom(hBox);
@@ -87,14 +88,16 @@ public abstract class FXMLHomeScreenBase extends BorderPane {
 
         HBox.setHgrow(region0, javafx.scene.layout.Priority.ALWAYS);
 
-        HBox.setHgrow(SettingsBtn, javafx.scene.layout.Priority.NEVER);
-        SettingsBtn.setMnemonicParsing(false);
-        SettingsBtn.setText("Settings");
+        HBox.setHgrow(settingsBtn, javafx.scene.layout.Priority.NEVER);
+        settingsBtn.setMnemonicParsing(false);
+        settingsBtn.setOnAction(this::openSettingsScreen);
+        settingsBtn.setText("Settings");
 
         exitBtn.setLayoutX(645.0);
         exitBtn.setLayoutY(30.0);
         exitBtn.setMinWidth(31.0);
         exitBtn.setMnemonicParsing(false);
+        exitBtn.setOnAction(this::exitApp);
         exitBtn.setPrefHeight(32.0);
         exitBtn.setPrefWidth(31.0);
         exitBtn.setText("X");
@@ -122,11 +125,13 @@ public abstract class FXMLHomeScreenBase extends BorderPane {
         logoImageViewer.setPreserveRatio(true);
 
         button.setMnemonicParsing(false);
+        button.setOnAction(this::openPlayerVsComputerPopup);
         button.setText("Play Vs Computer");
 
         button0.setLayoutX(82.0);
         button0.setLayoutY(122.0);
         button0.setMnemonicParsing(false);
+        button0.setOnAction(this::openPlayerVsPlayerPopup);
         button0.setText("Play Vs Player");
         setCenter(anchorPane);
 
@@ -147,7 +152,7 @@ public abstract class FXMLHomeScreenBase extends BorderPane {
         hBox.getChildren().add(region);
         hBox.getChildren().add(chatBtn);
         header.getChildren().add(region0);
-        header.getChildren().add(SettingsBtn);
+        header.getChildren().add(settingsBtn);
         header.getChildren().add(exitBtn);
         anchorPane0.getChildren().add(logoImageViewer);
         vBox.getChildren().add(anchorPane0);
@@ -157,4 +162,15 @@ public abstract class FXMLHomeScreenBase extends BorderPane {
         vBox0.getChildren().add(profileImageView);
 
     }
+
+    protected abstract void openChat(javafx.event.ActionEvent actionEvent);
+
+    protected abstract void openSettingsScreen(javafx.event.ActionEvent actionEvent);
+
+    protected abstract void exitApp(javafx.event.ActionEvent actionEvent);
+
+    protected abstract void openPlayerVsComputerPopup(javafx.event.ActionEvent actionEvent);
+
+    protected abstract void openPlayerVsPlayerPopup(javafx.event.ActionEvent actionEvent);
+
 }

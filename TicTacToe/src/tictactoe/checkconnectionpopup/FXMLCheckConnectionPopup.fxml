@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.layout.HBox?>
+
+
+<fx:root alignment="CENTER" type="HBox" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.checkconnectionpopup.FXMLCheckConnectionPopupController">
+   <children>
+      <ProgressIndicator>
+         <padding>
+            <Insets left="20.0" />
+         </padding>
+      </ProgressIndicator>
+      <Label text="Checking Connection!">
+         <padding>
+            <Insets bottom="20.0" right="20.0" top="20.0" />
+         </padding>
+      </Label>
+   </children>
+   <padding>
+      <Insets left="20.0" />
+   </padding>
+</fx:root>

@@ -7,11 +7,15 @@ package tictactoe.setting;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import shared.AppFunctions;
+import tictactoe.homescreen.FXMLHomeScreenController;
 
 /**
  * FXML Controller class
@@ -19,6 +23,12 @@ import javafx.scene.layout.VBox;
  * @author Ayat Gamal
  */
 public class FXMLSettingController extends FXMLSettingBase implements Initializable {
+
+    private Stage stage;
+
+    public FXMLSettingController(Stage stage) {
+        this.stage = stage;
+    }
 
     @FXML
     private Pane accountDetailsPane;
@@ -39,6 +49,11 @@ public class FXMLSettingController extends FXMLSettingBase implements Initializa
             accountDetailsPane.setVisible(isDetailsVisible);
         });
 
+    }
+
+    @Override
+    protected void handleBackBtn(ActionEvent actionEvent) {
+            AppFunctions.goTo(actionEvent, new FXMLHomeScreenController(stage));
     }
 
 }
