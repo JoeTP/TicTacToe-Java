@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../../../resources/styles/serverstylesheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.server.FXMLServerController">
+   <top>
+      <AnchorPane prefHeight="13.0" prefWidth="600.0" stylesheets="@../../../resources/styles/serverstylesheet.css" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="serverEscBtn" layoutX="14.0" layoutY="11.0" mnemonicParsing="false" text="ESC" />
+         </children>
+      </AnchorPane>
+   </top>
+   <bottom>
+      <AnchorPane prefHeight="401.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <PieChart fx:id="usersPieChart" layoutX="300.0" layoutY="32.0" legendVisible="false" prefHeight="284.0" prefWidth="280.0" styleClass="default-color0" stylesheets="@../../../resources/styles/serverstylesheet.css" title="Users" />
+            <Button id="serverStartBtn" fx:id="serverStartBtn" layoutX="93.0" layoutY="293.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="68.0" styleClass="serverStartBtn" stylesheets="@../onlinegmaeboard/css/gameBoardOnline.css" text="Start" />
+            <Button fx:id="serverStopBtn" layoutX="177.0" layoutY="293.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Stop" />
+            <Circle fx:id="serverIndicator" fill="#13f803" layoutX="64.0" layoutY="305.0" radius="11.0" stroke="BLACK" strokeType="INSIDE" styleClass="serverStartBtn" />
+            <Text layoutX="216.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Server GUI" wrappingWidth="167.923828125">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Text>
+            <ListView fx:id="usersList" layoutX="47.0" layoutY="60.0" prefHeight="202.0" prefWidth="200.0" />
+            <Label layoutX="100.0" layoutY="32.0" text="Active users">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </bottom>
+</BorderPane>
