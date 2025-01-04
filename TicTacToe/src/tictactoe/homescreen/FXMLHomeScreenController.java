@@ -16,6 +16,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  * FXML Controller class
@@ -29,15 +30,24 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
     private double xOffset;
     private double yOffset;
 
-    public FXMLHomeScreenController(Stage stage,boolean isOffline) {
+    public FXMLHomeScreenController(Stage stage) {
+        this.stage = stage;
+        stage.initStyle(StageStyle.DECORATED.UNDECORATED);
+    }
+
+    public FXMLHomeScreenController(Stage stage, boolean isOffline) {
         this.isOffline = isOffline;
         this.stage = stage;
-        
-        
+        stage.initStyle(StageStyle.DECORATED.UNDECORATED);
+
         setLogo();
         checkConnection();
         exitApp();
         dragWindow();
+    }
+
+    public FXMLHomeScreenController() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     void setLogo() {
@@ -70,7 +80,7 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
 
     void dragWindow() {
 
-        header.setOnMousePressed((event)->{
+        header.setOnMousePressed((event) -> {
             xOffset = event.getSceneX();
             yOffset = event.getSceneY();
         });
