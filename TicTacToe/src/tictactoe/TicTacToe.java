@@ -16,6 +16,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.layout.StackPane;
 import javafx.stage.StageStyle;
 import tictactoe.offlinegameboard.FXMLOfflineGameBoardBase;
+import tictactoe.popupwin.FXMLPopUpWinController;
 
 import tictactoe.setting.FXMLSettingController;
 
@@ -52,7 +53,7 @@ public class TicTacToe extends Application {
       //  Parent root = new FXMLHomeScreenController(stage, false);
 
   
- Parent root = new FXMLsplashScreenController();
+ Parent root = new FXMLPopUpWinController(stage,true);
        // Parent root = new  FXMLOfflineGameBoardBase();
          //  Parent root = new FXMLHomeScreenController();
      
