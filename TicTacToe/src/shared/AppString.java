@@ -9,16 +9,16 @@ package shared;
  *
  * @author Youssif
  */
-public abstract class AppString {
+public interface AppString {
     /**
      * add your string here
      */
-    String online = "Online";
-    String offline = "Offline";
+    String ONLINE = "Online";
+    String OFFLINE = "Offline";
     
     /**
      * add your paths here
      */
-//    String homeScreenPath = 
+//    String HOME_SCREEN_PATH = 
             
 }
