@@ -21,5 +21,9 @@ public abstract class AppFunctions {
         stage.setScene(scene);
         stage.show();
     }
+    
+    public static void pop(ActionEvent actionEvent, Parent root){
+        
+    }
 
 }
