@@ -46,7 +46,7 @@ public class TicTacToe extends Application {
         //     Scene scene = new Scene(root);
         //    scene.getStylesheets().add(getClass().getResource("offlinegameboard/fxmlofflinegameboard.css").toExternalForm());
         //String css = this.getClass().getResource().
-        //  scene.getStylesheets().add(getClass().getResource("onlinegmaeboard/style.css").toExternalForm());
+        //scene.getStylesheets().add(getClass().getResource("onlinegmaeboard/style.css").toExternalForm());
         //   stage.setTitle("TicTacToe");
 //        Parent root = new FXMLHomeScreenController(stage,false);
         //      Scene scene = new Scene(root);
