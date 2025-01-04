@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="720.0" type="BorderPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.homescreen.FXMLHomeScreenController">
    <bottom>
       <HBox BorderPane.alignment="CENTER_LEFT">
          <children>
@@ -22,14 +22,14 @@
                         <Insets left="20.0" />
                      </HBox.margin>
                   </ImageView>
-                  <Label alignment="CENTER" text="Online" />
+                  <Label fx:id="connectionLabel" alignment="CENTER" text="Online" />
                </children>
                <opaqueInsets>
                   <Insets left="20.0" />
                </opaqueInsets>
             </HBox>
             <Region HBox.hgrow="ALWAYS" />
-            <Button mnemonicParsing="false" text="Chat">
+            <Button fx:id="chatBtn" mnemonicParsing="false" onAction="#openChat" text="Chat">
                <HBox.margin>
                   <Insets bottom="20.0" right="20.0" />
                </HBox.margin>
@@ -41,8 +41,8 @@
       <HBox fx:id="header" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
             <Region HBox.hgrow="ALWAYS" />
-            <Button mnemonicParsing="false" text="Settings" HBox.hgrow="NEVER" />
-            <Button layoutX="645.0" layoutY="30.0" minWidth="31.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="31.0" text="X" />
+            <Button fx:id="settingsBtn" mnemonicParsing="false" onAction="#openSettingsScreen" text="Settings" HBox.hgrow="NEVER" />
+            <Button fx:id="exitBtn" layoutX="645.0" layoutY="30.0" minWidth="31.0" mnemonicParsing="false" onAction="#exitApp" prefHeight="32.0" prefWidth="31.0" text="X" />
          </children>
          <padding>
             <Insets right="20.0" top="20.0" />
@@ -63,8 +63,8 @@
                         </ImageView>
                      </children>
                   </AnchorPane>
-                  <Button mnemonicParsing="false" text="Play Vs Computer" />
-                  <Button layoutX="82.0" layoutY="122.0" mnemonicParsing="false" text="Play Vs Player" />
+                  <Button mnemonicParsing="false" onAction="#openPlayerVsComputerPopup" text="Play Vs Computer" />
+                  <Button layoutX="82.0" layoutY="122.0" mnemonicParsing="false" onAction="#openPlayerVsPlayerPopup" text="Play Vs Player" />
                </children>
             </VBox>
          </children>
@@ -83,4 +83,4 @@
          </padding>
       </VBox>
    </left>
-</BorderPane>
+</fx:root>

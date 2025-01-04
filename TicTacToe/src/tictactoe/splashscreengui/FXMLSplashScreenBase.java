@@ -33,7 +33,7 @@ public abstract class FXMLSplashScreenBase extends StackPane {
         foreground.setFitWidth(720.0);
         foreground.setPickOnBounds(true);
         foreground.setPreserveRatio(true);
-        foreground.setImage(new Image(getClass().getResource("../../../resources/assets/icons/foreground.jpg").toExternalForm()));
+        foreground.setImage(new Image(getClass().getResource("/assets/icons/foreground.jpg").toExternalForm()));
 
         vbox.setAlignment(javafx.geometry.Pos.CENTER);
         vbox.setSpacing(10.0);
@@ -42,7 +42,7 @@ public abstract class FXMLSplashScreenBase extends StackPane {
         icon.setFitWidth(300.0);
         icon.setPickOnBounds(true);
         icon.setPreserveRatio(true);
-        icon.setImage(new Image(getClass().getResource("../../../resources/assets/icons/icon.png").toExternalForm()));
+        icon.setImage(new Image(getClass().getResource("/assets/icons/icon.png").toExternalForm()));
         VBox.setMargin(icon, new Insets(0.0, 0.0, 20.0, 0.0));
 
         texttictactoe.setFill(javafx.scene.paint.Color.valueOf("#473e77"));

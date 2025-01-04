@@ -23,7 +23,7 @@
          <children>
             <AnchorPane HBox.hgrow="ALWAYS">
                <children>
-                  <Button fx:id="backBtn" layoutX="23.0" layoutY="44.0" mnemonicParsing="false" text="Back" AnchorPane.leftAnchor="23.0" />
+                  <Button fx:id="backBtn" layoutX="23.0" layoutY="44.0" mnemonicParsing="false" onAction="#handleBackBtn" text="Back" AnchorPane.leftAnchor="23.0" />
                   <Text fx:id="signinTitle" layoutX="281.0" layoutY="82.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Setting">
                      <font>
                         <Font size="48.0" />

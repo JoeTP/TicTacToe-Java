@@ -26,55 +26,22 @@ import tictactoe.splashscreengui.FXMLSplashScreenController;
 
 public class TicTacToe extends Application {
 
-    private double xOffset = 0.0;
-    private double yOffset = 0.0;
+   
+    
 
     @Override
     public void start(Stage stage) throws Exception {
-        //Parent root = new FXMLSettingController();
-        //Parent root = new FXMLSignupController();
-
-        //Parent root = new FXMLOfflineGameBoardBase();
-        //Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
-        //Parent root = new FXMLSigninController();       
-        //Parent root = new FXMLPlayerVsCompController();        
-        //Parent root = new FXMLHomeScreenController();
-        //Parent root = new FXMLOfflineGameBoardBase();
-        //Parent root = new FXMLHomeScreenController();
-        //Scene scene = new Scene(root);
-        //scene.getStylesheets().add(getClass().getResource("offlinegameboard/fxmlofflinegameboard.css").toExternalForm());
-        //String css = this.getClass().getResource().
-        //scene.getStylesheets().add(getClass().getResource("onlinegmaeboard/style.css").toExternalForm());
-        //stage.setTitle("TicTacToe");
-        //Parent root = new FXMLHomeScreenController(stage, false);
-        //Parent root = new FXMLsplashScreenController();
-        //Parent root = new  FXMLOfflineGameBoardBase();
-        //Parent root = new FXMLHomeScreenController();
-        Parent root = new FXMLHomeScreenController(stage);
+        
+        Parent root = new FXMLSplashScreenController(stage);
         Scene scene = new Scene(root);
-        //scene.getStylesheets().add(getClass().getResource("offlinegameboard/fxmlofflinegameboard.css").toExternalForm());
-        //String css = this.getClass().getResource().
-        //scene.getStylesheets().add(getClass().getResource("onlinegmaeboard/style.css").toExternalForm());
-
         scene.getStylesheets().add(getClass().getResource("offlinegameboard/fxmlofflinegameboard.css").toExternalForm());
-        stage.setTitle("TicTacToe");
-
-        //Parent root = new FXMLOfflineGameBoardBase();
-        //Scene scene = new Scene(root);
-        //scene.getStylesheets().add(getClass().getResource("offlinegameboard/fxmlofflinegameboard.css").toExternalForm());
-        //String css = this.getClass().getResource().
-        //scene.getStylesheets().add(getClass().getResource("onlinegmaeboard/style.css").toExternalForm());
-        //stage.setTitle("TicTacToe");
-        //Parent root = new FXMLHomeScreenController(stage,false);
-        //Scene scene = new Scene(root);
-        //   stage.setTitle("TicTacToe");
-//        Parent root = new FXMLHomeScreenController(stage,false);
-        //      Scene scene = new Scene(root);
         stage.setTitle("TicTacToe");
         stage.setScene(scene);
         stage.show();
         stage.setResizable(false);
     }
+    
+   
 
     public static void main(String[] args) {
         launch(args);
