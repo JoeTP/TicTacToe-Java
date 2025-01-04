@@ -67,6 +67,9 @@ public class TicTacToe extends Application {
         //stage.setTitle("TicTacToe");
         //Parent root = new FXMLHomeScreenController(stage,false);
         //Scene scene = new Scene(root);
+        //   stage.setTitle("TicTacToe");
+//        Parent root = new FXMLHomeScreenController(stage,false);
+        //      Scene scene = new Scene(root);
         stage.setTitle("TicTacToe");
         stage.setScene(scene);
         stage.show();
