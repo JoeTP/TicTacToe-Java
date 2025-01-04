@@ -6,7 +6,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 
 
-public class FXMLOfflineGameBoardController implements Initializable {
+public class FXMLOfflineGameBoardController extends FXMLOfflineGameBoardBase implements Initializable {
 
     
    
