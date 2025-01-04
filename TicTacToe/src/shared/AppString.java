@@ -15,10 +15,15 @@ public interface AppString {
      */
     String ONLINE = "Online";
     String OFFLINE = "Offline";
+    String WIN_LABLE = "🎉Congratulations!You Win!";
+    String LOSE_LABLE = "\"     😢 Oops! You Lose! 😢\"";
+    
     
     /**
      * add your paths here
      */
 //    String HOME_SCREEN_PATH = 
+    
+    
             
 }
