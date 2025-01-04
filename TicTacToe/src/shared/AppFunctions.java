@@ -1,19 +1,29 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package shared;
 
+import java.io.IOException;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import tictactoe.TicTacToe;
+import tictactoe.setting.FXMLSettingController;
+
 /**
- *
- * @author Youssif
- * here we handle commonly used functions like navigating to another scene
+ * Here we handle commonly used functions like navigating to another scene.
  */
 public abstract class AppFunctions {
-    
-    public static void print(){
-        System.out.println("PRINT");
+
+    public static void goTo(ActionEvent actionEvent, Parent root){
+        Scene scene = new Scene(root);
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
     }
     
+    public static void pop(ActionEvent actionEvent, Parent root){
+        
+    }
+
 }
