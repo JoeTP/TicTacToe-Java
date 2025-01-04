@@ -19,8 +19,6 @@ import javafx.stage.StageStyle;
 import tictactoe.offlinegameboard.FXMLOfflineGameBoardBase;
 import tictactoe.popupwin.FXMLPopUpWinController;
 
-import tictactoe.server.FXMLServerController;
-
 
 import tictactoe.setting.FXMLSettingController;
 
@@ -58,7 +56,7 @@ public class TicTacToe extends Application {
 
   
 
- //Parent root = new FXMLPopUpWinController(stage,true);
+ Parent root = new FXMLPopUpWinController(stage,true);
        // Parent root = new  FXMLOfflineGameBoardBase();
          //  Parent root = new FXMLHomeScreenController();
      
@@ -72,7 +70,7 @@ public class TicTacToe extends Application {
        // scene.getStylesheets().add(getClass().getResource("offlinegameboard/fxmlofflinegameboard.css").toExternalForm());
 
      //   Parent root = new FXMLGameBoardOnlineBase();
-    Parent root = new FXMLServerController();
+   
     //   Parent root = new FXMLHomeScreenController();
      
         Scene scene = new Scene(root);
