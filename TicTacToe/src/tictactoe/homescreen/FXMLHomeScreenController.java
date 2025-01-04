@@ -17,6 +17,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import shared.AppFunctions;
+import shared.AppString;
 
 /**
  * FXML Controller class
@@ -33,6 +35,8 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
     public FXMLHomeScreenController(Stage stage) {
         this.stage = stage;
         stage.initStyle(StageStyle.DECORATED.UNDECORATED);
+                AppFunctions.print();
+
     }
 
     public FXMLHomeScreenController(Stage stage, boolean isOffline) {
@@ -47,7 +51,7 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
     }
 
     public FXMLHomeScreenController() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     void setLogo() {
@@ -60,12 +64,12 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
         if (isOffline) {
             imgPath = "/assets/icons/offline.png";
             chatBtn.setDisable(isOffline);
-            connectionLabel.setText("Offline");
+            connectionLabel.setText(AppString.OFFLINE);
             profileImageView.setImage(new Image(getClass().getResourceAsStream("/assets/icons/profile.png")));
         } else {
             imgPath = "/assets/icons/online.png";
             chatBtn.setDisable(isOffline);
-            connectionLabel.setText("Online");
+            connectionLabel.setText(AppString.ONLINE);
             ///TODO: get the user profile image from server
             profileImageView.setImage(new Image(getClass().getResourceAsStream("/assets/icons/profile.png")));
         }

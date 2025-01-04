@@ -50,7 +50,7 @@ public class TicTacToe extends Application {
         //Parent root = new FXMLsplashScreenController();
         //Parent root = new  FXMLOfflineGameBoardBase();
         //Parent root = new FXMLHomeScreenController();
-        Parent root = new FXMLSplashScreenController(stage);
+        Parent root = new FXMLHomeScreenController(stage);
         Scene scene = new Scene(root);
         //scene.getStylesheets().add(getClass().getResource("offlinegameboard/fxmlofflinegameboard.css").toExternalForm());
         //String css = this.getClass().getResource().
