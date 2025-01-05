@@ -76,7 +76,7 @@ public abstract class FXMLHomeScreenBase extends BorderPane {
 
         connectionLabel.setAlignment(javafx.geometry.Pos.CENTER);
         connectionLabel.getStyleClass().add("bigLabel");
-        connectionLabel.getStylesheets().add("/tictactoe/homescreen/../../../resources/styling/generalStyle.css");
+        connectionLabel.getStylesheets().add("/styling/generalStyle.css");
         connectionLabel.setText("Online");
         hBox0.setOpaqueInsets(new Insets(0.0, 0.0, 0.0, 20.0));
 
@@ -85,20 +85,20 @@ public abstract class FXMLHomeScreenBase extends BorderPane {
         chatBtn.setMnemonicParsing(false);
         chatBtn.setOnAction(this::openChat);
         chatBtn.getStyleClass().add("bigBtn");
-        chatBtn.getStylesheets().add("/tictactoe/homescreen/../../../resources/styling/generalStyle.css");
+        chatBtn.getStylesheets().add("/styling/generalStyle.css");
         chatBtn.setText("Chat");
         HBox.setMargin(chatBtn, new Insets(0.0, 20.0, 20.0, 0.0));
         setBottom(hBox);
 
         BorderPane.setAlignment(header, javafx.geometry.Pos.CENTER);
         header.setSpacing(20.0);
-        header.getStylesheets().add("/tictactoe/homescreen/styling/generalStyle.css");
+        header.getStylesheets().add("/styling/generalStyle.css");
 
         button.setMnemonicParsing(false);
         button.setOnAction(this::signup);
         button.setPrefHeight(33.0);
         button.setPrefWidth(63.0);
-        button.getStylesheets().add("/tictactoe/homescreen/../onlinegmaeboard/style.css");
+        button.getStylesheets().add("/onlinegmaeboard/style.css");
         button.setText("Sign up");
         HBox.setMargin(button, new Insets(0.0, 0.0, 0.0, 20.0));
 
@@ -108,7 +108,7 @@ public abstract class FXMLHomeScreenBase extends BorderPane {
         settingsBtn.setMnemonicParsing(false);
         settingsBtn.setOnAction(this::openSettingsScreen);
         settingsBtn.getStyleClass().add("bigBtn");
-        settingsBtn.getStylesheets().add("/tictactoe/homescreen/../../../resources/styling/generalStyle.css");
+        settingsBtn.getStylesheets().add("/styling/generalStyle.css");
         settingsBtn.setText("Settings");
 
         exitBtn.setLayoutX(645.0);
@@ -119,7 +119,7 @@ public abstract class FXMLHomeScreenBase extends BorderPane {
         exitBtn.setPrefHeight(32.0);
         exitBtn.setPrefWidth(31.0);
         exitBtn.getStyleClass().add("bigBtn");
-        exitBtn.getStylesheets().add("/tictactoe/homescreen/../../../resources/styling/generalStyle.css");
+        exitBtn.getStylesheets().add("/styling/generalStyle.css");
         exitBtn.setText("X");
         header.setPadding(new Insets(20.0, 20.0, 0.0, 0.0));
         setTop(header);
@@ -144,12 +144,12 @@ public abstract class FXMLHomeScreenBase extends BorderPane {
         logoImageViewer.setLayoutX(10.0);
         logoImageViewer.setPickOnBounds(true);
         logoImageViewer.setPreserveRatio(true);
-        logoImageViewer.setImage(new Image(getClass().getResource("../../../resources/assets/icons/icon.png").toExternalForm()));
+        logoImageViewer.setImage(new Image(getClass().getResource("/assets/icons/icon.png").toExternalForm()));
 
         button0.setMnemonicParsing(false);
         button0.setOnAction(this::openPlayerVsComputerPopup);
         button0.getStyleClass().add("bigBtn");
-        button0.getStylesheets().add("/tictactoe/homescreen/../../../resources/styling/generalStyle.css");
+        button0.getStylesheets().add("/styling/generalStyle.css");
         button0.setText("Play Vs Computer");
         VBox.setMargin(button0, new Insets(0.0));
 
@@ -158,7 +158,7 @@ public abstract class FXMLHomeScreenBase extends BorderPane {
         button1.setMnemonicParsing(false);
         button1.setOnAction(this::openPlayerVsPlayerPopup);
         button1.getStyleClass().add("bigBtn");
-        button1.getStylesheets().add("/tictactoe/homescreen/../../../resources/styling/generalStyle.css");
+        button1.getStylesheets().add("styling/generalStyle.css");
         button1.setText("   Play Vs Player   ");
         BorderPane.setMargin(anchorPane, new Insets(0.0));
         setCenter(anchorPane);

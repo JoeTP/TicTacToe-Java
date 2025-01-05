@@ -44,6 +44,7 @@ public abstract class FXMLSigninBase extends BorderPane {
 
         setPrefHeight(552.0);
         setPrefWidth(400.0);
+        getStylesheets().add("/styling/generalStyle.css");
 
         BorderPane.setAlignment(hBox, javafx.geometry.Pos.CENTER);
         hBox.setSpacing(120.0);
@@ -55,12 +56,15 @@ public abstract class FXMLSigninBase extends BorderPane {
         backBtn.setLayoutY(44.0);
         backBtn.setMnemonicParsing(false);
         backBtn.setOnAction(this::handleBackButton);
+        backBtn.getStyleClass().add("bigBtn");
         backBtn.setText("Back");
 
-        signinTitle.setLayoutX(125.0);
-        signinTitle.setLayoutY(77.0);
+        signinTitle.setFill(javafx.scene.paint.Color.valueOf("#3e5879"));
+        signinTitle.setLayoutX(143.0);
+        signinTitle.setLayoutY(69.0);
         signinTitle.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         signinTitle.setStrokeWidth(0.0);
+        signinTitle.getStyleClass().add("bigLabel");
         signinTitle.setText("Sign-in");
         signinTitle.setFont(new Font(48.0));
         BorderPane.setMargin(hBox, new Insets(0.0, 0.0, 10.0, 0.0));
@@ -85,18 +89,22 @@ public abstract class FXMLSigninBase extends BorderPane {
         signinBtn.setMnemonicParsing(false);
         signinBtn.setPrefHeight(43.0);
         signinBtn.setPrefWidth(112.0);
+        signinBtn.getStyleClass().add("bigBtn");
         signinBtn.setText("Sign-in");
 
+        text.setFill(javafx.scene.paint.Color.valueOf("#3e5879"));
         text.setLayoutX(60.0);
         text.setLayoutY(372.0);
         text.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         text.setStrokeWidth(0.0);
         text.setText("Don't you have an account?");
+        text.setFont(new Font("Stencil", 12.0));
 
         signupBtn.setLayoutX(263.0);
-        signupBtn.setLayoutY(351.0);
+        signupBtn.setLayoutY(349.0);
         signupBtn.setMnemonicParsing(false);
         signupBtn.setOnAction(this::goToSignup);
+        signupBtn.getStyleClass().add("bigBtn");
         signupBtn.setText("Sign-up");
 
         usernameTextField.setLayoutX(60.0);
