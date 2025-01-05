@@ -16,6 +16,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import shared.AppFunctions;
+import tictactoe.signin.FXMLSigninController;
 
 /**
  * FXML Controller class
@@ -38,17 +39,7 @@ public class FXMLSignupController extends FXMLSignupBase {
 
     @Override
     protected void goToSignin(ActionEvent actionEvent) {
-        System.out.println("im here in scener FSITSt");
-            try {
-                singingParent = FXMLLoader.load(getClass().getResource("/tictactoe/signin/FXMLSignin.fxml"));
-            } catch (IOException ex) {
-                Logger.getLogger(FXMLSignupController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            Scene signinScene = new Scene(singingParent);
-            Stage signinStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            System.out.println("im here in scener");
-            signinStage.setScene(signinScene);
-            signinStage.show();
+        AppFunctions.goTo(actionEvent, new FXMLSigninController(stage));
     }
 
 }

@@ -6,7 +6,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import tictactoe.onlinegmaeboard.FXMLGameBoardOnlineController;
 
-import tictactoe.popupwin.FXMLPopUpWinController;
 
 import tictactoe.splashscreengui.FXMLSplashScreenController;
 

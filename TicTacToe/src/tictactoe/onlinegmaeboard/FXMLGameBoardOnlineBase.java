@@ -31,7 +31,7 @@ public abstract class FXMLGameBoardOnlineBase extends VBox {
     protected final ImageView player2Img;
     protected final Region region;
     protected final AnchorPane anchorPane0;
-    protected final Button leaveBtn;
+    protected final Button forfiteBtn;
     protected final HBox hBox;
     protected final AnchorPane anchorPane1;
     protected final GridPane gameBoardGridPane;
@@ -77,7 +77,7 @@ public abstract class FXMLGameBoardOnlineBase extends VBox {
         player2Img = new ImageView();
         region = new Region();
         anchorPane0 = new AnchorPane();
-        leaveBtn = new Button();
+        forfiteBtn = new Button();
         hBox = new HBox();
         anchorPane1 = new AnchorPane();
         gameBoardGridPane = new GridPane();
@@ -118,6 +118,7 @@ public abstract class FXMLGameBoardOnlineBase extends VBox {
         setPrefHeight(720.0);
         setPrefWidth(1000.0);
         getStyleClass().add("scrollBane");
+        getStylesheets().add("/tictactoe/onlinegmaeboard/style.css");
 
         hboxTop.setPrefHeight(100.0);
         hboxTop.setPrefWidth(1000.0);
@@ -153,10 +154,11 @@ public abstract class FXMLGameBoardOnlineBase extends VBox {
         region.setPrefHeight(200.0);
         region.setPrefWidth(230.0);
 
-        leaveBtn.setId("textId");
-        leaveBtn.setLayoutY(6.0);
-        leaveBtn.setMnemonicParsing(false);
-        leaveBtn.setText("Leave");
+        forfiteBtn.setId("textId");
+        forfiteBtn.setLayoutY(6.0);
+        forfiteBtn.setMnemonicParsing(false);
+        forfiteBtn.setOnAction(this::winOrLossPopup);
+        forfiteBtn.setText("Forfite");
         HBox.setMargin(anchorPane0, new Insets(20.0, 0.0, 0.0, 0.0));
 
         hBox.setPrefHeight(100.0);
@@ -290,7 +292,7 @@ public abstract class FXMLGameBoardOnlineBase extends VBox {
         anchorPane.getChildren().add(hboxTurn);
         hboxTop.getChildren().add(anchorPane);
         hboxTop.getChildren().add(region);
-        anchorPane0.getChildren().add(leaveBtn);
+        anchorPane0.getChildren().add(forfiteBtn);
         hboxTop.getChildren().add(anchorPane0);
         getChildren().add(hboxTop);
         gameBoardGridPane.getColumnConstraints().add(columnConstraints);
@@ -323,4 +325,7 @@ public abstract class FXMLGameBoardOnlineBase extends VBox {
         getChildren().add(anchorPane3);
 
     }
+
+    protected abstract void winOrLossPopup(javafx.event.ActionEvent actionEvent);
+
 }
