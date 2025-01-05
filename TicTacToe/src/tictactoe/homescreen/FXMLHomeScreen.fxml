@@ -23,14 +23,14 @@
                         <Insets left="20.0" />
                      </HBox.margin>
                   </ImageView>
-                  <Label fx:id="connectionLabel" alignment="CENTER" styleClass="bigLabel" text="Online" />
+                  <Label fx:id="connectionLabel" alignment="CENTER" styleClass="bigLabel" stylesheets="@../../../resources/styling/generalStyle.css" text="Online" />
                </children>
                <opaqueInsets>
                   <Insets left="20.0" />
                </opaqueInsets>
             </HBox>
             <Region HBox.hgrow="ALWAYS" />
-            <Button fx:id="chatBtn" mnemonicParsing="false" onAction="#openChat" styleClass="bigBtn" text="Chat">
+            <Button fx:id="chatBtn" mnemonicParsing="false" onAction="#openChat" styleClass="bigBtn" stylesheets="@../../../resources/styling/generalStyle.css" text="Chat">
                <HBox.margin>
                   <Insets bottom="20.0" right="20.0" />
                </HBox.margin>
@@ -42,8 +42,8 @@
       <HBox fx:id="header" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
             <Region HBox.hgrow="ALWAYS" />
-            <Button fx:id="settingsBtn" mnemonicParsing="false" onAction="#openSettingsScreen" styleClass="bigBtn" text="Settings" HBox.hgrow="NEVER" />
-            <Button fx:id="exitBtn" layoutX="645.0" layoutY="30.0" minWidth="31.0" mnemonicParsing="false" onAction="#exitApp" prefHeight="32.0" prefWidth="31.0" styleClass="bigBtn" text="X" />
+            <Button fx:id="settingsBtn" mnemonicParsing="false" onAction="#openSettingsScreen" styleClass="bigBtn" stylesheets="@../../../resources/styling/generalStyle.css" text="Settings" HBox.hgrow="NEVER" />
+            <Button fx:id="exitBtn" layoutX="645.0" layoutY="30.0" minWidth="31.0" mnemonicParsing="false" onAction="#exitApp" prefHeight="32.0" prefWidth="31.0" styleClass="bigBtn" stylesheets="@../../../resources/styling/generalStyle.css" text="X" />
          </children>
          <padding>
             <Insets right="20.0" top="20.0" />
@@ -67,11 +67,11 @@
                         </ImageView>
                      </children>
                   </AnchorPane>
-                  <Button mnemonicParsing="false" onAction="#openPlayerVsComputerPopup" styleClass="bigBtn" text="Play Vs Computer">
+                  <Button mnemonicParsing="false" onAction="#openPlayerVsComputerPopup" styleClass="bigBtn" stylesheets="@../../../resources/styling/generalStyle.css" text="Play Vs Computer">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin></Button>
-                  <Button layoutX="82.0" layoutY="122.0" mnemonicParsing="false" onAction="#openPlayerVsPlayerPopup" styleClass="bigBtn" text="   Play Vs Player   " />
+                  <Button layoutX="82.0" layoutY="122.0" mnemonicParsing="false" onAction="#openPlayerVsPlayerPopup" styleClass="bigBtn" stylesheets="@../../../resources/styling/generalStyle.css" text="   Play Vs Player   " />
                </children>
             </VBox>
          </children>

@@ -30,7 +30,7 @@ public abstract class FXMLPlayerVsPlayerPopupBase extends BorderPane {
         setMinWidth(450.0);
         setPrefHeight(500.0);
         setPrefWidth(450.0);
-        getStylesheets().add("/tictactoe/playervsplayerpopup/../onlinegmaeboard/style.css");
+        getStylesheets().add("/tictactoe/onlinegmaeboard/style.css");
 
         BorderPane.setAlignment(anchorPane, javafx.geometry.Pos.CENTER);
         anchorPane.setPrefHeight(0.0);
@@ -45,6 +45,7 @@ public abstract class FXMLPlayerVsPlayerPopupBase extends BorderPane {
         backBtn.setPrefHeight(30.0);
         backBtn.setPrefWidth(30.0);
         backBtn.setStyle("-fx-border-radius: 30px; -fx-background-radius: 30px;");
+        backBtn.getStyleClass().add("bigBtn");
         backBtn.setText("B");
         setTop(anchorPane);
 
@@ -58,17 +59,18 @@ public abstract class FXMLPlayerVsPlayerPopupBase extends BorderPane {
         localBtn.setOnAction(this::handleLocalButton);
         localBtn.setPrefHeight(44.0);
         localBtn.setPrefWidth(242.0);
-        localBtn.getStylesheets().add("/tictactoe/playervsplayerpopup/../onlinegmaeboard/style.css");
+        localBtn.getStyleClass().add("bigBtn");
         localBtn.setText("Local");
         localBtn.setFont(new Font(20.0));
 
-        playerVsPlayerLabel.setLayoutX(100.0);
-        playerVsPlayerLabel.setLayoutY(45.0);
+        playerVsPlayerLabel.setFill(javafx.scene.paint.Color.valueOf("#3e5879"));
+        playerVsPlayerLabel.setLayoutX(53.0);
+        playerVsPlayerLabel.setLayoutY(79.0);
         playerVsPlayerLabel.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         playerVsPlayerLabel.setStrokeWidth(0.0);
         playerVsPlayerLabel.setText("Player Vs Player");
         playerVsPlayerLabel.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
-        playerVsPlayerLabel.setFont(new Font(36.0));
+        playerVsPlayerLabel.setFont(new Font("Stencil", 36.0));
 
         onlineBtn.setLayoutX(94.0);
         onlineBtn.setLayoutY(288.0);
@@ -76,6 +78,7 @@ public abstract class FXMLPlayerVsPlayerPopupBase extends BorderPane {
         onlineBtn.setOnAction(this::handleOnlineButton);
         onlineBtn.setPrefHeight(44.0);
         onlineBtn.setPrefWidth(242.0);
+        onlineBtn.getStyleClass().add("bigBtn");
         onlineBtn.setText("Online");
         onlineBtn.setFont(new Font(20.0));
         setCenter(anchorPane0);

@@ -31,7 +31,7 @@ public abstract class FXMLPlayerVsPlayerOnlineBase extends BorderPane {
         setMinWidth(450.0);
         setPrefHeight(500.0);
         setPrefWidth(450.0);
-        getStylesheets().add("/tictactoe/playervsplayeronline/../onlinegmaeboard/style.css");
+        getStylesheets().add("/styling/generalStyle.css");
 
         BorderPane.setAlignment(anchorPane, javafx.geometry.Pos.CENTER);
         anchorPane.setPrefHeight(0.0);
@@ -61,10 +61,12 @@ public abstract class FXMLPlayerVsPlayerOnlineBase extends BorderPane {
         startBtn.setText("Send request");
         startBtn.setFont(new Font(20.0));
 
+        playerVsPlayerLabel.setFill(javafx.scene.paint.Color.valueOf("#3e5879"));
         playerVsPlayerLabel.setLayoutX(90.0);
         playerVsPlayerLabel.setLayoutY(53.0);
         playerVsPlayerLabel.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         playerVsPlayerLabel.setStrokeWidth(0.0);
+        playerVsPlayerLabel.getStyleClass().add("bigLabel");
         playerVsPlayerLabel.setText("Player Vs Player");
         playerVsPlayerLabel.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         playerVsPlayerLabel.setFont(new Font(36.0));

@@ -74,6 +74,7 @@ public abstract class FXMLHomeScreenBase extends BorderPane {
 
         connectionLabel.setAlignment(javafx.geometry.Pos.CENTER);
         connectionLabel.getStyleClass().add("bigLabel");
+        connectionLabel.getStylesheets().add("/styling/generalStyle.css");
         connectionLabel.setText("Online");
         hBox0.setOpaqueInsets(new Insets(0.0, 0.0, 0.0, 20.0));
 
@@ -82,6 +83,7 @@ public abstract class FXMLHomeScreenBase extends BorderPane {
         chatBtn.setMnemonicParsing(false);
         chatBtn.setOnAction(this::openChat);
         chatBtn.getStyleClass().add("bigBtn");
+        chatBtn.getStylesheets().add("/styling/generalStyle.css");
         chatBtn.setText("Chat");
         HBox.setMargin(chatBtn, new Insets(0.0, 20.0, 20.0, 0.0));
         setBottom(hBox);
@@ -95,6 +97,7 @@ public abstract class FXMLHomeScreenBase extends BorderPane {
         settingsBtn.setMnemonicParsing(false);
         settingsBtn.setOnAction(this::openSettingsScreen);
         settingsBtn.getStyleClass().add("bigBtn");
+        settingsBtn.getStylesheets().add("/styling/generalStyle.css");
         settingsBtn.setText("Settings");
 
         exitBtn.setLayoutX(645.0);
@@ -105,6 +108,7 @@ public abstract class FXMLHomeScreenBase extends BorderPane {
         exitBtn.setPrefHeight(32.0);
         exitBtn.setPrefWidth(31.0);
         exitBtn.getStyleClass().add("bigBtn");
+        exitBtn.getStylesheets().add("/styling/generalStyle.css");
         exitBtn.setText("X");
         header.setPadding(new Insets(20.0, 20.0, 0.0, 0.0));
         setTop(header);
@@ -134,6 +138,7 @@ public abstract class FXMLHomeScreenBase extends BorderPane {
         button.setMnemonicParsing(false);
         button.setOnAction(this::openPlayerVsComputerPopup);
         button.getStyleClass().add("bigBtn");
+        button.getStylesheets().add("/styling/generalStyle.css");
         button.setText("Play Vs Computer");
         VBox.setMargin(button, new Insets(0.0));
 
@@ -142,6 +147,7 @@ public abstract class FXMLHomeScreenBase extends BorderPane {
         button0.setMnemonicParsing(false);
         button0.setOnAction(this::openPlayerVsPlayerPopup);
         button0.getStyleClass().add("bigBtn");
+        button0.getStylesheets().add("/styling/generalStyle.css");
         button0.setText("   Play Vs Player   ");
         setCenter(anchorPane);
 
