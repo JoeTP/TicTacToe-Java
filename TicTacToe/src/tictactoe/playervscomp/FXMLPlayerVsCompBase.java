@@ -1,6 +1,5 @@
 package tictactoe.playervscomp;
 
-import javafx.beans.value.ChangeListener;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
@@ -41,14 +40,17 @@ public abstract class FXMLPlayerVsCompBase extends BorderPane {
         anchorPane.setPrefHeight(472.0);
         anchorPane.setPrefWidth(720.0);
 
+        chooseDifficultyLabel.setFill(javafx.scene.paint.Color.valueOf("#3e5879"));
         chooseDifficultyLabel.setLayoutX(98.0);
         chooseDifficultyLabel.setLayoutY(31.0);
         chooseDifficultyLabel.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         chooseDifficultyLabel.setStrokeWidth(0.0);
+        chooseDifficultyLabel.getStyleClass().add("bigLabel");
         chooseDifficultyLabel.setText("Choose Difficulty");
         chooseDifficultyLabel.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         chooseDifficultyLabel.setFont(new Font(36.0));
 
+        difficultySlider.setBlockIncrement(1.0);
         difficultySlider.setLayoutX(82.0);
         difficultySlider.setLayoutY(273.0);
         difficultySlider.setMajorTickUnit(1.0);
@@ -64,7 +66,7 @@ public abstract class FXMLPlayerVsCompBase extends BorderPane {
         difficultyImg.setLayoutY(106.0);
         difficultyImg.setPickOnBounds(true);
         difficultyImg.setPreserveRatio(true);
-        difficultyImg.setImage(new Image(getClass().getResource("/assets/icons/easy.png").toExternalForm()));
+        difficultyImg.setImage(new Image(getClass().getResource("../../../resources/assets/icons/easy.PNG").toExternalForm()));
 
         AnchorPane.setLeftAnchor(startBtn, 165.0);
         AnchorPane.setRightAnchor(startBtn, 165.0);
@@ -73,6 +75,8 @@ public abstract class FXMLPlayerVsCompBase extends BorderPane {
         startBtn.setMnemonicParsing(false);
         startBtn.setPrefHeight(30.0);
         startBtn.setPrefWidth(120.0);
+        startBtn.getStyleClass().add("bigBtn");
+        startBtn.getStylesheets().add("/tictactoe/playervscomp/../../../resources/styling/generalStyle.css");
         startBtn.setText("Start");
         startBtn.setFont(new Font(20.0));
         setCenter(anchorPane);
@@ -89,6 +93,8 @@ public abstract class FXMLPlayerVsCompBase extends BorderPane {
         backBtn.setPrefHeight(30.0);
         backBtn.setPrefWidth(30.0);
         backBtn.setStyle("-fx-border-radius: 30px; -fx-background-radius: 30px;");
+        backBtn.getStyleClass().add("bigBtn");
+        backBtn.getStylesheets().add("/tictactoe/playervscomp/../../../resources/styling/generalStyle.css");
         backBtn.setText("B");
         setTop(anchorPane0);
 
@@ -97,8 +103,6 @@ public abstract class FXMLPlayerVsCompBase extends BorderPane {
         anchorPane.getChildren().add(difficultyImg);
         anchorPane.getChildren().add(startBtn);
         anchorPane0.getChildren().add(backBtn);
-        
-        
 
     }
 }

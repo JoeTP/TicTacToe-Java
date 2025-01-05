@@ -4,6 +4,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -72,6 +73,7 @@ public abstract class FXMLHomeScreenBase extends BorderPane {
         HBox.setMargin(connectionIndicatorImageView, new Insets(0.0, 0.0, 0.0, 20.0));
 
         connectionLabel.setAlignment(javafx.geometry.Pos.CENTER);
+        connectionLabel.getStyleClass().add("bigLabel");
         connectionLabel.setText("Online");
         hBox0.setOpaqueInsets(new Insets(0.0, 0.0, 0.0, 20.0));
 
@@ -79,6 +81,7 @@ public abstract class FXMLHomeScreenBase extends BorderPane {
 
         chatBtn.setMnemonicParsing(false);
         chatBtn.setOnAction(this::openChat);
+        chatBtn.getStyleClass().add("bigBtn");
         chatBtn.setText("Chat");
         HBox.setMargin(chatBtn, new Insets(0.0, 20.0, 20.0, 0.0));
         setBottom(hBox);
@@ -91,6 +94,7 @@ public abstract class FXMLHomeScreenBase extends BorderPane {
         HBox.setHgrow(settingsBtn, javafx.scene.layout.Priority.NEVER);
         settingsBtn.setMnemonicParsing(false);
         settingsBtn.setOnAction(this::openSettingsScreen);
+        settingsBtn.getStyleClass().add("bigBtn");
         settingsBtn.setText("Settings");
 
         exitBtn.setLayoutX(645.0);
@@ -100,6 +104,7 @@ public abstract class FXMLHomeScreenBase extends BorderPane {
         exitBtn.setOnAction(this::exitApp);
         exitBtn.setPrefHeight(32.0);
         exitBtn.setPrefWidth(31.0);
+        exitBtn.getStyleClass().add("bigBtn");
         exitBtn.setText("X");
         header.setPadding(new Insets(20.0, 20.0, 0.0, 0.0));
         setTop(header);
@@ -115,24 +120,29 @@ public abstract class FXMLHomeScreenBase extends BorderPane {
         vBox.setPrefWidth(274.0);
         vBox.setSpacing(20.0);
 
-        AnchorPane.setBottomAnchor(logoImageViewer, 0.0);
-        AnchorPane.setLeftAnchor(logoImageViewer, 0.0);
-        AnchorPane.setRightAnchor(logoImageViewer, 0.0);
+        AnchorPane.setBottomAnchor(logoImageViewer, 30.0);
+        AnchorPane.setLeftAnchor(logoImageViewer, 10.0);
+        AnchorPane.setRightAnchor(logoImageViewer, 15.634613037109375);
         AnchorPane.setTopAnchor(logoImageViewer, 0.0);
         logoImageViewer.setFitHeight(180.0);
         logoImageViewer.setFitWidth(285.0);
+        logoImageViewer.setLayoutX(10.0);
         logoImageViewer.setPickOnBounds(true);
         logoImageViewer.setPreserveRatio(true);
+        logoImageViewer.setImage(new Image(getClass().getResource("/assets/icons/icon.png").toExternalForm()));
 
         button.setMnemonicParsing(false);
         button.setOnAction(this::openPlayerVsComputerPopup);
+        button.getStyleClass().add("bigBtn");
         button.setText("Play Vs Computer");
+        VBox.setMargin(button, new Insets(0.0));
 
         button0.setLayoutX(82.0);
         button0.setLayoutY(122.0);
         button0.setMnemonicParsing(false);
         button0.setOnAction(this::openPlayerVsPlayerPopup);
-        button0.setText("Play Vs Player");
+        button0.getStyleClass().add("bigBtn");
+        button0.setText("   Play Vs Player   ");
         setCenter(anchorPane);
 
         BorderPane.setAlignment(vBox0, javafx.geometry.Pos.BOTTOM_LEFT);

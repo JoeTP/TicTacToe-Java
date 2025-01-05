@@ -5,30 +5,14 @@
  */
 package tictactoe.homescreen;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import shared.AppFunctions;
 import shared.AppString;
-import tictactoe.TicTacToe;
-import tictactoe.setting.FXMLSettingBase;
+import tictactoe.playervscomp.FXMLPlayerVsCompController;
+import tictactoe.playervsplayer.FXMLPlayerVsPlayerController;
 import tictactoe.setting.FXMLSettingController;
 
 /**
@@ -55,7 +39,7 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
     public FXMLHomeScreenController(Stage stage, boolean isOffline) {
         this.isOffline = isOffline;
         this.stage = stage;
-       // stage.initStyle(StageStyle.DECORATED.UNDECORATED);
+        // stage.initStyle(StageStyle.DECORATED.UNDECORATED);
 
         dragWindow();
         checkConnection();
@@ -116,12 +100,12 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
 
     @Override
     protected void openPlayerVsComputerPopup(ActionEvent actionEvent) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        AppFunctions.openPopup(stage, new FXMLPlayerVsCompController(stage));
     }
 
     @Override
     protected void openPlayerVsPlayerPopup(ActionEvent actionEvent) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        AppFunctions.openPopup(stage, new FXMLPlayerVsPlayerController(stage));
     }
 
 }
