@@ -64,13 +64,14 @@ public abstract class FXMLPlayerVsCompBase extends BorderPane {
         difficultyImg.setLayoutY(106.0);
         difficultyImg.setPickOnBounds(true);
         difficultyImg.setPreserveRatio(true);
-        difficultyImg.setImage(new Image(getClass().getResource("/assets/icons/easy.png").toExternalForm()));
+        difficultyImg.setImage(new Image(getClass().getResource("../../../resources/assets/icons/easy.PNG").toExternalForm()));
 
         AnchorPane.setLeftAnchor(startBtn, 165.0);
         AnchorPane.setRightAnchor(startBtn, 165.0);
         startBtn.setLayoutX(165.0);
         startBtn.setLayoutY(318.0);
         startBtn.setMnemonicParsing(false);
+        startBtn.setOnAction(this::openGameBoard);
         startBtn.setPrefHeight(30.0);
         startBtn.setPrefWidth(120.0);
         startBtn.setText("Start");
@@ -101,6 +102,10 @@ public abstract class FXMLPlayerVsCompBase extends BorderPane {
 
     }
 
+
     protected abstract void handleBackButton(javafx.event.ActionEvent actionEvent);
+
+    protected abstract void openGameBoard(javafx.event.ActionEvent actionEvent);
+
 
 }
