@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import tictactoe.onlinegmaeboard.FXMLGameBoardOnlineController;
 
 import tictactoe.popupwin.FXMLPopUpWinController;
 
@@ -17,7 +18,7 @@ public class TicTacToe extends Application {
         //Parent root = new FXMLSignupController();
 
 
-        Parent root = new FXMLSplashScreenController(stage);
+        Parent root = new FXMLGameBoardOnlineController();
 
 
 
