@@ -10,8 +10,11 @@ public class TicTacToe extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        //   Parent root = new FXMLSettingController();
+        //Parent root = new FXMLSignupController();
 
         Parent root = new FXMLSplashScreenController(stage);
+
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("offlinegameboard/fxmlofflinegameboard.css").toExternalForm());
         stage.setTitle("TicTacToe");
