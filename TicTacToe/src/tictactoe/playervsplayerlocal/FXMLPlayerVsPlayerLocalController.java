@@ -9,25 +9,34 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
+import javafx.stage.Stage;
+import shared.AppFunctions;
+import tictactoe.offlinegameboard.FXMLOfflineGameBoardController;
 
 /**
  * FXML Controller class
  *
  * @author Kimo Store
  */
-public class FXMLPlayerVsPlayerLocalController extends FXMLPlayerVsPlayerLocalBase implements Initializable {
+public class FXMLPlayerVsPlayerLocalController extends FXMLPlayerVsPlayerLocalBase {
 
     /**
      * Initializes the controller class.
      */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
+       
+    private final Stage stage;
+    public FXMLPlayerVsPlayerLocalController(Stage stage) {
+        this.stage = stage;
+    }
 
     @Override
     protected void handleBackButton(ActionEvent actionEvent) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        AppFunctions.closePopup(actionEvent);
+    }
+
+    @Override
+    protected void openGameBoard(ActionEvent actionEvent) {
+        AppFunctions.goTo(actionEvent, new FXMLOfflineGameBoardController(stage));
     }
     
 }

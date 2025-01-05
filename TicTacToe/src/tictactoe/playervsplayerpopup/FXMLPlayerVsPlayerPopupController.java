@@ -5,11 +5,11 @@
  */
 package tictactoe.playervsplayerpopup;
 
-import tictactoe.playervsplayerlocal.*;
-import java.net.URL;
-import java.util.ResourceBundle;
-import javafx.fxml.Initializable;
+import javafx.event.ActionEvent;
 import javafx.stage.Stage;
+import shared.AppFunctions;
+import tictactoe.playervsplayerlocal.FXMLPlayerVsPlayerLocalController;
+import tictactoe.playervsplayeronline.FXMLPlayerVsPlayerOnlineController;
 
 /**
  * FXML Controller class
@@ -21,6 +21,22 @@ public class FXMLPlayerVsPlayerPopupController extends FXMLPlayerVsPlayerPopupBa
 
     public FXMLPlayerVsPlayerPopupController(Stage stage) {
       this.stage = stage;  
+    }
+
+    @Override
+    protected void handleBackButton(ActionEvent actionEvent) {
+        AppFunctions.closePopup(actionEvent);
+    }
+
+    @Override
+    protected void handleLocalButton(ActionEvent actionEvent) {
+        AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerLocalController(stage));
+    }
+
+    @Override
+    protected void handleOnlineButton(ActionEvent actionEvent) {
+        AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage));
+
     }
 
     /**

@@ -42,6 +42,7 @@ public abstract class FXMLPlayerVsPlayerOnlineBase extends BorderPane {
         backBtn.setLayoutX(14.0);
         backBtn.setLayoutY(7.0);
         backBtn.setMnemonicParsing(false);
+        backBtn.setOnAction(this::handleBackButton);
         backBtn.setPrefHeight(30.0);
         backBtn.setPrefWidth(30.0);
         backBtn.setStyle("-fx-border-radius: 30px; -fx-background-radius: 30px;");
@@ -80,4 +81,7 @@ public abstract class FXMLPlayerVsPlayerOnlineBase extends BorderPane {
         anchorPane0.getChildren().add(listView);
 
     }
+
+    protected abstract void handleBackButton(javafx.event.ActionEvent actionEvent);
+
 }

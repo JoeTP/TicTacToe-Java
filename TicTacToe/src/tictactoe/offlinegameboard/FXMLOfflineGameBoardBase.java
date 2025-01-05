@@ -82,6 +82,7 @@ public abstract class FXMLOfflineGameBoardBase extends BorderPane {
 
         setPrefHeight(720.0);
         setPrefWidth(720.0);
+        getStylesheets().add("/tictactoe/offlinegameboard/fxmlofflinegameboard.css");
 
         BorderPane.setAlignment(hBox, javafx.geometry.Pos.CENTER);
         hBox.setPrefHeight(70.0);

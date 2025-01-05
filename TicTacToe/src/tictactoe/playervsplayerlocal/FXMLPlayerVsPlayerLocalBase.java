@@ -84,6 +84,7 @@ public abstract class FXMLPlayerVsPlayerLocalBase extends BorderPane {
         startBtn.setLayoutX(165.0);
         startBtn.setLayoutY(366.0);
         startBtn.setMnemonicParsing(false);
+        startBtn.setOnAction(this::openGameBoard);
         startBtn.setPrefHeight(30.0);
         startBtn.setPrefWidth(120.0);
         startBtn.setText("Start");
@@ -109,5 +110,7 @@ public abstract class FXMLPlayerVsPlayerLocalBase extends BorderPane {
     }
 
     protected abstract void handleBackButton(javafx.event.ActionEvent actionEvent);
+
+    protected abstract void openGameBoard(javafx.event.ActionEvent actionEvent);
 
 }

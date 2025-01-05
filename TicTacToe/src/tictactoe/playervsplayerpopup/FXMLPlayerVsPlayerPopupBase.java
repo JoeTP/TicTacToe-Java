@@ -41,6 +41,7 @@ public abstract class FXMLPlayerVsPlayerPopupBase extends BorderPane {
         backBtn.setLayoutX(14.0);
         backBtn.setLayoutY(8.0);
         backBtn.setMnemonicParsing(false);
+        backBtn.setOnAction(this::handleBackButton);
         backBtn.setPrefHeight(30.0);
         backBtn.setPrefWidth(30.0);
         backBtn.setStyle("-fx-border-radius: 30px; -fx-background-radius: 30px;");
@@ -54,6 +55,7 @@ public abstract class FXMLPlayerVsPlayerPopupBase extends BorderPane {
         localBtn.setLayoutX(94.0);
         localBtn.setLayoutY(167.0);
         localBtn.setMnemonicParsing(false);
+        localBtn.setOnAction(this::handleLocalButton);
         localBtn.setPrefHeight(44.0);
         localBtn.setPrefWidth(242.0);
         localBtn.getStylesheets().add("/tictactoe/playervsplayerpopup/../onlinegmaeboard/style.css");
@@ -71,6 +73,7 @@ public abstract class FXMLPlayerVsPlayerPopupBase extends BorderPane {
         onlineBtn.setLayoutX(94.0);
         onlineBtn.setLayoutY(288.0);
         onlineBtn.setMnemonicParsing(false);
+        onlineBtn.setOnAction(this::handleOnlineButton);
         onlineBtn.setPrefHeight(44.0);
         onlineBtn.setPrefWidth(242.0);
         onlineBtn.setText("Online");
@@ -83,4 +86,11 @@ public abstract class FXMLPlayerVsPlayerPopupBase extends BorderPane {
         anchorPane0.getChildren().add(onlineBtn);
 
     }
+
+    protected abstract void handleBackButton(javafx.event.ActionEvent actionEvent);
+
+    protected abstract void handleLocalButton(javafx.event.ActionEvent actionEvent);
+
+    protected abstract void handleOnlineButton(javafx.event.ActionEvent actionEvent);
+
 }

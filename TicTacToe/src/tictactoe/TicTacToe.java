@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import tictactoe.offlinegameboard.FXMLOfflineGameBoardController;
 import tictactoe.splashscreengui.FXMLSplashScreenController;
 
 public class TicTacToe extends Application {
@@ -12,7 +13,7 @@ public class TicTacToe extends Application {
     public void start(Stage stage) throws Exception {
 
         Parent root = new FXMLSplashScreenController(stage);
-
+        //Parent root = new FXMLOfflineGameBoardController(stage);
 
         stage.setTitle("TicTacToe");
 

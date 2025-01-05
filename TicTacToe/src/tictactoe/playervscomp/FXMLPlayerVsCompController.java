@@ -52,10 +52,11 @@ public class FXMLPlayerVsCompController extends FXMLPlayerVsCompBase {
     protected void openGameBoard(ActionEvent actionEvent) {
         
         AppFunctions.goTo(actionEvent, new FXMLOfflineGameBoardController(stage));
+        
     }
 
     @Override
     protected void handleBackButton(ActionEvent actionEvent) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        AppFunctions.closePopup(actionEvent);
     }
 }
