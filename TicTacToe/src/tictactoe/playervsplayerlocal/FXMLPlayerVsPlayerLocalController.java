@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tictactoe.playervsplayer;
+package tictactoe.playervsplayerlocal;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -14,7 +14,7 @@ import javafx.fxml.Initializable;
  *
  * @author Kimo Store
  */
-public class FXMLPlayerVsPlayerController extends FXMLPlayerVsPlayerBase implements Initializable {
+public class FXMLPlayerVsPlayerLocalController extends FXMLPlayerVsPlayerLocalBase implements Initializable {
 
     /**
      * Initializes the controller class.
