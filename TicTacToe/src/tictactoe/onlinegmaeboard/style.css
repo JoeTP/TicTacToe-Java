@@ -133,7 +133,17 @@ fx-font-size: 15px;
     -fx-pref-width: 200px;
  -fx-border-color: #3E5879;
 }
+.serverStartBtn:hover{
+    -fx-background-color: #13f803;
+}
 
 
 
-
+.label{
+    
+       x-font-size: 30px;
+   -fx-background-color:  #3E5879;
+     -fx-font-weight: bold;
+     
+       
+}

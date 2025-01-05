@@ -5,18 +5,19 @@
  */
 package tictactoe.playervscomp;
 
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
-import javafx.fxml.Initializable;
+import javafx.event.ActionEvent;
 import javafx.scene.image.Image;
+import javafx.stage.Stage;
+import shared.AppFunctions;
+import tictactoe.offlinegameboard.FXMLOfflineGameBoardController;
 
 /**
  * FXML Controller class
  *
  * @author Kimo Store
  */
-public class FXMLPlayerVsCompController extends FXMLPlayerVsCompBase implements Initializable {
+public class FXMLPlayerVsCompController extends FXMLPlayerVsCompBase {
 
     /**
      * Initializes the controller class.
@@ -24,12 +25,10 @@ public class FXMLPlayerVsCompController extends FXMLPlayerVsCompBase implements 
      * @param rb
      */
     
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        
-    }    
+    Stage stage;    
 
-    public FXMLPlayerVsCompController() {
+    public FXMLPlayerVsCompController(Stage stage) {
+        this.stage = stage;
         handlingDifficultySlider();
     }
     
@@ -48,5 +47,16 @@ public class FXMLPlayerVsCompController extends FXMLPlayerVsCompBase implements 
         }
         };
         difficultySlider.valueProperty().addListener(difficultyChangeListener);
+    }
+    @Override
+    protected void openGameBoard(ActionEvent actionEvent) {
+        
+        AppFunctions.goTo(actionEvent, new FXMLOfflineGameBoardController(stage));
+        
+    }
+
+    @Override
+    protected void handleBackButton(ActionEvent actionEvent) {
+        AppFunctions.closePopup(actionEvent);
     }
 }

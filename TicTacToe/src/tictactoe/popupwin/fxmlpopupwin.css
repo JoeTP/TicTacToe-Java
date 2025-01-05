@@ -1,0 +1,103 @@
+/* Main Background */
+.mainBackground {
+   -fx-background-color: #3E5879;
+   
+    
+}
+
+.rect {
+    -fx-border-color: black; 
+    -fx-border-width: 2; 
+    -fx-border-radius: 20; 
+    -fx-background-color: white;
+    -fx-background-radius: 20; 
+    -fx-padding: 10; 
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 15, 0.5, 0, 0);
+}
+.btnImg{
+     -fx-background-color:#f5efe7;
+    
+}
+
+/* Title Label */
+.titleLabel {
+    -fx-font-size: 28px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-text-alignment: center;
+}
+
+/* Play Button */
+.playButton {
+    -fx-background-color: #f39c12;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-padding: 10 20;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-cursor: hand;
+}
+
+.playButton:hover {
+    -fx-background-color: #d35400;
+}
+
+/* Winner Pop-Up */
+.winnerPopup {
+    -fx-background-color: #27ae60;
+    -fx-padding: 20;
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 10, 0.5, 0, 0);
+    -fx-pref-width: 400;
+}
+
+/* Winner Label */
+.winnerPopup .popupLabel {
+    -fx-font-size: 20px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-text-alignment: center;
+}
+
+/* Loser Pop-Up */
+.loserPopup {
+    -fx-background-color: #e74c3c;
+    -fx-padding: 20;
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 10, 0.5, 0, 0);
+    -fx-pref-width: 400;
+}
+
+/* Loser Label */
+.loserPopup .popupLabel {
+    -fx-font-size: 20px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-text-alignment: center;
+}
+
+/* Close Button */
+.closeButton {
+    -fx-background-color: #16a085;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 8 16;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+}
+
+.closeButton:hover {
+    -fx-background-color: #1abc9c;
+}
+
+
+
+/* Winner and Loser Images */
+#winnerPopup ImageView, #losePopup ImageView {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0.5, 0, 0);
+    -fx-padding: 10;
+}
