@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package tictactoe.homescreen;
+
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.scene.image.Image;
@@ -11,6 +12,7 @@ import javafx.stage.Stage;
 import shared.AppFunctions;
 import shared.AppString;
 import tictactoe.playervscomp.FXMLPlayerVsCompController;
+import tictactoe.playervsplayer.FXMLPlayerVsPlayerController;
 import tictactoe.setting.FXMLSettingController;
 
 /**
@@ -37,7 +39,7 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
     public FXMLHomeScreenController(Stage stage, boolean isOffline) {
         this.isOffline = isOffline;
         this.stage = stage;
-       // stage.initStyle(StageStyle.DECORATED.UNDECORATED);
+        // stage.initStyle(StageStyle.DECORATED.UNDECORATED);
 
         dragWindow();
         checkConnection();
@@ -98,12 +100,12 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
 
     @Override
     protected void openPlayerVsComputerPopup(ActionEvent actionEvent) {
-        AppFunctions.pop( stage, new FXMLPlayerVsCompController());
+        AppFunctions.openPopup(stage, new FXMLPlayerVsCompController(stage));
     }
 
     @Override
     protected void openPlayerVsPlayerPopup(ActionEvent actionEvent) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        AppFunctions.openPopup(stage, new FXMLPlayerVsPlayerController(stage));
     }
 
 }

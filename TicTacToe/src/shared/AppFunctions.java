@@ -22,17 +22,18 @@ public abstract class AppFunctions {
         stage.setScene(scene);
         stage.show();
     }
-    
-    public static void pop(ActionEvent actionEvent, Parent root){
-        
-    }
 
-    public static void pop(Stage ownerStage, Parent root) {
+    public static void openPopup(Stage ownerStage, Parent root) {
         Stage newStage = new Stage();
         newStage.setScene(new Scene(root));
         newStage.initOwner(ownerStage);
         newStage.initModality(Modality.WINDOW_MODAL);
         newStage.show();
+    }
+    
+    public static void closePopup(ActionEvent actionEvent) {
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.close();
     }
 
 }

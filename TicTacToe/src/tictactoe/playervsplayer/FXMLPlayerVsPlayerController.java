@@ -5,23 +5,28 @@
  */
 package tictactoe.playervsplayer;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-import javafx.fxml.Initializable;
+import javafx.event.ActionEvent;
+import javafx.stage.Stage;
+import shared.AppFunctions;
 
 /**
  * FXML Controller class
  *
  * @author Kimo Store
  */
-public class FXMLPlayerVsPlayerController extends FXMLPlayerVsPlayerBase implements Initializable {
+public class FXMLPlayerVsPlayerController extends FXMLPlayerVsPlayerBase  {
 
-    /**
-     * Initializes the controller class.
-     */
+    Stage stage;
+
+    public FXMLPlayerVsPlayerController(Stage stage) {
+        this.stage = stage;
+    }
+
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
+    protected void handleBackButton(ActionEvent actionEvent) {
+        AppFunctions.closePopup(actionEvent);
+    }
+
     
+
 }
