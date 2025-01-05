@@ -20,7 +20,7 @@ public class FXMLPlayerVsPlayerOnlineController extends FXMLPlayerVsPlayerOnline
 
 
 
-    Stage stage;
+    private Stage stage;
 
     public FXMLPlayerVsPlayerOnlineController(Stage stage) {
         this.stage = stage;
@@ -33,6 +33,7 @@ public class FXMLPlayerVsPlayerOnlineController extends FXMLPlayerVsPlayerOnline
 
     @Override
     protected void openGameBoard(ActionEvent actionEvent) {
+        AppFunctions.closePopup(actionEvent);
         AppFunctions.goTo(actionEvent, new FXMLGameBoardOnlineController(stage));
     }
 
