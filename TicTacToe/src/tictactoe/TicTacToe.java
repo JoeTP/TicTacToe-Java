@@ -17,7 +17,7 @@ public class TicTacToe extends Application {
         //Parent root = new FXMLSignupController();
 
 
-        Parent root = new FXMLGameBoardOnlineController();
+        Parent root = new FXMLSplashScreenController(stage);
 
 
 
