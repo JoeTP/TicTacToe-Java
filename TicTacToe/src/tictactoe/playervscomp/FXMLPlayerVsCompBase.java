@@ -1,6 +1,5 @@
 package tictactoe.playervscomp;
 
-import javafx.beans.value.ChangeListener;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
@@ -49,6 +48,7 @@ public abstract class FXMLPlayerVsCompBase extends BorderPane {
         chooseDifficultyLabel.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         chooseDifficultyLabel.setFont(new Font(36.0));
 
+        difficultySlider.setBlockIncrement(1.0);
         difficultySlider.setLayoutX(82.0);
         difficultySlider.setLayoutY(273.0);
         difficultySlider.setMajorTickUnit(1.0);
@@ -86,6 +86,7 @@ public abstract class FXMLPlayerVsCompBase extends BorderPane {
         backBtn.setLayoutX(20.0);
         backBtn.setLayoutY(14.0);
         backBtn.setMnemonicParsing(false);
+        backBtn.setOnAction(this::handleBackButton);
         backBtn.setPrefHeight(30.0);
         backBtn.setPrefWidth(30.0);
         backBtn.setStyle("-fx-border-radius: 30px; -fx-background-radius: 30px;");
@@ -97,8 +98,9 @@ public abstract class FXMLPlayerVsCompBase extends BorderPane {
         anchorPane.getChildren().add(difficultyImg);
         anchorPane.getChildren().add(startBtn);
         anchorPane0.getChildren().add(backBtn);
-        
-        
 
     }
+
+    protected abstract void handleBackButton(javafx.event.ActionEvent actionEvent);
+
 }

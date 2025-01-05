@@ -13,11 +13,14 @@ public class TicTacToe extends Application {
 
         Parent root = new FXMLSplashScreenController(stage);
 
+
         stage.setTitle("TicTacToe");
+
+
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("offlinegameboard/fxmlofflinegameboard.css").toExternalForm());
         stage.setTitle("TicTacToe");
-         stage.setScene(scene);
+        stage.setScene(scene);
         stage.show();
         stage.setResizable(false);
     }

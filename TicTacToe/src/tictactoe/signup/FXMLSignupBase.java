@@ -4,7 +4,6 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -29,18 +28,8 @@ public abstract class FXMLSignupBase extends BorderPane {
     protected final Button signinBtn;
     protected final HBox hBox0;
     protected final Button previousImageBtn;
-    protected ImageView characterImageView;
+    protected final ImageView characterImageView;
     protected final Button nextImageBtn;
-    protected int imgeNavigator = 0;
-
-    protected final String[] imagePaths = {
-        "assets/icons/cat.png",
-        "assets/icons/robot.png",
-        "assets/icons/panda-bear.png",
-        "assets/icons/dinosaur.png",
-        "assets/icons/jaguar.png",
-        "assets/icons/turtle.png"
-    };
 
     public FXMLSignupBase() {
 
@@ -73,6 +62,7 @@ public abstract class FXMLSignupBase extends BorderPane {
         backBtn.setLayoutX(23.0);
         backBtn.setLayoutY(44.0);
         backBtn.setMnemonicParsing(false);
+        backBtn.setOnAction(this::handleBackButton);
         backBtn.setText("Back");
 
         signupTitle.setLayoutX(125.0);
@@ -125,6 +115,7 @@ public abstract class FXMLSignupBase extends BorderPane {
         signinBtn.setLayoutX(224.0);
         signinBtn.setLayoutY(321.0);
         signinBtn.setMnemonicParsing(false);
+        signinBtn.setOnAction(this::goToSignin);
         signinBtn.setPrefHeight(43.0);
         signinBtn.setPrefWidth(112.0);
         signinBtn.setText("Sign-In");
@@ -161,22 +152,10 @@ public abstract class FXMLSignupBase extends BorderPane {
         anchorPane0.getChildren().add(hBox0);
         vBox.getChildren().add(anchorPane0);
 
-        characterImageView.setImage(new Image(imagePaths[imgeNavigator]));
-        characterImageView.setFitWidth(64);
-        characterImageView.setFitHeight(64);
-        characterImageView.setPreserveRatio(true);
-
-        nextImageBtn.setOnAction(e -> {
-            imgeNavigator = (imgeNavigator + 1) % imagePaths.length;
-            characterImageView.setImage(new Image(imagePaths[imgeNavigator]));
-        });
-
-        previousImageBtn.setOnAction(e -> {
-            imgeNavigator = (imgeNavigator - 1 + imagePaths.length) % imagePaths.length;
-            characterImageView.setImage(new Image(imagePaths[imgeNavigator]));
-            System.out.println("Next image: " + imgeNavigator);
-        });
-       
-
     }
+
+    protected abstract void handleBackButton(javafx.event.ActionEvent actionEvent);
+
+    protected abstract void goToSignin(javafx.event.ActionEvent actionEvent);
+
 }

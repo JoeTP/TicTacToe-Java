@@ -4,7 +4,6 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -55,6 +54,7 @@ public abstract class FXMLSigninBase extends BorderPane {
         backBtn.setLayoutX(23.0);
         backBtn.setLayoutY(44.0);
         backBtn.setMnemonicParsing(false);
+        backBtn.setOnAction(this::handleBackButton);
         backBtn.setText("Back");
 
         signinTitle.setLayoutX(125.0);
@@ -79,7 +79,6 @@ public abstract class FXMLSigninBase extends BorderPane {
         userImg.setLayoutY(14.0);
         userImg.setPickOnBounds(true);
         userImg.setPreserveRatio(true);
-        userImg.setImage(new Image(getClass().getResource("/assets/icons/robot.png").toExternalForm()));
 
         signinBtn.setLayoutX(141.0);
         signinBtn.setLayoutY(288.0);
@@ -97,6 +96,7 @@ public abstract class FXMLSigninBase extends BorderPane {
         signupBtn.setLayoutX(263.0);
         signupBtn.setLayoutY(351.0);
         signupBtn.setMnemonicParsing(false);
+        signupBtn.setOnAction(this::goToSignup);
         signupBtn.setText("Sign-up");
 
         usernameTextField.setLayoutX(60.0);
@@ -124,4 +124,9 @@ public abstract class FXMLSigninBase extends BorderPane {
         vBox.getChildren().add(anchorPane0);
 
     }
+
+    protected abstract void handleBackButton(javafx.event.ActionEvent actionEvent);
+
+    protected abstract void goToSignup(javafx.event.ActionEvent actionEvent);
+
 }

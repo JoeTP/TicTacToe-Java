@@ -1,8 +1,5 @@
 package tictactoe.popupwin;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import shared.AppString;
