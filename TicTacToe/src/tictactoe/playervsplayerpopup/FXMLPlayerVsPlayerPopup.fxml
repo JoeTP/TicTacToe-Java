@@ -10,24 +10,24 @@
    <top>
       <AnchorPane prefHeight="0.0" prefWidth="450.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="backBtn" layoutX="14.0" layoutY="8.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="30.0" prefWidth="30.0" style="-fx-border-radius: 30px; -fx-background-radius: 30px;" text="B" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="14.0" />
+            <Button fx:id="backBtn" layoutX="14.0" layoutY="8.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="30.0" prefWidth="30.0" style="-fx-border-radius: 30px; -fx-background-radius: 30px;" styleClass="bigBtn" text="B" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="14.0" />
          </children>
       </AnchorPane>
    </top>
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="localBtn" layoutX="94.0" layoutY="167.0" mnemonicParsing="false" onAction="#handleLocalButton" prefHeight="44.0" prefWidth="242.0" stylesheets="@../onlinegmaeboard/style.css" text="Local">
+            <Button fx:id="localBtn" layoutX="94.0" layoutY="167.0" mnemonicParsing="false" onAction="#handleLocalButton" prefHeight="44.0" prefWidth="242.0" styleClass="bigBtn" text="Local">
                <font>
                   <Font size="20.0" />
                </font>
             </Button>
-            <Text fx:id="playerVsPlayerLabel" layoutX="100.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player Vs Player" textAlignment="CENTER">
+            <Text fx:id="playerVsPlayerLabel" fill="#3e5879" layoutX="53.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player Vs Player" textAlignment="CENTER">
                <font>
-                  <Font size="36.0" />
+                  <Font name="Stencil" size="36.0" />
                </font>
             </Text>
-            <Button fx:id="onlineBtn" layoutX="94.0" layoutY="288.0" mnemonicParsing="false" onAction="#handleOnlineButton" prefHeight="44.0" prefWidth="242.0" text="Online">
+            <Button fx:id="onlineBtn" layoutX="94.0" layoutY="288.0" mnemonicParsing="false" onAction="#handleOnlineButton" prefHeight="44.0" prefWidth="242.0" styleClass="bigBtn" text="Online">
                <font>
                   <Font size="20.0" />
                </font>

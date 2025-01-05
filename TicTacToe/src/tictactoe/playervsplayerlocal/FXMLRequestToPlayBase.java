@@ -1,4 +1,4 @@
-package tictactoe.playervsplayer;
+package tictactoe.playervsplayerlocal;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

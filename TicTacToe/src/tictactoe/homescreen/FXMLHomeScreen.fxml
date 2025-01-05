@@ -4,6 +4,7 @@
 <?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -22,14 +23,14 @@
                         <Insets left="20.0" />
                      </HBox.margin>
                   </ImageView>
-                  <Label fx:id="connectionLabel" alignment="CENTER" text="Online" />
+                  <Label fx:id="connectionLabel" alignment="CENTER" styleClass="bigLabel" stylesheets="@../../../resources/styling/generalStyle.css" text="Online" />
                </children>
                <opaqueInsets>
                   <Insets left="20.0" />
                </opaqueInsets>
             </HBox>
             <Region HBox.hgrow="ALWAYS" />
-            <Button fx:id="chatBtn" mnemonicParsing="false" onAction="#openChat" text="Chat">
+            <Button fx:id="chatBtn" mnemonicParsing="false" onAction="#openChat" styleClass="bigBtn" stylesheets="@../../../resources/styling/generalStyle.css" text="Chat">
                <HBox.margin>
                   <Insets bottom="20.0" right="20.0" />
                </HBox.margin>
@@ -38,11 +39,16 @@
       </HBox>
    </bottom>
    <top>
-      <HBox fx:id="header" spacing="20.0" BorderPane.alignment="CENTER">
+      <HBox fx:id="header" spacing="20.0" stylesheets="@styling/generalStyle.css" BorderPane.alignment="CENTER">
          <children>
+            <Button mnemonicParsing="false" onAction="#signup" prefHeight="33.0" prefWidth="63.0" stylesheets="@../onlinegmaeboard/style.css" text="Sign up">
+               <HBox.margin>
+                  <Insets left="20.0" />
+               </HBox.margin>
+            </Button>
             <Region HBox.hgrow="ALWAYS" />
-            <Button fx:id="settingsBtn" mnemonicParsing="false" onAction="#openSettingsScreen" text="Settings" HBox.hgrow="NEVER" />
-            <Button fx:id="exitBtn" layoutX="645.0" layoutY="30.0" minWidth="31.0" mnemonicParsing="false" onAction="#exitApp" prefHeight="32.0" prefWidth="31.0" text="X" />
+            <Button fx:id="settingsBtn" mnemonicParsing="false" onAction="#openSettingsScreen" styleClass="bigBtn" stylesheets="@../../../resources/styling/generalStyle.css" text="Settings" HBox.hgrow="NEVER" />
+            <Button fx:id="exitBtn" layoutX="645.0" layoutY="30.0" minWidth="31.0" mnemonicParsing="false" onAction="#exitApp" prefHeight="32.0" prefWidth="31.0" styleClass="bigBtn" stylesheets="@../../../resources/styling/generalStyle.css" text="X" />
          </children>
          <padding>
             <Insets right="20.0" top="20.0" />
@@ -56,18 +62,27 @@
                <children>
                   <AnchorPane>
                      <children>
-                        <ImageView fx:id="logoImageViewer" fitHeight="180.0" fitWidth="285.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <ImageView fx:id="logoImageViewer" fitHeight="180.0" fitWidth="285.0" layoutX="10.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="15.634613037109375" AnchorPane.topAnchor="0.0">
                            <viewport>
                               <Rectangle2D />
                            </viewport>
+                           <image>
+                              <Image url="@../../../resources/assets/icons/icon.png" />
+                           </image>
                         </ImageView>
                      </children>
                   </AnchorPane>
-                  <Button mnemonicParsing="false" onAction="#openPlayerVsComputerPopup" text="Play Vs Computer" />
-                  <Button layoutX="82.0" layoutY="122.0" mnemonicParsing="false" onAction="#openPlayerVsPlayerPopup" text="Play Vs Player" />
+                  <Button mnemonicParsing="false" onAction="#openPlayerVsComputerPopup" styleClass="bigBtn" stylesheets="@../../../resources/styling/generalStyle.css" text="Play Vs Computer">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin></Button>
+                  <Button layoutX="82.0" layoutY="122.0" mnemonicParsing="false" onAction="#openPlayerVsPlayerPopup" styleClass="bigBtn" stylesheets="@../../../resources/styling/generalStyle.css" text="   Play Vs Player   " />
                </children>
             </VBox>
          </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
       </AnchorPane>
    </center>
    <left>

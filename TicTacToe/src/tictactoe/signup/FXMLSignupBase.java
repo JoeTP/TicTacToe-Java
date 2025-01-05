@@ -52,9 +52,11 @@ public abstract class FXMLSignupBase extends BorderPane {
 
         setPrefHeight(552.0);
         setPrefWidth(400.0);
+        getStylesheets().add("/styling/generalStyle.css");
 
         BorderPane.setAlignment(hBox, javafx.geometry.Pos.CENTER);
         hBox.setSpacing(120.0);
+        hBox.getStylesheets().add("/styling/generalStyle.css");
 
         HBox.setHgrow(anchorPane, javafx.scene.layout.Priority.ALWAYS);
 
@@ -63,12 +65,15 @@ public abstract class FXMLSignupBase extends BorderPane {
         backBtn.setLayoutY(44.0);
         backBtn.setMnemonicParsing(false);
         backBtn.setOnAction(this::handleBackButton);
+        backBtn.getStyleClass().add("bigBtn");
         backBtn.setText("Back");
 
-        signupTitle.setLayoutX(125.0);
-        signupTitle.setLayoutY(77.0);
+        signupTitle.setFill(javafx.scene.paint.Color.valueOf("#3e5879"));
+        signupTitle.setLayoutX(144.0);
+        signupTitle.setLayoutY(70.0);
         signupTitle.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         signupTitle.setStrokeWidth(0.0);
+        signupTitle.getStyleClass().add("bigLabel");
         signupTitle.setText("Sign-up");
         signupTitle.setFont(new Font(48.0));
         BorderPane.setMargin(hBox, new Insets(0.0, 0.0, 10.0, 0.0));
@@ -86,6 +91,7 @@ public abstract class FXMLSignupBase extends BorderPane {
         signupBtn.setMnemonicParsing(false);
         signupBtn.setPrefHeight(43.0);
         signupBtn.setPrefWidth(112.0);
+        signupBtn.getStyleClass().add("bigBtn");
         signupBtn.setText("Sign-Up");
 
         usernameTextField.setLayoutX(60.0);
@@ -94,11 +100,13 @@ public abstract class FXMLSignupBase extends BorderPane {
         usernameTextField.setPrefWidth(276.0);
         usernameTextField.setPromptText("User Name");
 
+        chooseCharText.setFill(javafx.scene.paint.Color.valueOf("#3e5879"));
         chooseCharText.setLayoutX(112.0);
         chooseCharText.setLayoutY(121.0);
         chooseCharText.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         chooseCharText.setStrokeWidth(0.0);
         chooseCharText.setText("Click To Choose Character");
+        chooseCharText.setFont(new Font("Stencil", 12.0));
 
         passwordField.setLayoutX(60.0);
         passwordField.setLayoutY(260.0);
@@ -118,12 +126,14 @@ public abstract class FXMLSignupBase extends BorderPane {
         signinBtn.setOnAction(this::goToSignin);
         signinBtn.setPrefHeight(43.0);
         signinBtn.setPrefWidth(112.0);
+        signinBtn.getStyleClass().add("bigBtn");
         signinBtn.setText("Sign-In");
 
         hBox0.setLayoutX(81.0);
         hBox0.setLayoutY(30.0);
 
         previousImageBtn.setMnemonicParsing(false);
+        previousImageBtn.getStyleClass().add("bigBtn");
         previousImageBtn.setText("Back");
         HBox.setMargin(previousImageBtn, new Insets(10.0));
 
@@ -133,6 +143,7 @@ public abstract class FXMLSignupBase extends BorderPane {
         characterImageView.setPreserveRatio(true);
 
         nextImageBtn.setMnemonicParsing(false);
+        nextImageBtn.getStyleClass().add("bigBtn");
         nextImageBtn.setText("Next");
         HBox.setMargin(nextImageBtn, new Insets(10.0));
         setCenter(vBox);

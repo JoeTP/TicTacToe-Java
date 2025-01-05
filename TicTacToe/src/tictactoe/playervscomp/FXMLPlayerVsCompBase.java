@@ -40,10 +40,12 @@ public abstract class FXMLPlayerVsCompBase extends BorderPane {
         anchorPane.setPrefHeight(472.0);
         anchorPane.setPrefWidth(720.0);
 
+        chooseDifficultyLabel.setFill(javafx.scene.paint.Color.valueOf("#3e5879"));
         chooseDifficultyLabel.setLayoutX(98.0);
         chooseDifficultyLabel.setLayoutY(31.0);
         chooseDifficultyLabel.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         chooseDifficultyLabel.setStrokeWidth(0.0);
+        chooseDifficultyLabel.getStyleClass().add("bigLabel");
         chooseDifficultyLabel.setText("Choose Difficulty");
         chooseDifficultyLabel.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         chooseDifficultyLabel.setFont(new Font(36.0));
@@ -74,6 +76,8 @@ public abstract class FXMLPlayerVsCompBase extends BorderPane {
         startBtn.setOnAction(this::openGameBoard);
         startBtn.setPrefHeight(30.0);
         startBtn.setPrefWidth(120.0);
+        startBtn.getStyleClass().add("bigBtn");
+        startBtn.getStylesheets().add("/styling/generalStyle.css");
         startBtn.setText("Start");
         startBtn.setFont(new Font(20.0));
         setCenter(anchorPane);
@@ -91,6 +95,8 @@ public abstract class FXMLPlayerVsCompBase extends BorderPane {
         backBtn.setPrefHeight(30.0);
         backBtn.setPrefWidth(30.0);
         backBtn.setStyle("-fx-border-radius: 30px; -fx-background-radius: 30px;");
+        backBtn.getStyleClass().add("bigBtn");
+        backBtn.getStylesheets().add("/styling/generalStyle.css");
         backBtn.setText("B");
         setTop(anchorPane0);
 

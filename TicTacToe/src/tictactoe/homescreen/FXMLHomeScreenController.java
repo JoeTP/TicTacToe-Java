@@ -14,6 +14,7 @@ import shared.AppString;
 import tictactoe.playervscomp.FXMLPlayerVsCompController;
 import tictactoe.playervsplayerpopup.FXMLPlayerVsPlayerPopupController;
 import tictactoe.setting.FXMLSettingController;
+import tictactoe.signup.FXMLSignupController;
 
 /**
  * FXML Controller class
@@ -108,6 +109,11 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
     @Override
     protected void openPlayerVsPlayerPopup(ActionEvent actionEvent) {
         AppFunctions.openPopup(stage, new FXMLPlayerVsPlayerPopupController(stage));
+    }
+
+    @Override
+    protected void signup(ActionEvent actionEvent) {
+        AppFunctions.openPopup(stage, new FXMLSignupController(stage));
     }
 
 }

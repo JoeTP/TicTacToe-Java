@@ -12,14 +12,16 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane prefHeight="552.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.signup.FXMLSignupController">
+<BorderPane prefHeight="552.0" prefWidth="400.0" stylesheets="@../../../resources/styling/generalStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.signup.FXMLSignupController">
    <top>
-      <HBox spacing="120.0" BorderPane.alignment="CENTER">
+      <HBox spacing="120.0" stylesheets="@styling/generalStyle.css" BorderPane.alignment="CENTER">
          <children>
             <AnchorPane HBox.hgrow="ALWAYS">
                <children>
-                  <Button fx:id="backBtn" layoutX="23.0" layoutY="44.0" mnemonicParsing="false" onAction="#handleBackButton" text="Back" AnchorPane.leftAnchor="23.0" />
-                  <Text fx:id="signupTitle" layoutX="125.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sign-up">
+
+                  <Button fx:id="backBtn" layoutX="23.0" layoutY="44.0" mnemonicParsing="false" onAction="#handleBackButton" styleClass="bigBtn" text="Back" AnchorPane.leftAnchor="23.0" />
+                  <Text fx:id="signupTitle" fill="#3e5879" layoutX="144.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="bigLabel" text="Sign-up">
+
                      <font>
                         <Font size="48.0" />
                      </font>
@@ -37,21 +39,24 @@
          <children>
             <AnchorPane VBox.vgrow="ALWAYS">
                <children>
-                  <Button fx:id="signupBtn" layoutX="59.0" layoutY="321.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="112.0" text="Sign-Up" />
+                  <Button fx:id="signupBtn" layoutX="59.0" layoutY="321.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="112.0" styleClass="bigBtn" text="Sign-Up" />
                   <TextField fx:id="usernameTextField" layoutX="60.0" layoutY="140.0" prefHeight="48.0" prefWidth="276.0" promptText="User Name" />
-                  <Text fx:id="chooseCharText" layoutX="112.0" layoutY="121.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Click To Choose Character" />
+                  <Text fx:id="chooseCharText" fill="#3e5879" layoutX="112.0" layoutY="121.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Click To Choose Character">
+                     <font>
+                        <Font name="Stencil" size="12.0" />
+                     </font></Text>
                   <PasswordField fx:id="passwordField" layoutX="60.0" layoutY="260.0" prefHeight="48.0" prefWidth="276.0" promptText="Passoword" />
                   <TextField fx:id="emailTextField" layoutX="60.0" layoutY="200.0" prefHeight="48.0" prefWidth="276.0" promptText="E-mail" />
-                  <Button fx:id="signinBtn" layoutX="224.0" layoutY="321.0" mnemonicParsing="false" onAction="#goToSignin" prefHeight="43.0" prefWidth="112.0" text="Sign-In" />
+                  <Button fx:id="signinBtn" layoutX="224.0" layoutY="321.0" mnemonicParsing="false" onAction="#goToSignin" prefHeight="43.0" prefWidth="112.0" styleClass="bigBtn" text="Sign-In" />
                   <HBox layoutX="81.0" layoutY="30.0">
                      <children>
-                        <Button fx:id="previousImageBtn" mnemonicParsing="false" text="Back">
+                        <Button fx:id="previousImageBtn" mnemonicParsing="false" styleClass="bigBtn" text="Back">
                            <HBox.margin>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </HBox.margin>
                         </Button>
                         <ImageView fx:id="characterImageView" fitHeight="60.0" fitWidth="92.0" pickOnBounds="true" preserveRatio="true" />
-                        <Button fx:id="nextImageBtn" mnemonicParsing="false" text="Next">
+                        <Button fx:id="nextImageBtn" mnemonicParsing="false" styleClass="bigBtn" text="Next">
                            <HBox.margin>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </HBox.margin>

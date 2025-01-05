@@ -8,6 +8,7 @@ package tictactoe.playervsplayeronline;
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
 import shared.AppFunctions;
+import tictactoe.onlinegmaeboard.FXMLGameBoardOnlineController;
 
 /**
  * FXML Controller class
@@ -19,14 +20,21 @@ public class FXMLPlayerVsPlayerOnlineController extends FXMLPlayerVsPlayerOnline
 
 
 
-    Stage stage;
+    private Stage stage;
 
     public FXMLPlayerVsPlayerOnlineController(Stage stage) {
         this.stage = stage;
     }
 
+    @Override
     protected void handleBackButton(ActionEvent actionEvent) {
         AppFunctions.closePopup(actionEvent);
+    }
+
+    @Override
+    protected void openGameBoard(ActionEvent actionEvent) {
+        AppFunctions.closePopup(actionEvent);
+        AppFunctions.goTo(actionEvent, new FXMLGameBoardOnlineController(stage));
     }
 
     

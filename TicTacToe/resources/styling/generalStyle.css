@@ -1,0 +1,26 @@
+.bigBtn{
+   -fx-background-color: #3E5879;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 8;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-cursor: hand; 
+    -fx-font-weight: bold;
+     -fx-font-family: "stencil";
+    
+}
+.bigBtn:hover {
+    -fx-background-color: #D8C4B6;
+}
+.bigLabel{
+        -fx-font-family: "stencil";
+        -fx-font-weight: bold;
+          -fx-font-size: 25px;
+         -fx-font-weight: bold;
+         -fx-border-width: 1; 
+         -fx-text-fill:  #3E5879;
+        
+}
+
+

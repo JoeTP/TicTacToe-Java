@@ -13,7 +13,7 @@
    <center>
       <AnchorPane prefHeight="472.0" prefWidth="720.0" BorderPane.alignment="CENTER">
          <children>
-            <Text fx:id="chooseDifficultyLabel" layoutX="98.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose Difficulty" textAlignment="CENTER">
+            <Text fx:id="chooseDifficultyLabel" fill="#3e5879" layoutX="98.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="bigLabel" text="Choose Difficulty" textAlignment="CENTER">
                <font>
                   <Font size="36.0" />
                </font>
@@ -24,7 +24,10 @@
                   <Image url="@../../../resources/assets/icons/easy.PNG" />
                </image>
             </ImageView>
-            <Button fx:id="startBtn" layoutX="165.0" layoutY="318.0" mnemonicParsing="false" onAction="#openGameBoard" prefHeight="30.0" prefWidth="120.0" text="Start" AnchorPane.leftAnchor="165.0" AnchorPane.rightAnchor="165.0">
+
+            <Button fx:id="startBtn" layoutX="165.0" layoutY="318.0" mnemonicParsing="false" onAction="#openGameBoard" prefHeight="30.0" prefWidth="120.0" styleClass="bigBtn" stylesheets="@../../../resources/styling/generalStyle.css" text="Start" AnchorPane.leftAnchor="165.0" AnchorPane.rightAnchor="165.0">
+
+
                <font>
                   <Font size="20.0" />
                </font>
@@ -35,7 +38,11 @@
    <top>
       <AnchorPane prefHeight="59.0" prefWidth="720.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="backBtn" layoutX="20.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="30.0" prefWidth="30.0" style="-fx-border-radius: 30px; -fx-background-radius: 30px;" text="B" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="14.0" />
+
+
+            <Button fx:id="backBtn" layoutX="20.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleBackButton"  prefHeight="30.0" prefWidth="30.0" style="-fx-border-radius: 30px; -fx-background-radius: 30px;" styleClass="bigBtn" stylesheets="@../../../resources/styling/generalStyle.css" text="B" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="14.0" />
+
+
          </children>
       </AnchorPane>
    </top>
