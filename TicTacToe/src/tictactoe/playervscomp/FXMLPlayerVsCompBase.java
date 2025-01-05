@@ -64,7 +64,7 @@ public abstract class FXMLPlayerVsCompBase extends BorderPane {
         difficultyImg.setLayoutY(106.0);
         difficultyImg.setPickOnBounds(true);
         difficultyImg.setPreserveRatio(true);
-        difficultyImg.setImage(new Image(getClass().getResource("../../../resources/assets/icons/easy.PNG").toExternalForm()));
+        difficultyImg.setImage(new Image(getClass().getResource("/assets/icons/easy.png").toExternalForm()));
 
         AnchorPane.setLeftAnchor(startBtn, 165.0);
         AnchorPane.setRightAnchor(startBtn, 165.0);

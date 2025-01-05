@@ -7,6 +7,7 @@ package tictactoe.playervsplayerlocal;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 
 /**
@@ -23,5 +24,10 @@ public class FXMLPlayerVsPlayerLocalController extends FXMLPlayerVsPlayerLocalBa
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
+
+    @Override
+    protected void handleBackButton(ActionEvent actionEvent) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }
