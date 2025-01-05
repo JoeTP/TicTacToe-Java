@@ -4,7 +4,9 @@ import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
 import tictactoe.popupwin.FXMLPopUpWinController;
+
 import tictactoe.splashscreengui.FXMLSplashScreenController;
 
 public class TicTacToe extends Application {
@@ -16,6 +18,7 @@ public class TicTacToe extends Application {
 
 
         Parent root = new FXMLSplashScreenController(stage);
+
 
 
         Scene scene = new Scene(root);

@@ -1,36 +1,28 @@
-package tictactoe.playervsplayer;
+package tictactoe.playervsplayerpopup;
 
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-public abstract class FXMLPlayerVsPlayerBase extends BorderPane {
+public abstract class FXMLPlayerVsPlayerPopupBase extends BorderPane {
 
     protected final AnchorPane anchorPane;
     protected final Button backBtn;
     protected final AnchorPane anchorPane0;
-    protected final TextField textField;
-    protected final Label label;
-    protected final TextField textField0;
-    protected final Label label0;
-    protected final Button startBtn;
+    protected final Button localBtn;
     protected final Text playerVsPlayerLabel;
+    protected final Button onlineBtn;
 
-    public FXMLPlayerVsPlayerBase() {
+    public FXMLPlayerVsPlayerPopupBase() {
 
         anchorPane = new AnchorPane();
         backBtn = new Button();
         anchorPane0 = new AnchorPane();
-        textField = new TextField();
-        label = new Label();
-        textField0 = new TextField();
-        label0 = new Label();
-        startBtn = new Button();
+        localBtn = new Button();
         playerVsPlayerLabel = new Text();
+        onlineBtn = new Button();
 
         setMaxHeight(500.0);
         setMaxWidth(450.0);
@@ -38,6 +30,7 @@ public abstract class FXMLPlayerVsPlayerBase extends BorderPane {
         setMinWidth(450.0);
         setPrefHeight(500.0);
         setPrefWidth(450.0);
+        getStylesheets().add("/tictactoe/playervsplayerpopup/../onlinegmaeboard/style.css");
 
         BorderPane.setAlignment(anchorPane, javafx.geometry.Pos.CENTER);
         anchorPane.setPrefHeight(0.0);
@@ -59,35 +52,15 @@ public abstract class FXMLPlayerVsPlayerBase extends BorderPane {
         anchorPane0.setPrefHeight(200.0);
         anchorPane0.setPrefWidth(200.0);
 
-        textField.setLayoutX(85.0);
-        textField.setLayoutY(135.0);
-        textField.setPrefHeight(40.0);
-        textField.setPrefWidth(280.0);
-        textField.setPromptText("Player 1 name");
-
-        label.setLayoutX(183.0);
-        label.setLayoutY(100.0);
-        label.setText("Player 1");
-        label.setFont(new Font(24.0));
-
-        textField0.setLayoutX(85.0);
-        textField0.setLayoutY(242.0);
-        textField0.setPrefHeight(40.0);
-        textField0.setPrefWidth(280.0);
-        textField0.setPromptText("Player 2 name");
-
-        label0.setLayoutX(183.0);
-        label0.setLayoutY(207.0);
-        label0.setText("Player 2");
-        label0.setFont(new Font(24.0));
-
-        startBtn.setLayoutX(165.0);
-        startBtn.setLayoutY(366.0);
-        startBtn.setMnemonicParsing(false);
-        startBtn.setPrefHeight(30.0);
-        startBtn.setPrefWidth(120.0);
-        startBtn.setText("Start");
-        startBtn.setFont(new Font(20.0));
+        localBtn.setLayoutX(94.0);
+        localBtn.setLayoutY(167.0);
+        localBtn.setMnemonicParsing(false);
+        localBtn.setOnAction(this::handleLocalButton);
+        localBtn.setPrefHeight(44.0);
+        localBtn.setPrefWidth(242.0);
+        localBtn.getStylesheets().add("/tictactoe/playervsplayerpopup/../onlinegmaeboard/style.css");
+        localBtn.setText("Local");
+        localBtn.setFont(new Font(20.0));
 
         playerVsPlayerLabel.setLayoutX(100.0);
         playerVsPlayerLabel.setLayoutY(45.0);
@@ -96,18 +69,28 @@ public abstract class FXMLPlayerVsPlayerBase extends BorderPane {
         playerVsPlayerLabel.setText("Player Vs Player");
         playerVsPlayerLabel.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         playerVsPlayerLabel.setFont(new Font(36.0));
+
+        onlineBtn.setLayoutX(94.0);
+        onlineBtn.setLayoutY(288.0);
+        onlineBtn.setMnemonicParsing(false);
+        onlineBtn.setOnAction(this::handleOnlineButton);
+        onlineBtn.setPrefHeight(44.0);
+        onlineBtn.setPrefWidth(242.0);
+        onlineBtn.setText("Online");
+        onlineBtn.setFont(new Font(20.0));
         setCenter(anchorPane0);
 
         anchorPane.getChildren().add(backBtn);
-        anchorPane0.getChildren().add(textField);
-        anchorPane0.getChildren().add(label);
-        anchorPane0.getChildren().add(textField0);
-        anchorPane0.getChildren().add(label0);
-        anchorPane0.getChildren().add(startBtn);
+        anchorPane0.getChildren().add(localBtn);
         anchorPane0.getChildren().add(playerVsPlayerLabel);
+        anchorPane0.getChildren().add(onlineBtn);
 
     }
 
     protected abstract void handleBackButton(javafx.event.ActionEvent actionEvent);
+
+    protected abstract void handleLocalButton(javafx.event.ActionEvent actionEvent);
+
+    protected abstract void handleOnlineButton(javafx.event.ActionEvent actionEvent);
 
 }

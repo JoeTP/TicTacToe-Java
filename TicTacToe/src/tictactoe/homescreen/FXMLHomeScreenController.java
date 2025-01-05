@@ -12,7 +12,11 @@ import javafx.stage.Stage;
 import shared.AppFunctions;
 import shared.AppString;
 import tictactoe.playervscomp.FXMLPlayerVsCompController;
+
 import tictactoe.playervsplayer.FXMLPlayerVsPlayerController;
+
+import tictactoe.playervsplayerpopup.FXMLPlayerVsPlayerPopupController;
+
 import tictactoe.setting.FXMLSettingController;
 
 /**
@@ -100,12 +104,20 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
 
     @Override
     protected void openPlayerVsComputerPopup(ActionEvent actionEvent) {
+
         AppFunctions.openPopup(stage, new FXMLPlayerVsCompController(stage));
+
+
+        AppFunctions.openPopup(stage, new FXMLPlayerVsCompController(stage));
+
     }
 
     @Override
     protected void openPlayerVsPlayerPopup(ActionEvent actionEvent) {
-        AppFunctions.openPopup(stage, new FXMLPlayerVsPlayerController(stage));
+
+       
+        AppFunctions.openPopup(stage, new FXMLPlayerVsPlayerPopupController(stage));
+
     }
 
 }

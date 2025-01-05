@@ -73,6 +73,7 @@ public abstract class FXMLPlayerVsCompBase extends BorderPane {
         startBtn.setLayoutX(165.0);
         startBtn.setLayoutY(318.0);
         startBtn.setMnemonicParsing(false);
+        startBtn.setOnAction(this::openGameBoard);
         startBtn.setPrefHeight(30.0);
         startBtn.setPrefWidth(120.0);
         startBtn.getStyleClass().add("bigBtn");
@@ -90,6 +91,7 @@ public abstract class FXMLPlayerVsCompBase extends BorderPane {
         backBtn.setLayoutX(20.0);
         backBtn.setLayoutY(14.0);
         backBtn.setMnemonicParsing(false);
+        backBtn.setOnAction(this::handleBackButton);
         backBtn.setPrefHeight(30.0);
         backBtn.setPrefWidth(30.0);
         backBtn.setStyle("-fx-border-radius: 30px; -fx-background-radius: 30px;");
@@ -105,4 +107,11 @@ public abstract class FXMLPlayerVsCompBase extends BorderPane {
         anchorPane0.getChildren().add(backBtn);
 
     }
+
+
+    protected abstract void handleBackButton(javafx.event.ActionEvent actionEvent);
+
+    protected abstract void openGameBoard(javafx.event.ActionEvent actionEvent);
+
+
 }

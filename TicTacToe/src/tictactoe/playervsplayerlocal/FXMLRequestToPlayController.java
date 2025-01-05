@@ -5,18 +5,20 @@
  */
 package tictactoe.playervsplayer;
 
+
+import javafx.event.ActionEvent;
+import javafx.stage.Stage;
+import shared.AppFunctions;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
+import tictactoe.playervsplayerlocal.FXMLRequestToPlayBase;
 
-/**
- * FXML Controller class
- *
- * @author Ayat Gamal
- */
+
 public class FXMLRequestToPlayController extends FXMLRequestToPlayBase {
 
     @FXML
@@ -30,5 +32,7 @@ public class FXMLRequestToPlayController extends FXMLRequestToPlayBase {
      * Initializes the controller class.
      */
        
+
     
+
 }

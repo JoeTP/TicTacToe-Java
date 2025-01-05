@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tictactoe.playervsplayer;
+package tictactoe.playervsplayeronline;
 
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
@@ -14,15 +14,17 @@ import shared.AppFunctions;
  *
  * @author Kimo Store
  */
-public class FXMLPlayerVsPlayerController extends FXMLPlayerVsPlayerBase  {
+
+public class FXMLPlayerVsPlayerOnlineController extends FXMLPlayerVsPlayerOnlineBase  {
+
+
 
     Stage stage;
 
-    public FXMLPlayerVsPlayerController(Stage stage) {
+    public FXMLPlayerVsPlayerOnlineController(Stage stage) {
         this.stage = stage;
     }
 
-    @Override
     protected void handleBackButton(ActionEvent actionEvent) {
         AppFunctions.closePopup(actionEvent);
     }
