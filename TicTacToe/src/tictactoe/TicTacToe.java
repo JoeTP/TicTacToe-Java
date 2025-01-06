@@ -15,10 +15,7 @@ public class TicTacToe extends Application {
         //   Parent root = new FXMLSettingController();
         //Parent root = new FXMLSignupController();
 
-
         Parent root = new FXMLSplashScreenController(stage);
-
-
 
         Scene scene = new Scene(root);
         stage.setTitle("TicTacToe");

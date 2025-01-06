@@ -42,7 +42,7 @@
             <AnchorPane VBox.vgrow="ALWAYS">
                <children>
                   <ImageView fx:id="userImg" fitHeight="84.0" fitWidth="84.0" layoutX="155.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
-                  <Button fx:id="signinBtn" layoutX="141.0" layoutY="288.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="112.0" styleClass="bigBtn" text="Sign-in" />
+                  <Button fx:id="signinBtn" layoutX="141.0" layoutY="288.0" mnemonicParsing="false" onAction="#goToActiveUsers" prefHeight="43.0" prefWidth="112.0" styleClass="bigBtn" text="Sign-in" />
                   <Text fill="#3e5879" layoutX="60.0" layoutY="372.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Don’t you have an account?">
                      <font>
                         <Font name="Stencil" size="12.0" />

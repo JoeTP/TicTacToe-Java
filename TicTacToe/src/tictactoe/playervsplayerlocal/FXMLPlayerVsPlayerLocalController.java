@@ -23,8 +23,8 @@ public class FXMLPlayerVsPlayerLocalController extends FXMLPlayerVsPlayerLocalBa
     /**
      * Initializes the controller class.
      */
-       
     private final Stage stage;
+
     public FXMLPlayerVsPlayerLocalController(Stage stage) {
         this.stage = stage;
     }
@@ -38,5 +38,5 @@ public class FXMLPlayerVsPlayerLocalController extends FXMLPlayerVsPlayerLocalBa
     protected void openGameBoard(ActionEvent actionEvent) {
         AppFunctions.goTo(actionEvent, new FXMLOfflineGameBoardController(stage));
     }
-    
+
 }
