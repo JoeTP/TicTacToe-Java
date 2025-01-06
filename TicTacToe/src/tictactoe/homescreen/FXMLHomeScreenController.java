@@ -111,9 +111,7 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
         AppFunctions.openPopup(stage, new FXMLPlayerVsPlayerPopupController(stage));
     }
 
-    @Override
-    protected void signup(ActionEvent actionEvent) {
-        AppFunctions.openPopup(stage, new FXMLSignupController(stage));
-    }
+    
+   
 
 }
