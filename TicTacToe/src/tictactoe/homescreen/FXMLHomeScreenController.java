@@ -48,7 +48,7 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
     }
 
     void setLogo() {
-        logoImageViewer.setImage(new Image(getClass().getResourceAsStream("/assets/icons/logo.png")));
+        logoImageViewer.setImage(new Image(getClass().getResourceAsStream("/assets/icons/icon.png")));
     }
 
     void checkConnection() {
@@ -113,5 +113,5 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
 
     
    
-
+  
 }

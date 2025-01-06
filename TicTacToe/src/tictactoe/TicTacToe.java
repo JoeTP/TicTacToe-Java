@@ -7,6 +7,9 @@ import javafx.stage.Stage;
 import tictactoe.onlinegmaeboard.FXMLGameBoardOnlineController;
 
 
+import shared.AppString;
+
+
 import tictactoe.splashscreengui.FXMLSplashScreenController;
 
 public class TicTacToe extends Application {
@@ -22,7 +25,7 @@ public class TicTacToe extends Application {
 
 
         Scene scene = new Scene(root);
-        stage.setTitle("TicTacToe");
+        stage.setTitle(AppString.APP_TITLE);
         stage.setScene(scene);
         stage.show();
         stage.setResizable(false);

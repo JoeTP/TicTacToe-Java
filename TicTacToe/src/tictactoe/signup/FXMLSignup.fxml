@@ -39,7 +39,7 @@
          <children>
             <AnchorPane VBox.vgrow="ALWAYS">
                <children>
-                  <Button fx:id="signupBtn" layoutX="59.0" layoutY="321.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="112.0" styleClass="bigBtn" text="Sign-Up" />
+                  <Button fx:id="signupBtn" layoutX="59.0" layoutY="321.0" mnemonicParsing="false" onAction="#goToActiveUsers" prefHeight="43.0" prefWidth="112.0" styleClass="bigBtn" text="Sign-Up" />
                   <TextField fx:id="usernameTextField" layoutX="60.0" layoutY="140.0" prefHeight="48.0" prefWidth="276.0" promptText="User Name" />
                   <Text fx:id="chooseCharText" fill="#3e5879" layoutX="112.0" layoutY="121.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Click To Choose Character">
                      <font>
