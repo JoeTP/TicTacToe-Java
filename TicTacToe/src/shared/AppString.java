@@ -17,6 +17,7 @@ public interface AppString {
     String OFFLINE = "Offline";
     String WIN_LABLE = "🎉Congratulations!You Win!";
     String LOSE_LABLE = "\"     😢 Oops! You Lose! 😢\"";
+    String APP_TITLE = "TicTacToe";
     
     
     /**
