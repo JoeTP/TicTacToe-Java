@@ -5,7 +5,6 @@
  */
 package tictactoe.playervsplayerlocal;
 
-
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
 import shared.AppFunctions;
@@ -17,7 +16,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 import tictactoe.playervsplayerlocal.FXMLRequestToPlayBase;
-
 
 public class FXMLRequestToPlayController extends FXMLRequestToPlayBase {
 
@@ -31,8 +29,4 @@ public class FXMLRequestToPlayController extends FXMLRequestToPlayBase {
     /**
      * Initializes the controller class.
      */
-       
-
-    
-
 }

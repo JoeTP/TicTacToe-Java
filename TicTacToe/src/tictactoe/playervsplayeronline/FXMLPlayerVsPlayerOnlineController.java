@@ -18,8 +18,6 @@ import tictactoe.onlinegmaeboard.FXMLGameBoardOnlineController;
 
 public class FXMLPlayerVsPlayerOnlineController extends FXMLPlayerVsPlayerOnlineBase  {
 
-
-
     private Stage stage;
 
     public FXMLPlayerVsPlayerOnlineController(Stage stage) {
