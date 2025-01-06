@@ -74,7 +74,7 @@ public abstract class FXMLHomeScreenBase extends BorderPane {
 
         connectionLabel.setAlignment(javafx.geometry.Pos.CENTER);
         connectionLabel.getStyleClass().add("bigLabel");
-        connectionLabel.getStylesheets().add("/tictactoe/homescreen/../../../resources/styling/generalStyle.css");
+        connectionLabel.getStylesheets().add("/styling/generalStyle.css");
         connectionLabel.setText("Online");
         hBox0.setOpaqueInsets(new Insets(0.0, 0.0, 0.0, 20.0));
 
@@ -89,7 +89,7 @@ public abstract class FXMLHomeScreenBase extends BorderPane {
         button.setMnemonicParsing(false);
         button.setOnAction(this::openPlayerVsPlayerPopup);
         button.getStyleClass().add("bigBtn");
-        button.getStylesheets().add("/tictactoe/homescreen/../../../resources/styling/generalStyle.css");
+        button.getStylesheets().add("/styling/generalStyle.css");
         button.setText("Sign In");
 
         HBox.setHgrow(anchorPane0, javafx.scene.layout.Priority.SOMETIMES);
@@ -104,14 +104,14 @@ public abstract class FXMLHomeScreenBase extends BorderPane {
         chatBtn.setMnemonicParsing(false);
         chatBtn.setOnAction(this::openChat);
         chatBtn.getStyleClass().add("bigBtn");
-        chatBtn.getStylesheets().add("/tictactoe/homescreen/../../../resources/styling/generalStyle.css");
+        chatBtn.getStylesheets().add("/styling/generalStyle.css");
         chatBtn.setText("Chat");
         BorderPane.setMargin(hBox, new Insets(0.0));
         setBottom(hBox);
 
         BorderPane.setAlignment(header, javafx.geometry.Pos.CENTER);
         header.setSpacing(20.0);
-        header.getStylesheets().add("/tictactoe/homescreen/styling/generalStyle.css");
+        header.getStylesheets().add("/styling/generalStyle.css");
 
         HBox.setHgrow(region, javafx.scene.layout.Priority.ALWAYS);
 
@@ -119,7 +119,7 @@ public abstract class FXMLHomeScreenBase extends BorderPane {
         settingsBtn.setMnemonicParsing(false);
         settingsBtn.setOnAction(this::openSettingsScreen);
         settingsBtn.getStyleClass().add("bigBtn");
-        settingsBtn.getStylesheets().add("/tictactoe/homescreen/../../../resources/styling/generalStyle.css");
+        settingsBtn.getStylesheets().add("/styling/generalStyle.css");
         settingsBtn.setText("Settings");
 
         exitBtn.setLayoutX(645.0);
@@ -130,7 +130,7 @@ public abstract class FXMLHomeScreenBase extends BorderPane {
         exitBtn.setPrefHeight(32.0);
         exitBtn.setPrefWidth(31.0);
         exitBtn.getStyleClass().add("bigBtn");
-        exitBtn.getStylesheets().add("/tictactoe/homescreen/../../../resources/styling/generalStyle.css");
+        exitBtn.getStylesheets().add("/styling/generalStyle.css");
         exitBtn.setText("X");
         header.setPadding(new Insets(20.0, 20.0, 0.0, 0.0));
         setTop(header);
@@ -160,7 +160,7 @@ public abstract class FXMLHomeScreenBase extends BorderPane {
         button0.setMnemonicParsing(false);
         button0.setOnAction(this::openPlayerVsComputerPopup);
         button0.getStyleClass().add("bigBtn");
-        button0.getStylesheets().add("/tictactoe/homescreen/../../../resources/styling/generalStyle.css");
+        button0.getStylesheets().add("/styling/generalStyle.css");
         button0.setText("Play Vs Computer");
         VBox.setMargin(button0, new Insets(0.0));
 
@@ -169,7 +169,7 @@ public abstract class FXMLHomeScreenBase extends BorderPane {
         button1.setMnemonicParsing(false);
         button1.setOnAction(this::openPlayerVsPlayerPopup);
         button1.getStyleClass().add("bigBtn");
-        button1.getStylesheets().add("/tictactoe/homescreen/../../../resources/styling/generalStyle.css");
+        button1.getStylesheets().add("/styling/generalStyle.css");
         button1.setText("   Play Vs Player   ");
         BorderPane.setMargin(anchorPane1, new Insets(0.0));
         setCenter(anchorPane1);
