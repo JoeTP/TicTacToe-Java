@@ -30,10 +30,19 @@ public abstract class AppFunctions {
         newStage.initModality(Modality.WINDOW_MODAL);
         newStage.show();
     }
-    
+
     public static void closePopup(ActionEvent actionEvent) {
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.close();
+    }
+
+    /**
+     * Used with Popups
+     * closing it first then go to new scene
+     */
+    public static void closeAndGo(ActionEvent actionEvent, Parent root) {
+        closePopup( actionEvent);
+        goTo(actionEvent, root);
     }
 
 }
