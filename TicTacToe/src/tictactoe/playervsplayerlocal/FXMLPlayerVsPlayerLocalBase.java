@@ -111,7 +111,6 @@ public abstract class FXMLPlayerVsPlayerLocalBase extends BorderPane {
 
     protected abstract void handleBackButton(javafx.event.ActionEvent actionEvent);
 
-
     protected abstract void openGameBoard(javafx.event.ActionEvent actionEvent);
 
 }
