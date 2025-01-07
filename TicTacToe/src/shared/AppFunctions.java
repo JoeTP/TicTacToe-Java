@@ -4,8 +4,12 @@ import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  * Here we handle commonly used functions like navigating to another scene.
@@ -21,10 +25,13 @@ public abstract class AppFunctions {
 
     public static void openPopup(Stage ownerStage, Parent root) {
         Stage newStage = new Stage();
+        // newStage.initStyle(StageStyle.UNDECORATED);
+        newStage.setResizable(false);
         newStage.setScene(new Scene(root));
         newStage.initOwner(ownerStage);
         newStage.initModality(Modality.WINDOW_MODAL);
         newStage.show();
+
     }
 
     public static void closePopup(ActionEvent actionEvent) {
@@ -33,11 +40,10 @@ public abstract class AppFunctions {
     }
 
     /**
-     * Used with Popups
-     * closing it first then go to new scene
+     * Used with Popups closing it first then go to new scene
      */
     public static void closeAndGo(ActionEvent actionEvent, Parent root) {
-        closePopup( actionEvent);
+        closePopup(actionEvent);
         goTo(actionEvent, root);
     }
 

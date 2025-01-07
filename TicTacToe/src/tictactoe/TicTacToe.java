@@ -4,8 +4,8 @@ import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import tictactoe.onlinegmaeboard.FXMLGameBoardOnlineController;
 
+import javafx.stage.StageStyle;
 
 import shared.AppString;
 
@@ -25,6 +25,7 @@ public class TicTacToe extends Application {
 
 
         Scene scene = new Scene(root);
+        //stage.initStyle(StageStyle.DECORATED.UNDECORATED);
         stage.setTitle(AppString.APP_TITLE);
         stage.setScene(scene);
         stage.show();
