@@ -7,12 +7,8 @@ package tictactoeserver.gui;
 
 
 import javafx.scene.paint.Color;
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.chart.PieChart;
 import tictactoeserver.DataAccessLayer;
 
@@ -21,20 +17,17 @@ import tictactoeserver.DataAccessLayer;
  *
  * @author Kimo Store
  */
-public class FXMLServerController extends FXMLServerBase implements Initializable {
+public class FXMLServerController extends FXMLServerBase {
 
     /**
      * Initializes the controller class.
      */
     private boolean serverRunning = false;
     private int count;
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
         
-    }    
 
     public FXMLServerController() {
-        count = DataAccessLayer.getEx();
+        count = DataAccessLayer.getData();
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
                 new PieChart.Data("Online", count),
                 new PieChart.Data("Offline", 4));
@@ -42,7 +35,6 @@ public class FXMLServerController extends FXMLServerBase implements Initializabl
         serverIndicator.setFill(Color.CRIMSON);
         usersPieChart.getData().get(0).getNode().setStyle("-fx-pie-color: DARKSLATEBLUE;");
         usersPieChart.getData().get(1).getNode().setStyle("-fx-pie-color: D8C4B6;");
-        
     }
     
 }

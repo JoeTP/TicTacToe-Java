@@ -5,7 +5,6 @@
  */
 package tictactoeserver;
 
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -19,30 +18,33 @@ import java.util.logging.Logger;
  * @author Kimo Store
  */
 public class DataAccessLayer {
-    private static Connection con;
+
+    private static Connection conection;
     private static ResultSet rs;
     protected static int i;
+
     static {
         i = 0;
         try {
-            Class.forName("org.sqlite.JDBC");           
-             con = DriverManager.getConnection ("jdbc:sqlite:database.sqlite");
+            Class.forName("org.sqlite.JDBC");
+            conection = DriverManager.getConnection("jdbc:sqlite:database.sqlite");
         } catch (SQLException ex) {
             Logger.getLogger(DataAccessLayer.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(DataAccessLayer.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public static int getEx(){
+
+    public static int getData() {
         try {
-            PreparedStatement pst = con.prepareStatement("SELECT * FROM USERS");
+            PreparedStatement pst = conection.prepareStatement("SELECT * FROM USERS");
             rs = pst.executeQuery();
-            while(rs.next()){
-                i++;                        
+            while (rs.next()) {
+                i++;
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(DataAccessLayer.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(DataAccessLayer.class.getName()).log(Level.SEVERE, null, ex);
-        }
         return i;
     }
 }
