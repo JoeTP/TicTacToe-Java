@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  * Here we handle commonly used functions like navigating to another scene.
@@ -21,6 +22,8 @@ public abstract class AppFunctions {
 
     public static void openPopup(Stage ownerStage, Parent root) {
         Stage newStage = new Stage();
+        newStage.initStyle(StageStyle.DECORATED.UNDECORATED);
+        newStage.setResizable(false);
         newStage.setScene(new Scene(root));
         newStage.initOwner(ownerStage);
         newStage.initModality(Modality.WINDOW_MODAL);
