@@ -11,6 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import static shared.AppString.GENERAL_STYLE_FILE_PATH;
 
 public abstract class FXMLSigninBase extends BorderPane {
 
@@ -45,7 +46,7 @@ public abstract class FXMLSigninBase extends BorderPane {
         setPrefHeight(552.0);
         setPrefWidth(400.0);
         getStyleClass().add("mainBackground");
-        getStylesheets().add("/styling/generalStyle.css");
+        getStylesheets().add(GENERAL_STYLE_FILE_PATH);
 
         BorderPane.setAlignment(hBox, javafx.geometry.Pos.CENTER);
         hBox.setSpacing(120.0);

@@ -14,8 +14,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import shared.AppFunctions;
+import static shared.AppString.ICON_PATHS;
 import tictactoe.playervsplayeronline.FXMLPlayerVsPlayerOnlineController;
 import tictactoe.signin.FXMLSigninController;
 
@@ -47,6 +49,19 @@ public class FXMLSignupController extends FXMLSignupBase {
     protected void goToActiveUsers(ActionEvent actionEvent) {
         AppFunctions.closePopup(actionEvent);
         AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage));
+    }
+
+    @Override
+    protected void showPreviousIcon(ActionEvent actionEvent) {
+        currentImageIndex = (currentImageIndex - 1 + ICON_PATHS.length) % ICON_PATHS.length;
+        characterImageView.setImage(new Image(ICON_PATHS[currentImageIndex]));
+    }
+
+    @Override
+    protected void showNextIcon(ActionEvent actionEvent) {
+        currentImageIndex = (currentImageIndex + 1 ) % ICON_PATHS.length;
+        characterImageView.setImage(new Image(ICON_PATHS[currentImageIndex]));
+        
     }
 
 }

@@ -13,6 +13,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import shared.AppFunctions;
 import shared.AppString;
+import static shared.AppString.LOGO;
 import tictactoe.playervscomp.FXMLPlayerVsCompController;
 import tictactoe.playervsplayerpopup.FXMLPlayerVsPlayerPopupController;
 import tictactoe.setting.FXMLSettingController;
@@ -50,7 +51,7 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
     }
 
     void setLogo() {
-        logoImageViewer.setImage(new Image(getClass().getResourceAsStream("/assets/icons/icon.png")));
+        logoImageViewer.setImage(new Image(getClass().getResourceAsStream(LOGO)));
     }
 
     void checkConnection() {

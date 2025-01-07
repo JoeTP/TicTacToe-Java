@@ -19,6 +19,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import static shared.AppString.GENERAL_STYLE_FILE_PATH;
+import static shared.AppString.ONLINE_GAME_BOARD_STYLE_FILE_PATH;
 
 public abstract class FXMLGameBoardOnlineBase extends VBox {
 
@@ -117,11 +119,11 @@ public abstract class FXMLGameBoardOnlineBase extends VBox {
         setPrefHeight(720.0);
         setPrefWidth(1000.0);
         getStyleClass().add("mainBackground");
-        getStylesheets().add("/tictactoe/onlinegmaeboard/style.css");
+        getStylesheets().add(ONLINE_GAME_BOARD_STYLE_FILE_PATH);
 
         hboxTop.setPrefHeight(100.0);
         hboxTop.setPrefWidth(1000.0);
-        hboxTop.getStylesheets().add("/styling/generalStyle.css");
+        hboxTop.getStylesheets().add(GENERAL_STYLE_FILE_PATH);
 
         AnchorPane.setLeftAnchor(hboxTurn, 100.0);
         AnchorPane.setTopAnchor(hboxTurn, 0.0);
@@ -259,7 +261,7 @@ public abstract class FXMLGameBoardOnlineBase extends VBox {
         BorderPane.setAlignment(flowPane, javafx.geometry.Pos.CENTER);
         flowPane.setPrefHeight(60.0);
         flowPane.setPrefWidth(200.0);
-        flowPane.getStylesheets().add("/styling/generalStyle.css");
+        flowPane.getStylesheets().add(GENERAL_STYLE_FILE_PATH);
 
         messageTextField.setPromptText("Message");
         messageTextField.setPadding(new Insets(0.0, 0.0, 0.0, 20.0));
@@ -275,7 +277,7 @@ public abstract class FXMLGameBoardOnlineBase extends VBox {
 
         AnchorPane.setLeftAnchor(timerLabel, 100.0);
         timerLabel.setId("textId");
-        timerLabel.getStylesheets().add("/styling/generalStyle.css");
+        timerLabel.getStylesheets().add(GENERAL_STYLE_FILE_PATH);
         timerLabel.setText("7:00");
 
         hboxTurn.getChildren().add(player1Img);

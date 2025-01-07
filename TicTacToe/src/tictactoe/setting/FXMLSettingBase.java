@@ -16,6 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import static shared.AppString.GENERAL_STYLE_FILE_PATH;
 
 public abstract class FXMLSettingBase extends BorderPane {
 
@@ -78,7 +79,7 @@ public abstract class FXMLSettingBase extends BorderPane {
         setPrefHeight(720.0);
         setPrefWidth(720.0);
         getStyleClass().add("mainBackground");
-        getStylesheets().add("/styling/generalStyle.css");
+        getStylesheets().add(GENERAL_STYLE_FILE_PATH);
 
         BorderPane.setAlignment(hBox, javafx.geometry.Pos.CENTER);
         hBox.setSpacing(120.0);
@@ -91,7 +92,7 @@ public abstract class FXMLSettingBase extends BorderPane {
         backBtn.setMnemonicParsing(false);
         backBtn.setOnAction(this::handleBackBtn);
         backBtn.getStyleClass().add("bigBtn");
-        backBtn.getStylesheets().add("/styling/generalStyle.css");
+        backBtn.getStylesheets().add(GENERAL_STYLE_FILE_PATH);
         backBtn.setText("Back");
 
         signinTitle.setFill(javafx.scene.paint.Color.valueOf("#3e5879"));
