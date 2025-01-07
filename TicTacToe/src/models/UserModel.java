@@ -20,8 +20,10 @@ public class UserModel {
     int numOfGames;
     int wins;
     int losses;
+    boolean isInGame;
+    boolean isOnline;
 
-    public UserModel(int id, String name, String password, String email, String image, int score, int numOfGames, int wins, int losses) {
+    public UserModel(int id, String name, String password, String email, String image, int score, int numOfGames, int wins, int losses, boolean isInGame, boolean isOnline) {
         this.id = id;
         this.name = name;
         this.password = password;
@@ -31,6 +33,10 @@ public class UserModel {
         this.numOfGames = numOfGames;
         this.wins = wins;
         this.losses = losses;
+        this.isInGame = isInGame;
+        this.isOnline = isOnline;
     }
 
+    
+    
 }
