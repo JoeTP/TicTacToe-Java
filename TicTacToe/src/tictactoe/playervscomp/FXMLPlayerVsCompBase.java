@@ -11,6 +11,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.util.StringConverter;
 
 public abstract class FXMLPlayerVsCompBase extends BorderPane {
 
@@ -67,7 +68,8 @@ public abstract class FXMLPlayerVsCompBase extends BorderPane {
         difficultySlider.setShowTickMarks(true);
         difficultySlider.setSnapToTicks(true);
         difficultySlider.setCursor(Cursor.HAND);
-
+        
+        
         difficultyImg.setFitHeight(144.0);
         difficultyImg.setFitWidth(262.0);
         difficultyImg.setLayoutX(96.0);
