@@ -41,22 +41,22 @@
                <children>
                   <Button fx:id="signupBtn" layoutX="59.0" layoutY="321.0" mnemonicParsing="false" onAction="#goToActiveUsers" prefHeight="43.0" prefWidth="112.0" styleClass="bigBtn" text="Sign-Up" />
                   <TextField fx:id="usernameTextField" layoutX="60.0" layoutY="140.0" prefHeight="48.0" prefWidth="276.0" promptText="User Name" />
-                  <Text fx:id="chooseCharText" fill="#3e5879" layoutX="112.0" layoutY="121.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Click To Choose Character">
+                  <Text fx:id="chooseCharText" fill="#3e5879" layoutX="112.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose Your Character">
                      <font>
-                        <Font name="Stencil" size="12.0" />
+                        <Font name="Stencil" size="14.0" />
                      </font></Text>
                   <PasswordField fx:id="passwordField" layoutX="60.0" layoutY="260.0" prefHeight="48.0" prefWidth="276.0" promptText="Passoword" />
                   <TextField fx:id="emailTextField" layoutX="60.0" layoutY="200.0" prefHeight="48.0" prefWidth="276.0" promptText="E-mail" />
                   <Button fx:id="signinBtn" layoutX="224.0" layoutY="321.0" mnemonicParsing="false" onAction="#goToSignin" prefHeight="43.0" prefWidth="112.0" styleClass="bigBtn" text="Sign-In" />
-                  <HBox layoutX="81.0" layoutY="30.0">
+                  <HBox layoutX="98.0" layoutY="30.0" AnchorPane.leftAnchor="98.0" AnchorPane.rightAnchor="98.0">
                      <children>
-                        <Button fx:id="previousImageBtn" mnemonicParsing="false" styleClass="bigBtn" text="Back">
+                        <Button fx:id="previousImageBtn" mnemonicParsing="false" onAction="#showPreviousIcon" styleClass="bigBtn" text="Back">
                            <HBox.margin>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </HBox.margin>
                         </Button>
-                        <ImageView fx:id="characterImageView" fitHeight="60.0" fitWidth="92.0" pickOnBounds="true" preserveRatio="true" />
-                        <Button fx:id="nextImageBtn" mnemonicParsing="false" styleClass="bigBtn" text="Next">
+                        <ImageView fx:id="characterImageView" fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true" />
+                        <Button fx:id="nextImageBtn" mnemonicParsing="false" onAction="#showNextIcon" styleClass="bigBtn" text="Next">
                            <HBox.margin>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </HBox.margin>

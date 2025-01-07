@@ -14,6 +14,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.shape.Line;
+import static shared.AppString.GAME_BOARD_STYLE_FILE_PATH;
+import static shared.AppString.GENERAL_STYLE_FILE_PATH;
 
 public abstract class FXMLOfflineGameBoardBase extends BorderPane {
 
@@ -202,8 +204,8 @@ public abstract class FXMLOfflineGameBoardBase extends BorderPane {
         leaveBtn.setText("Leave");
         BorderPane.setMargin(flowPane, new Insets(0.0, 0.0, 20.0, 105.0));
         setBottom(flowPane);
-        getStylesheets().add("/tictactoe/offlinegameboard/fxmlofflinegameboard.css");
-        getStylesheets().add("/styling/generalStyle.css");
+        getStylesheets().add(GAME_BOARD_STYLE_FILE_PATH);
+        getStylesheets().add(GENERAL_STYLE_FILE_PATH);
 
         hBox0.getChildren().add(player1Img);
         hBox0.getChildren().add(player1Label);
