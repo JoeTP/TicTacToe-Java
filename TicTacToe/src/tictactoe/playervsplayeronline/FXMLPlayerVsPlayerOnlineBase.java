@@ -31,7 +31,7 @@ public abstract class FXMLPlayerVsPlayerOnlineBase extends BorderPane {
         setMinWidth(450.0);
         setPrefHeight(500.0);
         setPrefWidth(450.0);
-        getStylesheets().add("/tictactoe/playervsplayeronline/../onlinegmaeboard/style.css");
+        getStylesheets().add("/tictactoe/onlinegmaeboard/style.css");
 
         BorderPane.setAlignment(anchorPane, javafx.geometry.Pos.CENTER);
         anchorPane.setPrefHeight(0.0);
