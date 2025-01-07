@@ -6,9 +6,9 @@
 package tictactoeserver.gui;
 
 
-import javafx.scene.paint.Color;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.paint.Color;
 import javafx.scene.chart.PieChart;
 import tictactoeserver.DataAccessLayer;
 
@@ -27,7 +27,7 @@ public class FXMLServerController extends FXMLServerBase {
         
 
     public FXMLServerController() {
-        count = DataAccessLayer.getData();
+        count = DataAccessLayer.getUserData();
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
                 new PieChart.Data("Online", count),
                 new PieChart.Data("Offline", 4));
