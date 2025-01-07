@@ -8,10 +8,14 @@ package tictactoe.playervscomp;
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import shared.AppFunctions;
+import tictactoe.homescreen.FXMLHomeScreenController;
 import tictactoe.offlinegameboard.FXMLOfflineGameBoardController;
 
 public class FXMLPlayerVsCompController extends FXMLPlayerVsCompBase {
@@ -26,7 +30,7 @@ public class FXMLPlayerVsCompController extends FXMLPlayerVsCompBase {
 
     public FXMLPlayerVsCompController(Stage stage) {
         this.stage = stage;
-         setDifficultyLabels();
+        setDifficultyLabels();
         handlingDifficultySlider();
     }
 
@@ -50,7 +54,8 @@ public class FXMLPlayerVsCompController extends FXMLPlayerVsCompBase {
     @FXML
     @Override
     protected void openGameBoard(ActionEvent actionEvent) {
-        AppFunctions.goTo(actionEvent, new FXMLOfflineGameBoardController(stage));
+        AppFunctions.closePopup(actionEvent);
+        stage.setScene(new Scene(new FXMLOfflineGameBoardController(stage)));
     }
 
     @FXML
