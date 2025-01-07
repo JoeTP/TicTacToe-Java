@@ -7,6 +7,7 @@ package tictactoe.homescreen;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -84,39 +85,35 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
             stage.setY(event.getScreenY() - yOffset);
         });
     }
-
+@FXML
     @Override
     protected void exitApp(ActionEvent actionEvent) {
         Platform.exit();
     }
-
+@FXML
     @Override
     protected void openChat(ActionEvent actionEvent) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+@FXML
     @Override
     protected void openSettingsScreen(ActionEvent actionEvent) {
         AppFunctions.goTo(actionEvent, new FXMLSettingController(stage));
     }
-
+@FXML
     @Override
     protected void openPlayerVsComputerPopup(ActionEvent actionEvent) {
 
         AppFunctions.openPopup(stage, new FXMLPlayerVsCompController(stage));
 
     }
-
+    @FXML
     @Override
     protected void openPlayerVsPlayerPopup(ActionEvent actionEvent) {
         AppFunctions.openPopup(stage, new FXMLPlayerVsPlayerPopupController(stage));
     }
 
-//    @Override
-//    protected void openDrawer(MouseEvent mouseEvent) {
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//    }
 
   
-
+  
 }

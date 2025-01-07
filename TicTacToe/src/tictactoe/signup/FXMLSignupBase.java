@@ -52,11 +52,11 @@ public abstract class FXMLSignupBase extends BorderPane {
 
         setPrefHeight(552.0);
         setPrefWidth(400.0);
+        getStyleClass().add("mainBackground");
         getStylesheets().add("/styling/generalStyle.css");
 
         BorderPane.setAlignment(hBox, javafx.geometry.Pos.CENTER);
         hBox.setSpacing(120.0);
-        hBox.getStylesheets().add("/styling/generalStyle.css");
 
         HBox.setHgrow(anchorPane, javafx.scene.layout.Priority.ALWAYS);
 

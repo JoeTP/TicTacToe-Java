@@ -1,5 +1,6 @@
 package tictactoe.offlinegameboard;
 
+import java.net.URL;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -82,7 +83,7 @@ public abstract class FXMLOfflineGameBoardBase extends BorderPane {
 
         setPrefHeight(720.0);
         setPrefWidth(720.0);
-        getStylesheets().add("/tictactoe/offlinegameboard/fxmlofflinegameboard.css");
+        getStyleClass().add("mainBackground");
 
         BorderPane.setAlignment(hBox, javafx.geometry.Pos.CENTER);
         hBox.setPrefHeight(70.0);
@@ -194,13 +195,15 @@ public abstract class FXMLOfflineGameBoardBase extends BorderPane {
         timerLabel.setTextFill(javafx.scene.paint.Color.valueOf("#3e5879"));
 
         region0.setPrefHeight(50.0);
-        region0.setPrefWidth(330.0);
+        region0.setPrefWidth(360.0);
 
         leaveBtn.setId("textId");
         leaveBtn.setMnemonicParsing(false);
         leaveBtn.setText("Leave");
         BorderPane.setMargin(flowPane, new Insets(0.0, 0.0, 20.0, 105.0));
         setBottom(flowPane);
+        getStylesheets().add("/tictactoe/offlinegameboard/fxmlofflinegameboard.css");
+        getStylesheets().add("/styling/generalStyle.css");
 
         hBox0.getChildren().add(player1Img);
         hBox0.getChildren().add(player1Label);
