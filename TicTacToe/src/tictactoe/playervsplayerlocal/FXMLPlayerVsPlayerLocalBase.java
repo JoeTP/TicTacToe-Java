@@ -38,6 +38,8 @@ public abstract class FXMLPlayerVsPlayerLocalBase extends BorderPane {
         setMinWidth(450.0);
         setPrefHeight(500.0);
         setPrefWidth(450.0);
+        getStyleClass().add("mainBackground");
+        getStylesheets().add("/styling/generalStyle.css");
 
         BorderPane.setAlignment(anchorPane, javafx.geometry.Pos.CENTER);
         anchorPane.setPrefHeight(0.0);
@@ -52,6 +54,7 @@ public abstract class FXMLPlayerVsPlayerLocalBase extends BorderPane {
         backBtn.setPrefHeight(30.0);
         backBtn.setPrefWidth(30.0);
         backBtn.setStyle("-fx-border-radius: 30px; -fx-background-radius: 30px;");
+        backBtn.getStyleClass().add("bigBtn");
         backBtn.setText("B");
         setTop(anchorPane);
 
@@ -59,41 +62,46 @@ public abstract class FXMLPlayerVsPlayerLocalBase extends BorderPane {
         anchorPane0.setPrefHeight(200.0);
         anchorPane0.setPrefWidth(200.0);
 
-        textField.setLayoutX(85.0);
-        textField.setLayoutY(135.0);
+        textField.setLayoutX(92.0);
+        textField.setLayoutY(129.0);
         textField.setPrefHeight(40.0);
         textField.setPrefWidth(280.0);
         textField.setPromptText("Player 1 name");
 
-        label.setLayoutX(183.0);
-        label.setLayoutY(100.0);
+        label.setLayoutX(193.0);
+        label.setLayoutY(78.0);
+        label.getStyleClass().add("bigLabel");
         label.setText("Player 1");
         label.setFont(new Font(24.0));
 
-        textField0.setLayoutX(85.0);
-        textField0.setLayoutY(242.0);
+        textField0.setLayoutX(92.0);
+        textField0.setLayoutY(246.0);
         textField0.setPrefHeight(40.0);
         textField0.setPrefWidth(280.0);
         textField0.setPromptText("Player 2 name");
 
-        label0.setLayoutX(183.0);
-        label0.setLayoutY(207.0);
+        label0.setLayoutX(190.0);
+        label0.setLayoutY(191.0);
+        label0.getStyleClass().add("bigLabel");
         label0.setText("Player 2");
         label0.setFont(new Font(24.0));
 
         startBtn.setLayoutX(165.0);
-        startBtn.setLayoutY(366.0);
+        startBtn.setLayoutY(333.0);
         startBtn.setMnemonicParsing(false);
         startBtn.setOnAction(this::openGameBoard);
         startBtn.setPrefHeight(30.0);
         startBtn.setPrefWidth(120.0);
+        startBtn.getStyleClass().add("bigBtn");
         startBtn.setText("Start");
         startBtn.setFont(new Font(20.0));
 
-        playerVsPlayerLabel.setLayoutX(100.0);
-        playerVsPlayerLabel.setLayoutY(45.0);
+        playerVsPlayerLabel.setFill(javafx.scene.paint.Color.valueOf("#d8c4b6"));
+        playerVsPlayerLabel.setLayoutX(151.0);
+        playerVsPlayerLabel.setLayoutY(39.0);
         playerVsPlayerLabel.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         playerVsPlayerLabel.setStrokeWidth(0.0);
+        playerVsPlayerLabel.getStyleClass().add("bigLabel");
         playerVsPlayerLabel.setText("Player Vs Player");
         playerVsPlayerLabel.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         playerVsPlayerLabel.setFont(new Font(36.0));

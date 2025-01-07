@@ -2,10 +2,8 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.geometry.Rectangle2D?>
-<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.effect.BoxBlur?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -18,15 +16,12 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<fx:root type="StackPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.homescreen.FXMLHomeScreenController">
+<fx:root stylesheets="@../../../resources/styling/generalStyle.css" type="StackPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.homescreen.FXMLHomeScreenController">
    <children>
-      <ImageView fitHeight="10000.0" fitWidth="720.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="720.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../resources/assets/icons/hsBackground.jpg" />
          </image>
-         <effect>
-            <BoxBlur />
-         </effect>
       </ImageView>
       <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="720.0">
          <bottom>
@@ -39,33 +34,30 @@
                               <Insets left="20.0" />
                            </HBox.margin>
                         </ImageView>
-                        <Label fx:id="connectionLabel" alignment="CENTER" text="Online" textFill="#3e5879">
-                           <font>
-                              <Font name="Stencil" size="25.0" />
-                           </font></Label>
+                        <Label fx:id="connectionLabel" alignment="CENTER" styleClass="bigLabel" text="Online" />
                      </children>
                      <opaqueInsets>
                         <Insets left="20.0" />
                      </opaqueInsets>
                   </HBox>
                   <Region HBox.hgrow="ALWAYS" />
-                  <Button fx:id="chatBtn" mnemonicParsing="false" onAction="#openChat" style="-fx-background-color: #3E5879; -fx-border-radius: 5; -fx-background-radius: 8;" styleClass="bigBtn" text="Chat" textFill="WHITE">
+                  <Button fx:id="chatBtn" mnemonicParsing="false" onAction="#openChat" text="Chat" textFill="WHITE">
                      <HBox.margin>
                         <Insets bottom="20.0" right="40.0" />
                      </HBox.margin>
                      <font>
-                        <Font name="Stencil" size="14.0" />
+                        <Font size="14.0" />
                      </font>
                   </Button>
                </children>
             </HBox>
          </bottom>
          <top>
-            <HBox fx:id="header" spacing="20.0" stylesheets="@../../../resources/styling/generalStyle.css" BorderPane.alignment="CENTER">
+            <HBox fx:id="header" spacing="20.0" BorderPane.alignment="CENTER">
                <children>
                   <Region HBox.hgrow="ALWAYS" />
-                  <Button fx:id="settingsBtn" mnemonicParsing="false" onAction="#openSettingsScreen" styleClass="bigBtn" text="Settings" HBox.hgrow="NEVER" />
-                  <Button fx:id="exitBtn" layoutX="645.0" layoutY="30.0" minWidth="31.0" mnemonicParsing="false" onAction="#exitApp" prefHeight="32.0" prefWidth="31.0" styleClass="bigBtn" text="X">
+                  <Button fx:id="settingsBtn" mnemonicParsing="false" onAction="#openSettingsScreen" text="Settings" HBox.hgrow="NEVER" />
+                  <Button fx:id="exitBtn" layoutX="645.0" layoutY="30.0" minWidth="31.0" mnemonicParsing="false" onAction="#exitApp" prefHeight="32.0" prefWidth="31.0" text="X">
                      <HBox.margin>
                         <Insets right="15.0" />
                      </HBox.margin>
@@ -83,14 +75,14 @@
                      <children>
                         <StackPane>
                            <children>
-                              <Rectangle arcHeight="40.0" arcWidth="40.0" fill="#f5efe7" height="420.0" stroke="#334d94" strokeDashOffset="20.0" strokeLineCap="ROUND" strokeType="OUTSIDE" width="300.0">
+                              <Rectangle arcHeight="40.0" arcWidth="40.0" fill="#f5efe7" height="380.0" stroke="#334d94" strokeDashOffset="20.0" strokeLineCap="ROUND" strokeType="OUTSIDE" width="280.0">
                                  <effect>
                                     <DropShadow color="#6d78b0" />
                                  </effect>
                               </Rectangle>
                               <AnchorPane>
                                  <children>
-                                    <ImageView fx:id="logoImageViewer" fitHeight="180.0" fitWidth="285.0" layoutX="26.0" layoutY="59.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="211.0" AnchorPane.leftAnchor="26.0" AnchorPane.rightAnchor="25.634613037109375" AnchorPane.topAnchor="59.0">
+                                    <ImageView fx:id="logoImageViewer" fitHeight="150.0" fitWidth="250.0" layoutX="48.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="216.0" AnchorPane.leftAnchor="48.0" AnchorPane.rightAnchor="47.028839111328125" AnchorPane.topAnchor="56.0">
                                        <viewport>
                                           <Rectangle2D />
                                        </viewport>
@@ -98,20 +90,16 @@
                                           <Image url="@../../../resources/assets/icons/icon.png" />
                                        </image>
                                     </ImageView>
-                                    <Button layoutX="77.0" layoutY="328.0" mnemonicParsing="false" onAction="#openPlayerVsPlayerPopup" style="-fx-background-color: #3E5879; -fx-border-radius: 5; -fx-background-radius: 8;" styleClass="bigBtn" text="   Play Vs Player   " textFill="WHITE">
+                                    <Button fx:id="playVsplayBtn" layoutX="92.0" layoutY="312.0" mnemonicParsing="false" onAction="#openPlayerVsPlayerPopup" text="   Play Vs Player   " textFill="WHITE">
                                        <font>
-                                          <Font name="Stencil" size="14.0" />
+                                          <Font size="14.0" />
                                        </font>
-                                       <cursor>
-                                          <Cursor fx:constant="HAND" />
-                                       </cursor></Button>
-                                    <Button layoutX="77.0" layoutY="269.0" mnemonicParsing="false" onAction="#openPlayerVsComputerPopup" style="-fx-background-color: #3E5879; -fx-border-radius: 8; -fx-background-radius: 8;" styleClass="bigBtn" text="Play Vs Computer" textFill="WHITE">
+                                       </Button>
+                                    <Button fx:id="playVscompBtn" layoutX="93.0" layoutY="245.0" mnemonicParsing="false" onAction="#openPlayerVsComputerPopup" text="Play Vs Computer" textFill="WHITE">
                                        <font>
-                                          <Font name="Stencil" size="14.0" />
+                                          <Font size="14.0" />
                                        </font>
-                                       <cursor>
-                                          <Cursor fx:constant="HAND" />
-                                       </cursor></Button>
+                                      </Button>
                                  </children>
                               </AnchorPane>
                            </children>

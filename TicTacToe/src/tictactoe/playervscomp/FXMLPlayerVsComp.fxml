@@ -10,17 +10,12 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="720.0" maxWidth="720.0" minHeight="500.0" minWidth="450.0" prefHeight="500.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.playervscomp.FXMLPlayerVsCompController">
+<BorderPane maxHeight="720.0" maxWidth="720.0" minHeight="500.0" minWidth="450.0" prefHeight="500.0" prefWidth="450.0" styleClass="mainBackground" stylesheets="@../../../resources/styling/generalStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.playervscomp.FXMLPlayerVsCompController">
    <center>
       <AnchorPane prefHeight="472.0" prefWidth="720.0" BorderPane.alignment="CENTER">
          <children>
-            <Text fx:id="chooseDifficultyLabel" fill="#3e5879" layoutX="157.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="bigLabel" text="Difficulty" textAlignment="CENTER">
-               <font>
-                  <Font size="36.0" />
-               </font>
-            </Text>
+            <Label layoutX="180.0" layoutY="12.0" styleClass="bigLabel" stylesheets="@../../../resources/styling/generalStyle.css" text="Difficulty" />
             <Slider fx:id="difficultySlider" blockIncrement="1.0" layoutX="100.0" layoutY="267.0" majorTickUnit="1.0" max="2.0" minorTickCount="0" prefHeight="42.0" prefWidth="266.0" showTickLabels="true" showTickMarks="true" snapToTicks="true">
                <cursor>
                   <Cursor fx:constant="HAND" />
@@ -30,7 +25,7 @@
                   <Image url="@../../../resources/assets/icons/easy.PNG" />
                </image>
             </ImageView>
-            <Label layoutX="160.0" layoutY="232.0" text="Select Difficulty" textFill="#213555">
+            <Label layoutX="155.0" layoutY="226.0" styleClass="bigLabel" stylesheets="@../../../resources/styling/generalStyle.css" text="Select Difficulty" textFill="#213555">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
