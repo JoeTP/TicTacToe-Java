@@ -22,11 +22,11 @@ public class ClientHandler extends Thread {
     DataInputStream dis;
     DataOutputStream ps;
     static Vector<ClientHandler> clients = new Vector<ClientHandler>();
+    Socket client;  // Add a reference to the client socket
 
     public ClientHandler(Socket client) {
+        this.client = client; 
         try {
-            System.out.println("IM CLIENT HANDLER");
-
             dis = new DataInputStream(client.getInputStream());
             System.out.println(dis);
             ps = new DataOutputStream(client.getOutputStream());
@@ -38,12 +38,20 @@ public class ClientHandler extends Thread {
     }
 
     public void run() {
-        while (true) {
-            try {
-                System.out.println("IM BLOCKING CODE IN CLIENT HANDLER");
-
+        try {
+            while (true) {
                 String str = dis.readUTF();
                 broadCastMsg(str);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            // Client disconnected, remove from clients vector
+            try {
+                clients.remove(this);
+                dis.close();
+                ps.close();
+                client.close();
             } catch (IOException ex) {
                 Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -59,5 +67,4 @@ public class ClientHandler extends Thread {
             }
         }
     }
-
 }
