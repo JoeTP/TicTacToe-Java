@@ -15,6 +15,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import static shared.AppString.GENERAL_STYLE_FILE_PATH;
+import static shared.AppString.LOGO;
 
 public abstract class FXMLHomeScreenBase extends StackPane {
 
@@ -68,7 +70,7 @@ public abstract class FXMLHomeScreenBase extends StackPane {
         vBox0 = new VBox();
         profileImageView = new ImageView();
 
-        getStylesheets().add("/styling/generalStyle.css");
+        getStylesheets().add(GENERAL_STYLE_FILE_PATH);
 
         imageView.setFitHeight(720.0);
         imageView.setPickOnBounds(true);
@@ -164,7 +166,7 @@ public abstract class FXMLHomeScreenBase extends StackPane {
         logoImageViewer.setLayoutY(56.0);
         logoImageViewer.setPickOnBounds(true);
         logoImageViewer.setPreserveRatio(true);
-        logoImageViewer.setImage(new Image(getClass().getResource("/assets/icons/icon.png").toExternalForm()));
+        logoImageViewer.setImage(new Image(getClass().getResource(LOGO).toExternalForm()));
 
         playVsplayBtn.setLayoutX(92.0);
         playVsplayBtn.setLayoutY(312.0);

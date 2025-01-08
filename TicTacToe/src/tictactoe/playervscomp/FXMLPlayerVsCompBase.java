@@ -13,6 +13,7 @@ import javafx.scene.text.Font;
 
 import javafx.scene.text.Text;
 import javafx.util.StringConverter;
+import static shared.AppString.GENERAL_STYLE_FILE_PATH;
 
 
 public abstract class FXMLPlayerVsCompBase extends BorderPane {
@@ -44,7 +45,7 @@ public abstract class FXMLPlayerVsCompBase extends BorderPane {
         setPrefHeight(500.0);
         setPrefWidth(450.0);
         getStyleClass().add("mainBackground");
-        getStylesheets().add("/styling/generalStyle.css");
+        getStylesheets().add(GENERAL_STYLE_FILE_PATH);
 
         BorderPane.setAlignment(anchorPane, javafx.geometry.Pos.CENTER);
         anchorPane.setPrefHeight(472.0);

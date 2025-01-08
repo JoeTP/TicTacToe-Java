@@ -10,6 +10,7 @@ package shared;
  * @author Youssif
  */
 public interface AppString {
+
     /**
      * add your string here
      */
@@ -19,12 +20,23 @@ public interface AppString {
     String LOSE_LABLE = "    😢 Oops! You Lose! 😢";
     String APP_TITLE = "TicTacToe";
     
+    String LOGO = "/assets/icons/icon.png";
+    String GAME_BOARD_STYLE_FILE_PATH = "/tictactoe/offlinegameboard/fxmlofflinegameboard.css";
+    String ONLINE_GAME_BOARD_STYLE_FILE_PATH = "/tictactoe/onlinegmaeboard/style.css";
     
+    String GENERAL_STYLE_FILE_PATH = "/styling/generalStyle.css";
+    
+    String[] ICON_PATHS = {
+        "/assets/icons/cat.png",
+        "/assets/icons/robot.png",
+        "/assets/icons/panda-bear.png",
+        "/assets/icons/dinosaur.png",
+        "/assets/icons/jaguar.png",
+        "/assets/icons/turtle.png"
+    };
+
     /**
      * add your paths here
      */
 //    String HOME_SCREEN_PATH = 
-    
-    
-            
 }

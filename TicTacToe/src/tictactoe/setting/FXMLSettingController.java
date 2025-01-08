@@ -40,10 +40,7 @@ public class FXMLSettingController extends FXMLSettingBase implements Initializa
 
     @FXML
     public void initialize(URL location, ResourceBundle resources) {
-        // Set initial state
         accountDetailsPane.setVisible(false);
-
-        // Toggle visibility on click
         accountHeaderVBox.setOnMouseClicked(event -> {
             isDetailsVisible = !isDetailsVisible;
             accountDetailsPane.setVisible(isDetailsVisible);
