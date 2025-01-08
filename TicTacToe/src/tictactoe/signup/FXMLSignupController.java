@@ -16,6 +16,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import shared.AppFunctions;
+import tictactoe.playervsplayeronline.FXMLPlayerVsPlayerOnlineController;
 import tictactoe.signin.FXMLSigninController;
 
 /**
@@ -40,6 +41,12 @@ public class FXMLSignupController extends FXMLSignupBase {
     @Override
     protected void goToSignin(ActionEvent actionEvent) {
         AppFunctions.goTo(actionEvent, new FXMLSigninController(stage));
+    }
+
+    @Override
+    protected void goToActiveUsers(ActionEvent actionEvent) {
+        AppFunctions.closePopup(actionEvent);
+        AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage));
     }
 
 }

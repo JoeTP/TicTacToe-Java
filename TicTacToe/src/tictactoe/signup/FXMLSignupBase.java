@@ -52,11 +52,11 @@ public abstract class FXMLSignupBase extends BorderPane {
 
         setPrefHeight(552.0);
         setPrefWidth(400.0);
+        getStyleClass().add("mainBackground");
         getStylesheets().add("/styling/generalStyle.css");
 
         BorderPane.setAlignment(hBox, javafx.geometry.Pos.CENTER);
         hBox.setSpacing(120.0);
-        hBox.getStylesheets().add("/styling/generalStyle.css");
 
         HBox.setHgrow(anchorPane, javafx.scene.layout.Priority.ALWAYS);
 
@@ -89,6 +89,7 @@ public abstract class FXMLSignupBase extends BorderPane {
         signupBtn.setLayoutX(59.0);
         signupBtn.setLayoutY(321.0);
         signupBtn.setMnemonicParsing(false);
+        signupBtn.setOnAction(this::goToActiveUsers);
         signupBtn.setPrefHeight(43.0);
         signupBtn.setPrefWidth(112.0);
         signupBtn.getStyleClass().add("bigBtn");
@@ -166,6 +167,8 @@ public abstract class FXMLSignupBase extends BorderPane {
     }
 
     protected abstract void handleBackButton(javafx.event.ActionEvent actionEvent);
+
+    protected abstract void goToActiveUsers(javafx.event.ActionEvent actionEvent);
 
     protected abstract void goToSignin(javafx.event.ActionEvent actionEvent);
 

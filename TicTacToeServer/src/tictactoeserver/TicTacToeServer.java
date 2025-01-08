@@ -28,7 +28,6 @@ public class TicTacToeServer extends Application {
        
  
         stage.setTitle("TicTacToe");
-
         stage.setScene(scene);
         stage.show();
         stage.setResizable(false);

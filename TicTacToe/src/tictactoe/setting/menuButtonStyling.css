@@ -4,9 +4,8 @@
     -fx-border-color: #ccc; /* Optional border for structure */
     -fx-border-width: 1px;
     -fx-border-radius: 10px;
-    -fx-padding: 8 12;
-    -fx-font-size: 14px;
-    -fx-text-fill: #333;
+    -fx-padding: 5;
+    -fx-font-size:1px;
     -fx-cursor: hand;
 }
 

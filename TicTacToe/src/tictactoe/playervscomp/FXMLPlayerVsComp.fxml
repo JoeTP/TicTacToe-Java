@@ -1,31 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="720.0" maxWidth="720.0" minHeight="500.0" minWidth="450.0" prefHeight="500.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.playervscomp.FXMLPlayerVsCompController">
+<BorderPane maxHeight="720.0" maxWidth="720.0" minHeight="500.0" minWidth="450.0" prefHeight="500.0" prefWidth="450.0" styleClass="mainBackground" stylesheets="@../../../resources/styling/generalStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.playervscomp.FXMLPlayerVsCompController">
    <center>
       <AnchorPane prefHeight="472.0" prefWidth="720.0" BorderPane.alignment="CENTER">
          <children>
-            <Text fx:id="chooseDifficultyLabel" fill="#3e5879" layoutX="98.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="bigLabel" text="Choose Difficulty" textAlignment="CENTER">
-               <font>
-                  <Font size="36.0" />
-               </font>
-            </Text>
-            <Slider fx:id="difficultySlider" blockIncrement="1.0" layoutX="82.0" layoutY="273.0" majorTickUnit="1.0" max="2.0" minorTickCount="0" prefHeight="31.0" prefWidth="286.0" snapToTicks="true" />
-            <ImageView fx:id="difficultyImg" fitHeight="144.0" fitWidth="262.0" layoutX="96.0" layoutY="106.0" pickOnBounds="true" preserveRatio="true">
+            <Label layoutX="180.0" layoutY="12.0" styleClass="bigLabel" stylesheets="@../../../resources/styling/generalStyle.css" text="Difficulty" />
+            <Slider fx:id="difficultySlider" blockIncrement="1.0" layoutX="100.0" layoutY="267.0" majorTickUnit="1.0" max="2.0" minorTickCount="0" prefHeight="42.0" prefWidth="266.0" showTickLabels="true" showTickMarks="true" snapToTicks="true">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Slider>
+            <ImageView fx:id="difficultyImg" fitHeight="144.0" fitWidth="262.0" layoutX="96.0" layoutY="87.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../resources/assets/icons/easy.PNG" />
                </image>
             </ImageView>
+            <Label layoutX="155.0" layoutY="226.0" styleClass="bigLabel" stylesheets="@../../../resources/styling/generalStyle.css" text="Select Difficulty" textFill="#213555">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </Label>
 
-            <Button fx:id="startBtn" layoutX="165.0" layoutY="318.0" mnemonicParsing="false" onAction="#openGameBoard" prefHeight="30.0" prefWidth="120.0" styleClass="bigBtn" stylesheets="@../../../resources/styling/generalStyle.css" text="Start" AnchorPane.leftAnchor="165.0" AnchorPane.rightAnchor="165.0">
+            <Button fx:id="startBtn" layoutX="148.0" layoutY="332.0" mnemonicParsing="false" onAction="#openGameBoard" prefHeight="44.0" prefWidth="155.0" styleClass="bigBtn" stylesheets="@../../../resources/styling/generalStyle.css" text="Start" AnchorPane.leftAnchor="148.0" AnchorPane.rightAnchor="147.0">
 
 
                <font>
@@ -40,7 +49,7 @@
          <children>
 
 
-            <Button fx:id="backBtn" layoutX="20.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleBackButton"  prefHeight="30.0" prefWidth="30.0" style="-fx-border-radius: 30px; -fx-background-radius: 30px;" styleClass="bigBtn" stylesheets="@../../../resources/styling/generalStyle.css" text="B" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="14.0" />
+            <Button fx:id="backBtn" layoutX="20.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="30.0" prefWidth="30.0" style="-fx-border-radius: 30px; -fx-background-radius: 30px;" styleClass="bigBtn" stylesheets="@../../../resources/styling/generalStyle.css" text="B" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="14.0" />
 
 
          </children>

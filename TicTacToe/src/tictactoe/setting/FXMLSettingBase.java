@@ -39,11 +39,11 @@ public abstract class FXMLSettingBase extends BorderPane {
     protected final Label label2;
     protected final MenuButton menuBtn;
     protected final MenuItem userNameMenuItem;
-    protected final Text userNameText;
+    protected final Label label3;
     protected final MenuItem iconMenuItem;
     protected final ImageView userIconImage;
     protected final MenuItem emailMenuItem;
-    protected final Text emailText;
+    protected final Label label4;
     protected final ImageView menuBtnIcon;
 
     public FXMLSettingBase() {
@@ -68,15 +68,17 @@ public abstract class FXMLSettingBase extends BorderPane {
         label2 = new Label();
         menuBtn = new MenuButton();
         userNameMenuItem = new MenuItem();
-        userNameText = new Text();
+        label3 = new Label();
         iconMenuItem = new MenuItem();
         userIconImage = new ImageView();
         emailMenuItem = new MenuItem();
-        emailText = new Text();
+        label4 = new Label();
         menuBtnIcon = new ImageView();
 
         setPrefHeight(720.0);
         setPrefWidth(720.0);
+        getStyleClass().add("mainBackground");
+        getStylesheets().add("/styling/generalStyle.css");
 
         BorderPane.setAlignment(hBox, javafx.geometry.Pos.CENTER);
         hBox.setSpacing(120.0);
@@ -88,12 +90,16 @@ public abstract class FXMLSettingBase extends BorderPane {
         backBtn.setLayoutY(44.0);
         backBtn.setMnemonicParsing(false);
         backBtn.setOnAction(this::handleBackBtn);
+        backBtn.getStyleClass().add("bigBtn");
+        backBtn.getStylesheets().add("/styling/generalStyle.css");
         backBtn.setText("Back");
 
-        signinTitle.setLayoutX(281.0);
-        signinTitle.setLayoutY(82.0);
+        signinTitle.setFill(javafx.scene.paint.Color.valueOf("#3e5879"));
+        signinTitle.setLayoutX(326.0);
+        signinTitle.setLayoutY(86.0);
         signinTitle.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         signinTitle.setStrokeWidth(0.0);
+        signinTitle.getStyleClass().add("bigLabel");
         signinTitle.setText("Setting");
         signinTitle.setFont(new Font(48.0));
         BorderPane.setMargin(hBox, new Insets(0.0, 0.0, 10.0, 0.0));
@@ -136,11 +142,12 @@ public abstract class FXMLSettingBase extends BorderPane {
         imageView.setFitWidth(32.0);
         imageView.setPickOnBounds(true);
         imageView.setPreserveRatio(true);
-         imageView.setImage(new Image(getClass().getResource("/assets/icons/sound.png").toExternalForm()));
+        imageView.setImage(new Image(getClass().getResource("/assets/icons/sound.png").toExternalForm()));
         soundToggleBtn.setGraphic(imageView);
 
         label.setLayoutX(202.0);
         label.setLayoutY(215.0);
+        label.getStyleClass().add("bigLabel");
         label.setText("Sound");
         label.setFont(new Font(24.0));
 
@@ -155,11 +162,12 @@ public abstract class FXMLSettingBase extends BorderPane {
         imageView0.setFitWidth(32.0);
         imageView0.setPickOnBounds(true);
         imageView0.setPreserveRatio(true);
-             imageView0.setImage(new Image(getClass().getResource("/assets/icons/dark-theme.png").toExternalForm()));
+        imageView0.setImage(new Image(getClass().getResource("/assets/icons/dark-theme.png").toExternalForm()));
         themeToggleBtn.setGraphic(imageView0);
 
         label0.setLayoutX(200.0);
         label0.setLayoutY(290.0);
+        label0.getStyleClass().add("bigLabel");
         label0.setText("Theme");
         label0.setFont(new Font(24.0));
 
@@ -174,18 +182,20 @@ public abstract class FXMLSettingBase extends BorderPane {
         imageView1.setFitWidth(93.0);
         imageView1.setPickOnBounds(true);
         imageView1.setPreserveRatio(true);
-           imageView1.setImage(new Image(getClass().getResource("/assets/icons/english.png").toExternalForm()));
+        imageView1.setImage(new Image(getClass().getResource("/assets/icons/english.png").toExternalForm()));
         langToggleBtn.setGraphic(imageView1);
 
         label1.setLayoutX(200.0);
         label1.setLayoutY(380.0);
+        label1.getStyleClass().add("bigLabel");
         label1.setText("Language");
         label1.setFont(new Font(24.0));
 
-        label2.setLayoutX(182.0);
-        label2.setLayoutY(120.0);
+        label2.setLayoutX(202.0);
+        label2.setLayoutY(124.0);
         label2.setText("Account Information");
-        label2.setFont(new Font(24.0));
+        label2.setTextFill(javafx.scene.paint.Color.valueOf("#3e5879"));
+        label2.setFont(new Font("Stencil", 21.0));
 
         menuBtn.setContentDisplay(javafx.scene.control.ContentDisplay.CENTER);
         menuBtn.setGraphicTextGap(9.0);
@@ -193,16 +203,14 @@ public abstract class FXMLSettingBase extends BorderPane {
         menuBtn.setLayoutY(107.0);
         menuBtn.setMnemonicParsing(false);
         menuBtn.setPopupSide(javafx.geometry.Side.RIGHT);
-        menuBtn.setPrefHeight(47.0);
-        menuBtn.setPrefWidth(62.0);
+        menuBtn.setPrefHeight(75.0);
+        menuBtn.setPrefWidth(59.0);
         menuBtn.getStylesheets().add("/tictactoe/setting/menuButtonStyling.css");
 
         userNameMenuItem.setMnemonicParsing(false);
 
-        userNameText.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
-        userNameText.setStrokeWidth(0.0);
-        userNameText.setText("Ayat Gamal");
-        userNameMenuItem.setGraphic(userNameText);
+        label3.setText("Ayat Gamal");
+        userNameMenuItem.setGraphic(label3);
 
         iconMenuItem.setMnemonicParsing(false);
 
@@ -215,10 +223,8 @@ public abstract class FXMLSettingBase extends BorderPane {
 
         emailMenuItem.setMnemonicParsing(false);
 
-        emailText.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
-        emailText.setStrokeWidth(0.0);
-        emailText.setText("AyatGa@gmail.com");
-        emailMenuItem.setGraphic(emailText);
+        label4.setText("AyatGa@gmail.com");
+        emailMenuItem.setGraphic(label4);
 
         menuBtnIcon.setFitHeight(32.0);
         menuBtnIcon.setFitWidth(32.0);

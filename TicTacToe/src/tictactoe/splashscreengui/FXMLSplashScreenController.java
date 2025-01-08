@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import shared.AppFunctions;
+import shared.AppIntegers;
 import tictactoe.homescreen.FXMLHomeScreenController;
 
 /**
@@ -27,7 +28,7 @@ public class FXMLSplashScreenController extends FXMLSplashScreenBase {
     public FXMLSplashScreenController(Stage stage) {
         this.stage = stage;
 
-        PauseTransition pause = new PauseTransition(Duration.seconds(2));
+        PauseTransition pause = new PauseTransition(Duration.seconds(AppIntegers.SPLASH_SCREEN_TIMER));
         pause.play();
         pause.setOnFinished(event -> {
             stage.setScene(new Scene(new FXMLHomeScreenController(stage, false)));
