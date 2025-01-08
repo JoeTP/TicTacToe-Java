@@ -37,10 +37,11 @@ public class DataAccessLayer {
         }
     }
 
-    public static int getUserData() {
+    public static UserModel getUserData(String userName) {
         UserModel user = new UserModel();
         try {
-            PreparedStatement pst = conection.prepareStatement("SELECT * FROM USERS");
+            PreparedStatement pst = conection.prepareStatement("SELECT * FROM USERS WHERE USER_NAME = ?");
+            pst.setString (2, userName);
             rs = pst.executeQuery();
             if (rs.next()) {
                 user.setId(rs.getInt(AppStrings.USER_ID));
@@ -54,6 +55,6 @@ public class DataAccessLayer {
         } catch (SQLException ex) {
             Logger.getLogger(DataAccessLayer.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return 0;
+        return user;
     }
 }
