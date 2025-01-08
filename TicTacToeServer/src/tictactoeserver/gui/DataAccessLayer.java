@@ -57,4 +57,37 @@ public class DataAccessLayer {
         }
         return user;
     }
+    public static int getUsersCount() {
+        try {
+            PreparedStatement pst = conection.prepareStatement("SELECT * FROM USERS");
+            rs = pst.executeQuery();
+            while (rs.next()) {
+                i++;
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(DataAccessLayer.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        return i;
+    }
+    public static void insertData(UserModel u) {
+        try {
+            PreparedStatement pst = conection.prepareStatement("INSERT INTO USERS (USER_NAME,USER_ACCOUNT,USER_PASSWORD,USER_IMG) VALUES (?,?,?,?)");
+            
+            pst.setString (1, u.getName());
+            pst.setString (2, u.getEmail());
+            pst.setString (3, u.getPassword());
+            pst.setString (4, u.getImage());
+            int isUpdate= pst.executeUpdate();
+            if(isUpdate > 0)
+            {
+                System.out.println("Inserted succ.");
+            }
+            else{
+                System.out.println("Inserted failed");
+            }
+         
+            } catch (SQLException ex) {
+                Logger.getLogger(DataAccessLayer.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }
 }
