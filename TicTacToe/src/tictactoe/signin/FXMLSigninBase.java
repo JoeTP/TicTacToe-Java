@@ -1,4 +1,5 @@
 package tictactoe.signin;
+import clientconnection.Client;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -27,9 +28,9 @@ public abstract class FXMLSigninBase extends BorderPane {
     protected final Button signupBtn;
     protected final TextField usernameTextField;
     protected final PasswordField passwordField;
-
+   
     public FXMLSigninBase() {
-
+       
         hBox = new HBox();
         anchorPane = new AnchorPane();
         backBtn = new Button();
