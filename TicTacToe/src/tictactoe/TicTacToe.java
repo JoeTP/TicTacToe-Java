@@ -5,7 +5,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import javafx.stage.StageStyle;
 
 import shared.AppString;
 import tictactoe.signup.FXMLSignupController;

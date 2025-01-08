@@ -27,7 +27,48 @@
          <bottom>
             <HBox BorderPane.alignment="CENTER_LEFT">
                <children>
+<<<<<<< HEAD
+                  <ImageView fx:id="connectionIndicatorImageView" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <Label fx:id="connectionLabel" alignment="CENTER" styleClass="bigLabel" stylesheets="@../../../resources/styling/generalStyle.css" text="Online" />
+               </children>
+               <opaqueInsets>
+                  <Insets left="20.0" />
+               </opaqueInsets>
+            </HBox>
+            <Region HBox.hgrow="ALWAYS" />
+            <Button fx:id="chatBtn" mnemonicParsing="false" onAction="#openChat" styleClass="bigBtn" stylesheets="@../../../resources/styling/generalStyle.css" text="Chat">
+               <HBox.margin>
+                  <Insets bottom="20.0" right="20.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+   </bottom>
+   <top>
+      <HBox fx:id="header" spacing="20.0" BorderPane.alignment="CENTER">
+         <children>
+            <Region HBox.hgrow="ALWAYS" />
+            <Button fx:id="settingsBtn" mnemonicParsing="false" onAction="#openSettingsScreen" styleClass="bigBtn" stylesheets="@../../../resources/styling/generalStyle.css" text="Settings" HBox.hgrow="NEVER" />
+            <Button fx:id="exitBtn" layoutX="645.0" layoutY="30.0" minWidth="31.0" mnemonicParsing="false" onAction="#exitApp" prefHeight="32.0" prefWidth="31.0" styleClass="bigBtn" stylesheets="@../../../resources/styling/generalStyle.css" text="X" />
+         </children>
+         <padding>
+            <Insets right="20.0" top="20.0" />
+         </padding>
+      </HBox>
+   </top>
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox alignment="CENTER" layoutX="117.0" layoutY="71.0" prefHeight="368.0" prefWidth="274.0" spacing="20.0">
+               <children>
+                  <AnchorPane>
+=======
                   <HBox alignment="CENTER" spacing="10.0">
+>>>>>>> d132314dad73bce636701107d46dd71ace7b2710
                      <children>
                         <ImageView fx:id="connectionIndicatorImageView" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <HBox.margin>
@@ -124,7 +165,26 @@
                   <Insets left="20.0" />
                </padding>
             </VBox>
+<<<<<<< HEAD
+         </children>
+      </AnchorPane>
+   </center>
+   <left>
+      <VBox alignment="CENTER" BorderPane.alignment="BOTTOM_LEFT">
+         <children>
+            <ImageView fx:id="profileImageView" fitHeight="67.0" fitWidth="89.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+         <padding>
+            <Insets left="20.0" />
+         </padding>
+      </VBox>
+   </left>
+=======
          </left>
       </BorderPane>
    </children>
+>>>>>>> d132314dad73bce636701107d46dd71ace7b2710
 </fx:root>

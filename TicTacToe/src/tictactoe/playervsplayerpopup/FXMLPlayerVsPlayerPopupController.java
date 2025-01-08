@@ -9,8 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.stage.Stage;
 import shared.AppFunctions;
 import tictactoe.playervsplayerlocal.FXMLPlayerVsPlayerLocalController;
-import tictactoe.playervsplayeronline.FXMLPlayerVsPlayerOnlineController;
-import tictactoe.signup.FXMLSignupController;
+import tictactoe.signin.FXMLSigninController;
 /**
  * FXML Controller class
  *
@@ -35,13 +34,7 @@ public class FXMLPlayerVsPlayerPopupController extends FXMLPlayerVsPlayerPopupBa
 
     @Override
     protected void handleOnlineButton(ActionEvent actionEvent) {
-        AppFunctions.openPopup(stage, new FXMLSignupController(stage));
+        AppFunctions.goTo(actionEvent, new FXMLSigninController(stage));
 
     }
-
-    /**
-     * Initializes the controller class.
-     */
-      
-    
 }
