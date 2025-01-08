@@ -10,6 +10,13 @@ package shared;
  * @author Youssif
  */
 public interface AppStrings {
+    
+    String START = "Start";
+    String STOP = "Stop";
+    String ONLINE = "Online";
+    String OFFLINE = "Offline";
+    
+    
     /**
      * USER Columns Name
      */
