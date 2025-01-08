@@ -16,14 +16,8 @@ public class TicTacToe extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        //   Parent root = new FXMLSettingController();
-        //Parent root = new FXMLSignupController();
-
 
         Parent root = new FXMLSplashScreenController(stage);
-
-
-
         Scene scene = new Scene(root);
         //stage.initStyle(StageStyle.DECORATED.UNDECORATED);
         stage.setTitle(AppString.APP_TITLE);

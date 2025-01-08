@@ -4,6 +4,8 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.shape.Circle;
@@ -16,12 +18,12 @@ public abstract class FXMLServerBase extends BorderPane {
     protected final Button serverEscBtn;
     protected final AnchorPane anchorPane0;
     protected final PieChart usersPieChart;
-    protected final Button serverStartBtn;
-    protected final Button serverStopBtn;
     protected final Circle serverIndicator;
     protected final Text text;
     protected final ListView usersList;
     protected final Label label;
+    protected final ToggleButton serverStateToggleButton;
+    protected final ToggleGroup startCloseGroup;
 
     public FXMLServerBase() {
 
@@ -29,12 +31,12 @@ public abstract class FXMLServerBase extends BorderPane {
         serverEscBtn = new Button();
         anchorPane0 = new AnchorPane();
         usersPieChart = new PieChart();
-        serverStartBtn = new Button();
-        serverStopBtn = new Button();
         serverIndicator = new Circle();
         text = new Text();
         usersList = new ListView();
         label = new Label();
+        serverStateToggleButton = new ToggleButton();
+        startCloseGroup = new ToggleGroup();
 
         setMaxHeight(USE_PREF_SIZE);
         setMaxWidth(USE_PREF_SIZE);
@@ -42,12 +44,12 @@ public abstract class FXMLServerBase extends BorderPane {
         setMinWidth(USE_PREF_SIZE);
         setPrefHeight(400.0);
         setPrefWidth(600.0);
-        getStylesheets().add("/tictactoe/server/../../../resources/styles/serverstylesheet.css");
+        getStylesheets().add("/tictactoeserver/gui/../../../resources/styles/serverstylesheet.css");
 
         BorderPane.setAlignment(anchorPane, javafx.geometry.Pos.CENTER);
         anchorPane.setPrefHeight(13.0);
         anchorPane.setPrefWidth(600.0);
-        anchorPane.getStylesheets().add("/tictactoe/server/../../../resources/styles/serverstylesheet.css");
+        anchorPane.getStylesheets().add("/tictactoeserver/gui/../../../resources/styles/serverstylesheet.css");
 
         serverEscBtn.setLayoutX(14.0);
         serverEscBtn.setLayoutY(11.0);
@@ -65,25 +67,8 @@ public abstract class FXMLServerBase extends BorderPane {
         usersPieChart.setPrefHeight(284.0);
         usersPieChart.setPrefWidth(280.0);
         usersPieChart.getStyleClass().add("default-color0");
-        usersPieChart.getStylesheets().add("/tictactoe/server/../../../resources/styles/serverstylesheet.css");
+        usersPieChart.getStylesheets().add("/tictactoeserver/gui/../../../resources/styles/serverstylesheet.css");
         usersPieChart.setTitle("Users");
-
-        serverStartBtn.setId("serverStartBtn");
-        serverStartBtn.setLayoutX(93.0);
-        serverStartBtn.setLayoutY(293.0);
-        serverStartBtn.setMnemonicParsing(false);
-        serverStartBtn.setPrefHeight(25.0);
-        serverStartBtn.setPrefWidth(68.0);
-        serverStartBtn.getStyleClass().add("serverStartBtn");
-        serverStartBtn.getStylesheets().add("/tictactoe/server/../onlinegmaeboard/css/gameBoardOnline.css");
-        serverStartBtn.setText("Start");
-
-        serverStopBtn.setLayoutX(177.0);
-        serverStopBtn.setLayoutY(293.0);
-        serverStopBtn.setMnemonicParsing(false);
-        serverStopBtn.setPrefHeight(25.0);
-        serverStopBtn.setPrefWidth(70.0);
-        serverStopBtn.setText("Stop");
 
         serverIndicator.setFill(javafx.scene.paint.Color.valueOf("#13f803"));
         serverIndicator.setLayoutX(64.0);
@@ -110,16 +95,26 @@ public abstract class FXMLServerBase extends BorderPane {
         label.setLayoutY(32.0);
         label.setText("Active users");
         label.setFont(new Font(18.0));
+
+        serverStateToggleButton.setLayoutX(99.0);
+        serverStateToggleButton.setLayoutY(289.0);
+        serverStateToggleButton.setMnemonicParsing(false);
+        serverStateToggleButton.setOnAction(this::handleServerState);
+        serverStateToggleButton.setText("Start");
+
+        serverStateToggleButton.setToggleGroup(startCloseGroup);
         setBottom(anchorPane0);
 
         anchorPane.getChildren().add(serverEscBtn);
         anchorPane0.getChildren().add(usersPieChart);
-        anchorPane0.getChildren().add(serverStartBtn);
-        anchorPane0.getChildren().add(serverStopBtn);
         anchorPane0.getChildren().add(serverIndicator);
         anchorPane0.getChildren().add(text);
         anchorPane0.getChildren().add(usersList);
         anchorPane0.getChildren().add(label);
+        anchorPane0.getChildren().add(serverStateToggleButton);
 
     }
+
+    protected abstract void handleServerState(javafx.event.ActionEvent actionEvent);
+
 }
