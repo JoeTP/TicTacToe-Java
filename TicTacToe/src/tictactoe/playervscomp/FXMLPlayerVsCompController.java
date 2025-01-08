@@ -54,8 +54,7 @@ public class FXMLPlayerVsCompController extends FXMLPlayerVsCompBase {
     @FXML
     @Override
     protected void openGameBoard(ActionEvent actionEvent) {
-        AppFunctions.closePopup(actionEvent);
-        stage.setScene(new Scene(new FXMLOfflineGameBoardController(stage)));
+        AppFunctions.closeAndGo(actionEvent,stage);
     }
 
     @FXML

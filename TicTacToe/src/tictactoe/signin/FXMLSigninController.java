@@ -5,6 +5,7 @@
  */
 package tictactoe.signin;
 
+import clientconnection.Client;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -30,9 +31,11 @@ import tictactoe.signup.FXMLSignupController;
 public class FXMLSigninController extends FXMLSigninBase {
 
     Stage stage;
+    Client c = new Client();
 
     public FXMLSigninController(Stage stage) {
         this.stage = stage;
+
     }
 
     @Override
@@ -48,7 +51,9 @@ public class FXMLSigninController extends FXMLSigninBase {
     }
 
     @Override
-    protected void goToActiveUsers(ActionEvent actionEvent) {
+    protected void goToActiveUsers(ActionEvent actionEvent) {//sign in button
+
+        c.connectToServer();
         AppFunctions.closePopup(actionEvent);
         AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage));
     }
