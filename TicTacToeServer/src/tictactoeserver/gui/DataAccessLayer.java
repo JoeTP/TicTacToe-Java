@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package tictactoeserver.gui;
 
 import java.sql.Connection;
@@ -15,10 +11,9 @@ import java.util.logging.Logger;
 import models.UserModel;
 import shared.AppStrings;
 
-/**
- *
- * @author Kimo Store
- */
+
+
+
 public class DataAccessLayer {
 
     private static Connection conection;

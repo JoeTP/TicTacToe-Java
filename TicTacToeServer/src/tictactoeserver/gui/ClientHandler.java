@@ -13,10 +13,7 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author Youssif
- */
+
 public class ClientHandler extends Thread {
 
     DataInputStream dis;
