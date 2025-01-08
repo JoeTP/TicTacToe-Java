@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tictactoeserver;
+package tictactoeserver.gui;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,6 +12,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import models.UserModel;
+import shared.AppStrings;
 
 /**
  *
@@ -35,16 +37,23 @@ public class DataAccessLayer {
         }
     }
 
-    public static int getData() {
+    public static int getUserData() {
+        UserModel user = new UserModel();
         try {
             PreparedStatement pst = conection.prepareStatement("SELECT * FROM USERS");
             rs = pst.executeQuery();
-            while (rs.next()) {
-                i++;
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(DataAccessLayer.class.getName()).log(Level.SEVERE, null, ex);
+            if (rs.next()) {
+                user.setId(rs.getInt(AppStrings.USER_ID));
+                user.setScore(rs.getInt(AppStrings.USER_SCORE));
+                user.setNumOfGames(rs.getInt(AppStrings.NO_OF_GAMES));
+                user.setWins(rs.getInt(AppStrings.NO_OF_WINS));
+                user.setLosses(rs.getInt(AppStrings.NO_OF_LOSSES));
+                user.setIsOnline(rs.getInt(AppStrings.IS_ONLINE) != 0); //false
+                user.setIsInGame(rs.getInt(AppStrings.IS_INGAME) != 0); //false
             }
-        return i;
+        } catch (SQLException ex) {
+            Logger.getLogger(DataAccessLayer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
     }
 }

@@ -11,35 +11,21 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import tictactoeserver.gui.FXMLServerController;
 
-/**
- *
- * @author Kimo Store
- */
-public class TicTacToeServer extends Application {
+public class MainServer extends Application {
+
     
     @Override
     public void start(Stage stage) {
-        
-        
         Parent root = new FXMLServerController();
         Scene scene = new Scene(root);
-       
-        scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
-       
- 
+      //  scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
         stage.setTitle("TicTacToe");
         stage.setScene(scene);
         stage.show();
         stage.setResizable(false);
-        
-        
     }
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
         launch(args);
     }
-    
 }
