@@ -41,7 +41,7 @@ public class DataAccessLayer {
         UserModel user = new UserModel();
         try {
             PreparedStatement pst = conection.prepareStatement("SELECT * FROM USERS WHERE USER_NAME = ?");
-            pst.setString (2, userName);
+            pst.setString (1, userName);
             rs = pst.executeQuery();
             if (rs.next()) {
                 user.setId(rs.getInt(AppStrings.USER_ID));

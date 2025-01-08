@@ -36,7 +36,7 @@ public class FXMLServerController extends FXMLServerBase {
     Thread th;
 
     public FXMLServerController() {
-        //count = DataAccessLayer.getUserData();
+        count = DataAccessLayer.getUsersCount();
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
                 new PieChart.Data(AppStrings.ONLINE, count),
                 new PieChart.Data(AppStrings.OFFLINE, 4));

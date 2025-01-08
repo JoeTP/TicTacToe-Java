@@ -4,7 +4,6 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -12,8 +11,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import static shared.AppString.GENERAL_STYLE_FILE_PATH;
-import static shared.AppString.ICON_PATHS;
 
 public abstract class FXMLSignupBase extends BorderPane {
 
@@ -33,7 +30,6 @@ public abstract class FXMLSignupBase extends BorderPane {
     protected final Button previousImageBtn;
     protected final ImageView characterImageView;
     protected final Button nextImageBtn;
-
     protected int currentImageIndex = 0;
 
     public FXMLSignupBase() {
@@ -54,11 +50,12 @@ public abstract class FXMLSignupBase extends BorderPane {
         previousImageBtn = new Button();
         characterImageView = new ImageView();
         nextImageBtn = new Button();
+        
 
         setPrefHeight(552.0);
         setPrefWidth(400.0);
         getStyleClass().add("mainBackground");
-        getStylesheets().add(GENERAL_STYLE_FILE_PATH);
+        getStylesheets().add("/styling/generalStyle.css");
 
         BorderPane.setAlignment(hBox, javafx.geometry.Pos.CENTER);
         hBox.setSpacing(120.0);
@@ -173,12 +170,7 @@ public abstract class FXMLSignupBase extends BorderPane {
         anchorPane0.getChildren().add(hBox0);
         vBox.getChildren().add(anchorPane0);
 
-        
-        characterImageView.setFitWidth(64);
-        characterImageView.setFitHeight(64);
-        characterImageView.setImage(new Image(ICON_PATHS[currentImageIndex]));
     }
-    
 
     protected abstract void handleBackButton(javafx.event.ActionEvent actionEvent);
 
