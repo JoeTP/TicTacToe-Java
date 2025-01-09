@@ -54,6 +54,11 @@ public class FXMLSignupController extends FXMLSignupBase {
         user = getNewUserData();
         Client client = new Client();
         client.connectToServer();
+        try {
+            client.sendUser(user);
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLSignupController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         System.out.println(client.serverStatus);
         if(client.serverStatus == false){
             System.out.println(user.getName()+"\n"+user.getEmail()+"\n"+user.getPassword()+"\n"+user.getImage());
