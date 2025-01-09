@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.shape.Line?>
 
-<BorderPane prefHeight="720.0" prefWidth="720.0" styleClass="mainBackground" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="720.0" prefWidth="720.0" styleClass="mainBackground" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.offlinegameboard.FXMLOfflineGameBoardController">
    <top>
       <HBox prefHeight="70.0" prefWidth="300.0" BorderPane.alignment="CENTER">
          <children>
@@ -79,7 +79,7 @@
          <children>
             <Label id="textId" fx:id="timerLabel" text="7:00" textFill="#3e5879" />
             <Region prefHeight="50.0" prefWidth="360.0" />
-            <Button id="textId" fx:id="leaveBtn" mnemonicParsing="false" text="Leave" />
+            <Button id="textId" fx:id="leaveBtn" mnemonicParsing="false" onAction="#handleLeaveBtn" text="Leave" />
          </children>
          <BorderPane.margin>
             <Insets bottom="20.0" left="105.0" />

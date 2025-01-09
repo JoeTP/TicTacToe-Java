@@ -25,12 +25,13 @@ public class ClientHandler extends Thread {
     Socket client;  // Add a reference to the client socket
 
     public ClientHandler(Socket client) {
-        this.client = client; 
+        this.client = client;
         try {
             dis = new DataInputStream(client.getInputStream());
-            System.out.println(dis);
             ps = new DataOutputStream(client.getOutputStream());
             ClientHandler.clients.add(this);
+
+            System.out.println("##OF CLIENTS" + clients.size());
             start();
         } catch (IOException ex) {
             Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
@@ -52,6 +53,8 @@ public class ClientHandler extends Thread {
                 dis.close();
                 ps.close();
                 client.close();
+
+                System.out.println("##OF CLIENTS" + clients.size());
             } catch (IOException ex) {
                 Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
             }
