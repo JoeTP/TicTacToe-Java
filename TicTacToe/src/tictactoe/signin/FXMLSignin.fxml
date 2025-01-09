@@ -12,12 +12,8 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<<<<<<< HEAD
-<BorderPane prefHeight="552.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.signin.FXMLSigninController">
-=======
 <BorderPane prefHeight="552.0" prefWidth="400.0" styleClass="mainBackground" stylesheets="@../../../resources/styling/generalStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.signin.FXMLSigninController">
->>>>>>> d132314dad73bce636701107d46dd71ace7b2710
-   <top>
+    <top>
       <HBox spacing="120.0" BorderPane.alignment="CENTER">
          <children>
             <AnchorPane HBox.hgrow="ALWAYS">
@@ -46,14 +42,14 @@
             <AnchorPane VBox.vgrow="ALWAYS">
                <children>
                   <ImageView fx:id="userImg" fitHeight="84.0" fitWidth="84.0" layoutX="155.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
-                  <Button fx:id="signinBtn" layoutX="141.0" layoutY="288.0" mnemonicParsing="false" onAction="#goToActiveUsers" prefHeight="43.0" prefWidth="112.0" styleClass="bigBtn" text="Sign-in" />
-                  <Text fill="#3e5879" layoutX="60.0" layoutY="372.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Don’t you have an account?">
+                  <Button fx:id="signinBtn" layoutX="141.0" layoutY="258.0" mnemonicParsing="false" onAction="#goToActiveUsers" prefHeight="43.0" prefWidth="112.0" styleClass="bigBtn" text="Sign-in" />
+                  <Text fill="#3e5879" layoutX="60.0" layoutY="372.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 15;" text="Don't you have an account?">
                      <font>
                         <Font name="Stencil" size="12.0" />
                      </font></Text>
-                  <Button fx:id="signupBtn" layoutX="263.0" layoutY="349.0" mnemonicParsing="false" onAction="#goToSignup" styleClass="bigBtn" text="Sign-up" />
-                  <TextField fx:id="usernameTextField" layoutX="60.0" layoutY="143.0" prefHeight="48.0" prefWidth="276.0" promptText="User Name" />
-                  <PasswordField fx:id="passwordField" layoutX="60.0" layoutY="213.0" prefHeight="48.0" prefWidth="276.0" promptText="Passoword" />
+                  <Button fx:id="signupBtn" layoutX="268.0" layoutY="337.0" mnemonicParsing="false" onAction="#goToSignup" style="-fx-background-color: transparent; -fx-text-fill: #3e5879; -fx-font-size: 20;" text="Sign-up" underline="true" />
+                  <TextField fx:id="usernameTextField" layoutX="60.0" layoutY="103.0" prefHeight="48.0" prefWidth="276.0" promptText="User Name" />
+                  <PasswordField fx:id="passwordField" layoutX="60.0" layoutY="173.0" prefHeight="48.0" prefWidth="276.0" promptText="Passoword" />
                </children>
             </AnchorPane>
          </children>

@@ -7,6 +7,7 @@ import javafx.stage.Stage;
 
 
 import shared.AppString;
+import tictactoe.signin.FXMLSigninController;
 import tictactoe.signup.FXMLSignupController;
 
 
@@ -18,7 +19,8 @@ public class TicTacToe extends Application {
     public void start(Stage stage) throws Exception {
  
         //   Parent root = new FXMLSettingController();
-      //  Parent root = new FXMLSignupController(stage);
+      //Parent root = new FXMLSignupController(stage);
+    //  Parent root = new FXMLSigninController(stage);
 
  
         Parent root = new FXMLSplashScreenController(stage);
