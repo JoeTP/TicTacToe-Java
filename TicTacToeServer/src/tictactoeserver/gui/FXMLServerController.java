@@ -19,16 +19,10 @@ import javafx.scene.chart.PieChart;
 import shared.AppStrings;
 import tictactoeserver.MainServer;
 
-/**
- * FXML Controller class
- *
- * @author Kimo Store
- */
+
 public class FXMLServerController extends FXMLServerBase {
 
-    /**
-     * Initializes the controller class.
-     */
+ 
     private boolean serverRunning = false;
     private int count;
     ServerSocket server;
