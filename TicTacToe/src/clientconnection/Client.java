@@ -12,23 +12,28 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
+import javafx.application.Platform;
+
+
 /**
  *
  * @author Ayat Gamal
  */
 public class Client {
+
   
-    DataInputStream dis;
-    PrintStream ps;
-    Socket socket;
-    public boolean serverStatus = false;
-   
+    public static DataInputStream dis;
+    public static PrintStream ps;
+    public static Socket socket;
+    public static boolean serverStatus = false;
     
-    public void connectToServer(){
-    
-          try {
+    public void connectToServer() {
+
+        try {
+
             socket = new Socket("127.0.0.1", 5001);
-            
+
             System.out.println("Cleint connection Established !");
 
             dis = new DataInputStream(socket.getInputStream());
@@ -40,18 +45,30 @@ public class Client {
 
         // thread for each client
         Thread th;
-        th = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-                   
-                        //String reply = dis.readLine(); // my message as a client
-                        serverStatus =  socket.isClosed();
+        th = new Thread(() -> {
+            while (true) {
+                try {
+                    String reply = dis.readLine();
+                    serverStatus = socket.isClosed();
+                    System.out.println(serverStatus);
+                } catch (IOException ex) {
+                    Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+
                 }
             }
-        });
+        }
+        );
         th.start();
     }
 
-    
+    public static void stopThreads() {
+        try {
+            //ps.close();
+            dis.close();
+            Platform.exit();
+        } catch (IOException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
 }

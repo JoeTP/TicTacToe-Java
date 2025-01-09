@@ -5,12 +5,10 @@
  */
 package tictactoe.onlinegmaeboard;
 
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
-import javafx.fxml.Initializable;
 import javafx.stage.Stage;
 import shared.AppFunctions;
+import tictactoe.homescreen.FXMLHomeScreenController;
 import tictactoe.popupwin.FXMLPopUpWinController;
 
 /**
@@ -18,14 +16,9 @@ import tictactoe.popupwin.FXMLPopUpWinController;
  *
  * @author Toshiba
  */
-public class FXMLGameBoardOnlineController extends FXMLGameBoardOnlineBase implements Initializable {
-    
+public class FXMLGameBoardOnlineController extends FXMLGameBoardOnlineBase {
+
     private Stage stage;
-  
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        
-    }    
 
     public FXMLGameBoardOnlineController(Stage stage) {
         this.stage = stage;
@@ -33,7 +26,10 @@ public class FXMLGameBoardOnlineController extends FXMLGameBoardOnlineBase imple
 
     @Override
     protected void winOrLossPopup(ActionEvent actionEvent) {
-        AppFunctions.openPopup(stage, new FXMLPopUpWinController(stage, false));
+        //go back to this line later
+        //AppFunctions.openPopup(stage, new FXMLPopUpWinController(stage, false));
+        AppFunctions.goTo(actionEvent, new FXMLHomeScreenController(stage));
+
     }
-    
+
 }
