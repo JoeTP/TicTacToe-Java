@@ -9,6 +9,8 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -19,7 +21,7 @@ public class Client {
     DataInputStream dis;
     PrintStream ps;
     Socket socket;
-    public static boolean clientStatus = false;
+    public boolean serverStatus = false;
    
     
     public void connectToServer(){
@@ -32,11 +34,9 @@ public class Client {
             dis = new DataInputStream(socket.getInputStream());
             ps = new PrintStream(socket.getOutputStream());
 
-        } catch (IOException e) {
-            dis = null;
-            ps = null;
-            socket = null;
-         }
+        } catch (IOException ex) { 
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         // thread for each client
         Thread th;
@@ -44,12 +44,9 @@ public class Client {
             @Override
             public void run() {
                 while (true) {
-                    try {
-                        String reply = dis.readLine(); // my message as a client
-                       clientStatus =  socket.isConnected();
-                        System.out.println(clientStatus);
-                    } catch (IOException e) {
-                     }
+                   
+                        //String reply = dis.readLine(); // my message as a client
+                        serverStatus =  socket.isClosed();
                 }
             }
         });
