@@ -41,9 +41,7 @@ public class FXMLSigninController extends FXMLSigninBase {
 
     @Override
     public void goToSignup(ActionEvent event) {
-
         AppFunctions.goTo(event, new FXMLSignupController(stage));
-
     }
 
     @Override
@@ -53,7 +51,6 @@ public class FXMLSigninController extends FXMLSigninBase {
 
     @Override
     protected void goToActiveUsers(ActionEvent actionEvent) {//sign in button
-
         c.connectToServer();
         AppFunctions.closeAndGo(actionEvent, stage);
     }

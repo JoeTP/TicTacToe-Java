@@ -9,52 +9,60 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.application.Platform;
 
 /**
  *
  * @author Ayat Gamal
  */
 public class Client {
-  
-    DataInputStream dis;
-    PrintStream ps;
-    Socket socket;
-    public static boolean clientStatus = false;
-   
-    
-    public void connectToServer(){
-    
-          try {
+
+    public static DataInputStream dis;
+    public static PrintStream ps;
+    public static Socket socket;
+    public static boolean serverStatus = false;
+
+    public void connectToServer() {
+
+        try {
             socket = new Socket("127.0.0.1", 5001);
-            
+
             System.out.println("Cleint connection Established !");
 
             dis = new DataInputStream(socket.getInputStream());
             ps = new PrintStream(socket.getOutputStream());
 
-        } catch (IOException e) {
-            dis = null;
-            ps = null;
-            socket = null;
-         }
+        } catch (IOException ex) { 
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         // thread for each client
         Thread th;
-        th = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-                    try {
-                        String reply = dis.readLine(); // my message as a client
-                       clientStatus =  socket.isConnected();
-                        System.out.println(clientStatus);
-                    } catch (IOException e) {
-                     }
+        th = new Thread(() -> {
+            while (true) {
+                try {
+                    String reply = dis.readLine();
+                    serverStatus = socket.isClosed();
+                    System.out.println(serverStatus);
+                } catch (IOException ex) {
+                    Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-        });
+        }
+        );
         th.start();
     }
 
-    
+    public static void stopThreads() {
+        try {
+            //ps.close();
+            dis.close();
+            Platform.exit();
+        } catch (IOException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
 }

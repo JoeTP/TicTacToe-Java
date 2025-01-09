@@ -1,13 +1,11 @@
 package tictactoe;
 
+import clientconnection.Client;
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
-
 import shared.AppString;
-import tictactoe.signup.FXMLSignupController;
 
 
 import tictactoe.splashscreengui.FXMLSplashScreenController;
@@ -28,6 +26,11 @@ public class TicTacToe extends Application {
         stage.setScene(scene);
         stage.show();
         stage.setResizable(false);
+    }
+    
+    @Override
+    public void stop(){
+        Client.stopThreads();
     }
 
     public static void main(String[] args) {
