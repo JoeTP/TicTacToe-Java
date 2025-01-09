@@ -35,7 +35,7 @@ public class ClientHandler extends Thread {
         }
     }
 
-    public void run() {
+   /* public void run() {
         try {
             while (true) {
                 String str = dis.readUTF();
@@ -57,7 +57,7 @@ public class ClientHandler extends Thread {
             }
         }
     }
-
+*/
     void broadCastMsg(String msg) {
         for (ClientHandler client : clients) {
             try {

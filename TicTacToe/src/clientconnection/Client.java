@@ -11,7 +11,10 @@ import java.io.PrintStream;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+
 import javafx.application.Platform;
+
 
 /**
  *
@@ -19,14 +22,16 @@ import javafx.application.Platform;
  */
 public class Client {
 
+  
     public static DataInputStream dis;
     public static PrintStream ps;
     public static Socket socket;
     public static boolean serverStatus = false;
-
+    
     public void connectToServer() {
 
         try {
+
             socket = new Socket("127.0.0.1", 5001);
 
             System.out.println("Cleint connection Established !");
@@ -48,6 +53,7 @@ public class Client {
                     System.out.println(serverStatus);
                 } catch (IOException ex) {
                     Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+
                 }
             }
         }
