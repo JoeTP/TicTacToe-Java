@@ -2,6 +2,7 @@ package tictactoe.signup;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -12,7 +13,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import static shared.AppString.GENERAL_STYLE_FILE_PATH;
 import static shared.AppString.ICON_PATHS;
 
 public abstract class FXMLSignupBase extends BorderPane {
@@ -28,12 +28,16 @@ public abstract class FXMLSignupBase extends BorderPane {
     protected final Text chooseCharText;
     protected final PasswordField passwordField;
     protected final TextField emailTextField;
+    protected final Label label;
     protected final Button signinBtn;
     protected final HBox hBox0;
     protected final Button previousImageBtn;
+    protected final ImageView imageView;
     protected final ImageView characterImageView;
     protected final Button nextImageBtn;
-
+ 
+    protected final ImageView imageView0;
+ 
     protected int currentImageIndex = 0;
 
     public FXMLSignupBase() {
@@ -49,16 +53,21 @@ public abstract class FXMLSignupBase extends BorderPane {
         chooseCharText = new Text();
         passwordField = new PasswordField();
         emailTextField = new TextField();
+        label = new Label();
         signinBtn = new Button();
         hBox0 = new HBox();
         previousImageBtn = new Button();
+        imageView = new ImageView();
         characterImageView = new ImageView();
         nextImageBtn = new Button();
+ 
+        imageView0 = new ImageView();
+ 
 
         setPrefHeight(552.0);
         setPrefWidth(400.0);
         getStyleClass().add("mainBackground");
-        getStylesheets().add(GENERAL_STYLE_FILE_PATH);
+        getStylesheets().add("/styling/generalStyle.css");
 
         BorderPane.setAlignment(hBox, javafx.geometry.Pos.CENTER);
         hBox.setSpacing(120.0);
@@ -91,8 +100,8 @@ public abstract class FXMLSignupBase extends BorderPane {
 
         VBox.setVgrow(anchorPane0, javafx.scene.layout.Priority.ALWAYS);
 
-        signupBtn.setLayoutX(59.0);
-        signupBtn.setLayoutY(321.0);
+        signupBtn.setLayoutX(142.0);
+        signupBtn.setLayoutY(320.0);
         signupBtn.setMnemonicParsing(false);
         signupBtn.setOnAction(this::goToActiveUsers);
         signupBtn.setPrefHeight(43.0);
@@ -126,14 +135,20 @@ public abstract class FXMLSignupBase extends BorderPane {
         emailTextField.setPrefWidth(276.0);
         emailTextField.setPromptText("E-mail");
 
-        signinBtn.setLayoutX(224.0);
-        signinBtn.setLayoutY(321.0);
+        label.setLayoutX(106.0);
+        label.setLayoutY(388.0);
+        label.setStyle("-fx-font-size: 20;");
+        label.setText("Have Account?");
+
+        signinBtn.setLayoutX(183.0);
+        signinBtn.setLayoutY(375.0);
         signinBtn.setMnemonicParsing(false);
         signinBtn.setOnAction(this::goToSignin);
         signinBtn.setPrefHeight(43.0);
         signinBtn.setPrefWidth(112.0);
-        signinBtn.getStyleClass().add("bigBtn");
+        signinBtn.setStyle("-fx-background-color: transparent; -fx-text-fill: #3e5879; -fx-font-size: 20;");
         signinBtn.setText("Sign-In");
+        signinBtn.setUnderline(true);
 
         AnchorPane.setLeftAnchor(hBox0, 98.0);
         AnchorPane.setRightAnchor(hBox0, 98.0);
@@ -146,16 +161,27 @@ public abstract class FXMLSignupBase extends BorderPane {
         previousImageBtn.setText("Back");
         HBox.setMargin(previousImageBtn, new Insets(10.0));
 
+        imageView.setPickOnBounds(true);
+        imageView.setPreserveRatio(true);
+        imageView.setImage(new Image(getClass().getResource("/assets/icons/angle-left.png").toExternalForm()));
+        previousImageBtn.setGraphic(imageView);
+
         characterImageView.setFitHeight(64.0);
         characterImageView.setFitWidth(64.0);
         characterImageView.setPickOnBounds(true);
         characterImageView.setPreserveRatio(true);
+        characterImageView.setImage(new Image(ICON_PATHS[currentImageIndex]));
 
         nextImageBtn.setMnemonicParsing(false);
         nextImageBtn.setOnAction(this::showNextIcon);
         nextImageBtn.getStyleClass().add("bigBtn");
         nextImageBtn.setText("Next");
         HBox.setMargin(nextImageBtn, new Insets(10.0));
+
+        imageView0.setPickOnBounds(true);
+        imageView0.setPreserveRatio(true);
+        imageView0.setImage(new Image(getClass().getResource("/assets/icons/angle-right.png").toExternalForm()));
+        nextImageBtn.setGraphic(imageView0);
         setCenter(vBox);
 
         anchorPane.getChildren().add(backBtn);
@@ -166,6 +192,7 @@ public abstract class FXMLSignupBase extends BorderPane {
         anchorPane0.getChildren().add(chooseCharText);
         anchorPane0.getChildren().add(passwordField);
         anchorPane0.getChildren().add(emailTextField);
+        anchorPane0.getChildren().add(label);
         anchorPane0.getChildren().add(signinBtn);
         hBox0.getChildren().add(previousImageBtn);
         hBox0.getChildren().add(characterImageView);
@@ -173,12 +200,12 @@ public abstract class FXMLSignupBase extends BorderPane {
         anchorPane0.getChildren().add(hBox0);
         vBox.getChildren().add(anchorPane0);
 
-        
+ 
         characterImageView.setFitWidth(64);
         characterImageView.setFitHeight(64);
         characterImageView.setImage(new Image(ICON_PATHS[currentImageIndex]));
+ 
     }
-    
 
     protected abstract void handleBackButton(javafx.event.ActionEvent actionEvent);
 
