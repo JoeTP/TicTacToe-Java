@@ -64,9 +64,8 @@ public class DataAccessLayer {
             }
         return i;
     }
-    public static void insertData(UserModel u) {
-        try {
-            PreparedStatement pst = conection.prepareStatement("INSERT INTO USERS (USER_NAME,USER_ACCOUNT,USER_PASSWORD,USER_IMG) VALUES (?,?,?,?)");
+    public static void insertData(UserModel u) throws SQLException {
+            PreparedStatement pst = conection.prepareStatement("INSERT INTO USERS (USER_NAME,USER_EMAIL,USER_PASSWORD,USER_IMG) VALUES (?,?,?,?)");
             
             pst.setString (1, u.getName());
             pst.setString (2, u.getEmail());
@@ -79,10 +78,6 @@ public class DataAccessLayer {
             }
             else{
                 System.out.println("Inserted failed");
-            }
-         
-            } catch (SQLException ex) {
-                Logger.getLogger(DataAccessLayer.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            }                     
     }
 }
