@@ -5,9 +5,11 @@
  */
 package tictactoe.signup;
 
+import clientconnection.Client;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -50,9 +52,18 @@ public class FXMLSignupController extends FXMLSignupBase {
     protected void goToActiveUsers(ActionEvent actionEvent) {
         UserModel user = new UserModel();
         user = getNewUserData();
-        System.out.println(user.getName()+"\n"+user.getEmail()+"\n"+user.getPassword()+"\n"+user.getImage());
-        //AppFunctions.closePopup(actionEvent);
-        //AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage));
+        Client client = new Client();
+        client.connectToServer();
+        System.out.println(client.serverStatus);
+        if(client.serverStatus == false){
+            System.out.println(user.getName()+"\n"+user.getEmail()+"\n"+user.getPassword()+"\n"+user.getImage());
+            Platform.runLater(()->{
+                AppFunctions.closePopup(actionEvent);
+                AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage));
+            });
+            
+        }
+        
     }
 
     @Override

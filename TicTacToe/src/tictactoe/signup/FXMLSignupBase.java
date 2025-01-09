@@ -4,6 +4,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -11,6 +12,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import static shared.AppString.ICON_PATHS;
 
 public abstract class FXMLSignupBase extends BorderPane {
 
@@ -147,6 +149,7 @@ public abstract class FXMLSignupBase extends BorderPane {
         characterImageView.setFitWidth(64.0);
         characterImageView.setPickOnBounds(true);
         characterImageView.setPreserveRatio(true);
+        characterImageView.setImage(new Image(ICON_PATHS[currentImageIndex]));
 
         nextImageBtn.setMnemonicParsing(false);
         nextImageBtn.setOnAction(this::showNextIcon);
