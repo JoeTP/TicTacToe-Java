@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 
 
 import javafx.application.Platform;
+import models.DataModel;
 import models.UserModel;
 
 
@@ -64,8 +65,8 @@ public class Client {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public static void sendUser(UserModel u) throws IOException{
-        oos.writeObject(u);
+    public static void sendData(DataModel d) throws IOException{
+        oos.writeObject(d);
     }
 
 }
