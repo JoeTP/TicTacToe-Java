@@ -15,6 +15,7 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.UserModel;
+import models.DataModel;
 
 
 public class ClientHandler extends Thread {
@@ -23,6 +24,7 @@ public class ClientHandler extends Thread {
     DataOutputStream ps;
     ObjectInputStream ois;
     Socket client;  // Add a reference to the client socket
+    int state;
     static Vector<ClientHandler> clients = new Vector<ClientHandler>();
 
     public ClientHandler(Socket client) {
@@ -42,11 +44,21 @@ public class ClientHandler extends Thread {
     public void run() {
         
         try {
-            ois = new ObjectInputStream(client.getInputStream());
-            UserModel user = (UserModel) ois.readObject();
-            System.out.println(user.getName());
-            System.out.println(user.getEmail());
-            DataAccessLayer.insertData(user);
+            while(true){
+                ois = new ObjectInputStream(client.getInputStream());
+                DataModel data = (DataModel) ois.readObject();
+                state = data.getState();
+                switch(state){
+                    case 1:
+                        UserModel user = data.getUser();
+                        System.out.println(user.getName());
+                        System.out.println(user.getEmail());
+                        DataAccessLayer.insertData(user);
+                        break;
+                }
+                
+            }
+            
             
             
             

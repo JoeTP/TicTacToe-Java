@@ -19,6 +19,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import models.DataModel;
 import models.UserModel;
 import shared.AppFunctions;
 import static shared.AppString.ICON_PATHS;
@@ -51,8 +52,9 @@ public class FXMLSignupController extends FXMLSignupBase {
 
     @Override
     protected void goToActiveUsers(ActionEvent actionEvent) {
-        UserModel user = getNewUserData();
+        UserModel user = getNewUserData();        
         if (user != null){
+            DataModel data = new DataModel(user,1);
             Client client = new Client();
             try {
                 client.connectToServer();
@@ -61,7 +63,7 @@ public class FXMLSignupController extends FXMLSignupBase {
                 alert.showAndWait();
             }
             try {
-                client.sendUser(user);
+                client.sendData(data);
             } catch (IOException ex) {
                 Logger.getLogger(FXMLSignupController.class.getName()).log(Level.SEVERE, null, ex);
             }
