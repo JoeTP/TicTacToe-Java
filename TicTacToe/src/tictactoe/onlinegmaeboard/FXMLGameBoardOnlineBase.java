@@ -3,7 +3,7 @@ package tictactoe.onlinegmaeboard;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -12,11 +12,12 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public abstract class FXMLGameBoardOnlineBase extends VBox {
@@ -55,14 +56,13 @@ public abstract class FXMLGameBoardOnlineBase extends VBox {
     protected final BorderPane borderPane;
     protected final HBox hBox0;
     protected final Text text;
-    protected final ScrollPane scrollPane;
-    protected final Pane pane;
-    protected final Label incomingLabel;
-    protected final Label outcomingLabel;
+    protected final AnchorPane anchorPane3;
+    protected final StackPane stackPane;
+    protected final TextArea textArea;
     protected final FlowPane flowPane;
     protected final TextField messageTextField;
     protected final Button sendBtn;
-    protected final AnchorPane anchorPane3;
+    protected final AnchorPane anchorPane4;
     protected final Label timerLabel;
 
     public FXMLGameBoardOnlineBase() {
@@ -101,14 +101,13 @@ public abstract class FXMLGameBoardOnlineBase extends VBox {
         borderPane = new BorderPane();
         hBox0 = new HBox();
         text = new Text();
-        scrollPane = new ScrollPane();
-        pane = new Pane();
-        incomingLabel = new Label();
-        outcomingLabel = new Label();
+        anchorPane3 = new AnchorPane();
+        stackPane = new StackPane();
+        textArea = new TextArea();
         flowPane = new FlowPane();
         messageTextField = new TextField();
         sendBtn = new Button();
-        anchorPane3 = new AnchorPane();
+        anchorPane4 = new AnchorPane();
         timerLabel = new Label();
 
         setMaxHeight(USE_PREF_SIZE);
@@ -117,11 +116,12 @@ public abstract class FXMLGameBoardOnlineBase extends VBox {
         setMinWidth(USE_PREF_SIZE);
         setPrefHeight(720.0);
         setPrefWidth(1000.0);
-        getStyleClass().add("scrollBane");
+        getStyleClass().add("mainBackground");
         getStylesheets().add("/tictactoe/onlinegmaeboard/style.css");
 
         hboxTop.setPrefHeight(100.0);
         hboxTop.setPrefWidth(1000.0);
+        hboxTop.getStylesheets().add("/tictactoe/onlinegmaeboard/../../../resources/styling/generalStyle.css");
 
         AnchorPane.setLeftAnchor(hboxTurn, 100.0);
         AnchorPane.setTopAnchor(hboxTurn, 0.0);
@@ -134,7 +134,6 @@ public abstract class FXMLGameBoardOnlineBase extends VBox {
         player1Img.setPickOnBounds(true);
         player1Img.setPreserveRatio(true);
 
-        player1Label.setId("textId");
         player1Label.setText("Player1");
 
         line.setEndX(-65.70710754394531);
@@ -154,18 +153,20 @@ public abstract class FXMLGameBoardOnlineBase extends VBox {
         region.setPrefHeight(200.0);
         region.setPrefWidth(230.0);
 
-        forfiteBtn.setId("textId");
+        AnchorPane.setRightAnchor(forfiteBtn, 10.0);
         forfiteBtn.setLayoutY(6.0);
         forfiteBtn.setMnemonicParsing(false);
         forfiteBtn.setOnAction(this::winOrLossPopup);
         forfiteBtn.setText("Forfite");
-        HBox.setMargin(anchorPane0, new Insets(20.0, 0.0, 0.0, 0.0));
+        HBox.setMargin(anchorPane0, new Insets(20.0, 0.0, 0.0, 100.0));
+        VBox.setMargin(hboxTop, new Insets(30.0, 0.0, 0.0, 0.0));
 
         hBox.setPrefHeight(100.0);
         hBox.setPrefWidth(200.0);
 
         AnchorPane.setLeftAnchor(gameBoardGridPane, 100.0);
         AnchorPane.setRightAnchor(gameBoardGridPane, 0.0);
+        AnchorPane.setTopAnchor(gameBoardGridPane, 0.0);
         gameBoardGridPane.getStyleClass().add("grid-pane");
 
         columnConstraints.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
@@ -213,6 +214,7 @@ public abstract class FXMLGameBoardOnlineBase extends VBox {
 
         GridPane.setColumnIndex(btn20, 2);
         btn20.setMnemonicParsing(false);
+        GridPane.setMargin(btn20, new Insets(20.0, 0.0, 0.0, 0.0));
 
         GridPane.setColumnIndex(btn21, 2);
         GridPane.setRowIndex(btn21, 1);
@@ -222,8 +224,9 @@ public abstract class FXMLGameBoardOnlineBase extends VBox {
         GridPane.setRowIndex(btn22, 2);
         btn22.setMnemonicParsing(false);
 
-        HBox.setMargin(anchorPane2, new Insets(0.0, 0.0, 0.0, 40.0));
+        HBox.setMargin(anchorPane2, new Insets(0.0, 0.0, 0.0, 100.0));
 
+        AnchorPane.setRightAnchor(vBox, 20.0);
         vBox.setAlignment(javafx.geometry.Pos.BOTTOM_LEFT);
         vBox.getStyleClass().add("vbox");
 
@@ -241,34 +244,22 @@ public abstract class FXMLGameBoardOnlineBase extends VBox {
         text.setStrokeWidth(0.0);
         text.setText("Chat");
         text.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
-        HBox.setMargin(text, new Insets(10.0, 0.0, 0.0, 0.0));
+        HBox.setMargin(text, new Insets(20.0, 0.0, 0.0, 0.0));
+        text.setFont(new Font("Bell MT Bold", 20.0));
+        BorderPane.setMargin(hBox0, new Insets(0.0));
         borderPane.setTop(hBox0);
 
-        BorderPane.setAlignment(scrollPane, javafx.geometry.Pos.CENTER);
-        scrollPane.setPrefHeight(400.0);
-        scrollPane.setPrefWidth(300.0);
-        scrollPane.getStyleClass().add("transparent-background");
+        stackPane.setPrefHeight(370.0);
+        stackPane.setPrefWidth(300.0);
 
-        pane.setPrefHeight(400.0);
-        pane.setPrefWidth(300.0);
-
-        incomingLabel.setAlignment(javafx.geometry.Pos.CENTER);
-        incomingLabel.setLayoutX(14.0);
-        incomingLabel.setLayoutY(23.0);
-        incomingLabel.getStyleClass().add("incoming-bubble");
-        incomingLabel.setText("Can i play with you again ?");
-
-        outcomingLabel.setAlignment(javafx.geometry.Pos.CENTER);
-        outcomingLabel.setLayoutX(212.0);
-        outcomingLabel.setLayoutY(75.0);
-        outcomingLabel.getStyleClass().add("outcoming-bubble");
-        outcomingLabel.setText("Sure !");
-        scrollPane.setContent(pane);
-        borderPane.setCenter(scrollPane);
+        textArea.setPrefHeight(890.0);
+        textArea.setPrefWidth(300.0);
+        borderPane.setCenter(anchorPane3);
 
         BorderPane.setAlignment(flowPane, javafx.geometry.Pos.CENTER);
         flowPane.setPrefHeight(60.0);
         flowPane.setPrefWidth(200.0);
+        flowPane.getStylesheets().add("/tictactoe/onlinegmaeboard/../../../resources/styling/generalStyle.css");
 
         messageTextField.setPromptText("Message");
         messageTextField.setPadding(new Insets(0.0, 0.0, 0.0, 20.0));
@@ -277,11 +268,14 @@ public abstract class FXMLGameBoardOnlineBase extends VBox {
         sendBtn.setMnemonicParsing(false);
         sendBtn.setText("Send");
         FlowPane.setMargin(sendBtn, new Insets(10.0, 0.0, 0.0, 10.0));
+        BorderPane.setMargin(flowPane, new Insets(0.0, 0.0, 10.0, 0.0));
         borderPane.setBottom(flowPane);
-        VBox.setMargin(hBox, new Insets(0.0));
+        VBox.setMargin(borderPane, new Insets(0.0));
+        VBox.setMargin(hBox, new Insets(20.0, 0.0, 0.0, 0.0));
 
         AnchorPane.setLeftAnchor(timerLabel, 100.0);
         timerLabel.setId("textId");
+        timerLabel.getStylesheets().add("/tictactoe/onlinegmaeboard/../../../resources/styling/generalStyle.css");
         timerLabel.setText("7:00");
 
         hboxTurn.getChildren().add(player1Img);
@@ -313,16 +307,16 @@ public abstract class FXMLGameBoardOnlineBase extends VBox {
         anchorPane1.getChildren().add(gameBoardGridPane);
         hBox.getChildren().add(anchorPane1);
         hBox0.getChildren().add(text);
-        pane.getChildren().add(incomingLabel);
-        pane.getChildren().add(outcomingLabel);
+        stackPane.getChildren().add(textArea);
+        anchorPane3.getChildren().add(stackPane);
         flowPane.getChildren().add(messageTextField);
         flowPane.getChildren().add(sendBtn);
         vBox.getChildren().add(borderPane);
         anchorPane2.getChildren().add(vBox);
         hBox.getChildren().add(anchorPane2);
         getChildren().add(hBox);
-        anchorPane3.getChildren().add(timerLabel);
-        getChildren().add(anchorPane3);
+        anchorPane4.getChildren().add(timerLabel);
+        getChildren().add(anchorPane4);
 
     }
 

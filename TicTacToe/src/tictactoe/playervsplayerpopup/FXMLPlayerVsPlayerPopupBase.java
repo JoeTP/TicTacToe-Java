@@ -1,10 +1,11 @@
 package tictactoe.playervsplayerpopup;
 
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
+import static shared.AppString.GENERAL_STYLE_FILE_PATH;
 
 public abstract class FXMLPlayerVsPlayerPopupBase extends BorderPane {
 
@@ -12,7 +13,7 @@ public abstract class FXMLPlayerVsPlayerPopupBase extends BorderPane {
     protected final Button backBtn;
     protected final AnchorPane anchorPane0;
     protected final Button localBtn;
-    protected final Text playerVsPlayerLabel;
+    protected final Label label;
     protected final Button onlineBtn;
 
     public FXMLPlayerVsPlayerPopupBase() {
@@ -21,7 +22,7 @@ public abstract class FXMLPlayerVsPlayerPopupBase extends BorderPane {
         backBtn = new Button();
         anchorPane0 = new AnchorPane();
         localBtn = new Button();
-        playerVsPlayerLabel = new Text();
+        label = new Label();
         onlineBtn = new Button();
 
         setMaxHeight(500.0);
@@ -30,7 +31,8 @@ public abstract class FXMLPlayerVsPlayerPopupBase extends BorderPane {
         setMinWidth(450.0);
         setPrefHeight(500.0);
         setPrefWidth(450.0);
-        getStylesheets().add("/tictactoe/onlinegmaeboard/style.css");
+        getStyleClass().add("mainBackground");
+        getStylesheets().add(GENERAL_STYLE_FILE_PATH);
 
         BorderPane.setAlignment(anchorPane, javafx.geometry.Pos.CENTER);
         anchorPane.setPrefHeight(0.0);
@@ -53,8 +55,8 @@ public abstract class FXMLPlayerVsPlayerPopupBase extends BorderPane {
         anchorPane0.setPrefHeight(200.0);
         anchorPane0.setPrefWidth(200.0);
 
-        localBtn.setLayoutX(94.0);
-        localBtn.setLayoutY(167.0);
+        localBtn.setLayoutX(104.0);
+        localBtn.setLayoutY(173.0);
         localBtn.setMnemonicParsing(false);
         localBtn.setOnAction(this::handleLocalButton);
         localBtn.setPrefHeight(44.0);
@@ -63,17 +65,12 @@ public abstract class FXMLPlayerVsPlayerPopupBase extends BorderPane {
         localBtn.setText("Local");
         localBtn.setFont(new Font(20.0));
 
-        playerVsPlayerLabel.setFill(javafx.scene.paint.Color.valueOf("#3e5879"));
-        playerVsPlayerLabel.setLayoutX(53.0);
-        playerVsPlayerLabel.setLayoutY(79.0);
-        playerVsPlayerLabel.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
-        playerVsPlayerLabel.setStrokeWidth(0.0);
-        playerVsPlayerLabel.setText("Player Vs Player");
-        playerVsPlayerLabel.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
-        playerVsPlayerLabel.setFont(new Font("Stencil", 36.0));
+        label.setLayoutX(145.0);
+        label.setLayoutY(64.0);
+        label.setText("Player Vs Player");
 
-        onlineBtn.setLayoutX(94.0);
-        onlineBtn.setLayoutY(288.0);
+        onlineBtn.setLayoutX(104.0);
+        onlineBtn.setLayoutY(267.0);
         onlineBtn.setMnemonicParsing(false);
         onlineBtn.setOnAction(this::handleOnlineButton);
         onlineBtn.setPrefHeight(44.0);
@@ -85,7 +82,7 @@ public abstract class FXMLPlayerVsPlayerPopupBase extends BorderPane {
 
         anchorPane.getChildren().add(backBtn);
         anchorPane0.getChildren().add(localBtn);
-        anchorPane0.getChildren().add(playerVsPlayerLabel);
+        anchorPane0.getChildren().add(label);
         anchorPane0.getChildren().add(onlineBtn);
 
     }

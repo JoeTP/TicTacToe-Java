@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.stage.Stage;
 import shared.AppFunctions;
 import tictactoe.offlinegameboard.FXMLOfflineGameBoardController;
+import tictactoe.playervsplayerpopup.FXMLPlayerVsPlayerPopupController;
 
 /**
  * FXML Controller class
@@ -31,7 +32,7 @@ public class FXMLPlayerVsPlayerLocalController extends FXMLPlayerVsPlayerLocalBa
 
     @Override
     protected void handleBackButton(ActionEvent actionEvent) {
-        AppFunctions.closePopup(actionEvent);
+        AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerPopupController(stage));
     }
 
     @Override

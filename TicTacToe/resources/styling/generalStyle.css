@@ -1,26 +1,72 @@
-.bigBtn{
-   -fx-background-color: #3E5879;
-    -fx-text-fill: white;
-    -fx-font-size: 14px;
-    -fx-padding: 8;
-    -fx-border-radius: 8;
-    -fx-background-radius: 8;
+
+@import url('https://fonts.googleapis.com/css2?family=Chicle&family=Quantico:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+.button {
+    -fx-background-color: linear-gradient(to bottom, #4e79a7, #3E5879); 
+    -fx-text-fill: #F5EFE7;
+    -fx-font-size: 16px; 
+    -fx-padding: 12; 
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
     -fx-cursor: hand; 
     -fx-font-weight: bold;
-     -fx-font-family: "stencil";
+    -fx-font-family: "Chicle", serif; 
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 8, 0, 2, 2); 
+    -fx-transition: all 0.3s ease; 
+    -fx-min-width: 50px;
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(to bottom, #ff4d4d, #ff1a1a);
+    -fx-effect: dropshadow(gaussian, rgba(255, 0, 0, 0.5), 12, 0, 3, 3);
     
 }
-.bigBtn:hover {
-    -fx-background-color: #D8C4B6;
+
+.label{
+       -fx-font-family: "Chicle", serif;
+        -fx-font-weight: bold;
+          -fx-font-size: 30px;
+         -fx-font-weight: bold;
+         -fx-border-width: 1; 
+         -fx-text-fill:  #3E5879;
 }
 .bigLabel{
-        -fx-font-family: "stencil";
+        -fx-font-family: "Chicle", serif;
         -fx-font-weight: bold;
-          -fx-font-size: 25px;
+          -fx-font-size: 30px;
          -fx-font-weight: bold;
          -fx-border-width: 1; 
          -fx-text-fill:  #3E5879;
         
 }
 
+.text-field {
+    -fx-background-color: linear-gradient(to bottom, #ffffff, #e6e6e6); /* Gradient background */
+    -fx-border-color: #3E5879; /* Border color */
+    -fx-border-width: 2; /* Border thickness */
+    -fx-border-radius: 8; /* Rounded border */
+    -fx-background-radius: 8; /* Rounded background */
+    -fx-padding: 8 12; /* Inner padding */
+    -fx-font-size: 14px; /* Font size */
+    -fx-font-family: "Arial", sans-serif; /* Font style */
+    -fx-text-fill: #3E5879; /* Text color */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0, 2, 2); /* Subtle shadow */
+    -fx-prompt-text-fill: #d8c4b6; /* Placeholder text color */
+    -fx-cursor: text; /* Text cursor */
+    -fx-transition: all 0.3s ease; /* Smooth transitions */
+}
 
+.text-field:hover {
+    -fx-background-color: linear-gradient(to bottom, #ffffff, #d9d9d9); /* Lighter gradient on hover */
+    -fx-border-color: #ff1a1a; /* Highlight border on hover */
+    -fx-effect: dropshadow(gaussian, rgba(255, 0, 0, 0.2), 8, 0, 3, 3); /* Enhanced shadow */
+}
+
+.text-field:focused {
+    -fx-border-color: #d8c4b6; /* Green border when focused */
+    -fx-background-color: linear-gradient(to bottom, #ffffff, #f0f0f0); /* Subtle change on focus */
+    -fx-effect: dropshadow(gaussian, rgba(76, 175, 80, 0.3), 10, 0, 3, 3); /* Stronger shadow */
+}
+.mainBackground{
+   -fx-background-color: #F5EFE7;
+}
