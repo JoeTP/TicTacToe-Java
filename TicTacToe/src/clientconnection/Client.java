@@ -34,7 +34,7 @@ public class Client {
 
             socket = new Socket("127.0.0.1", 5001);
 
-            System.out.println("Cleint connection Established !");
+            System.out.println("Client connection Established !");
 
             dis = new DataInputStream(socket.getInputStream());
             ps = new PrintStream(socket.getOutputStream());

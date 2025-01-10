@@ -6,11 +6,16 @@
 package tictactoe.signin;
 
 import clientconnection.Client;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,23 +24,24 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import json.JSONConverters;
+import models.UserModel;
 import shared.AppFunctions;
+import shared.*;
 import tictactoe.playervsplayeronline.FXMLPlayerVsPlayerOnlineController;
 import tictactoe.playervsplayerpopup.FXMLPlayerVsPlayerPopupController;
 import tictactoe.signup.FXMLSignupController;
 
-/**
- * FXML Controller class
- *
- * @author Ayat Gamal
- */
 public class FXMLSigninController extends FXMLSigninBase {
 
     Stage stage;
-    Client c = new Client();
+   Client c;
+   
 
     public FXMLSigninController(Stage stage) {
         this.stage = stage;
+         c = new Client();
+          c.connectToServer();
 
     }
 
@@ -48,11 +54,73 @@ public class FXMLSigninController extends FXMLSigninBase {
     protected void handleBackButton(ActionEvent actionEvent) {
         AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerPopupController(stage));
     }
+   @Override
+    protected void goToActiveUsers(ActionEvent actionEvent) {
+        
+         
+       
+         System.out.println(""+c.serverStatus);
+           if(c.serverStatus == false){  //connect
+                System.out.println("connect connection");
+             UserModel user =getUserInput();
+            
+            Platform.runLater(()->{
+              AppFunctions.closeAndGo(actionEvent, stage);
+            });
+            
+        }
+        
+    }
 
-    @Override
-    protected void goToActiveUsers(ActionEvent actionEvent) {//sign in button
-        c.connectToServer();
-        AppFunctions.closeAndGo(actionEvent, stage);
+   
+    public UserModel getUserInput() {
+        UserModel user = new UserModel();
+       
+        user.setName(usernameTextField.getText());
+        user.setPassword(passwordField.getText());
+        System.out.println("AL --before sendLoginRequest " + user.getName());
+        String response = sendLoginRequest(user);
+        if(!response.equals("Failure")){      
+            user= JSONConverters.jsonToUserModel(response);
+        
+        }
+        
+        System.out.println("Al --Server Response: " + response);
+        return user;
+    }
+
+    public String sendLoginRequest(UserModel user) {
+        String response = "";
+         String jsonRequest = JSONConverters.userModelToJson(user);
+            System.out.println("jsonRequest "+jsonRequest);
+        try {
+            System.out.println("before socket");
+            Socket socket = new Socket("127.0.0.1", 5001);
+             System.out.println("after socket");
+            DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
+             System.out.println("dos");
+            DataInputStream dis = new DataInputStream(socket.getInputStream());
+              System.out.println("dis");
+           
+            dos.writeUTF(jsonRequest);
+
+            dos.flush();
+
+            try {
+                System.out.println("in sendLoginRequest  inner try ");
+               
+                response = dis.readUTF();
+                System.out.println("response: "+response );
+            } catch (SocketTimeoutException e) {
+                System.out.println("Server Timeout. Please try again.");
+            } catch (IOException ex) {
+                System.out.println("Connection failed. Please check the server.");
+            }
+
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLSigninController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return response;
     }
 
 }

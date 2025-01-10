@@ -38,7 +38,12 @@ public class UserModel {
     }
 
     public UserModel() {
-        
+
+    }
+
+    public UserModel(int id, String name) { // for Login Request
+       this.id=id;
+       this.name=name;
     }
 
     public int getId() {
@@ -128,8 +133,7 @@ public class UserModel {
     public void setIsOnline(boolean isOnline) {
         this.isOnline = isOnline;
     }
-    
 
-    
-    
+ 
+
 }
