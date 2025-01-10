@@ -23,9 +23,21 @@ public class UserModel {
     boolean isInGame;
     boolean isOnline;
 
-    public UserModel() {
+     public UserModel() {
+        id=0;
+        name="No name";
+        password = "No password";
+        email ="No email";
+        image = "No img";
+        score=0;
+        numOfGames=0;
+        wins=0;
+        losses=0;
+        isInGame =false;
+        isOnline=false;
+
     }
-    
+
     public UserModel(int id, String name, String password, String email, String image, int score , int numOfGames, int wins, int losses, boolean isInGame, boolean isOnline) {
         this.id = id;
         this.name = name;

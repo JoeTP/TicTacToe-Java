@@ -28,29 +28,47 @@ public class DataAccessLayer {
         }
     }
 
-    public static UserModel getUserData(String userName) {
-        UserModel user = null; 
-        System.out.println("in data access layer : " + userName);
+    public static UserModel getUserDataLogin(String userName) {
+        UserModel user = null;
         try {
+
+            if (conection == null || conection.isClosed()) {
+
+                return null;
+            }
+
             PreparedStatement pst = conection.prepareStatement("SELECT * FROM USERS WHERE USER_NAME = ?");
             pst.setString(1, userName);
+
             rs = pst.executeQuery();
+
             if (rs.next()) {
-                user = new UserModel(); 
+                user = new UserModel();
+
                 user.setId(rs.getInt(AppStrings.USER_ID));
                 user.setPassword(rs.getString(AppStrings.USER_PASSWORD));
                 user.setName(rs.getString(AppStrings.USER_NAME));
-                user.setScore(rs.getInt(AppStrings.USER_SCORE));
-                user.setNumOfGames(rs.getInt(AppStrings.NO_OF_GAMES));
-                user.setWins(rs.getInt(AppStrings.NO_OF_WINS));
-                user.setLosses(rs.getInt(AppStrings.NO_OF_LOSSES));
-                user.setIsOnline(rs.getInt(AppStrings.IS_ONLINE) != 0); 
-                user.setIsInGame(rs.getInt(AppStrings.IS_INGAME) != 0); 
+            } else {
+
             }
+
         } catch (SQLException ex) {
+
             Logger.getLogger(DataAccessLayer.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NullPointerException ex) {
+
+            Logger.getLogger(DataAccessLayer.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException ex) {
+
+                Logger.getLogger(DataAccessLayer.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-        System.out.println("in data access layer : " + user.getName()+"   , pass:"+user.getPassword());
+
         return user;
     }
 

@@ -2,6 +2,7 @@ package tictactoe.signin;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -20,6 +21,7 @@ public abstract class FXMLSigninBase extends BorderPane {
     protected final Text signinTitle;
     protected final VBox vBox;
     protected final AnchorPane anchorPane0;
+    protected final Label wrongLabel;
     protected final ImageView userImg;
     protected final Button signinBtn;
     protected final Text text;
@@ -35,6 +37,7 @@ public abstract class FXMLSigninBase extends BorderPane {
         signinTitle = new Text();
         vBox = new VBox();
         anchorPane0 = new AnchorPane();
+        wrongLabel = new Label();
         userImg = new ImageView();
         signinBtn = new Button();
         text = new Text();
@@ -78,6 +81,11 @@ public abstract class FXMLSigninBase extends BorderPane {
 
         VBox.setVgrow(anchorPane0, javafx.scene.layout.Priority.ALWAYS);
 
+        wrongLabel.setLayoutX(75.0);
+        wrongLabel.setLayoutY(240.0);
+        wrongLabel.setText("Please Enter correct info");
+        wrongLabel.setVisible(false);
+
         userImg.setFitHeight(84.0);
         userImg.setFitWidth(84.0);
         userImg.setLayoutX(155.0);
@@ -110,13 +118,13 @@ public abstract class FXMLSigninBase extends BorderPane {
         signupBtn.setText("Sign-up");
 
         usernameTextField.setLayoutX(60.0);
-        usernameTextField.setLayoutY(143.0);
+        usernameTextField.setLayoutY(114.0);
         usernameTextField.setPrefHeight(48.0);
         usernameTextField.setPrefWidth(276.0);
         usernameTextField.setPromptText("User Name");
 
         passwordField.setLayoutX(60.0);
-        passwordField.setLayoutY(213.0);
+        passwordField.setLayoutY(183.0);
         passwordField.setPrefHeight(48.0);
         passwordField.setPrefWidth(276.0);
         passwordField.setPromptText("Passoword");
@@ -125,6 +133,7 @@ public abstract class FXMLSigninBase extends BorderPane {
         anchorPane.getChildren().add(backBtn);
         anchorPane.getChildren().add(signinTitle);
         hBox.getChildren().add(anchorPane);
+        anchorPane0.getChildren().add(wrongLabel);
         anchorPane0.getChildren().add(userImg);
         anchorPane0.getChildren().add(signinBtn);
         anchorPane0.getChildren().add(text);

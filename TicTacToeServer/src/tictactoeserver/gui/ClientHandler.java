@@ -41,8 +41,7 @@ public class ClientHandler extends Thread {
 
     @Override
     public void run() {
-        System.out.println("runnnnnnnnnnnnnnn");
-
+       
         try {
 
             System.out.println("Waiting for client input...");
@@ -52,9 +51,9 @@ public class ClientHandler extends Thread {
             UserModel user = JSONConverters.jsonToUserModel(jsonRequest);
             System.out.println("after converson user: " + user.getPassword());
 
-            System.out.println("user before converson handleRequest: " + user.getPassword());
+            
             String response = handleRequest(user);
-            System.out.println("response");
+            System.out.println("response" +response);
             ps.writeUTF(response);
             ps.flush();
         } catch (EOFException e) {
@@ -87,29 +86,28 @@ public class ClientHandler extends Thread {
         }
     }
 
-
     private String handleRequest(UserModel user) {
-        String response ="Failure";
-        System.out.println("user in handleRequest: " + user.getName());
-
-        UserModel userFromSql = DataAccessLayer.getUserData(user.getName());
-        System.out.println("user from data " + user);
-        if (userFromSql != null) {
-            System.out.println("userFromSql != null");
-          if (user.getPassword().equals(userFromSql.getPassword())) {
-            System.out.println("Password matches for user: " + userFromSql.getName());
-            response=JSONConverters.userModelToJson(userFromSql);
-            
-        } else {
-            System.out.println("Password does not match for user: " + userFromSql.getName());
-      
-        }
-        }
-        System.out.println("userFromSql retrieved nameee: " + userFromSql.getLosses());
-        System.out.println("userFromSql retrieved nameee: " + userFromSql.getName());
-        System.out.println("userFromSql retrieved passs : " + userFromSql.getPassword());
-        return response;
+        String response = "Failure";
        
+  
+      
+        UserModel userFromSql = DataAccessLayer.getUserDataLogin(user.getName());
+
+        if (userFromSql == null) {
+            System.out.println("User not found in database for username: " + user.getName());
+ 
+        } else {
+            System.out.println("Retrieved user from database: " + userFromSql.getName());
+            if (user.getPassword().equals(userFromSql.getPassword())) {
+                System.out.println("Password matches for user: " + userFromSql.getName());
+                response = JSONConverters.userModelToJson(userFromSql);
+            } else {
+                System.out.println("Password does not match for user: " + userFromSql.getName());
+
+            }
+        }
+
+        return response;
     }
 
 }

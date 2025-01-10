@@ -38,6 +38,17 @@ public class UserModel {
     }
 
     public UserModel() {
+        id=0;
+        name="No name";
+        password = "No password";
+        email ="No email";
+        image = "No img";
+        score=0;
+        numOfGames=0;
+        wins=0;
+        losses=0;
+        isInGame =false;
+        isOnline=false;
 
     }
 
