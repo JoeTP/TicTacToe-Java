@@ -22,8 +22,8 @@ public class ClientHandler extends Thread {
     DataInputStream dis;
     DataOutputStream ps;
     ObjectInputStream ois;
-    static Vector<ClientHandler> clients = new Vector<ClientHandler>();
     Socket client;  // Add a reference to the client socket
+    static Vector<ClientHandler> clients = new Vector<ClientHandler>();
 
     public ClientHandler(Socket client) {
         this.client = client;

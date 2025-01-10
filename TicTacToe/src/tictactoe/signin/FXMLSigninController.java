@@ -50,9 +50,13 @@ public class FXMLSigninController extends FXMLSigninBase {
     }
 
     @Override
-    protected void goToActiveUsers(ActionEvent actionEvent) {//sign in button
+    protected void goToActiveUsers(ActionEvent actionEvent) {try {
+        //sign in button
         c.connectToServer();
         AppFunctions.closeAndGo(actionEvent, stage);
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLSigninController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

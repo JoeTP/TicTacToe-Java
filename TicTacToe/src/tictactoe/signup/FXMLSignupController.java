@@ -54,7 +54,12 @@ public class FXMLSignupController extends FXMLSignupBase {
         UserModel user = getNewUserData();
         if (user != null){
             Client client = new Client();
-            client.connectToServer();
+            try {
+                client.connectToServer();
+            } catch (IOException ex) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Couldn't connect to server");
+                alert.showAndWait();
+            }
             try {
                 client.sendUser(user);
             } catch (IOException ex) {

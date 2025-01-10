@@ -30,21 +30,12 @@ public class Client {
     public static Socket socket;
     public static boolean serverStatus = false;
     public static ObjectOutputStream oos;
-    public void connectToServer() {
-
-        try {
-
-            socket = new Socket("127.0.0.1", 5001);
-
-            System.out.println("Cleint connection Established !");
-
-            dis = new DataInputStream(socket.getInputStream());
-            ps = new PrintStream(socket.getOutputStream());
-            oos = new ObjectOutputStream(socket.getOutputStream());
-        } catch (IOException ex) { 
-            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+    public void connectToServer() throws IOException {
+        socket = new Socket("127.0.0.1", 5001);
+        System.out.println("Cleint connection Established !");
+        dis = new DataInputStream(socket.getInputStream());
+        ps = new PrintStream(socket.getOutputStream());
+        oos = new ObjectOutputStream(socket.getOutputStream());
         // thread for each client
         Thread th;
         th = new Thread(() -> {
@@ -67,6 +58,7 @@ public class Client {
         try {
             //ps.close();
             dis.close();
+            oos.close();
             Platform.exit();
         } catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
