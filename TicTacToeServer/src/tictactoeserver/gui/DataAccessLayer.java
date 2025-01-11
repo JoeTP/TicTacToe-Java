@@ -64,7 +64,8 @@ public class DataAccessLayer {
             }
         return i;
     }
-    public static void insertData(UserModel u) throws SQLException {
+    public static boolean insertData(UserModel u){
+        try {
             PreparedStatement pst = conection.prepareStatement("INSERT INTO USERS (USER_NAME,USER_EMAIL,USER_PASSWORD,USER_IMG) VALUES (?,?,?,?)");
             
             pst.setString (1, u.getName());
@@ -74,10 +75,16 @@ public class DataAccessLayer {
             int isUpdate= pst.executeUpdate();
             if(isUpdate > 0)
             {
-                System.out.println("Inserted succ.");
+                System.out.println("Inserted succ.");            
+                return true;
             }
             else{
                 System.out.println("Inserted failed");
+                return false;
             }                     
+        } catch (SQLException ex) {
+            Logger.getLogger(DataAccessLayer.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }   
     }
 }

@@ -9,12 +9,14 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.sql.SQLException;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.UserModel;
+import models.DataModel;
 
 
 public class ClientHandler extends Thread {
@@ -22,8 +24,11 @@ public class ClientHandler extends Thread {
     DataInputStream dis;
     DataOutputStream ps;
     ObjectInputStream ois;
-    static Vector<ClientHandler> clients = new Vector<ClientHandler>();
+    ObjectOutputStream oos;
+    boolean response;
     Socket client;  // Add a reference to the client socket
+    int state;
+    static Vector<ClientHandler> clients = new Vector<ClientHandler>();
 
     public ClientHandler(Socket client) {
         this.client = client;
@@ -42,11 +47,22 @@ public class ClientHandler extends Thread {
     public void run() {
         
         try {
-            ois = new ObjectInputStream(client.getInputStream());
-            UserModel user = (UserModel) ois.readObject();
-            System.out.println(user.getName());
-            System.out.println(user.getEmail());
-            DataAccessLayer.insertData(user);
+            while(true){
+                ois = new ObjectInputStream(client.getInputStream());
+                DataModel data = (DataModel) ois.readObject();
+                state = data.getState();
+                switch(state){
+                    case 1:
+                        UserModel user = data.getUser();
+                        System.out.println(user.getName());
+                        System.out.println(user.getEmail());
+                        response = DataAccessLayer.insertData(user);
+                        ps.writeBoolean(response);
+                        break;
+                }
+                
+            }
+            
             
             
             
@@ -76,8 +92,6 @@ public class ClientHandler extends Thread {
         } catch (IOException ex) {
             Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
             Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
