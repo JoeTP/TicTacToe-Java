@@ -17,8 +17,15 @@ public class GameBoardController extends FXMLGameBoardBase {
     Stage stage;
     private Player playerOne = new Player();
     private Player playerTwo = new Player();
-
+   // private int[] winPattern = new int[3];
+      int[] flatPlaces = new int[9];
     private int[][] places = new int[3][3];
+
+    private final int[][] winPatterns = {
+        {0, 1, 2}, {3, 4, 5}, {6, 7, 8}, //  rows
+        {0, 3, 6}, {1, 4, 7},{2, 5, 8}, //   columns
+        {0, 4, 8}, {2, 4, 6} // diagonals
+    };
 
     private final String x = "X";
     private final String o = "O";
@@ -40,6 +47,7 @@ public class GameBoardController extends FXMLGameBoardBase {
         playerTwo.setChar(o);
         playerOne.hisTurn = true;
         prinMoves();
+      
     }
 
     /*
@@ -65,7 +73,62 @@ public class GameBoardController extends FXMLGameBoardBase {
         }
 
         prinMoves();
+        Player c =  checkWinner();
+        if (c == null) {
+            System.out.println("Draaaawww");
+            
+        } 
+        if(c == playerTwo){
+            System.out.println("Player 2");
+            
+        }
+        if(c == playerOne){
+            System.out.println("Player 1");
+            
+        }
+    }
 
+    /*
+    if winPatern have 3 evens in consequence
+     */
+    private Player checkWinner() {  
+       //test case
+       /*
+        1 2 3    
+        4 6 5 
+        7 8 0 
+       */
+       // 1 2 3 4 6 5 7 8 0 
+       boolean even = false;
+       boolean odd = false;
+       
+         for (int row = 0; row < 3; row++) {
+            for (int col = 0; col < 3; col++) {
+                flatPlaces[row * 3 + col] = places[row][col];
+            }
+        }
+
+        for (int[] pattern : winPatterns) {
+            int a = flatPlaces[pattern[0]]; //if one of predefind win patterns is EXIST in sequence i the flat arr ]
+            int b = flatPlaces[pattern[1]];
+            int c = flatPlaces[pattern[2]];
+            System.out.println(a + " " + b + " " +c );
+            if (a != 0 && b != 0 && c != 0 && a % 2 == b % 2 && b % 2 == c % 2) {
+                even = true;
+             }else  if (a != 0 && b != 0 && c != 0 && a % 2 != b % 2 && b % 2 != c % 2){
+                odd = true;
+            }
+            if(even){
+            System.out.println("End of the game");// needd to be Handeld
+                System.out.println("winner is even number =>  Second {OO} player wins");
+                return playerTwo;  
+            }
+            if (odd){
+                System.out.println("winner is ODDn number =>  Fisrts {XX} player wins");
+                return playerOne;  
+            }
+        }
+        return null; // Drawwwww
     }
 
     private void setPlayerXMove() {
@@ -90,6 +153,15 @@ public class GameBoardController extends FXMLGameBoardBase {
     }
 
     private void prinMoves() {
+        for (int i = 0; i < 3; i++) {
+            for (int c = 0; c < 3; c++) {
+                System.out.print(places[i][c] + " ");
+            }
+            System.out.println("");
+        }
+    }
+
+    private void prinMoves(int even, int odd) {
         for (int i = 0; i < 3; i++) {
             for (int c = 0; c < 3; c++) {
                 System.out.print(places[i][c] + " ");
