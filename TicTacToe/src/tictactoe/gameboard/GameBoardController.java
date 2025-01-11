@@ -2,16 +2,16 @@ package tictactoe.gameboard;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import models.Player;
 import shared.AppFunctions;
 import tictactoe.homescreen.FXMLHomeScreenController;
 
 public class GameBoardController extends FXMLGameBoardBase {
 
     Stage stage;
+    private Player playerOne;
+    private Player playerTwo;
 
     public GameBoardController(Stage stage) {
         this.stage = stage;
