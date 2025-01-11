@@ -35,9 +35,9 @@
 
 /* Game Board (GridPane) */
 .grid-pane {
-    -fx-background-color: #D8C4B6; /* Set background color */
-    -fx-pref-width: 500px; /* Set width */
-    -fx-pref-height: 500px; /* Set height */
+    -fx-background-color: #ffffff; /* Set background color */
+    -fx-pref-width: 400px; /* Set width */
+    -fx-pref-height: 400px; /* Set height */
     -fx-alignment: center;
     -fx-border-radius: 30; /* Set border radius */
     -fx-background-radius: 30; 
@@ -48,16 +48,19 @@
     -fx-max-width: Infinity; /* Allow button to expand fully */
     -fx-max-height: Infinity; /* Allow button to expand fully */
     -fx-alignment: center;
-    -fx-font-size: 70px; /* Large text size */
+    -fx-font-size: 70px; 
     -fx-font-weight: bold;
     -fx-pref-width: 100;
     -fx-pref-height: 100;
     -fx-text-fill: #3E5879; /* Golden text color */
     -fx-background-color: transparent; /* Transparent background */
-    -fx-border-color: #F5EFE7; /* Set grid line color to white */
+    -fx-border-color: #d8c4b6; /* Set grid line color to white */
     -fx-border-width: 1; /* Thickness of grid lines */
     -fx-border-style: solid;
     -fx-cursor: hand;
+    /* -fx-border-radius: 30;  */
+    -fx-effect: shadow;
+    /* -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.75), 10, 0.5, 4, 4); */
 }
 
 /* Chat Section */

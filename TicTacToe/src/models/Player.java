@@ -11,14 +11,25 @@ package models;
  */
 public class Player extends UserModel {
 
-    boolean hisTurn;
+    public boolean hisTurn;
+    private String character;
 
     public Player() {
         hisTurn = false;
     }
 
-    public boolean isHisTurn() {
-        return hisTurn;
+//    public boolean isHisTurn() {
+//        return hisTurn;
+//    }
+//    public void setTurn(boolean b) {
+//        hisTurn = b;
+//    }
+
+    public void setChar(String c) {
+        character = c;
+    }
+    public String getChat() {
+        return character;
     }
 
 }
