@@ -1,0 +1,126 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Chicle&family=Quantico:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+
+
+.mainBackground {
+    -fx-background-color: #F5EFE7;
+}
+
+/* Root Layout */
+.root {
+    -fx-font-family: "Arial";
+    -fx-padding: 10;
+    -fx-spacing: 10;
+     -fx-background-color: #F5EFE7;
+
+}
+
+/* Top Bar (First HBox) */
+.hbox {
+    -fx-alignment: center;
+    -fx-spacing: 20;
+    -fx-background-color: #D8C4B6; 
+    -fx-pref-width: 500px; 
+    -fx-pref-height: 72.79px; 
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+}
+
+#textId {
+    -fx-font-size: 30px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #3E5879;
+}
+
+/* Game Board (GridPane) */
+.grid-pane {
+    -fx-background-color: #ffffff; /* Set background color */
+    -fx-pref-width: 400px; /* Set width */
+    -fx-pref-height: 400px; /* Set height */
+    -fx-alignment: center;
+    -fx-border-radius: 30; /* Set border radius */
+    -fx-background-radius: 30; 
+}
+
+/* Tic-Tac-Toe Buttons with Simulated Grid Lines */
+.grid-pane .button {
+    -fx-max-width: Infinity; /* Allow button to expand fully */
+    -fx-max-height: Infinity; /* Allow button to expand fully */
+    -fx-alignment: center;
+    -fx-font-size: 70px; 
+    -fx-font-weight: bold;
+    -fx-pref-width: 100;
+    -fx-pref-height: 100;
+    -fx-text-fill: #3E5879; /* Golden text color */
+    -fx-background-color: transparent; /* Transparent background */
+    -fx-border-color: #d8c4b6; /* Set grid line color to white */
+    -fx-border-width: 1; /* Thickness of grid lines */
+    -fx-border-style: solid;
+    -fx-cursor: hand;
+    /* -fx-border-radius: 30;  */
+    -fx-effect: shadow;
+    /* -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.75), 10, 0.5, 4, 4); */
+}
+
+/* Chat Section */
+.vbox {
+    -fx-background-color: #3E5879;
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+    -fx-spacing: 30px; /* Space between chat messages */
+    -fx-pref-height: 500px;
+    -fx-pref-width: 300px;
+}
+
+/* Chat Message Bubbles */
+.incoming-bubble {
+    -fx-padding: 10px 15px;
+    -fx-background-color: #3E5879;
+    -fx-background-radius: 70px;
+    -fx-font-size: 15px;
+    -fx-text-fill: white; /* Text color */
+    -fx-spacing: 10px;
+    -fx-min-width: 50px;
+}
+
+.outcoming-bubble {
+    -fx-padding: 10px 15px;
+    -fx-background-color: #D8C4B6;
+    -fx-background-radius: 70px;
+    -fx-font-size: 15px;
+    -fx-text-fill: #3E5879; /* Text color */
+    -fx-spacing: 10px;
+    -fx-min-width: 50px;
+}
+
+/* Text Area */
+.text-area {
+    -fx-background-color: #fff;
+    -fx-font-size: 14px;
+    -fx-border-color: #d2b79c;
+}
+
+/* Text Field */
+.text-field {
+    -fx-background-color: #fff;
+    -fx-font-size: 14px;
+    -fx-border-color: #d2b79c;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 20px;
+    -fx-pref-height: 30px;
+    -fx-border-color: #3E5879;
+}
+
+/* Server Start Button Hover Effect */
+.serverStartBtn:hover {
+    -fx-background-color: #13f803;
+}
+
+/* Label */
+.labelTwo {
+    -fx-font-size: 30px;
+    -fx-background-color: #3E5879;
+    -fx-font-weight: bold;
+    -fx-text-fill: white; /* Text color */
+}
