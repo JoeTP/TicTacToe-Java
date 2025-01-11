@@ -2,7 +2,11 @@ package tictactoe.gameboard;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.SkinBase;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import models.Player;
 import shared.AppFunctions;
@@ -15,9 +19,18 @@ public class GameBoardController extends FXMLGameBoardBase {
     private Player playerTwo = new Player();
 
     private int[][] places = new int[3][3];
+
     private final String x = "X";
     private final String o = "O";
+    private int move = 0;
 
+    /*
+        
+        [b00 b01 b02]
+        [b10 b11 b12]
+        [b20 b21 b22]
+         
+     */
     public GameBoardController(Stage stage) {
         this.stage = stage;
 
@@ -38,11 +51,41 @@ public class GameBoardController extends FXMLGameBoardBase {
         if (b.getText() == "") {
             if (playerOne.hisTurn) {
                 b.setText(x);
+
             } else {
                 b.setText(o);
             }
             playerTwo.hisTurn = !playerTwo.hisTurn;
             playerOne.hisTurn = !playerOne.hisTurn;
+
+        }
+
+        int c = GridPane.getColumnIndex(b);
+        int r = GridPane.getRowIndex(b);
+        traceMoves(r+1, c+1);
+        prinMoves();
+    }
+
+    private void setPlayerXMove() {
+
+    }
+
+    private void setPlayerOMove() {
+
+    }
+
+    private void traceMoves(int r, int c) {
+
+        places[r][c] = move;
+        move++;
+    }
+
+    private void prinMoves() {
+        for (int i = 0; i < 3; i++) {
+            for (int c = 0; c < 3; c++) {
+                System.out.print(places[i][c] + " ");
+            }
+            System.out.println("");
         }
     }
 
