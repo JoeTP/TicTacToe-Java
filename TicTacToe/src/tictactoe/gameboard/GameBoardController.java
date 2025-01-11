@@ -22,7 +22,7 @@ public class GameBoardController extends FXMLGameBoardBase {
 
     private final String x = "X";
     private final String o = "O";
-    private int move = 0;
+    private int move = 1;
 
     /*
         
@@ -39,6 +39,7 @@ public class GameBoardController extends FXMLGameBoardBase {
         playerOne.setChar(x);
         playerTwo.setChar(o);
         playerOne.hisTurn = true;
+        prinMoves();
     }
 
     /*
@@ -58,12 +59,13 @@ public class GameBoardController extends FXMLGameBoardBase {
             playerTwo.hisTurn = !playerTwo.hisTurn;
             playerOne.hisTurn = !playerOne.hisTurn;
 
+            Integer c = GridPane.getColumnIndex(b);
+            Integer r = GridPane.getRowIndex(b);
+            traceMoves(r, c);
         }
 
-        int c = GridPane.getColumnIndex(b);
-        int r = GridPane.getRowIndex(b);
-        traceMoves(r+1, c+1);
         prinMoves();
+
     }
 
     private void setPlayerXMove() {
@@ -74,10 +76,17 @@ public class GameBoardController extends FXMLGameBoardBase {
 
     }
 
-    private void traceMoves(int r, int c) {
+    private void traceMoves(Integer r, Integer c) {
+        if (r == null) {
+            r = 0;
+        }
+        if (c == null) {
+            c = 0;
+        }
 
         places[r][c] = move;
         move++;
+
     }
 
     private void prinMoves() {
