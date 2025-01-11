@@ -2,6 +2,7 @@
 package json;
 
 import com.google.gson.Gson;
+import models.DataModel;
 import models.UserModel;
 
 
@@ -15,6 +16,13 @@ public class JSONConverters {
     public static UserModel jsonToUserModel(String json) {
         return gson.fromJson(json, UserModel.class);
     }
+       public static DataModel jsonToDataModel(String json) {
+        return gson.fromJson(json, DataModel.class);
+    }
+       public static String DataModelToJson(DataModel userModel) {
+        return gson.toJson(userModel);
+    }
+   
   }
   
 

@@ -7,6 +7,7 @@ package clientconnection;
 
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.PrintStream;
 import java.net.Socket;
 import java.util.logging.Level;
@@ -14,6 +15,8 @@ import java.util.logging.Logger;
 
 
 import javafx.application.Platform;
+import models.DataModel;
+import models.UserModel;
 
 
 /**
@@ -27,26 +30,19 @@ public class Client {
     public static PrintStream ps;
     public static Socket socket;
     public static boolean serverStatus = false;
-    
-    public void connectToServer() {
 
-        try {
-
-            socket = new Socket("127.0.0.1", 5001);
-
-            System.out.println("Client connection Established !");
-
-            dis = new DataInputStream(socket.getInputStream());
-            ps = new PrintStream(socket.getOutputStream());
-
-        } catch (IOException ex) { 
-            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public static ObjectOutputStream oos;
+    public void connectToServer() throws IOException {
+        socket = new Socket("127.0.0.1", 5001);
+        System.out.println("Cleint connection Established !");
+        dis = new DataInputStream(socket.getInputStream());
+        ps = new PrintStream(socket.getOutputStream());
+        oos = new ObjectOutputStream(socket.getOutputStream());
 
         // thread for each client
         Thread th;
         th = new Thread(() -> {
-            while (true) {
+            /*while (true) {
                 try {
                     String reply = dis.readLine();
                     serverStatus = socket.isClosed();
@@ -55,7 +51,7 @@ public class Client {
                     Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
 
                 }
-            }
+            }*/
         }
         );
         th.start();
@@ -63,12 +59,19 @@ public class Client {
 
     public static void stopThreads() {
         try {
-            //ps.close();
+            ps.close();
             dis.close();
+            oos.close();
             Platform.exit();
         } catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    public static void sendData(DataModel d) throws IOException{
+        oos.writeObject(d);
+    }
+    public static boolean receveResponse() throws IOException{
+        boolean response = dis.readBoolean();
+        return response;
+    }
 }

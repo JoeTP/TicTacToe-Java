@@ -25,6 +25,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import json.JSONConverters;
+import models.DataModel;
 import models.UserModel;
 import shared.AppFunctions;
 import shared.*;
@@ -38,9 +39,13 @@ public class FXMLSigninController extends FXMLSigninBase {
     Client c;
 
     public FXMLSigninController(Stage stage) {
-        this.stage = stage;
-        c = new Client();
-        c.connectToServer();
+        try {
+            this.stage = stage;
+            c = new Client();
+            c.connectToServer();
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLSigninController.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 
@@ -55,6 +60,7 @@ public class FXMLSigninController extends FXMLSigninBase {
     }
 
     @Override
+
     protected void goToActiveUsers(ActionEvent actionEvent) {
 
         System.out.println("" + c.serverStatus);
@@ -73,12 +79,13 @@ public class FXMLSigninController extends FXMLSigninBase {
         user.setName(usernameTextField.getText());
         user.setPassword(passwordField.getText());
         System.out.println("AL --before sendLoginRequest " + user.getName());
-
-        String response = sendLoginRequest(user);
+        DataModel data = new DataModel(user, 2);
+        System.out.println("get state : "+data.getState());
+        String response = sendLoginRequest(data);
         if (!(response.equals("Failure"))) {
               System.out.println("response: should be not failure :" + response);
           
-               user = JSONConverters.jsonToUserModel(response);
+               //user = JSONConverters.jsonToUserModel(response);
            
                 AppFunctions.closeAndGo(actionEvent, stage);
        
@@ -96,9 +103,11 @@ public class FXMLSigninController extends FXMLSigninBase {
    
     }
 
-    public String sendLoginRequest(UserModel user) {
+    public String sendLoginRequest(DataModel userAndState) {
         String response = "";
-        String jsonRequest = JSONConverters.userModelToJson(user);
+        System.out.println("get state : "+userAndState.getState());
+        System.out.println("get user and state "+userAndState.getUser().getName());
+        String jsonRequest = JSONConverters.DataModelToJson(userAndState);
         System.out.println("jsonRequest " + jsonRequest);
         try {
           
@@ -129,6 +138,7 @@ public class FXMLSigninController extends FXMLSigninBase {
             Logger.getLogger(FXMLSigninController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return response;
+
     }
 
 }

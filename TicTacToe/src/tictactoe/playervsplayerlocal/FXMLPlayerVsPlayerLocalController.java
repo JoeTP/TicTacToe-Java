@@ -37,7 +37,7 @@ public class FXMLPlayerVsPlayerLocalController extends FXMLPlayerVsPlayerLocalBa
 
     @Override
     protected void openGameBoard(ActionEvent actionEvent) {
-        AppFunctions.goTo(actionEvent, new FXMLOfflineGameBoardController(stage));
+        AppFunctions.closeAndGo(actionEvent, stage);
     }
 
 }
