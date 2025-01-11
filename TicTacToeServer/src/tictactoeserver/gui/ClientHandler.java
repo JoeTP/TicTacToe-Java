@@ -107,7 +107,7 @@ public class ClientHandler extends Thread {
     public void run() {
 
         try {
-
+          while (true) {
             System.out.println("Waiting for client input...");
 
             String jsonRequest = dis.readUTF();
@@ -124,6 +124,7 @@ public class ClientHandler extends Thread {
             System.out.println("response" + response);
             ps.writeUTF(response);
             ps.flush();
+          }
         } catch (EOFException e) {
             System.out.println("Client disconnected.");
 
@@ -139,8 +140,8 @@ public class ClientHandler extends Thread {
 
             Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-    }
+}
+    
 
     void broadCastMsg(String msg
     ) {
