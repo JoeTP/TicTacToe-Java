@@ -57,7 +57,7 @@ public class Client {
 
     public static void stopThreads() {
         try {
-            //ps.close();
+            ps.close();
             dis.close();
             oos.close();
             Platform.exit();
@@ -68,5 +68,8 @@ public class Client {
     public static void sendData(DataModel d) throws IOException{
         oos.writeObject(d);
     }
-
+    public static boolean receveResponse() throws IOException{
+        boolean response = dis.readBoolean();
+        return response;
+    }
 }

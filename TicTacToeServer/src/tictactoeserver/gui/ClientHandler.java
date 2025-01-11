@@ -9,6 +9,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.sql.SQLException;
 import java.util.Vector;
@@ -23,6 +24,8 @@ public class ClientHandler extends Thread {
     DataInputStream dis;
     DataOutputStream ps;
     ObjectInputStream ois;
+    ObjectOutputStream oos;
+    boolean response;
     Socket client;  // Add a reference to the client socket
     int state;
     static Vector<ClientHandler> clients = new Vector<ClientHandler>();
@@ -53,7 +56,8 @@ public class ClientHandler extends Thread {
                         UserModel user = data.getUser();
                         System.out.println(user.getName());
                         System.out.println(user.getEmail());
-                        DataAccessLayer.insertData(user);
+                        response = DataAccessLayer.insertData(user);
+                        ps.writeBoolean(response);
                         break;
                 }
                 
@@ -88,8 +92,6 @@ public class ClientHandler extends Thread {
         } catch (IOException ex) {
             Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
             Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
