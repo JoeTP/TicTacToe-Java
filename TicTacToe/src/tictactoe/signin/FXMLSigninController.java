@@ -36,16 +36,10 @@ import tictactoe.signup.FXMLSignupController;
 public class FXMLSigninController extends FXMLSigninBase {
 
     Stage stage;
-    Client c;
 
     public FXMLSigninController(Stage stage) {
-        try {
-            this.stage = stage;
-            c = new Client();
-            c.connectToServer();
-        } catch (IOException ex) {
-            Logger.getLogger(FXMLSigninController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
+        this.stage = stage;
 
     }
 
@@ -62,82 +56,55 @@ public class FXMLSigninController extends FXMLSigninBase {
     @Override
 
     protected void goToActiveUsers(ActionEvent actionEvent) {
-
+        Client c = new Client();
         System.out.println("" + c.serverStatus);
         if (c.serverStatus == false) {  //connect
             System.out.println("connect connection");
-            getUserInput(actionEvent);
+            UserModel user = new UserModel();
 
-           
-        }
-
-    }
-
-    public void getUserInput(ActionEvent actionEvent) {
-        UserModel user = new UserModel();
-
-        user.setName(usernameTextField.getText());
-        user.setPassword(passwordField.getText());
-        System.out.println("AL --before sendLoginRequest " + user.getName());
-        DataModel data = new DataModel(user, 2);
-        System.out.println("get state : "+data.getState());
-        String response = sendLoginRequest(data);
-        if (!(response.equals("Failure"))) {
-              System.out.println("response: should be not failure :" + response);
-          
-               //user = JSONConverters.jsonToUserModel(response);
-           
-                AppFunctions.closeAndGo(actionEvent, stage);
-       
-        } else {
-            System.out.println("should be failure " + response);
-     
-          wrongLabel.setVisible(true);
-            wrongLabel.setStyle("-fx-text-fill: red; -fx-font-size: 20px;");
-            wrongLabel.setText("Please Enter Correct Info");
-
-            
-        }
-
-      
-   
-    }
-
-    public String sendLoginRequest(DataModel userAndState) {
-        String response = "";
-        System.out.println("get state : "+userAndState.getState());
-        System.out.println("get user and state "+userAndState.getUser().getName());
-        String jsonRequest = JSONConverters.DataModelToJson(userAndState);
-        System.out.println("jsonRequest " + jsonRequest);
-        try {
-          
-            Socket socket = new Socket("127.0.0.1", 5001);
-           
-            DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
-          
-            DataInputStream dis = new DataInputStream(socket.getInputStream());
-        
-
-            dos.writeUTF(jsonRequest);
-
-            dos.flush();
-
+            user.setName(usernameTextField.getText());
+            user.setPassword(passwordField.getText());
+            System.out.println("AL --before sendLoginRequest " + user.getName());
+            DataModel data = new DataModel(user, 2);
+            System.out.println("get state : " + data.getState());
+            boolean response = false;
+            System.out.println("get state : " + data.getState());
+            System.out.println("get user and state " + data.getUser().getName());
+           // String jsonRequest = JSONConverters.DataModelToJson(data);
+           // System.out.println("jsonRequest " + jsonRequest);
             try {
-                
-               
-                response = dis.readUTF();
-              
-                
-            } catch (SocketTimeoutException e) {
-                System.out.println("Server Timeout. Please try again.");
+
+                c.sendData(data);
+
+                try {
+
+                    response = c.receveResponse();
+
+                } catch (SocketTimeoutException e) {
+                    System.out.println("Server Timeout. Please try again.");
+                } catch (IOException ex) {
+                    System.out.println("Connection failed. Please check the server.");
+                }
+
             } catch (IOException ex) {
-                System.out.println("Connection failed. Please check the server.");
+                Logger.getLogger(FXMLSigninController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if (!(response)) {
+                System.out.println("response: should be not failure :" + response);
+
+                //user = JSONConverters.jsonToUserModel(response);
+                AppFunctions.closeAndGo(actionEvent, stage);
+
+            } else {
+                System.out.println("should be failure " + response);
+
+                wrongLabel.setVisible(true);
+                wrongLabel.setStyle("-fx-text-fill: red; -fx-font-size: 20px;");
+                wrongLabel.setText("Please Enter Correct Info");
+
             }
 
-        } catch (IOException ex) {
-            Logger.getLogger(FXMLSigninController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return response;
 
     }
 

@@ -28,28 +28,21 @@ public class DataAccessLayer {
         }
     }
 
-    public static UserModel getUserDataLogin(String userName) {
-        UserModel user = null;
+    public static Boolean getUserDataLogin(String userName, String pass) {
+
+        Boolean isExist = false;
         try {
 
-            if (conection == null || conection.isClosed()) {
-
-                return null;
-            }
-
-            PreparedStatement pst = conection.prepareStatement("SELECT * FROM USERS WHERE USER_NAME = ?");
+            PreparedStatement pst = conection.prepareStatement("SELECT * FROM USERS WHERE USER_NAME = ? AND USER_PASSWORD = ?");
             pst.setString(1, userName);
+            pst.setString(2, pass);
 
             rs = pst.executeQuery();
-
             if (rs.next()) {
-                user = new UserModel();
-
-                user.setId(rs.getInt(AppStrings.USER_ID));
-                user.setPassword(rs.getString(AppStrings.USER_PASSWORD));
-                user.setName(rs.getString(AppStrings.USER_NAME));
+                System.out.println("User found: " + rs.getString("username"));
+                return true;
             } else {
-
+                System.out.println("No user found with the given credentials.");
             }
 
         } catch (SQLException ex) {
@@ -69,7 +62,7 @@ public class DataAccessLayer {
             }
         }
 
-        return user;
+        return isExist;
     }
 
     public static int getUsersCount() {
@@ -85,28 +78,26 @@ public class DataAccessLayer {
         return i;
     }
 
-    public static boolean insertData(UserModel u){
+    public static boolean insertData(UserModel u) {
         try {
             PreparedStatement pst = conection.prepareStatement("INSERT INTO USERS (USER_NAME,USER_EMAIL,USER_PASSWORD,USER_IMG) VALUES (?,?,?,?)");
-            
-            pst.setString (1, u.getName());
-            pst.setString (2, u.getEmail());
-            pst.setString (3, u.getPassword());
-            pst.setString (4, u.getImage());
-            int isUpdate= pst.executeUpdate();
-            if(isUpdate > 0)
-            {
-                System.out.println("Inserted succ.");            
+
+            pst.setString(1, u.getName());
+            pst.setString(2, u.getEmail());
+            pst.setString(3, u.getPassword());
+            pst.setString(4, u.getImage());
+            int isUpdate = pst.executeUpdate();
+            if (isUpdate > 0) {
+                System.out.println("Inserted succ.");
                 return true;
-            }
-            else{
+            } else {
                 System.out.println("Inserted failed");
                 return false;
-            }                     
+            }
         } catch (SQLException ex) {
             Logger.getLogger(DataAccessLayer.class.getName()).log(Level.SEVERE, null, ex);
             return false;
-        }   
+        }
 
     }
 

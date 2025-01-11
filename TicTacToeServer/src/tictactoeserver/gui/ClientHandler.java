@@ -103,45 +103,50 @@ public class ClientHandler extends Thread {
 //
 //        }
 //
+//  
     @Override
     public void run() {
-
         try {
-          while (true) {
-            System.out.println("Waiting for client input...");
+            while (true) {
 
-            String jsonRequest = dis.readUTF();
-            System.out.println("Received jsonRequest: " + jsonRequest);
-            DataModel userAndState = JSONConverters.jsonToDataModel(jsonRequest);
-            state = userAndState.getState();
-            UserModel user = userAndState.getUser();
-            
-            
-            //UserModel user = JSONConverters.jsonToUserModel(jsonRequest);
-            System.out.println("after converson user: " + user.getPassword());
+                ois = new ObjectInputStream(client.getInputStream());
+                DataModel data = (DataModel) ois.readObject();
+                state = data.getState();
+                System.out.println("Waiting for client input...");
 
-            String response = handleRequest(user);
-            System.out.println("response" + response);
-            ps.writeUTF(response);
-            ps.flush();
-          }
+                System.out.println("State: " + state);
+
+                // Handle requests based on state
+                UserModel user = data.getUser();
+                System.out.println(user.getName());
+                System.out.println(user.getEmail());
+                switch (state) {
+                    case 1: // Sign-up
+                        boolean response = false;
+                        response = DataAccessLayer.insertData(user);
+                        ps.writeBoolean(response);
+                        break;
+                    case 2: // Sign-in
+                        boolean responseLogin = false;
+                        responseLogin=DataAccessLayer.getUserDataLogin(user.getName(), user.getPassword());
+                       ps.writeBoolean(responseLogin);
+
+                        break;
+
+                    default:
+                        System.out.println("Unknown state: " + state);
+                        ps.writeUTF("Unknown request");
+                        ps.flush();
+                }
+            }
         } catch (EOFException e) {
             System.out.println("Client disconnected.");
-
         } catch (IOException e) {
             Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, e);
-        }
-        try {
-            clients.remove(this);
-            dis.close();
-            ps.close();
-            client.close();
-        } catch (IOException ex) {
-
+        } catch (ClassNotFoundException ex) {
             Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
-}
-    
+    }
 
     void broadCastMsg(String msg
     ) {
@@ -154,26 +159,26 @@ public class ClientHandler extends Thread {
         }
     }
 
-    private String handleRequest(UserModel user) {
-        String response = "Failure";
-
-        UserModel userFromSql = DataAccessLayer.getUserDataLogin(user.getName());
-
-        if (userFromSql == null) {
-            System.out.println("User not found in database for username: " + user.getName());
-
-        } else {
-            System.out.println("Retrieved user from database: " + userFromSql.getName());
-            if (user.getPassword().equals(userFromSql.getPassword())) {
-                System.out.println("Password matches for user: " + userFromSql.getName());
-                response = JSONConverters.userModelToJson(userFromSql);
-            } else {
-                System.out.println("Password does not match for user: " + userFromSql.getName());
-
-            }
-        }
-
-        return response;
-    }
+//    private String handleRequest(UserModel user) {
+//        String response = "Failure";
+//
+//        UserModel userFromSql = DataAccessLayer.getUserDataLogin(user.getName());
+//
+//        if (userFromSql == null) {
+//            System.out.println("User not found in database for username: " + user.getName());
+//
+//        } else {
+//            System.out.println("Retrieved user from database: " + userFromSql.getName());
+//            if (user.getPassword().equals(userFromSql.getPassword())) {
+//                System.out.println("Password matches for user: " + userFromSql.getName());
+//                response = JSONConverters.userModelToJson(userFromSql);
+//            } else {
+//                System.out.println("Password does not match for user: " + userFromSql.getName());
+//
+//            }
+//        }
+//
+//        return response;
+//    }
 
 }

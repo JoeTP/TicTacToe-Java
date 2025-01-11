@@ -54,6 +54,7 @@ public class FXMLSignupController extends FXMLSignupBase {
     @Override
 protected void goToActiveUsers(ActionEvent actionEvent) {
     UserModel user = getNewUserData();
+        System.out.println("user  :"+user.getName());
     if (user != null) {
         DataModel data = new DataModel(user, 1);
 
@@ -65,6 +66,7 @@ protected void goToActiveUsers(ActionEvent actionEvent) {
     try {
         // Perform network operations
         client.connectToServer();
+        System.out.println("data"+data.getState());
         client.sendData(data);
         response = client.receveResponse();
         System.out.println("Received response: " + response); // Debugging output
