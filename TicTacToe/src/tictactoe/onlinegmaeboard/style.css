@@ -66,7 +66,6 @@
     -fx-border-radius: 20;
     -fx-background-radius: 20;
     -fx-spacing: 30px; /* Space between chat messages */
-    -fx-pref-height: 500px;
     -fx-pref-width: 300px;
 }
 
@@ -93,7 +92,6 @@
 
 /* Text Area */
 .text-area {
-    -fx-pref-height: 300px;
     -fx-background-color: #fff;
     -fx-font-size: 14px;
     -fx-border-color: #d2b79c;

@@ -18,10 +18,12 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import json.JSONConverters;
 
-import models.UserModel;
+import javafx.collections.FXCollections;
+import static javafx.collections.FXCollections.observableArrayList;
+import javafx.collections.ObservableList;
 import models.DataModel;
+import models.UserModel;
 
 public class ClientHandler extends Thread {
 
@@ -30,19 +32,22 @@ public class ClientHandler extends Thread {
     ObjectInputStream ois;
 
     ObjectOutputStream oos;
+    UserModel user;
     boolean response;
 
     Socket client;  // Add a reference to the client socket
     int state;
-    static Vector<ClientHandler> clients = new Vector<ClientHandler>();
+    static ObservableList<ClientHandler> clients = FXCollections.synchronizedObservableList(FXCollections.observableArrayList());
+    static ObservableList<String> usernames = FXCollections.synchronizedObservableList(FXCollections.observableArrayList());
 
     public ClientHandler(Socket client) {
         this.client = client;
         try {
             dis = new DataInputStream(client.getInputStream());
             ps = new DataOutputStream(client.getOutputStream());
-            ClientHandler.clients.add(this);
-
+            synchronized (clients) {
+            clients.add(this);
+        }
             System.out.println("##OF CLIENTS" + clients.size());
             start();
         } catch (IOException ex) {
@@ -50,60 +55,8 @@ public class ClientHandler extends Thread {
         }
     }
 
-//
-//=======
-//    public void run() {
-//
-//        try {
-//            while (true) {
-//                ois = new ObjectInputStream(client.getInputStream());
-//                DataModel data = (DataModel) ois.readObject();
-//                state = data.getState();
-//                switch (state) {
-//                    case 1:
-//                        UserModel user = data.getUser();
-//                        System.out.println(user.getName());
-//                        System.out.println(user.getEmail());
-//                        response = DataAccessLayer.insertData(user);
-//                        ps.writeBoolean(response);
-//                        break;
-//                    case 2:
-//                        
-//                }
-//
-//            }
 
-    /*try {
-            while (true) {
-            String str = dis.readUTF();
-            broadCastMsg(str);
-            }
-            } catch (IOException ex) {
-            Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
-            } finally {
-            // Client disconnected, remove from clients vector
-            try {
-            clients.remove(this);
-            dis.close();
-            ps.close();
-            client.close();
-            
-            System.out.println("##OF CLIENTS" + clients.size());
-            } catch (IOException ex) {
-            Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            }
-            } catch (IOException ex) {
-            Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
-            }*/
-//        } catch (IOException ex) {
-//            Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (ClassNotFoundException ex) {
-//            Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
-//
-//        }
-//
-//  
+
     @Override
     public void run() {
         try {
@@ -159,26 +112,22 @@ public class ClientHandler extends Thread {
         }
     }
 
-//    private String handleRequest(UserModel user) {
-//        String response = "Failure";
-//
-//        UserModel userFromSql = DataAccessLayer.getUserDataLogin(user.getName());
-//
-//        if (userFromSql == null) {
-//            System.out.println("User not found in database for username: " + user.getName());
-//
-//        } else {
-//            System.out.println("Retrieved user from database: " + userFromSql.getName());
-//            if (user.getPassword().equals(userFromSql.getPassword())) {
-//                System.out.println("Password matches for user: " + userFromSql.getName());
-//                response = JSONConverters.userModelToJson(userFromSql);
-//            } else {
-//                System.out.println("Password does not match for user: " + userFromSql.getName());
-//
-//            }
-//        }
-//
-//        return response;
-//    }
+
+    public String getUserName() {
+        return user != null ? user.getName() : "Unknown User";
+    }
+    void disconnect() {
+    try {
+        synchronized (clients) {
+            clients.remove(this);
+        }
+        dis.close();
+        ps.close();
+        client.close();
+        System.out.println("## Number of Clients: " + clients.size());
+    } catch (IOException ex) {
+        Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
+    }
+}
 
 }

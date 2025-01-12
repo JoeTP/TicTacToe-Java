@@ -28,7 +28,11 @@ import json.JSONConverters;
 import models.DataModel;
 import models.UserModel;
 import shared.AppFunctions;
+
 import shared.*;
+
+import tictactoe.gameboard.GameBoardController;
+
 import tictactoe.playervsplayeronline.FXMLPlayerVsPlayerOnlineController;
 import tictactoe.playervsplayerpopup.FXMLPlayerVsPlayerPopupController;
 import tictactoe.signup.FXMLSignupController;
@@ -54,12 +58,15 @@ public class FXMLSigninController extends FXMLSigninBase {
     }
 
     @Override
-
     protected void goToActiveUsers(ActionEvent actionEvent) {
-        try {
+   
             Client c = new Client();
 
-            c.connectToServer();
+            try {
+                c.connectToServer();
+            } catch (IOException ex) {
+                Logger.getLogger(FXMLSigninController.class.getName()).log(Level.SEVERE, null, ex);
+            }
             System.out.println("" + c.serverStatus);
             if (c.serverStatus == false) {  //connect
                 System.out.println("connect connection");
@@ -107,10 +114,8 @@ public class FXMLSigninController extends FXMLSigninBase {
 
 
             }
-        } catch (IOException ex) {
-            Logger.getLogger(FXMLSigninController.class.getName()).log(Level.SEVERE, null, ex);
-        }
 
-    }
+        
+        }
 
 }

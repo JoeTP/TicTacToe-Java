@@ -85,7 +85,7 @@ protected void goToActiveUsers(ActionEvent actionEvent) {
     // Update the UI on the JavaFX Application Thread
     Platform.runLater(() -> {
         System.out.println("Updating UI with finalResponse: " + finalResponse); // Debugging output
-        if (finalResponse) {
+        if (!finalResponse) {
             try {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "Signup was successful.");
                 alert.showAndWait();
@@ -98,7 +98,7 @@ protected void goToActiveUsers(ActionEvent actionEvent) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Username or email are already used.");
             alert.showAndWait();
             AppFunctions.closePopup(actionEvent);
-            AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage));
+           
         }
     });
 }).start(); // Start the background thread
