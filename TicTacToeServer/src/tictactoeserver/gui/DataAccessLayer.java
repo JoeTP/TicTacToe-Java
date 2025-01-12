@@ -39,7 +39,7 @@ public class DataAccessLayer {
 
             rs = pst.executeQuery();
             if (rs.next()) {
-                System.out.println("User found: " + rs.getString("username"));
+                System.out.println("User found: " + rs.getString("USER_NAME"));
                 return true;
             } else {
                 System.out.println("No user found with the given credentials.");

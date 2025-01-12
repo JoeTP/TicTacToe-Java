@@ -56,54 +56,53 @@ public class FXMLSigninController extends FXMLSigninBase {
     @Override
 
     protected void goToActiveUsers(ActionEvent actionEvent) {
-        Client c = new Client();
-        System.out.println("" + c.serverStatus);
-        if (c.serverStatus == false) {  //connect
-            System.out.println("connect connection");
-            UserModel user = new UserModel();
+        try {
+            Client c = new Client();
+            c.connectToServer();
+            System.out.println("" + c.serverStatus);
+            if (c.serverStatus == false) {  //connect
+                System.out.println("connect connection");
+                UserModel user = new UserModel();
 
-            user.setName(usernameTextField.getText());
-            user.setPassword(passwordField.getText());
-            System.out.println("AL --before sendLoginRequest " + user.getName());
-            DataModel data = new DataModel(user, 2);
-            System.out.println("get state : " + data.getState());
-            boolean response = false;
-            System.out.println("get state : " + data.getState());
-            System.out.println("get user and state " + data.getUser().getName());
-           // String jsonRequest = JSONConverters.DataModelToJson(data);
-           // System.out.println("jsonRequest " + jsonRequest);
-            try {
-
-                c.sendData(data);
-
+                user.setName(usernameTextField.getText());
+                user.setPassword(passwordField.getText());
+                System.out.println("AL --before sendLoginRequest " + user.getName());
+                DataModel data = new DataModel(user, 2);
+                System.out.println("get state : " + data.getState());
+                boolean response = false;
+              
+                System.out.println("get user and state " + data.getUser().getName());
+                System.out.println("get user and state pass " + data.getUser().getPassword());
+                // String jsonRequest = JSONConverters.DataModelToJson(data);
+                // System.out.println("jsonRequest " + jsonRequest);
                 try {
+
+                    c.sendData(data);
 
                     response = c.receveResponse();
 
-                } catch (SocketTimeoutException e) {
-                    System.out.println("Server Timeout. Please try again.");
                 } catch (IOException ex) {
-                    System.out.println("Connection failed. Please check the server.");
+                    Logger.getLogger(FXMLSigninController.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
-            } catch (IOException ex) {
-                Logger.getLogger(FXMLSigninController.class.getName()).log(Level.SEVERE, null, ex);
+                if (response==true) {
+                    System.out.println("response: should be true :" + response);
+
+                    //user = JSONConverters.jsonToUserModel(response);
+                    AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage));
+
+                } else {
+                    System.out.println("should be failure " + response);
+
+                    wrongLabel.setVisible(true);
+                    wrongLabel.setStyle("-fx-text-fill: red; -fx-font-size: 20px;");
+                    wrongLabel.setText("Please Enter Correct Info");
+
+                }
+
             }
-            if (!(response)) {
-                System.out.println("response: should be not failure :" + response);
-
-                //user = JSONConverters.jsonToUserModel(response);
-                AppFunctions.closeAndGo(actionEvent, stage);
-
-            } else {
-                System.out.println("should be failure " + response);
-
-                wrongLabel.setVisible(true);
-                wrongLabel.setStyle("-fx-text-fill: red; -fx-font-size: 20px;");
-                wrongLabel.setText("Please Enter Correct Info");
-
-            }
-
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLSigninController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }

@@ -12,6 +12,8 @@ import java.io.Serializable;
  * @author Youssif
  */
 public class UserModel implements Serializable {
+    private static final long serialVersionUID = -5159020983329262064L;
+
 
     int id;
     String name;
