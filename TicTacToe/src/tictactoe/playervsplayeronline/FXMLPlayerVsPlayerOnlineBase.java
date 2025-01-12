@@ -6,25 +6,24 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import static shared.AppString.GENERAL_STYLE_FILE_PATH;
 
 public abstract class FXMLPlayerVsPlayerOnlineBase extends BorderPane {
 
     protected final AnchorPane anchorPane;
     protected final Button backBtn;
     protected final AnchorPane anchorPane0;
-    protected final Button sendBtn;
+    protected final Button startBtn;
     protected final Text playerVsPlayerLabel;
-    protected final ListView listView;
+    protected final ListView activePlayersListView;
 
     public FXMLPlayerVsPlayerOnlineBase() {
 
         anchorPane = new AnchorPane();
         backBtn = new Button();
         anchorPane0 = new AnchorPane();
-        sendBtn = new Button();
+        startBtn = new Button();
         playerVsPlayerLabel = new Text();
-        listView = new ListView();
+        activePlayersListView = new ListView();
 
         setMaxHeight(500.0);
         setMaxWidth(450.0);
@@ -33,7 +32,7 @@ public abstract class FXMLPlayerVsPlayerOnlineBase extends BorderPane {
         setPrefHeight(500.0);
         setPrefWidth(450.0);
         getStyleClass().add("mainBackground");
-        getStylesheets().add(GENERAL_STYLE_FILE_PATH);
+        getStylesheets().add("/styling/generalStyle.css");
 
         BorderPane.setAlignment(anchorPane, javafx.geometry.Pos.CENTER);
         anchorPane.setPrefHeight(0.0);
@@ -56,15 +55,15 @@ public abstract class FXMLPlayerVsPlayerOnlineBase extends BorderPane {
         anchorPane0.setPrefHeight(200.0);
         anchorPane0.setPrefWidth(200.0);
 
-        sendBtn.setLayoutX(131.0);
-        sendBtn.setLayoutY(367.0);
-        sendBtn.setMnemonicParsing(false);
-        sendBtn.setOnAction(this::openGameBoard);
-        sendBtn.setPrefHeight(33.0);
-        sendBtn.setPrefWidth(188.0);
-        sendBtn.getStyleClass().add("bigBtn");
-        sendBtn.setText("Send request");
-        sendBtn.setFont(new Font(20.0));
+        startBtn.setLayoutX(131.0);
+        startBtn.setLayoutY(367.0);
+        startBtn.setMnemonicParsing(false);
+        startBtn.setOnAction(this::openGameBoard);
+        startBtn.setPrefHeight(33.0);
+        startBtn.setPrefWidth(188.0);
+        startBtn.getStyleClass().add("bigBtn");
+        startBtn.setText("Send request");
+        startBtn.setFont(new Font(20.0));
 
         playerVsPlayerLabel.setFill(javafx.scene.paint.Color.valueOf("#3e5879"));
         playerVsPlayerLabel.setLayoutX(145.0);
@@ -76,16 +75,16 @@ public abstract class FXMLPlayerVsPlayerOnlineBase extends BorderPane {
         playerVsPlayerLabel.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         playerVsPlayerLabel.setFont(new Font(36.0));
 
-        listView.setLayoutX(37.0);
-        listView.setLayoutY(77.0);
-        listView.setPrefHeight(248.0);
-        listView.setPrefWidth(368.0);
+        activePlayersListView.setLayoutX(37.0);
+        activePlayersListView.setLayoutY(77.0);
+        activePlayersListView.setPrefHeight(248.0);
+        activePlayersListView.setPrefWidth(368.0);
         setCenter(anchorPane0);
 
         anchorPane.getChildren().add(backBtn);
-        anchorPane0.getChildren().add(sendBtn);
+        anchorPane0.getChildren().add(startBtn);
         anchorPane0.getChildren().add(playerVsPlayerLabel);
-        anchorPane0.getChildren().add(listView);
+        anchorPane0.getChildren().add(activePlayersListView);
 
     }
 

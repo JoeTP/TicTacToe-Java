@@ -70,3 +70,15 @@
 .mainBackground{
    -fx-background-color: #F5EFE7;
 }
+.list-view {
+    -fx-padding: 10;
+    -fx-background-color: #f0f4f8;
+    -fx-border-color: #3e5879;
+    -fx-border-width: 2;
+    -fx-border-radius: 5;
+}
+
+.list-cell {
+    -fx-font-size: 16px;
+    -fx-text-fill: #3e5879;
+}
