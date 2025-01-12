@@ -21,7 +21,6 @@ import javafx.collections.ObservableList;
 import models.UserModel;
 import models.DataModel;
 
-
 public class ClientHandler extends Thread {
 
     DataInputStream dis;
@@ -41,8 +40,8 @@ public class ClientHandler extends Thread {
             dis = new DataInputStream(client.getInputStream());
             ps = new DataOutputStream(client.getOutputStream());
             synchronized (clients) {
-            clients.add(this);
-        }
+                clients.add(this);
+            }
             System.out.println("##OF CLIENTS" + clients.size());
             start();
         } catch (IOException ex) {
@@ -51,13 +50,13 @@ public class ClientHandler extends Thread {
     }
 
     public void run() {
-        
+
         try {
-            while(true){
+            while (true) {
                 ois = new ObjectInputStream(client.getInputStream());
                 DataModel data = (DataModel) ois.readObject();
                 state = data.getState();
-                switch(state){
+                switch (state) {
                     case 1:
                         user = data.getUser();
                         synchronized (usernames) {
@@ -69,12 +68,9 @@ public class ClientHandler extends Thread {
                         ps.writeBoolean(response);
                         break;
                 }
-                
+
             }
-            
-            
-            
-            
+
             /*try {
             while (true) {
             String str = dis.readUTF();
@@ -99,7 +95,7 @@ public class ClientHandler extends Thread {
             Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
             }*/
         } catch (IOException ex) {
-            Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
+            disconnect();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -118,17 +114,22 @@ public class ClientHandler extends Thread {
     public String getUserName() {
         return user != null ? user.getName() : "Unknown User";
     }
+
     void disconnect() {
-    try {
-        synchronized (clients) {
-            clients.remove(this);
+        try {
+            synchronized (clients) {
+                clients.remove(this);
+            }
+            synchronized (usernames) {
+                usernames.remove(user.getName());
+            }
+            dis.close();
+            ps.close();
+            ois.close();
+            client.close();
+            System.out.println("## Number of Clients: " + clients.size());
+        } catch (IOException ex) {
+            Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
-        dis.close();
-        ps.close();
-        client.close();
-        System.out.println("## Number of Clients: " + clients.size());
-    } catch (IOException ex) {
-        Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
     }
-}
 }

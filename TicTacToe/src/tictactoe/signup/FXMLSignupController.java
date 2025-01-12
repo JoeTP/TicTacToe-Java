@@ -50,59 +50,60 @@ public class FXMLSignupController extends FXMLSignupBase {
     protected void goToSignin(ActionEvent actionEvent) {
         AppFunctions.goTo(actionEvent, new FXMLSigninController(stage));
     }
-   
+
     @Override
-protected void goToActiveUsers(ActionEvent actionEvent) {
-    UserModel user = getNewUserData();
-    if (user != null) {
-        DataModel data = new DataModel(user, 1);
+    protected void goToActiveUsers(ActionEvent actionEvent) {
+        UserModel user = getNewUserData();
+        if (user != null) {
+            DataModel data = new DataModel(user, 1);
 
-        // Start a new thread for background operations
-        new Thread(() -> {
-    Client client = new Client();
-    boolean response = false;
+            // Start a new thread for background operations
+            new Thread(() -> {
+                Client client = new Client();
+                boolean response = false;
 
-    try {
-        // Perform network operations
-        client.connectToServer();
-        client.sendData(data);
-        response = client.receveResponse();
-        System.out.println("Received response: " + response); // Debugging output
-    } catch (IOException ex) {
-        Platform.runLater(() -> {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Couldn't connect to server.");
-            alert.showAndWait();
-        });
-        ex.printStackTrace();
-        return; // Exit the thread early on failure
-    }
+                try {
+                    // Perform network operations
+                    client.connectToServer();
+                    client.sendData(data);
+                    response = client.receveResponse();
+                    System.out.println("Received response: " + response); // Debugging output
+                } catch (IOException ex) {
+                    Platform.runLater(() -> {
+                        Alert alert = new Alert(Alert.AlertType.ERROR, "Couldn't connect to server.");
+                        alert.showAndWait();
+                    });
+                    ex.printStackTrace();
+                    return; // Exit the thread early on failure
+                }
 
-    boolean finalResponse = response;
-    System.out.println("Final response: " + finalResponse); // Debugging output
+                boolean finalResponse = response;
+                System.out.println("Final response: " + finalResponse); // Debugging output
 
-    // Update the UI on the JavaFX Application Thread
-    Platform.runLater(() -> {
-        System.out.println("Updating UI with finalResponse: " + finalResponse); // Debugging output
-        if (finalResponse) {
-            try {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Signup was successful.");
-                alert.showAndWait();
-                AppFunctions.closePopup(actionEvent);
-                AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Username or email are already used.");
-            alert.showAndWait();
-            AppFunctions.closePopup(actionEvent);
-            AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage));
+                // Update the UI on the JavaFX Application Thread
+                Platform.runLater(() -> {
+                    System.out.println("Updating UI with finalResponse: " + finalResponse); // Debugging output
+                    if (finalResponse) {
+                        try {
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Signup was successful.");
+                            alert.showAndWait();
+                            AppFunctions.closePopup(actionEvent);
+                            AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage));
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Username or email are already used.");
+                        alert.showAndWait();
+                        AppFunctions.closePopup(actionEvent);
+                        AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage));
+                    }
+                });
+            }).start(); // Start the background thread
         }
-    });
-}).start(); // Start the background thread
     }
-}
- /*   @Override
+
+    /*   @Override
     protected void goToActiveUsers(ActionEvent actionEvent) {
         UserModel user = getNewUserData();
         boolean response = false;       
@@ -143,7 +144,7 @@ protected void goToActiveUsers(ActionEvent actionEvent) {
         
         
     }
-*/
+     */
     @Override
     protected void showPreviousIcon(ActionEvent actionEvent) {
         currentImageIndex = (currentImageIndex - 1 + ICON_PATHS.length) % ICON_PATHS.length;
@@ -152,43 +153,42 @@ protected void goToActiveUsers(ActionEvent actionEvent) {
 
     @Override
     protected void showNextIcon(ActionEvent actionEvent) {
-        currentImageIndex = (currentImageIndex + 1 ) % ICON_PATHS.length;
+        currentImageIndex = (currentImageIndex + 1) % ICON_PATHS.length;
         characterImageView.setImage(new Image(ICON_PATHS[currentImageIndex]));
-        
+
     }
-    protected UserModel getNewUserData(){
+
+    protected UserModel getNewUserData() {
         UserModel user = new UserModel();
         boolean valid = true;
         String regexPattern = "[\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,}$";
-        if(usernameTextField.getText().length() > 6)
-        {
+        if (usernameTextField.getText().length() > 6) {
             user.setName(usernameTextField.getText());
-        }else{
+        } else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Username is smaller than 6 letters.");
             alert.showAndWait();
             valid = false;
         }
-        if(emailTextField.getText().matches(regexPattern)){
+        if (emailTextField.getText().matches(regexPattern)) {
             user.setEmail(emailTextField.getText());
-        }else{
+        } else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Invalid email address");
             alert.showAndWait();
             valid = false;
         }
-        if(passwordField.getText().length() > 6){
+        if (passwordField.getText().length() > 6) {
             user.setPassword(passwordField.getText());
-        }else{
+        } else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Password is smaller than 6 letters.");
             alert.showAndWait();
             valid = false;
         }
         user.setImage(Integer.toString(currentImageIndex));
-        if(valid){
+        if (valid) {
             return user;
-        }else{
+        } else {
             return null;
         }
-        
+
     }
 }
- 
