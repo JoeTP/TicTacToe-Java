@@ -18,10 +18,9 @@ public class DataAccessLayer {
 
     private static Connection conection;
     private static ResultSet rs;
-    protected static int i;
+    protected static int usersCount;
 
     static {
-        i = 0;
         try {
             Class.forName("org.sqlite.JDBC");
             conection = DriverManager.getConnection("jdbc:sqlite:database.sqlite");
@@ -53,16 +52,17 @@ public class DataAccessLayer {
         return user;
     }
     public static int getUsersCount() {
+        usersCount = 0;
         try {
             PreparedStatement pst = conection.prepareStatement("SELECT * FROM USERS");
             rs = pst.executeQuery();
             while (rs.next()) {
-                i++;
+                usersCount++;
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(DataAccessLayer.class.getName()).log(Level.SEVERE, null, ex);
             }
-        return i;
+        return usersCount;
     }
     public static boolean insertData(UserModel u){
         try {

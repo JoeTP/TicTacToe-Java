@@ -16,6 +16,7 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
+import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
 import models.UserModel;
 import models.DataModel;
@@ -31,15 +32,17 @@ public class ClientHandler extends Thread {
     boolean response;
     Socket client;  // Add a reference to the client socket
     int state;
-    static ObservableList<ClientHandler> clients = FXCollections.observableArrayList();
+    static ObservableList<ClientHandler> clients = FXCollections.synchronizedObservableList(FXCollections.observableArrayList());
+    static ObservableList<String> usernames = FXCollections.synchronizedObservableList(FXCollections.observableArrayList());
 
     public ClientHandler(Socket client) {
         this.client = client;
         try {
             dis = new DataInputStream(client.getInputStream());
             ps = new DataOutputStream(client.getOutputStream());
-            ClientHandler.clients.add(this);
-
+            synchronized (clients) {
+            clients.add(this);
+        }
             System.out.println("##OF CLIENTS" + clients.size());
             start();
         } catch (IOException ex) {
@@ -57,6 +60,9 @@ public class ClientHandler extends Thread {
                 switch(state){
                     case 1:
                         user = data.getUser();
+                        synchronized (usernames) {
+                            usernames.add(user.getName());
+                        }
                         System.out.println(user.getName());
                         System.out.println(user.getEmail());
                         response = DataAccessLayer.insertData(user);
@@ -108,4 +114,21 @@ public class ClientHandler extends Thread {
             }
         }
     }
+
+    public String getUserName() {
+        return user != null ? user.getName() : "Unknown User";
+    }
+    void disconnect() {
+    try {
+        synchronized (clients) {
+            clients.remove(this);
+        }
+        dis.close();
+        ps.close();
+        client.close();
+        System.out.println("## Number of Clients: " + clients.size());
+    } catch (IOException ex) {
+        Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
+    }
+}
 }

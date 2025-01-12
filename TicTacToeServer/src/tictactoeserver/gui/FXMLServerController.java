@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
+import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
@@ -24,9 +25,10 @@ import javafx.scene.chart.PieChart;
 import shared.AppStrings;
 import tictactoeserver.MainServer;
 import static tictactoeserver.gui.ClientHandler.clients;
+import static tictactoeserver.gui.ClientHandler.usernames;
 
 
-public class FXMLServerController extends FXMLServerBase implements Initializable {
+public class FXMLServerController extends FXMLServerBase {
 
  
     private boolean serverRunning = false;
@@ -38,35 +40,21 @@ public class FXMLServerController extends FXMLServerBase implements Initializabl
 
     public FXMLServerController() {
         System.out.println("FXMLServerController initialized");
-
-        clients.addListener((ListChangeListener<ClientHandler>) change -> {
-            usersCount = DataAccessLayer.getUsersCount();
-            onlineUsersCount = clients.size();
-            System.out.println("Total users count: " + DataAccessLayer.getUsersCount());
-            System.out.println(onlineUsersCount);
-
-            // Prepare the pie chart data
-            ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
-                new PieChart.Data(AppStrings.ONLINE, onlineUsersCount),
-                new PieChart.Data(AppStrings.OFFLINE, usersCount - onlineUsersCount)
-            );
-
-            // Safely update the UI on the JavaFX Application thread
-            Platform.runLater(() -> {
-                if (usersPieChart != null) {
-                    usersPieChart.setData(pieChartData);
-                    usersPieChart.getData().get(0).getNode().setStyle("-fx-pie-color: DARKSLATEBLUE;");
-                    usersPieChart.getData().get(1).getNode().setStyle("-fx-pie-color: D8C4B6;");
+        updatePieChart();
+        usernames.addListener((ListChangeListener<String>) change -> {
+                updatePieChart();
+                synchronized (usernames) {
+            while (change.next()) {
+                if (change.wasAdded()) {
+                    String lastUserName = change.getAddedSubList().get(change.getAddedSubList().size() - 1);
+                    Platform.runLater(() -> usersList.getItems().add(lastUserName));
+                    System.out.println("Last added user: " + lastUserName);
                 }
-        });
-    
+            }
+        }
     });
-    
-    // Set initial color for server indicator
     serverIndicator.setFill(Color.CRIMSON);
     }
-
-
 
     @Override
     protected void handleServerState(ActionEvent actionEvent) {
@@ -110,23 +98,34 @@ public class FXMLServerController extends FXMLServerBase implements Initializabl
             } catch (InterruptedException ex) {
                 Logger.getLogger(FXMLServerController.class.getName()).log(Level.SEVERE, null, ex);
             }
-
         }
         if (!serverRunning) {
             serverStateToggle.setText(AppStrings.START);
         } else {
             serverStateToggle.setText(AppStrings.STOP);
         }
-        
-        
-        
-        
-        
-        
     }
+    protected void updatePieChart(){
+        usersCount = DataAccessLayer.getUsersCount();
+            onlineUsersCount = clients.size();
+            System.out.println("Total users count: " + DataAccessLayer.getUsersCount());
+            System.out.println(onlineUsersCount);
+            // Prepare the pie chart data
+            ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
+                new PieChart.Data(AppStrings.ONLINE, onlineUsersCount),
+                new PieChart.Data(AppStrings.OFFLINE, usersCount - onlineUsersCount)
+            );
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        
+            // Safely update the UI on the JavaFX Application thread
+            Platform.runLater(() -> {
+                if (usersPieChart != null) {
+                    usersPieChart.setData(pieChartData);
+                    usersPieChart.getData().get(0).getNode().setStyle("-fx-pie-color: DARKSLATEBLUE;");
+                    usersPieChart.getData().get(1).getNode().setStyle("-fx-pie-color: D8C4B6;");
+                    totalUsersNoLabel.setText(Integer.toString(usersCount));
+                    ActiceUsersNoLabel.setText(Integer.toString(onlineUsersCount));                    
+                }
+        });
+    }
 }
-}
+    

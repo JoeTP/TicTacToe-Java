@@ -12,9 +12,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../../../resources/styles/serverstylesheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoeserver.gui.FXMLServerController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@styles/serverstylesheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoeserver.gui.FXMLServerController">
    <top>
-      <AnchorPane prefHeight="13.0" prefWidth="600.0" stylesheets="@../../../resources/styles/serverstylesheet.css" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="13.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="serverEscBtn" layoutX="14.0" layoutY="11.0" mnemonicParsing="false" text="ESC" />
          </children>
@@ -23,7 +23,7 @@
    <bottom>
       <AnchorPane prefHeight="401.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <PieChart fx:id="usersPieChart" layoutX="300.0" layoutY="32.0" legendVisible="false" prefHeight="284.0" prefWidth="280.0" styleClass="default-color0" stylesheets="@../../../resources/styles/serverstylesheet.css" title="Users" />
+            <PieChart fx:id="usersPieChart" layoutX="300.0" layoutY="32.0" legendVisible="false" prefHeight="284.0" prefWidth="280.0" styleClass="default-color0" title="Users" />
             <Circle fx:id="serverIndicator" fill="#13f803" layoutX="64.0" layoutY="305.0" radius="11.0" stroke="BLACK" strokeType="INSIDE" styleClass="serverStartBtn" />
             <Text layoutX="216.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Server GUI" wrappingWidth="167.923828125">
                <font>
@@ -41,6 +41,11 @@
                   <ToggleGroup fx:id="startCloseGroup" />
                </toggleGroup>
             </ToggleButton>
+            <Label fx:id="totalUsersLabel" layoutX="356.0" layoutY="297.0" text="Total Users :" />
+            <Label layoutX="426.0" layoutY="297.0" />
+            <Label fx:id="totalUsersNoLabel" layoutX="426.0" layoutY="297.0" text="0" />
+            <Label fx:id="ActiceUsersLabel" layoutX="454.0" layoutY="297.0" text="Active Users :" />
+            <Label fx:id="ActiceUsersNoLabel" layoutX="531.0" layoutY="297.0" text="0" />
          </children>
       </AnchorPane>
    </bottom>
