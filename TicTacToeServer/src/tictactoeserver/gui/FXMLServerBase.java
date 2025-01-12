@@ -22,7 +22,7 @@ public abstract class FXMLServerBase extends BorderPane {
     protected final Text text;
     protected final ListView usersList;
     protected final Label label;
-    protected final ToggleButton serverStateToggleButton;
+    protected final ToggleButton serverStateToggle;
     protected final ToggleGroup startCloseGroup;
 
     public FXMLServerBase() {
@@ -35,7 +35,7 @@ public abstract class FXMLServerBase extends BorderPane {
         text = new Text();
         usersList = new ListView();
         label = new Label();
-        serverStateToggleButton = new ToggleButton();
+        serverStateToggle = new ToggleButton();
         startCloseGroup = new ToggleGroup();
 
         setMaxHeight(USE_PREF_SIZE);
@@ -96,13 +96,13 @@ public abstract class FXMLServerBase extends BorderPane {
         label.setText("Active users");
         label.setFont(new Font(18.0));
 
-        serverStateToggleButton.setLayoutX(99.0);
-        serverStateToggleButton.setLayoutY(289.0);
-        serverStateToggleButton.setMnemonicParsing(false);
-        serverStateToggleButton.setOnAction(this::handleServerState);
-        serverStateToggleButton.setText("Start");
+        serverStateToggle.setLayoutX(99.0);
+        serverStateToggle.setLayoutY(289.0);
+        serverStateToggle.setMnemonicParsing(false);
+        serverStateToggle.setOnAction(this::handleServerState);
+        serverStateToggle.setText("Start");
 
-        serverStateToggleButton.setToggleGroup(startCloseGroup);
+        serverStateToggle.setToggleGroup(startCloseGroup);
         setBottom(anchorPane0);
 
         anchorPane.getChildren().add(serverEscBtn);
@@ -111,7 +111,7 @@ public abstract class FXMLServerBase extends BorderPane {
         anchorPane0.getChildren().add(text);
         anchorPane0.getChildren().add(usersList);
         anchorPane0.getChildren().add(label);
-        anchorPane0.getChildren().add(serverStateToggleButton);
+        anchorPane0.getChildren().add(serverStateToggle);
 
     }
 

@@ -15,6 +15,8 @@ import java.sql.SQLException;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import models.UserModel;
 import models.DataModel;
 
@@ -25,10 +27,11 @@ public class ClientHandler extends Thread {
     DataOutputStream ps;
     ObjectInputStream ois;
     ObjectOutputStream oos;
+    UserModel user;
     boolean response;
     Socket client;  // Add a reference to the client socket
     int state;
-    static Vector<ClientHandler> clients = new Vector<ClientHandler>();
+    static ObservableList<ClientHandler> clients = FXCollections.observableArrayList();
 
     public ClientHandler(Socket client) {
         this.client = client;
@@ -53,7 +56,7 @@ public class ClientHandler extends Thread {
                 state = data.getState();
                 switch(state){
                     case 1:
-                        UserModel user = data.getUser();
+                        user = data.getUser();
                         System.out.println(user.getName());
                         System.out.println(user.getEmail());
                         response = DataAccessLayer.insertData(user);
