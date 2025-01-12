@@ -1,5 +1,6 @@
 package tictactoe.gameboard;
 
+import java.util.Random;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
@@ -18,47 +19,38 @@ public class GameBoardController extends FXMLGameBoardBase {
     private Player playerOne = new Player();
     private Player playerTwo = new Player();
     // private int[] winPattern = new int[3];
-    int[] flatPlaces = new int[9];
-    private int[][] board = new int[3][3];
-
-    private final int[][] winPatterns = {
-        {0, 1, 2}, {3, 4, 5}, {6, 7, 8}, //  rows
-        {0, 3, 6}, {1, 4, 7}, {2, 5, 8}, //   columns
-        {0, 4, 8}, {2, 4, 6} // diagonals
-    };
+    private Integer[][] board = new Integer[3][3];
 
     private final String x = "X";
     private final String o = "O";
     private int move = 1;
 
-    /*
-        [b00 b01 b02]
-        [b10 b11 b12]
-        [b20 b21 b22]
-     */
     public GameBoardController(Stage stage) {
         this.stage = stage;
 
-        //this is static but we need to make the user randomly be player one or two
-        //now player one is always starting
-        playerOne.setChar(x);
-        playerTwo.setChar(o);
-        playerOne.hisTurn = true;
-        prinMoves();
+        assignPlayers();
 
     }
 
-    /*
-        [1 2 3]
-        [4 5 6]
-        [7 8 9] 
-     */
+    private void assignPlayers() {
+        Random random = new Random();
+        if (random.nextBoolean()) {
+            playerOne.setChar(x);
+            playerTwo.setChar(o);
+            playerOne.hisTurn = true;
+        } else {
+            playerOne.setChar(o);
+            playerTwo.setChar(x);
+            playerTwo.hisTurn = true;
+        }
+    }
+
     private void setTurn(Button b) {
-        if (b.getText() == "") {
+        if (b.getText().isEmpty()) {
             if (playerOne.hisTurn) {
-                b.setText(x);
+                b.setText(playerOne.getChar());
             } else {
-                b.setText(o);
+                b.setText(playerTwo.getChar());
             }
             playerTwo.hisTurn = !playerTwo.hisTurn;
             playerOne.hisTurn = !playerOne.hisTurn;
@@ -66,21 +58,10 @@ public class GameBoardController extends FXMLGameBoardBase {
             Integer c = GridPane.getColumnIndex(b);
             Integer r = GridPane.getRowIndex(b);
             fillBoard(r, c);
+
+            checkPlayerWinner();
         }
 
-        prinMoves();
-
-        String winner = checkWinner(board);
-        if (playerOne.getChar() == winner) {
-            //draw line for winner and do popup
-            System.out.println("PLAYER ONE WINNER");
-        } else if (playerTwo.getChar() == winner) {
-            //draw line for winner and do popup   
-            System.out.println("PLAYER TWO WINNER");
-        } else if (move == 9) {
-            //its draw (no line) and do popup
-            System.out.println("NO WINNER ITS DRAW");
-        }
     }
 
     private void fillBoard(Integer r, Integer c) {
@@ -94,18 +75,22 @@ public class GameBoardController extends FXMLGameBoardBase {
         move++;
     }
 
-    private void prinMoves() {
-        for (int i = 0; i < 3; i++) {
-            for (int c = 0; c < 3; c++) {
-                System.out.print(board[i][c] + " ");
-            }
-            System.out.println("");
+    private void checkPlayerWinner() {
+        String winner = checkWinnerChar(board);
+        if (playerOne.getChar() == winner) {
+            //draw line for winner and do popup
+            System.out.println("PLAYER ONE WINNER");
+        } else if (playerTwo.getChar() == winner) {
+            //draw line for winner and do popup   
+            System.out.println("PLAYER TWO WINNER");
+        } else if (move > 9) {
+            //its draw (no line) and do popup
+            System.out.println("NO WINNER ITS DRAW");
         }
-        System.out.println("");
     }
 
-    private String checkWinner(int[][] board) {
-        if (move >= 5) {
+    private String checkWinnerChar(Integer[][] board) {
+        if (move > 5) {
             for (int i = 0; i < 3; i++) {
                 //rows
                 if (checkLine(board[i][0], board[i][1], board[i][2])) {
@@ -128,38 +113,41 @@ public class GameBoardController extends FXMLGameBoardBase {
         return null;
     }
 
-    public String checkRowsAndColumns(int[][] board) {
-        for (int i = 0; i < 3; i++) {
-            //rows
-            if (checkLine(board[i][0], board[i][1], board[i][2])) {
-                //get the winner in the current itration
-                return getWinnerCharacter(board[i][0]);
-            }
-            //columns
-            if (checkLine(board[0][i], board[1][i], board[2][i])) {
-                return getWinnerCharacter(board[0][i]);
-            }
-        }
-        return null;
-    }
+//    public String checkRowsAndColumns(int[][] board) {
+//        for (int i = 0; i < 3; i++) {
+//            //rows
+//            if (checkLine(board[i][0], board[i][1], board[i][2])) {
+//                //get the winner in the current itration
+//                return getWinnerCharacter(board[i][0]);
+//            }
+//            //columns
+//            if (checkLine(board[0][i], board[1][i], board[2][i])) {
+//                return getWinnerCharacter(board[0][i]);
+//            }
+//        }
+//        return null;
+//    }
 
     /*
                     [x - -] [- - x]
                     [- x -] [- x -]
                     [- - x] [x - -]
      */
-    public String checkDiagonals(int[][] board) {
-        if (checkLine(board[0][0], board[1][1], board[2][2])) {
-            return getWinnerCharacter(board[0][0]);
+//    public String checkDiagonals(int[][] board) {
+//        if (checkLine(board[0][0], board[1][1], board[2][2])) {
+//            return getWinnerCharacter(board[0][0]);
+//        }
+//        if (checkLine(board[0][2], board[1][1], board[2][0])) {
+//            return getWinnerCharacter(board[0][2]);
+//        }
+//        return null;
+//    }
+    private boolean checkLine(Integer a, Integer b, Integer c) {
+        if (a == null || b == null || c == null) {
+            return false;
         }
-        if (checkLine(board[0][2], board[1][1], board[2][0])) {
-            return getWinnerCharacter(board[0][2]);
-        }
-        return null;
-    }
-
-    private boolean checkLine(int a, int b, int c) {
-        return (a % 2 == b % 2) && (b % 2 == c % 2);
+        boolean state = ((a % 2 == b % 2) && (b % 2 == c % 2));
+        return state;
     }
 
     private String getWinnerCharacter(int value) {
