@@ -13,6 +13,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GameBoardController">
    <bottom>
@@ -75,6 +76,7 @@
                   <Button fx:id="b10" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleB10" style="-fx-border-radius: 0;" GridPane.columnIndex="1" />
                   <Button fx:id="b11" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleB11" style="-fx-border-radius: 0;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Button fx:id="b00" layoutX="177.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleB00" style="-fx-border-radius: 30 0 0 0;" />
+                  <Line fx:id="winingLine" endX="100.0" startX="-100.0" visible="false" />
                </children>
             </GridPane>
          </children>

@@ -6,6 +6,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.SkinBase;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import models.Player;
@@ -20,7 +21,9 @@ public class GameBoardController extends FXMLGameBoardBase {
    // private int[] winPattern = new int[3];
       int[] flatPlaces = new int[9];
     private int[][] places = new int[3][3];
+    private boolean isEndOfGame = false;
 
+    
     private final int[][] winPatterns = {
         {0, 1, 2}, {3, 4, 5}, {6, 7, 8}, //  rows
         {0, 3, 6}, {1, 4, 7},{2, 5, 8}, //   columns
@@ -38,6 +41,7 @@ public class GameBoardController extends FXMLGameBoardBase {
         [b20 b21 b22]
          
      */
+    
     public GameBoardController(Stage stage) {
         this.stage = stage;
 
@@ -121,9 +125,11 @@ public class GameBoardController extends FXMLGameBoardBase {
             if(even){
             System.out.println("End of the game");// needd to be Handeld
                 System.out.println("winner is even number =>  Second {OO} player wins");
+                endGame(o, flatPlaces);
                 return playerTwo;  
             }
             if (odd){
+                endGame(x, flatPlaces);
                 System.out.println("winner is ODDn number =>  Fisrts {XX} player wins");
                 return playerOne;  
             }
@@ -131,6 +137,27 @@ public class GameBoardController extends FXMLGameBoardBase {
         return null; // Drawwwww
     }
 
+    private void endGame(String winner, int winningPlaces[]){
+        isEndOfGame = true;
+        drawWinningLine(winningPlaces);
+        System.out.println("End of the game, Winner is" + winner);
+        
+    }
+    
+    private void drawWinningLine(int winningPlaces[]){
+       
+        winingLine.setStartX(10 );
+        winingLine.setStartY(10);
+        winingLine.setEndX(winningPlaces[2]);
+        winingLine.setEndY(winningPlaces[2]);
+        
+        winingLine.setTranslateX(winningPlaces[1]);
+        winingLine.setTranslateY(winningPlaces[1]);
+        
+        winingLine.setVisible(true);
+    }
+    
+    
     private void setPlayerXMove() {
 
     }
