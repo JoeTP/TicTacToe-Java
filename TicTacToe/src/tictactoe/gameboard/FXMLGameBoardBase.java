@@ -13,7 +13,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
+<<<<<<< HEAD
 import javafx.scene.shape.Line;
+=======
+import shared.AppString;
+>>>>>>> 6aa3bb7b2d3e1bfd00c67d2a212f5aaa1e402acd
 
 public abstract class FXMLGameBoardBase extends BorderPane {
 
@@ -119,7 +123,7 @@ public abstract class FXMLGameBoardBase extends BorderPane {
         label0.setLayoutY(10.0);
         label0.setText("Player2Name");
         setTop(hBox0);
-        getStylesheets().add("/tictactoe/gameboard/../../../resources/styling/generalStyle.css");
+        getStylesheets().add(AppString.GENERAL_STYLE_FILE_PATH);
         getStylesheets().add("/tictactoe/gameboard/style.css");
 
         BorderPane.setAlignment(anchorPane, javafx.geometry.Pos.CENTER);
