@@ -18,29 +18,27 @@ public class GameBoardController extends FXMLGameBoardBase {
     Stage stage;
     private Player playerOne = new Player();
     private Player playerTwo = new Player();
-    // private int[] winPattern = new int[3];
     private Integer[][] board = new Integer[3][3];
 
-    private final String x = "X";
-    private final String o = "O";
+    private final String X_CHAR = "X";
+    private final String O_CHAR = "O";
     private int move = 1;
 
     public GameBoardController(Stage stage) {
         this.stage = stage;
 
         assignPlayers();
-
     }
 
     private void assignPlayers() {
         Random random = new Random();
         if (random.nextBoolean()) {
-            playerOne.setChar(x);
-            playerTwo.setChar(o);
+            playerOne.setChar(X_CHAR);
+            playerTwo.setChar(O_CHAR);
             playerOne.hisTurn = true;
         } else {
-            playerOne.setChar(o);
-            playerTwo.setChar(x);
+            playerOne.setChar(O_CHAR);
+            playerTwo.setChar(X_CHAR);
             playerTwo.hisTurn = true;
         }
     }
@@ -152,7 +150,7 @@ public class GameBoardController extends FXMLGameBoardBase {
 
     private String getWinnerCharacter(int value) {
         //return the value of the 1st itration
-        return (value % 2 == 0) ? x : o;
+        return (value % 2 == 0) ? X_CHAR : O_CHAR;
     }
 
     @Override
