@@ -68,6 +68,7 @@ public class Client {
         }
     }
     public static void sendData(DataModel d) throws IOException{
+        System.out.println("sendd Dataaa" +d.getUser().getName());
         oos.writeObject(d);
     }
     public static boolean receveResponse() throws IOException{

@@ -1,0 +1,47 @@
+/* Style for the buttons */
+.button {
+    -fx-background-color: transparent;
+    -fx-border-color: #000;
+    -fx-border-radius: 50%;
+    -fx-text-fill: #000;
+    -fx-padding: 10px 20px;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-min-width: 50px;
+    -fx-min-height: 50px;
+}
+
+/* Hover effect for buttons 
+.button:hover {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-border-color: #4CAF50;
+}
+*/
+/* Style for the image */
+.image-view {
+    -fx-border-radius: 10%;
+    -fx-border-color: #ddd;
+    -fx-border-width: 3px;
+    -fx-padding: 5px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0.5, 0, 0);
+}
+
+/* HBox layout */
+.hbox {
+    -fx-alignment: center;
+    -fx-padding: 20px;
+    -fx-spacing: 20px;
+}
+
+/* Style for the entire scene */
+.scene {
+    -fx-background-color: #f4f4f4;
+}
+
+/* Style for the image container */
+.image-container {
+    -fx-alignment: center;
+    -fx-padding: 10px;
+}
