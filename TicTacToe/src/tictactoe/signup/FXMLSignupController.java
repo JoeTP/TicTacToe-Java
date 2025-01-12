@@ -56,12 +56,10 @@ public class FXMLSignupController extends FXMLSignupBase {
         UserModel user = getNewUserData();
         if (user != null) {
             DataModel data = new DataModel(user, 1);
-
             // Start a new thread for background operations
             new Thread(() -> {
                 Client client = new Client();
                 boolean response = false;
-
                 try {
                     // Perform network operations
                     client.connectToServer();
@@ -76,7 +74,6 @@ public class FXMLSignupController extends FXMLSignupBase {
                     ex.printStackTrace();
                     return; // Exit the thread early on failure
                 }
-
                 boolean finalResponse = response;
                 System.out.println("Final response: " + finalResponse); // Debugging output
 

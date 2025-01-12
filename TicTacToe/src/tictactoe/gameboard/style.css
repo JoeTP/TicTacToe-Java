@@ -59,7 +59,6 @@
     -fx-border-style: solid;
     -fx-cursor: hand;
     /* -fx-border-radius: 30;  */
-    -fx-effect: shadow;
     /* -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.75), 10, 0.5, 4, 4); */
 }
 

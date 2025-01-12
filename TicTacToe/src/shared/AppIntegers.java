@@ -12,5 +12,6 @@ package shared;
 public class AppIntegers {
 
     public static int SPLASH_SCREEN_TIMER = 1;
+    public static   int SERVER_PORT =5001;
     
 }
