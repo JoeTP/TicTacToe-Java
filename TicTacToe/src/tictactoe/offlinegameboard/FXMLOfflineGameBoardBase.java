@@ -204,7 +204,7 @@ public abstract class FXMLOfflineGameBoardBase extends BorderPane {
         BorderPane.setMargin(flowPane, new Insets(0.0, 0.0, 20.0, 105.0));
         setBottom(flowPane);
         getStylesheets().add("/tictactoe/offlinegameboard/fxmlofflinegameboard.css");
-        getStylesheets().add("/tictactoe/offlinegameboard/../../../resources/styling/generalStyle.css");
+        getStylesheets().add("/styling/generalStyle.css");
 
         hBox0.getChildren().add(player1Img);
         hBox0.getChildren().add(player1Label);

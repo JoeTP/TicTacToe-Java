@@ -1,4 +1,3 @@
-
 package tictactoeserver.gui;
 
 import java.sql.Connection;
@@ -11,17 +10,13 @@ import java.util.logging.Logger;
 import models.UserModel;
 import shared.AppStrings;
 
-
-
-
 public class DataAccessLayer {
 
     private static Connection conection;
     private static ResultSet rs;
-    protected static int i;
+    protected static int usersCount;
 
     static {
-        i = 0;
         try {
             Class.forName("org.sqlite.JDBC");
             conection = DriverManager.getConnection("jdbc:sqlite:database.sqlite");
@@ -32,59 +27,80 @@ public class DataAccessLayer {
         }
     }
 
-    public static UserModel getUserData(String userName) {
-        UserModel user = new UserModel();
+    public static Boolean getUserDataLogin(String userName, String pass) {
+
+        Boolean isExist = false;
         try {
-            PreparedStatement pst = conection.prepareStatement("SELECT * FROM USERS WHERE USER_NAME = ?");
-            pst.setString (1, userName);
+
+            PreparedStatement pst = conection.prepareStatement("SELECT * FROM USERS WHERE USER_NAME = ? AND USER_PASSWORD = ?");
+            pst.setString(1, userName);
+            pst.setString(2, pass);
+
             rs = pst.executeQuery();
             if (rs.next()) {
-                user.setId(rs.getInt(AppStrings.USER_ID));
-                user.setScore(rs.getInt(AppStrings.USER_SCORE));
-                user.setNumOfGames(rs.getInt(AppStrings.NO_OF_GAMES));
-                user.setWins(rs.getInt(AppStrings.NO_OF_WINS));
-                user.setLosses(rs.getInt(AppStrings.NO_OF_LOSSES));
-                user.setIsOnline(rs.getInt(AppStrings.IS_ONLINE) != 0); //false
-                user.setIsInGame(rs.getInt(AppStrings.IS_INGAME) != 0); //false
+                System.out.println("User found: " + rs.getString("USER_NAME"));
+                return true;
+            } else {
+                System.out.println("No user found with the given credentials.");
             }
+
         } catch (SQLException ex) {
+                  System.out.println("not on try on DataAccessLayer");
             Logger.getLogger(DataAccessLayer.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NullPointerException ex) {
+
+            Logger.getLogger(DataAccessLayer.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException ex) {
+                System.out.println("rs != null");
+                Logger.getLogger(DataAccessLayer.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-        return user;
+
+        return isExist;
     }
+
     public static int getUsersCount() {
+        usersCount = 0;
         try {
             PreparedStatement pst = conection.prepareStatement("SELECT * FROM USERS");
             rs = pst.executeQuery();
             while (rs.next()) {
-                i++;
+
+                usersCount++;
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(DataAccessLayer.class.getName()).log(Level.SEVERE, null, ex);
             }
-        return i;
+        return usersCount;
+
     }
-    public static boolean insertData(UserModel u){
+
+    public static boolean insertData(UserModel u) {
         try {
             PreparedStatement pst = conection.prepareStatement("INSERT INTO USERS (USER_NAME,USER_EMAIL,USER_PASSWORD,USER_IMG) VALUES (?,?,?,?)");
-            
-            pst.setString (1, u.getName());
-            pst.setString (2, u.getEmail());
-            pst.setString (3, u.getPassword());
-            pst.setString (4, u.getImage());
-            int isUpdate= pst.executeUpdate();
-            if(isUpdate > 0)
-            {
-                System.out.println("Inserted succ.");            
+
+            pst.setString(1, u.getName());
+            pst.setString(2, u.getEmail());
+            pst.setString(3, u.getPassword());
+            pst.setString(4, u.getImage());
+            int isUpdate = pst.executeUpdate();
+            if (isUpdate > 0) {
+                System.out.println("Inserted succ.");
                 return true;
-            }
-            else{
+            } else {
                 System.out.println("Inserted failed");
                 return false;
-            }                     
+            }
         } catch (SQLException ex) {
             Logger.getLogger(DataAccessLayer.class.getName()).log(Level.SEVERE, null, ex);
             return false;
-        }   
+        }
+
     }
+
 }
