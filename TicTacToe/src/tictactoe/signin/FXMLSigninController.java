@@ -100,7 +100,7 @@ public class FXMLSigninController extends FXMLSigninBase {
                     System.out.println("response: should be true :" + response);
 
                     //user = JSONConverters.jsonToUserModel(response);
-                    AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage,client));
+                    AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage));
 
                 } else {
                     System.out.println("should be failure " + response);

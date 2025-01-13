@@ -26,8 +26,8 @@ public class FXMLPlayerVsPlayerOnlineController extends FXMLPlayerVsPlayerOnline
    
     ClientConnection client;
 
-    public FXMLPlayerVsPlayerOnlineController(Stage stage, ClientConnection c) {
-        this.client = c;
+    public FXMLPlayerVsPlayerOnlineController(Stage stage) {
+        //this.client = c;
         this.stage = stage;
 
        // startListeningForUpdates();

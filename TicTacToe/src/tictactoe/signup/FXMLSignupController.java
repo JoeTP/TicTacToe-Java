@@ -85,7 +85,7 @@ public class FXMLSignupController extends FXMLSignupBase {
                             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Signup was successful.");
                             alert.showAndWait();
                             AppFunctions.closePopup(actionEvent);
-                            AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage,client));
+                            AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage));
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
