@@ -59,17 +59,14 @@ public class FXMLSignupController extends FXMLSignupBase {
     if (user != null) {
         DataModel data = new DataModel(user, 1);
 
-        // Start a new thread for background operations
         new Thread(() -> {
     ClientConnection client = new ClientConnection();
     boolean response = false;
 
     try {
-        // Perform network operations
         client.connectToServer();
         client.sendData(data);
         response = client.receveResponse();
-        System.out.println("Received response: " + response); // Debugging output
     } catch (IOException ex) {
         Platform.runLater(() -> {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Couldn't connect to server.");
@@ -80,11 +77,7 @@ public class FXMLSignupController extends FXMLSignupBase {
     }
 
     boolean finalResponse = response;
-    System.out.println("Final response: " + finalResponse); // Debugging output
-
-    // Update the UI on the JavaFX Application Thread
     Platform.runLater(() -> {
-        System.out.println("Updating UI with finalResponse: " + finalResponse); // Debugging output
         if (finalResponse) {
             try {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "Signup was successful.");
@@ -101,7 +94,7 @@ public class FXMLSignupController extends FXMLSignupBase {
             AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage));
         }
     });
-}).start(); // Start the background thread
+}).start();
     }
 }
 

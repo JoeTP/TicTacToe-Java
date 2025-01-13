@@ -6,10 +6,6 @@
 package tictactoe.homescreen;
 
 import clientconnection.ClientConnection;
-<<<<<<< HEAD
-=======
-
->>>>>>> d0b2795a691b57e48c98c858c5010bcf42a7ac6b
 import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
@@ -66,11 +62,9 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
 
     @Override
     protected void exitApp(ActionEvent actionEvent) {
-<<<<<<< HEAD
+
         ClientConnection.stopThreads();
-=======
         System.exit(0);
->>>>>>> d0b2795a691b57e48c98c858c5010bcf42a7ac6b
     }
 
     @Override
