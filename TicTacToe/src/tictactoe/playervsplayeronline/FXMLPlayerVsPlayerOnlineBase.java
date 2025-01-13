@@ -6,25 +6,26 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import static shared.AppString.GENERAL_STYLE_FILE_PATH;
 
 public abstract class FXMLPlayerVsPlayerOnlineBase extends BorderPane {
 
     protected final AnchorPane anchorPane;
-    protected final Button backBtn;
+    protected final Button backBtn1;
     protected final AnchorPane anchorPane0;
-    protected final Button sendBtn;
+    protected final Button startBtn;
     protected final Text playerVsPlayerLabel;
-    protected final ListView listView;
+    protected final ListView activePlayersListView;
+    protected final Button refreshBtn;
 
     public FXMLPlayerVsPlayerOnlineBase() {
 
         anchorPane = new AnchorPane();
-        backBtn = new Button();
+        backBtn1 = new Button();
         anchorPane0 = new AnchorPane();
-        sendBtn = new Button();
+        startBtn = new Button();
         playerVsPlayerLabel = new Text();
-        listView = new ListView();
+        activePlayersListView = new ListView();
+        refreshBtn = new Button();
 
         setMaxHeight(500.0);
         setMaxWidth(450.0);
@@ -33,64 +34,78 @@ public abstract class FXMLPlayerVsPlayerOnlineBase extends BorderPane {
         setPrefHeight(500.0);
         setPrefWidth(450.0);
         getStyleClass().add("mainBackground");
-        getStylesheets().add(GENERAL_STYLE_FILE_PATH);
+        getStylesheets().add("/styling/generalStyle.css");
 
         BorderPane.setAlignment(anchorPane, javafx.geometry.Pos.CENTER);
         anchorPane.setPrefHeight(0.0);
         anchorPane.setPrefWidth(450.0);
 
-        AnchorPane.setLeftAnchor(backBtn, 14.0);
-        AnchorPane.setTopAnchor(backBtn, 7.0);
-        backBtn.setLayoutX(14.0);
-        backBtn.setLayoutY(7.0);
-        backBtn.setMnemonicParsing(false);
-        backBtn.setOnAction(this::handleBackButton);
-        backBtn.setPrefHeight(30.0);
-        backBtn.setPrefWidth(30.0);
-        backBtn.setStyle("-fx-border-radius: 30px; -fx-background-radius: 30px;");
-        backBtn.getStyleClass().add("bigBtn");
-        backBtn.setText("B");
+        backBtn1.setLayoutX(24.0);
+        backBtn1.setLayoutY(17.0);
+        backBtn1.setMnemonicParsing(false);
+        backBtn1.setOnAction(this::handleBackButton);
+        backBtn1.setPrefHeight(30.0);
+        backBtn1.setPrefWidth(30.0);
+        backBtn1.setStyle("-fx-border-radius: 30px; -fx-background-radius: 30px;");
+        backBtn1.getStyleClass().add("bigBtn");
+        backBtn1.setText("B");
         setTop(anchorPane);
 
         BorderPane.setAlignment(anchorPane0, javafx.geometry.Pos.CENTER);
         anchorPane0.setPrefHeight(200.0);
         anchorPane0.setPrefWidth(200.0);
 
-        sendBtn.setLayoutX(131.0);
-        sendBtn.setLayoutY(367.0);
-        sendBtn.setMnemonicParsing(false);
-        sendBtn.setOnAction(this::openGameBoard);
-        sendBtn.setPrefHeight(33.0);
-        sendBtn.setPrefWidth(188.0);
-        sendBtn.getStyleClass().add("bigBtn");
-        sendBtn.setText("Send request");
-        sendBtn.setFont(new Font(20.0));
+        startBtn.setLayoutX(131.0);
+        startBtn.setLayoutY(367.0);
+        startBtn.setMnemonicParsing(false);
+        startBtn.setOnAction(this::openGameBoard);
+        startBtn.setPrefHeight(33.0);
+        startBtn.setPrefWidth(188.0);
+        startBtn.getStyleClass().add("bigBtn");
+        startBtn.setText("Send request");
+        startBtn.setFont(new Font(20.0));
 
         playerVsPlayerLabel.setFill(javafx.scene.paint.Color.valueOf("#3e5879"));
-        playerVsPlayerLabel.setLayoutX(145.0);
-        playerVsPlayerLabel.setLayoutY(55.0);
+        playerVsPlayerLabel.setLayoutX(55.0);
+        playerVsPlayerLabel.setLayoutY(46.0);
         playerVsPlayerLabel.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         playerVsPlayerLabel.setStrokeWidth(0.0);
         playerVsPlayerLabel.getStyleClass().add("bigLabel");
-        playerVsPlayerLabel.setText("Player Vs Player");
+        playerVsPlayerLabel.setText("Click to the player who you need to play with");
         playerVsPlayerLabel.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
+        playerVsPlayerLabel.setWrappingWidth(312.830078125);
         playerVsPlayerLabel.setFont(new Font(36.0));
 
-        listView.setLayoutX(37.0);
-        listView.setLayoutY(77.0);
-        listView.setPrefHeight(248.0);
-        listView.setPrefWidth(368.0);
+        activePlayersListView.setLayoutX(41.0);
+        activePlayersListView.setLayoutY(106.0);
+        activePlayersListView.setPrefHeight(248.0);
+        activePlayersListView.setPrefWidth(368.0);
+
+        refreshBtn.setLayoutX(352.0);
+        refreshBtn.setLayoutY(48.0);
+        refreshBtn.setMnemonicParsing(false);
+        refreshBtn.setOnAction(this::handlerefreshBtn);
+        refreshBtn.setPrefHeight(47.0);
+        refreshBtn.setPrefWidth(68.0);
+        refreshBtn.setStyle("-fx-border-radius: 30px; -fx-background-radius: 30px;");
+        refreshBtn.getStyleClass().add("bigBtn");
+        refreshBtn.setText("refresh");
         setCenter(anchorPane0);
 
-        anchorPane.getChildren().add(backBtn);
-        anchorPane0.getChildren().add(sendBtn);
+        anchorPane.getChildren().add(backBtn1);
+        anchorPane0.getChildren().add(startBtn);
         anchorPane0.getChildren().add(playerVsPlayerLabel);
-        anchorPane0.getChildren().add(listView);
+        anchorPane0.getChildren().add(activePlayersListView);
+        anchorPane0.getChildren().add(refreshBtn);
 
     }
 
     protected abstract void handleBackButton(javafx.event.ActionEvent actionEvent);
 
     protected abstract void openGameBoard(javafx.event.ActionEvent actionEvent);
+
+    protected abstract void handlerefreshBtn(javafx.event.ActionEvent actionEvent);
+    
+    
 
 }
