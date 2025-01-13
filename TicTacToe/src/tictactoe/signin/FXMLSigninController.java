@@ -5,7 +5,7 @@
  */
 package tictactoe.signin;
 
-import clientconnection.Client;
+import clientconnection.ClientConnection;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -33,7 +33,7 @@ import tictactoe.signup.FXMLSignupController;
 public class FXMLSigninController extends FXMLSigninBase {
 
     Stage stage;
-    Client c = new Client();
+    ClientConnection c = new ClientConnection();
 
     public FXMLSigninController(Stage stage) {
         this.stage = stage;

@@ -9,7 +9,7 @@ package shared;
  *
  * @author Youssif
  */
-public class AppIntegers {
+public class AppConstants {
 
     public static int SPLASH_SCREEN_TIMER = 1;
     

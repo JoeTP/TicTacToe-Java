@@ -5,7 +5,7 @@
  */
 package tictactoe.signup;
 
-import clientconnection.Client;
+import clientconnection.ClientConnection;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -59,7 +59,7 @@ protected void goToActiveUsers(ActionEvent actionEvent) {
 
         // Start a new thread for background operations
         new Thread(() -> {
-    Client client = new Client();
+    ClientConnection client = new ClientConnection();
     boolean response = false;
 
     try {

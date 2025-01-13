@@ -23,7 +23,7 @@ import models.UserModel;
  *
  * @author Ayat Gamal
  */
-public class Client {
+public class ClientConnection {
 
   
     public static DataInputStream dis;
@@ -62,7 +62,7 @@ public class Client {
             oos.close();
             Platform.exit();
         } catch (IOException ex) {
-            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClientConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     public static void sendData(DataModel d) throws IOException{

@@ -1,5 +1,6 @@
 package tictactoe.gameboard;
 
+import gameboard.WinningLine;
 import java.util.Random;
 import javafx.event.ActionEvent;
 import javafx.geometry.Bounds;
@@ -22,8 +23,8 @@ public class GameBoardController extends FXMLGameBoardBase {
     private Player playerOne = new Player();
     private Player playerTwo = new Player();
     private boolean isEndOfGame = false;
-    String startLine;
-    String endLine;
+  //  String startLine;
+    //String endLine;
 
     /*
         [b00 b01 b02]
@@ -69,42 +70,26 @@ public class GameBoardController extends FXMLGameBoardBase {
             fillBoard(r, c);
 
             checkPlayerWinner();
+            printGame();
         }
+        
     }
 
-    private void endGame(String winner, int winningPlaces[]) {
+    private void printGame(){
+        
+        for(int i = 0 ; i<3 ; i++){
+            for(int j = 0; j<3 ;j++){
+                System.out.print(board[i][j] + " ");
+            }
+            System.out.println(" ");
+        }
+    }
+    private void endGame(String winner) {
         isEndOfGame = true;
         System.out.println("End of the game, Winner is" + winner);
 
     }
-
-    private void drawWinningLine(String startLine, String endLine) {
-        int r1 = getRow(startLine);
-        int c1 = getCol(startLine);
-        int r2 = getRow(endLine);
-        int c2 = getCol(endLine);
-        //start point
-        double btnWidth = grid.getWidth() / 3;
-        double btnHeight = grid.getHeight() / 3;
-
-        double gridX = grid.getLayoutX();
-        double gridY = grid.getLayoutY();
-
-        double x1 = gridX + (c1 * btnWidth) + btnWidth / 2;
-        double y1 = gridY + (r1 * btnHeight) + btnHeight / 2;
-
-        double x2 = gridX + (c2 * btnWidth) + btnWidth / 2;
-        double y2 = gridY + (r2 * btnHeight) + btnHeight / 2;
-
-        Line line = new Line(x1, y1, x2, y2);
-        anchorPane.getChildren().add(line);
-
-        line.setStroke(Color.GREENYELLOW.darker());
-        line.setStrokeWidth(5);
-        line.setVisible(true);
-
-    }
-
+    
     private void setPlayerXMove() {
 
     }
@@ -130,48 +115,20 @@ public class GameBoardController extends FXMLGameBoardBase {
     private void checkPlayerWinner() {
         String winner = checkWinnerChar(board);
         if (playerOne.getChar() == winner) {
-            drawWinningLine(getStartLine(), getEndLine());
+           WinningLine.drawWinningLine(WinningLine.getStartLine(), WinningLine.getEndLine(), grid);
+            
             //do popup
             System.out.println("PLAYER ONE WINNER");
         } else if (playerTwo.getChar() == winner) {
-            drawWinningLine(getStartLine(), getEndLine());
+           WinningLine.drawWinningLine(WinningLine.getStartLine(), WinningLine.getEndLine(),grid);
             //do popup
             System.out.println("PLAYER TWO WINNER");
         } else if (move > 9) {
-            drawWinningLine(getStartLine(), getEndLine());
+           WinningLine.drawWinningLine(WinningLine.getStartLine(), WinningLine.getEndLine(),grid);
             //do popup
             System.out.println("NO WINNER ITS DRAW");
         }
     }
-
-    private int getCol(String btnString) {
-        char c = btnString.charAt(1);
-        int col = Character.getNumericValue(c);
-        return col;
-    }
-
-    private int getRow(String btnString) {
-        char r = btnString.charAt(0);
-        int row = Character.getNumericValue(r);
-        return row;
-    }
-
-    private void setStartLine(String s) {
-        startLine = s;
-    }
-
-    private void setEndLine(String s) {
-        endLine = s;
-    }
-
-    private String getStartLine() {
-        return startLine;
-    }
-
-    private String getEndLine() {
-        return endLine;
-    }
-
     private String checkWinnerChar(Integer[][] board) {
 
         if (move > 5) {
@@ -179,25 +136,25 @@ public class GameBoardController extends FXMLGameBoardBase {
                 //rows
                 if (checkLine(board[i][0], board[i][1], board[i][2])) {
                     //get the winner in the current itration
-                    setStartLine(i + "0"); // extract index off BUTTONS
-                    setEndLine(i + "2");
+                    WinningLine.setStartLine(i + "0"); // extract index off BUTTONS
+                   WinningLine.setEndLine(i + "2");
                     return getWinnerCharacter(board[i][0]);
                 }
                 //columns
                 if (checkLine(board[0][i], board[1][i], board[2][i])) {
-                    setStartLine("0" + i);
-                    setEndLine("2" + i);
+                    WinningLine.setStartLine("0" + i);
+                    WinningLine.setEndLine("2" + i);
                     return getWinnerCharacter(board[0][i]);
                 }
             }
             if (checkLine(board[0][0], board[1][1], board[2][2])) {
-                setStartLine("00");
-                setEndLine("22");
+                WinningLine.setStartLine("00");
+                WinningLine.setEndLine("22");
                 return getWinnerCharacter(board[0][0]);
             }
             if (checkLine(board[0][2], board[1][1], board[2][0])) {
-                setStartLine("02");
-                setEndLine("20");
+                WinningLine.setStartLine("02");
+                WinningLine.setEndLine("20");
                 return getWinnerCharacter(board[0][2]);
             }
         }
