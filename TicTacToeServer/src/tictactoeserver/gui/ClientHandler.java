@@ -63,8 +63,9 @@ public class ClientHandler extends Thread {
                 System.out.println("Waiting for client input...");
 
                 System.out.println("State: " + state);
-
+                //   sendActiveUsersList();
                 // Handle requests based on state
+
                 user = data.getUser();
 
                 System.out.println(user.getName());
@@ -75,12 +76,15 @@ public class ClientHandler extends Thread {
                         response = DataAccessLayer.insertData(user);
                         ps.writeBoolean(response);
                         break;
-                    case 2: // Sign-in
+                    case 2:
                         boolean responseLogin = false;
                         responseLogin = DataAccessLayer.getUserDataLogin(user.getName(), user.getPassword());
                         ps.writeBoolean(responseLogin);
 
                         break;
+                    case 3:
+                        System.out.println("in case 3 : ");
+                        sendActiveUsersList();
 
                     default:
                         System.out.println("Unknown state: " + state);
@@ -92,29 +96,6 @@ public class ClientHandler extends Thread {
                 }
             }
 
-            /*try {
-            while (true) {
-            String str = dis.readUTF();
-            broadCastMsg(str);
-            }
-            } catch (IOException ex) {
-            Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
-            } finally {
-            // Client disconnected, remove from clients vector
-            try {
-            clients.remove(this);
-            dis.close();
-            ps.close();
-            client.close();
-            
-            System.out.println("##OF CLIENTS" + clients.size());
-            } catch (IOException ex) {
-            Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            }
-            } catch (IOException ex) {
-            Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
-            }*/
         } catch (IOException ex) {
             disconnect();
         } catch (ClassNotFoundException ex) {
@@ -133,20 +114,50 @@ public class ClientHandler extends Thread {
         }
     }
 
+    private void handleNewUser(String username) {
+        synchronized (usernames) {
+            System.out.println("add user in handleNewUser");
+            usernames.add(username);
+        }
+
+        sendActiveUsersList();
+    }
+
+    private void sendActiveUsersList() {
+        synchronized (usernames) {
+            try {
+                System.out.println("the count in sendActiveUsersList " + usernames.size());
+                ps.writeInt(usernames.size());
+
+                for (String username : usernames) {
+                    System.out.println("username in sendActiveUsersList" + username);
+                    ps.writeUTF(username);
+
+                }
+                ps.flush();
+            } catch (IOException ex) {
+                Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
     public String getUserName() {
         return user != null ? user.getName() : "Unknown User";
     }
 
     void disconnect() {
         try {
+
             synchronized (usernames) {
                 usernames.remove(user.getName());
             }
+
             synchronized (clients) {
                 clients.remove(this);
             }
             dis.close();
             ps.close();
+
             ois.close();
             client.close();
             this.stop();
@@ -158,4 +169,5 @@ public class ClientHandler extends Thread {
             Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
 }

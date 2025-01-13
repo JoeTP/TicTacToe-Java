@@ -61,7 +61,9 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
 
     @Override
     protected void exitApp(ActionEvent actionEvent) {
+
         System.exit(0);
+
     }
 
     @Override

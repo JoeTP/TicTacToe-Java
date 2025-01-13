@@ -85,7 +85,7 @@ public class FXMLSignupController extends FXMLSignupBase {
                             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Signup was successful.");
                             alert.showAndWait();
                             AppFunctions.closePopup(actionEvent);
-                            AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage));
+                            AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage,client));
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -93,7 +93,7 @@ public class FXMLSignupController extends FXMLSignupBase {
                         Alert alert = new Alert(Alert.AlertType.INFORMATION, "Username or email are already used.");
                         alert.showAndWait();
                         AppFunctions.closePopup(actionEvent);
-                        AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage));
+                      //  AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage));
                     }
                 });
             }).start();
