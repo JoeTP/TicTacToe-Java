@@ -15,11 +15,8 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 import javafx.application.Platform;
 import models.DataModel;
-import models.UserModel;
-
 
 /**
  *
@@ -27,19 +24,13 @@ import models.UserModel;
  */
 public class ClientConnection {
 
-  
     public static DataInputStream dis;
       
     public static DataOutputStream dos;
     public static PrintStream ps;
     public static Socket socket;
     public static boolean serverStatus = false;
-
     public static ObjectInputStream ois;
-    
-
-   
-
     public static ObjectOutputStream oos;
     public void connectToServer() throws IOException {
         socket = new Socket("127.0.0.1", 5001);
@@ -71,17 +62,20 @@ public class ClientConnection {
         try {
             ps.close();
             dis.close();
-            oos.close();           
+            oos.close();
             Platform.exit();
         } catch (IOException ex) {
             Logger.getLogger(ClientConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public static void sendData(DataModel d) throws IOException{
-//        System.out.println("sendd Dataaa" +d.getUser().getName());
+
+    public static void sendData(DataModel d) throws IOException {
+        System.out.println("sendd Dataaa" + d.getUser().getName());
+
         oos.writeObject(d);
     }
-    public static boolean receveResponse() throws IOException{
+
+    public static boolean receveResponse() throws IOException {
         boolean response = dis.readBoolean();
         return response;
     }

@@ -41,6 +41,8 @@ public class FXMLSigninController extends FXMLSigninBase {
 
     Stage stage;
 
+    ClientConnection c = new ClientConnection();
+
     public FXMLSigninController(Stage stage) {
 
         this.stage = stage;
@@ -59,27 +61,27 @@ public class FXMLSigninController extends FXMLSigninBase {
 
     @Override
     protected void goToActiveUsers(ActionEvent actionEvent) {
-   
-            ClientConnection client = new ClientConnection();
 
-            try {
-                client.connectToServer();
-            } catch (IOException ex) {
-                Logger.getLogger(FXMLSigninController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            System.out.println("" + client.serverStatus);
-            if (client.serverStatus == false) {  //connect
-                System.out.println("connect connection");
-                UserModel user = new UserModel();
+        ClientConnection client = new ClientConnection();
 
+        try {
+            client.connectToServer();
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLSigninController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println("" + client.serverStatus);
+        if (client.serverStatus == false) {  //connect
+            System.out.println("connect connection");
+            UserModel user = new UserModel();
 
-                user.setName(usernameTextField.getText());
-                user.setPassword(passwordField.getText());
-                System.out.println("AL --before sendLoginRequest " + user.getName());
-                DataModel data = new DataModel(user, 2);
-                System.out.println("get state : " + data.getState());
-                boolean response = false;
+            user.setName(usernameTextField.getText());
+            user.setPassword(passwordField.getText());
+            System.out.println("AL --before sendLoginRequest " + user.getName());
+            DataModel data = new DataModel(user, 2);
+            System.out.println("get state : " + data.getState());
+            boolean response = false;
 
+        
    
 
               
@@ -112,9 +114,13 @@ public class FXMLSigninController extends FXMLSigninBase {
                 }
 
 
+                wrongLabel.setVisible(true);
+                wrongLabel.setStyle("-fx-text-fill: red; -fx-font-size: 20px;");
+                wrongLabel.setText("Please Enter Correct Info");
+
             }
 
-        
         }
 
-}
+    }
+

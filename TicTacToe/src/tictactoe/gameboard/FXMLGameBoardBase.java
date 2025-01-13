@@ -220,6 +220,8 @@ public abstract class FXMLGameBoardBase extends BorderPane {
         b00.setLayoutY(10.0);
         b00.setMnemonicParsing(false);
         b00.setOnAction(this::handleB00);
+        b00.setPrefHeight(153.0);
+        b00.setPrefWidth(192.0);
         b00.setStyle("-fx-border-radius: 30 0 0 0;");
         BorderPane.setMargin(anchorPane, new Insets(0.0, 20.0, 0.0, 20.0));
         setCenter(anchorPane);

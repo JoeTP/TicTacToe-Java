@@ -6,6 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import shared.AppString;
+import tictactoe.homescreen.FXMLHomeScreenBase;
+import tictactoe.homescreen.FXMLHomeScreenController;
  
 
 
@@ -17,7 +19,8 @@ public class TicTacToe extends Application {
     public void start(Stage stage) throws Exception {
  
 
-        Parent root = new FXMLSplashScreenController(stage);
+//        Parent root = new FXMLSplashScreenController(stage);
+        Parent root = new FXMLHomeScreenController(stage);
         Scene scene = new Scene(root);
         //stage.initStyle(StageStyle.DECORATED.UNDECORATED);
         stage.setTitle(AppString.APP_TITLE);

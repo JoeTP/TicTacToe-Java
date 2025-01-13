@@ -74,7 +74,7 @@
                   <Button fx:id="b01" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleB01" style="-fx-border-radius: 0;" GridPane.rowIndex="1" />
                   <Button fx:id="b10" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleB10" style="-fx-border-radius: 0;" GridPane.columnIndex="1" />
                   <Button fx:id="b11" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleB11" style="-fx-border-radius: 0;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Button fx:id="b00" layoutX="177.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleB00" style="-fx-border-radius: 30 0 0 0;" />
+                  <Button fx:id="b00" layoutX="177.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleB00" prefHeight="153.0" prefWidth="192.0" style="-fx-border-radius: 30 0 0 0;" />
                </children>
             </GridPane>
          </children>
