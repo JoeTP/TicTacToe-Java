@@ -41,6 +41,8 @@ public class FXMLSigninController extends FXMLSigninBase {
 
     Stage stage;
 
+    ClientConnection c = new ClientConnection();
+
     public FXMLSigninController(Stage stage) {
 
         this.stage = stage;
@@ -59,39 +61,38 @@ public class FXMLSigninController extends FXMLSigninBase {
 
     @Override
     protected void goToActiveUsers(ActionEvent actionEvent) {
-   
-            ClientConnection c = new ClientConnection();
 
-            try {
-                c.connectToServer();
-            } catch (IOException ex) {
-                Logger.getLogger(FXMLSigninController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            System.out.println("" + c.serverStatus);
-            if (c.serverStatus == false) {  //connect
-                System.out.println("connect connection");
-                UserModel user = new UserModel();
+        ClientConnection client = new ClientConnection();
 
+        try {
+            client.connectToServer();
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLSigninController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println("" + client.serverStatus);
+        if (client.serverStatus == false) {  //connect
+            System.out.println("connect connection");
+            UserModel user = new UserModel();
 
-                user.setName(usernameTextField.getText());
-                user.setPassword(passwordField.getText());
-                System.out.println("AL --before sendLoginRequest " + user.getName());
-                DataModel data = new DataModel(user, 2);
-                System.out.println("get state : " + data.getState());
-                boolean response = false;
+            user.setName(usernameTextField.getText());
+            user.setPassword(passwordField.getText());
+            System.out.println("AL --before sendLoginRequest " + user.getName());
+            DataModel data = new DataModel(user, 2);
+            System.out.println("get state : " + data.getState());
+            boolean response = false;
 
+        
    
 
               
                 System.out.println("get user and state " + data.getUser().getName());
                 System.out.println("get user and state pass " + data.getUser().getPassword());
-                // String jsonRequest = JSONConverters.DataModelToJson(data);
-                // System.out.println("jsonRequest " + jsonRequest);
+
                 try {
 
-                    c.sendData(data);
+                    client.sendData(data);
 
-                    response = c.receveResponse();
+                    response = client.receveResponse();
 
                 } catch (IOException ex) {
                     Logger.getLogger(FXMLSigninController.class.getName()).log(Level.SEVERE, null, ex);
@@ -113,9 +114,13 @@ public class FXMLSigninController extends FXMLSigninBase {
                 }
 
 
+                wrongLabel.setVisible(true);
+                wrongLabel.setStyle("-fx-text-fill: red; -fx-font-size: 20px;");
+                wrongLabel.setText("Please Enter Correct Info");
+
             }
 
-        
         }
 
-}
+    }
+

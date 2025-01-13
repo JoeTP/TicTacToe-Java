@@ -1,9 +1,13 @@
 package tictactoe.gameboard;
 
+import gameboard.WinningLine;
 import java.util.Random;
 import javafx.event.ActionEvent;
+import javafx.geometry.Bounds;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 import models.Player;
 import shared.AppFunctions;
@@ -18,6 +22,15 @@ public class GameBoardController extends FXMLGameBoardBase {
     Stage stage;
     private Player playerOne = new Player();
     private Player playerTwo = new Player();
+    private boolean isEndOfGame = false;
+  //  String startLine;
+    //String endLine;
+
+    /*
+        [b00 b01 b02]
+        [b10 b11 b12]
+        [b20 b21 b22]
+     */
     private Integer[][] board = new Integer[3][3];
 
     private final String X_CHAR = "X";
@@ -26,7 +39,6 @@ public class GameBoardController extends FXMLGameBoardBase {
 
     public GameBoardController(Stage stage) {
         this.stage = stage;
-
         assignPlayers();
     }
 
@@ -58,8 +70,35 @@ public class GameBoardController extends FXMLGameBoardBase {
             fillBoard(r, c);
 
             checkPlayerWinner();
+            printGame();
         }
+        
+    }
 
+    private void printGame(){
+        
+        for(int i = 0 ; i<3 ; i++){
+            for(int j = 0; j<3 ;j++){
+                System.out.print(board[i][j] + " ");
+            }
+            System.out.println(" ");
+        }
+    }
+    private void endGame(String winner) {
+        isEndOfGame = true;
+        System.out.println("End of the game, Winner is" + winner);
+
+    }
+    
+    private void setPlayerXMove() {
+
+    }
+
+    private void setPlayerOMove() {
+
+    }
+
+    private void traceMoves(Integer r, Integer c) {
     }
 
     private void fillBoard(Integer r, Integer c) {
@@ -76,34 +115,46 @@ public class GameBoardController extends FXMLGameBoardBase {
     private void checkPlayerWinner() {
         String winner = checkWinnerChar(board);
         if (playerOne.getChar() == winner) {
-            //draw line for winner and do popup
+           WinningLine.drawWinningLine(WinningLine.getStartLine(), WinningLine.getEndLine(), grid);
+            
+            //do popup
             System.out.println("PLAYER ONE WINNER");
         } else if (playerTwo.getChar() == winner) {
-            //draw line for winner and do popup   
+           WinningLine.drawWinningLine(WinningLine.getStartLine(), WinningLine.getEndLine(),grid);
+            //do popup
             System.out.println("PLAYER TWO WINNER");
         } else if (move > 9) {
-            //its draw (no line) and do popup
+           WinningLine.drawWinningLine(WinningLine.getStartLine(), WinningLine.getEndLine(),grid);
+            //do popup
             System.out.println("NO WINNER ITS DRAW");
         }
     }
-
     private String checkWinnerChar(Integer[][] board) {
+
         if (move > 5) {
             for (int i = 0; i < 3; i++) {
                 //rows
                 if (checkLine(board[i][0], board[i][1], board[i][2])) {
                     //get the winner in the current itration
+                    WinningLine.setStartLine(i + "0"); // extract index off BUTTONS
+                   WinningLine.setEndLine(i + "2");
                     return getWinnerCharacter(board[i][0]);
                 }
                 //columns
                 if (checkLine(board[0][i], board[1][i], board[2][i])) {
+                    WinningLine.setStartLine("0" + i);
+                    WinningLine.setEndLine("2" + i);
                     return getWinnerCharacter(board[0][i]);
                 }
             }
             if (checkLine(board[0][0], board[1][1], board[2][2])) {
+                WinningLine.setStartLine("00");
+                WinningLine.setEndLine("22");
                 return getWinnerCharacter(board[0][0]);
             }
             if (checkLine(board[0][2], board[1][1], board[2][0])) {
+                WinningLine.setStartLine("02");
+                WinningLine.setEndLine("20");
                 return getWinnerCharacter(board[0][2]);
             }
         }
