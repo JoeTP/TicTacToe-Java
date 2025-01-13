@@ -5,7 +5,7 @@
  */
 package tictactoe.signup;
 
-import clientconnection.Client;
+import clientconnection.ClientConnection;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -58,7 +58,7 @@ public class FXMLSignupController extends FXMLSignupBase {
             DataModel data = new DataModel(user, 1);
             // Start a new thread for background operations
             new Thread(() -> {
-                Client client = new Client();
+                ClientConnection client = new ClientConnection();
                 boolean response = false;
                 try {
                     // Perform network operations
@@ -91,9 +91,7 @@ public class FXMLSignupController extends FXMLSignupBase {
                         }
                     } else {
                         Alert alert = new Alert(Alert.AlertType.INFORMATION, "Username or email are already used.");
-                        alert.showAndWait();
-                        AppFunctions.closePopup(actionEvent);
-                        AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage));
+                        alert.showAndWait();                        
                     }
                 });
             }).start();

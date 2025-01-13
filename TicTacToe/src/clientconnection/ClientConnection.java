@@ -23,7 +23,7 @@ import models.UserModel;
  *
  * @author Ayat Gamal
  */
-public class Client {
+public class ClientConnection {
 
   
     public static DataInputStream dis;
@@ -48,7 +48,7 @@ public class Client {
                     serverStatus = socket.isClosed();
                     System.out.println(serverStatus);
                 } catch (IOException ex) {
-                    Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ClientConnection.class.getName()).log(Level.SEVERE, null, ex);
 
                 }
             }*/
@@ -64,7 +64,7 @@ public class Client {
             oos.close();           
             Platform.exit();
         } catch (IOException ex) {
-            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClientConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     public static void sendData(DataModel d) throws IOException{
@@ -74,5 +74,8 @@ public class Client {
     public static boolean receveResponse() throws IOException{
         boolean response = dis.readBoolean();
         return response;
+    }
+    public static void sendGameRequest(String username){
+        ps.print(username);
     }
 }

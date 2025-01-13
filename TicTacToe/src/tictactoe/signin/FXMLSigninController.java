@@ -5,7 +5,7 @@
  */
 package tictactoe.signin;
 
-import clientconnection.Client;
+import clientconnection.ClientConnection;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -60,7 +60,7 @@ public class FXMLSigninController extends FXMLSigninBase {
     @Override
     protected void goToActiveUsers(ActionEvent actionEvent) {
    
-            Client c = new Client();
+            ClientConnection c = new ClientConnection();
 
             try {
                 c.connectToServer();
