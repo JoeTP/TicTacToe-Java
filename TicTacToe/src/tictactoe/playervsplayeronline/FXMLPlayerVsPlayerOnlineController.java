@@ -18,6 +18,7 @@ import javafx.event.ActionEvent;
 import javafx.stage.Stage;
 import models.DataModel;
 import shared.AppFunctions;
+import tictactoe.gameboard.GameBoardController;
 import tictactoe.onlinegmaeboard.FXMLGameBoardOnlineController;
 
 public class FXMLPlayerVsPlayerOnlineController extends FXMLPlayerVsPlayerOnlineBase {
@@ -26,8 +27,8 @@ public class FXMLPlayerVsPlayerOnlineController extends FXMLPlayerVsPlayerOnline
    
     ClientConnection client;
 
-    public FXMLPlayerVsPlayerOnlineController(Stage stage, ClientConnection c) {
-        this.client = c;
+    public FXMLPlayerVsPlayerOnlineController(Stage stage) {
+        //this.client = c;
         this.stage = stage;
 
        // startListeningForUpdates();
@@ -42,7 +43,7 @@ public class FXMLPlayerVsPlayerOnlineController extends FXMLPlayerVsPlayerOnline
     @Override
     protected void openGameBoard(ActionEvent actionEvent) {
         AppFunctions.closePopup(actionEvent);
-        AppFunctions.goTo(actionEvent, new FXMLGameBoardOnlineController(stage));
+        AppFunctions.goTo(actionEvent, new GameBoardController(stage));
     }
 
     @Override

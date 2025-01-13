@@ -81,27 +81,38 @@ public class FXMLSigninController extends FXMLSigninBase {
             System.out.println("get state : " + data.getState());
             boolean response = false;
 
-            System.out.println("get user and state " + data.getUser().getName());
-            System.out.println("get user and state pass " + data.getUser().getPassword());
+        
+   
 
-            try {
+              
+                System.out.println("get user and state " + data.getUser().getName());
+                System.out.println("get user and state pass " + data.getUser().getPassword());
 
-                client.sendData(data);
+                try {
 
-                response = client.receveResponse();
+                    client.sendData(data);
 
-            } catch (IOException ex) {
-                Logger.getLogger(FXMLSigninController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+                    response = client.receveResponse();
 
-            if (response == true) {
-                System.out.println("response: should be true :" + response);
+                } catch (IOException ex) {
+                    Logger.getLogger(FXMLSigninController.class.getName()).log(Level.SEVERE, null, ex);
+                }
 
-                //user = JSONConverters.jsonToUserModel(response);
-                AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage, client));
+                if (response==true) {
+                    System.out.println("response: should be true :" + response);
 
-            } else {
-                System.out.println("should be failure " + response);
+                    //user = JSONConverters.jsonToUserModel(response);
+                    AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage));
+
+                } else {
+                    System.out.println("should be failure " + response);
+
+                    wrongLabel.setVisible(true);
+                    wrongLabel.setStyle("-fx-text-fill: red; -fx-font-size: 20px;");
+                    wrongLabel.setText("Please Enter Correct Info");
+
+                }
+
 
                 wrongLabel.setVisible(true);
                 wrongLabel.setStyle("-fx-text-fill: red; -fx-font-size: 20px;");
@@ -113,4 +124,3 @@ public class FXMLSigninController extends FXMLSigninBase {
 
     }
 
-}
