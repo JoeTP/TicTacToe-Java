@@ -1,7 +1,6 @@
 package tictactoe.gameboard;
 
-import java.lang.String;
-import java.net.URL;
+
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -13,11 +12,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
-<<<<<<< HEAD
 import javafx.scene.shape.Line;
-=======
-import shared.AppString;
->>>>>>> 6aa3bb7b2d3e1bfd00c67d2a212f5aaa1e402acd
+ import shared.AppString;
+ 
 
 public abstract class FXMLGameBoardBase extends BorderPane {
 
