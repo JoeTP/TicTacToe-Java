@@ -6,6 +6,7 @@ import javafx.geometry.Bounds;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 import models.Player;
 import shared.AppFunctions;
@@ -77,21 +78,31 @@ public class GameBoardController extends FXMLGameBoardBase {
 
     }
 
-    private void drawWinningLine(Button b1, Button b2) {
+    private void drawWinningLine(String startLine, String endLine) {
+        int r1 = getRow(startLine);
+        int c1 = getCol(startLine);
+        int r2 = getRow(endLine);
+        int c2 = getCol(endLine);
         //start point
-        double x1 = b1.getLayoutX() + (b1.getWidth() / 2);
-        double y1 = b1.getLayoutY() + (b1.getHeight() / 2);
-//end
-        double x2 = b2.getLayoutX() + (b2.getWidth() / 2);
-        double y2 = b2.getLayoutY() + (b2.getHeight() / 2);
+        double btnWidth = grid.getWidth() / 3;
+        double btnHeight = grid.getHeight() / 3;
 
-        winingLine.setStartX(x1);
-        winingLine.setStartY(y1);
-        winingLine.setEndX(x2);
-        winingLine.setEndY(y2);
-        winingLine.setStroke(Color.GREENYELLOW);
-        winingLine.setStrokeWidth(5);
-        winingLine.setVisible(true);
+        double gridX = grid.getLayoutX();
+        double gridY = grid.getLayoutY();
+
+        double x1 = gridX + (c1 * btnWidth) + btnWidth / 2;
+        double y1 = gridY + (r1 * btnHeight) + btnHeight / 2;
+
+        double x2 = gridX + (c2 * btnWidth) + btnWidth / 2;
+        double y2 = gridY + (r2 * btnHeight) + btnHeight / 2;
+
+        Line line = new Line(x1, y1, x2, y2);
+        anchorPane.getChildren().add(line);
+
+        line.setStroke(Color.GREENYELLOW.darker());
+        line.setStrokeWidth(5);
+        line.setVisible(true);
+
     }
 
     private void setPlayerXMove() {
@@ -119,48 +130,30 @@ public class GameBoardController extends FXMLGameBoardBase {
     private void checkPlayerWinner() {
         String winner = checkWinnerChar(board);
         if (playerOne.getChar() == winner) {
-            drawWinningLine(mapButton(getStartLine()), mapButton(getEndLine()));
+            drawWinningLine(getStartLine(), getEndLine());
             //do popup
             System.out.println("PLAYER ONE WINNER");
         } else if (playerTwo.getChar() == winner) {
-            drawWinningLine(mapButton(getStartLine()), mapButton(getEndLine()));
+            drawWinningLine(getStartLine(), getEndLine());
             //do popup
             System.out.println("PLAYER TWO WINNER");
         } else if (move > 9) {
-            drawWinningLine(mapButton(getStartLine()), mapButton(getEndLine()));
+            drawWinningLine(getStartLine(), getEndLine());
             //do popup
             System.out.println("NO WINNER ITS DRAW");
         }
     }
 
-    private Button mapButton(String btnString) {
-        if ("00".equals(btnString)) {
-            return b00;
-        } else if ("01".equals(btnString)) {
-            return b10;
+    private int getCol(String btnString) {
+        char c = btnString.charAt(1);
+        int col = Character.getNumericValue(c);
+        return col;
+    }
 
-        } else if ("20".equals(btnString)) {
-            return b02;
-
-        } else if ("10".equals(btnString)) {
-            return b01;
-
-        } else if ("11".equals(btnString)) {
-            return b11;
-
-        } else if ("21".equals(btnString)) {
-            return b12;
-
-        } else if ("02".equals(btnString)) {
-            return b20;
-
-        } else if ("12".equals(btnString)) {
-            return b21;
-
-        } else if ("22".equals(btnString)) {
-            return b22;
-        }
-        return null;
+    private int getRow(String btnString) {
+        char r = btnString.charAt(0);
+        int row = Character.getNumericValue(r);
+        return row;
     }
 
     private void setStartLine(String s) {

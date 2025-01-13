@@ -1,6 +1,7 @@
 package tictactoe.gameboard;
 
-
+import java.lang.String;
+import java.net.URL;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -12,9 +13,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Line;
- import shared.AppString;
- 
+import shared.AppString;
 
 public abstract class FXMLGameBoardBase extends BorderPane {
 
@@ -44,7 +43,6 @@ public abstract class FXMLGameBoardBase extends BorderPane {
     protected final Button b10;
     protected final Button b11;
     protected final Button b00;
-    protected final Line winingLine;
 
     public FXMLGameBoardBase() {
 
@@ -74,7 +72,6 @@ public abstract class FXMLGameBoardBase extends BorderPane {
         b10 = new Button();
         b11 = new Button();
         b00 = new Button();
-        winingLine = new Line();
 
         setMaxHeight(USE_PREF_SIZE);
         setMaxWidth(USE_PREF_SIZE);
@@ -223,12 +220,9 @@ public abstract class FXMLGameBoardBase extends BorderPane {
         b00.setLayoutY(10.0);
         b00.setMnemonicParsing(false);
         b00.setOnAction(this::handleB00);
+        b00.setPrefHeight(153.0);
+        b00.setPrefWidth(192.0);
         b00.setStyle("-fx-border-radius: 30 0 0 0;");
-
-        winingLine.setEndX(100.0);
-        winingLine.setStartX(-100.0);
-        winingLine.setVisible(false);
-        
         BorderPane.setMargin(anchorPane, new Insets(0.0, 20.0, 0.0, 20.0));
         setCenter(anchorPane);
 
@@ -254,7 +248,6 @@ public abstract class FXMLGameBoardBase extends BorderPane {
         grid.getChildren().add(b10);
         grid.getChildren().add(b11);
         grid.getChildren().add(b00);
-        grid.getChildren().add(winingLine);
         anchorPane.getChildren().add(grid);
 
     }
