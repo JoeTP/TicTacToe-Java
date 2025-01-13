@@ -6,7 +6,9 @@
 package clientconnection;
 
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintStream;
 import java.net.Socket;
@@ -27,10 +29,13 @@ public class Client {
 
   
     public static DataInputStream dis;
+      
+    public static DataOutputStream dos;
     public static PrintStream ps;
     public static Socket socket;
     public static boolean serverStatus = false;
-
+    public static ObjectInputStream ois;
+    
     public static ObjectOutputStream oos;
     public void connectToServer() throws IOException {
         socket = new Socket("127.0.0.1", 5001);
@@ -38,6 +43,7 @@ public class Client {
         dis = new DataInputStream(socket.getInputStream());
         ps = new PrintStream(socket.getOutputStream());
         oos = new ObjectOutputStream(socket.getOutputStream());
+       
 
         // thread for each client
         Thread th;
@@ -75,4 +81,23 @@ public class Client {
         boolean response = dis.readBoolean();
         return response;
     }
+      public static int receveResponseInt() throws IOException{
+        int response = dis.readInt();
+        return response;
+    }
+            public static String receveResponseString() throws IOException{
+        String response = dis.readUTF();
+        return response;
+    }
+      public static DataModel recieveObject() throws IOException{
+          DataModel response=null;
+        try {
+             response = (DataModel) ois.readObject();
+          
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
+          return response;
+    }
+      
 }

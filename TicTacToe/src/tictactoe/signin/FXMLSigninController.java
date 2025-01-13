@@ -60,15 +60,15 @@ public class FXMLSigninController extends FXMLSigninBase {
     @Override
     protected void goToActiveUsers(ActionEvent actionEvent) {
    
-            Client c = new Client();
+            Client client = new Client();
 
             try {
-                c.connectToServer();
+                client.connectToServer();
             } catch (IOException ex) {
                 Logger.getLogger(FXMLSigninController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            System.out.println("" + c.serverStatus);
-            if (c.serverStatus == false) {  //connect
+            System.out.println("" + client.serverStatus);
+            if (client.serverStatus == false) {  //connect
                 System.out.println("connect connection");
                 UserModel user = new UserModel();
 
@@ -85,13 +85,12 @@ public class FXMLSigninController extends FXMLSigninBase {
               
                 System.out.println("get user and state " + data.getUser().getName());
                 System.out.println("get user and state pass " + data.getUser().getPassword());
-                // String jsonRequest = JSONConverters.DataModelToJson(data);
-                // System.out.println("jsonRequest " + jsonRequest);
+
                 try {
 
-                    c.sendData(data);
+                    client.sendData(data);
 
-                    response = c.receveResponse();
+                    response = client.receveResponse();
 
                 } catch (IOException ex) {
                     Logger.getLogger(FXMLSigninController.class.getName()).log(Level.SEVERE, null, ex);
@@ -101,7 +100,7 @@ public class FXMLSigninController extends FXMLSigninBase {
                     System.out.println("response: should be true :" + response);
 
                     //user = JSONConverters.jsonToUserModel(response);
-                    AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage));
+                    AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage,client));
 
                 } else {
                     System.out.println("should be failure " + response);

@@ -1,43 +1,41 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package tictactoe.playervsplayeronline;
 
+import clientconnection.Client;
+import static clientconnection.Client.socket;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.scene.control.ListView;
 import javafx.stage.Stage;
+import models.DataModel;
 import shared.AppFunctions;
 import tictactoe.onlinegmaeboard.FXMLGameBoardOnlineController;
 
-/**
- * FXML Controller class
- *
- * @author Kimo Store
- */
 public class FXMLPlayerVsPlayerOnlineController extends FXMLPlayerVsPlayerOnlineBase {
 
     private Stage stage;
-
     private ScheduledExecutorService executorService;
+    Client client;
 
-    public FXMLPlayerVsPlayerOnlineController(Stage stage) {
+    public FXMLPlayerVsPlayerOnlineController(Stage stage, Client c) {
+        this.client = c;
         this.stage = stage;
-        startActivePlayersUpdater();
+
+        startListeningForUpdates();
     }
 
     @Override
     protected void handleBackButton(ActionEvent actionEvent) {
-        if (executorService != null && !executorService.isShutdown()) {
-            executorService.shutdownNow();
-        }
+        stopListeningForUpdates();
         AppFunctions.closePopup(actionEvent);
     }
 
@@ -47,62 +45,72 @@ public class FXMLPlayerVsPlayerOnlineController extends FXMLPlayerVsPlayerOnline
         AppFunctions.goTo(actionEvent, new FXMLGameBoardOnlineController(stage));
     }
 
-    private void startActivePlayersUpdater() {
+    protected void stopListeningForUpdates() {
+        if (executorService != null && !executorService.isShutdown()) {
+            executorService.shutdownNow();
+        }
+    }
+
+    protected void startListeningForUpdates() {
         executorService = Executors.newSingleThreadScheduledExecutor();
-        executorService.scheduleAtFixedRate(() -> {
+        executorService.execute(() -> {
             try {
-                // Generate a mock list of active players for testing
-                List<String> activePlayers = createTestPlayerList();
+                while (!executorService.isShutdown()) {
+                    // Receive the number of users
+                    int numberOfUsers = client.receveResponseInt();
+                    List<String> activeUsers = new ArrayList<>();
 
-                // Update the UI on the JavaFX Application Thread
-                Platform.runLater(() -> {
-                    //   activePlayersListView.getItems().setAll("Test1", "Test2", "Test3");
+                    // Receive each active username
+                    for (int i = 0; i < numberOfUsers; i++) {
+                        activeUsers.add(client.receveResponseString());
+                    }
 
-                    activePlayersListView.getItems().setAll(activePlayers);
-                });
-            } catch (Exception e) {
+                    // Update the UI with the latest active users list
+                    Platform.runLater(() -> {
+                        activePlayersListView.getItems().setAll(activeUsers);
+                    });
+                }
+            } catch (IOException e) {
                 e.printStackTrace();
+                stopListeningForUpdates(); // Stop listening for updates if an error occurs
             }
-        }, 0, 5, TimeUnit.SECONDS); // Update every 5 seconds
+        });
     }
 
-//   private void startActivePlayersUpdater() {
-//        executorService = Executors.newSingleThreadScheduledExecutor();
-//        executorService.scheduleAtFixedRate(() -> {
-//            try {
-//                // Fetch active players from the server
-//              //  List<String> activePlayers = fetchActivePlayersFromServer();
-//
-//                // Update the UI on the JavaFX Application Thread
-//                Platform.runLater(() -> {
-//                    activePlayersListView.getItems().setAll(activePlayers);
-//                });
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }, 0, 5, TimeUnit.SECONDS); // Update every 5 seconds
-//    }
-    private List<String> createTestPlayerList() {
-        // Simulate changing player lists by generating random names
-        List<String> players = new ArrayList<>();
-        players.add("Player1");
-        players.add("Player2");
-        players.add("Player3");
-        players.add("Player4");
-        players.add("Player4");
-        players.add("Player4");
-        players.add("Player4");
-        players.add("Player4");
-        players.add("Player4");
-        players.add("Player4");
-        players.add("Player4");
-        players.add("Player" + (int) (Math.random() * 100)); // Adds some dynamic behavior
-        return players;
+    protected List<String> fetchActivePlayersFromServer() {
+        List<String> activeUsers = new ArrayList<>();
+
+        try {
+            // Send a request to get active players data
+            DataModel data = new DataModel("activePlayers", 3);
+            client.sendData(data);
+
+            // Receive the response (list of active users)
+            Object response = client.recieveObject();
+            if (response instanceof List<?>) {
+                activeUsers = (List<String>) response;
+            } else {
+                System.err.println("Invalid response from server: not a List");
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLPlayerVsPlayerOnlineController.class.getName()).log(Level.SEVERE, "Error fetching active players", ex);
+        }
+
+        // Return the fetched active users list (this could be displayed in the UI or used elsewhere)
+        return activeUsers;
     }
 
-//    private List<String> fetchActivePlayersFromServer() throws Exception {
-//        // Replace this with the actual call to your server's API
-//        OnlineUsersClient client = new OnlineUsersClient();
-//        return client.getOnlineUsers();
-//    }
+    @Override
+    protected void handlerefreshBtn(ActionEvent actionEvent) {
+       refreshBtn.setDisable(true); // Disable the button
+    
+    List<String> activePlayers = fetchActivePlayersFromServer();
+    
+    // Update the ListView with the fetched active players
+    Platform.runLater(() -> activePlayersListView.getItems().setAll(activePlayers));
+    
+    // Re-enable the button after the update
+    refreshBtn.setDisable(false);
+    }
+
 }

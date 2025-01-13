@@ -85,12 +85,12 @@ protected void goToActiveUsers(ActionEvent actionEvent) {
     // Update the UI on the JavaFX Application Thread
     Platform.runLater(() -> {
         System.out.println("Updating UI with finalResponse: " + finalResponse); // Debugging output
-        if (!finalResponse) {
+        if (finalResponse) {
             try {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "Signup was successful.");
                 alert.showAndWait();
                 AppFunctions.closePopup(actionEvent);
-                AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage));
+                AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage,client));
             } catch (Exception e) {
                 e.printStackTrace();
             }
