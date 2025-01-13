@@ -34,6 +34,8 @@ public interface AppString {
         "/assets/icons/jaguar.png",
         "/assets/icons/turtle.png"
     };
+   String SERVER_HOST= "127.0.0.1";
+
 
     /**
      * add your paths here

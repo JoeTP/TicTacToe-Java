@@ -5,12 +5,17 @@
  */
 package shared;
 
+import javafx.beans.property.SimpleBooleanProperty;
+
 /**
  *
  * @author Youssif
  */
-public class AppIntegers {
+public class AppConstants {
 
     public static int SPLASH_SCREEN_TIMER = 1;
+    public static int SERVER_PORT = 5001;
+
+    public static SimpleBooleanProperty CONNECTION_FLAG = new SimpleBooleanProperty(false);
     
 }

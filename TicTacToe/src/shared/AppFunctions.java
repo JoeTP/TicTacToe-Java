@@ -10,6 +10,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import tictactoe.gameboard.GameBoardController;
 import tictactoe.offlinegameboard.FXMLOfflineGameBoardController;
 
 /**
@@ -43,9 +44,9 @@ public abstract class AppFunctions {
     /**
      * Used with Popups closing it first then go to new scene
      */
-    public static void closeAndGo(ActionEvent actionEvent, Stage stage) {
+    public static void closeAndGo(ActionEvent actionEvent, Stage stage, Parent root) {
         closePopup(actionEvent);
-        stage.setScene(new Scene(new FXMLOfflineGameBoardController(stage)));
+        stage.setScene(new Scene(root));
     }
 
 }

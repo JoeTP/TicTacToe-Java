@@ -1,0 +1,52 @@
+/* General styling */
+* {
+    -fx-font-family: "Arial";
+-fx-background-color: #f0f0f0;
+}
+
+/* Title styling */
+#title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+    -fx-padding: 10 0 20 0;
+}
+
+/* Player name styling */
+#player-name {
+    -fx-font-size: 20px;
+    -fx-text-fill: #555;
+}
+
+/* Buttons styling */
+#accept-button {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 8 15;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+#accept-button:hover {
+    -fx-background-color: #45a049;
+}
+
+#decline-button {
+    -fx-background-color: #f44336;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 8 15;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+#decline-button:hover {
+    -fx-background-color: #e53935;
+}
+
+/* Icon styling */
+.image-view {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0.5, 0, 0);
+}
+ 
