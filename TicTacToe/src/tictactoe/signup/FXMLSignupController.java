@@ -100,48 +100,6 @@ public class FXMLSignupController extends FXMLSignupBase {
         }
     }
 
-    /*   @Override
-    protected void goToActiveUsers(ActionEvent actionEvent) {
-        UserModel user = getNewUserData();
-        boolean response = false;       
-        if (user != null){
-            
-           
-            DataModel data = new DataModel(user,1);
-            Client client = new Client();
-            try {
-                client.connectToServer();
-            } catch (IOException ex) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Couldn't connect to server");
-                alert.showAndWait();
-            }
-            try {
-                client.sendData(data);
-                response = client.receveResponse();
-            } catch (IOException ex) {
-                Logger.getLogger(FXMLSignupController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            System.out.println(response);
-            if(client.serverStatus == false && response == true){
-                Platform.runLater(()->{
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "Signup was successful.");
-                    alert.showAndWait();
-                    AppFunctions.closePopup(actionEvent);
-                    AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage));
-            });
-            
-        }else{
-                 Platform.runLater(()->{
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Username or email are already used");
-                alert.showAndWait();
-                 });
-            }
-
-        }
-        
-        
-    }
-     */
     @Override
     protected void showPreviousIcon(ActionEvent actionEvent) {
         currentImageIndex = (currentImageIndex - 1 + ICON_PATHS.length) % ICON_PATHS.length;

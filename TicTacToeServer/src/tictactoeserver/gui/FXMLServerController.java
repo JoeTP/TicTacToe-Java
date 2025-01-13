@@ -38,7 +38,7 @@ public class FXMLServerController extends FXMLServerBase {
 
     public FXMLServerController() {
         System.out.println("FXMLServerController initialized");
-        updatePieChart();
+        
         usernames.addListener((ListChangeListener<String>) change -> {
             updatePieChart();
             synchronized (usernames) {
@@ -59,6 +59,7 @@ public class FXMLServerController extends FXMLServerBase {
                 }
             }
         });
+        updatePieChart();
         serverIndicator.setFill(Color.CRIMSON);
     }
 
@@ -95,6 +96,7 @@ public class FXMLServerController extends FXMLServerBase {
             serverRunning = false;
             try {
                 server.close();
+                th.stop();
                 th.join();
                 System.out.println("SERVER STOPPED");
                 serverIndicator.setFill(Color.CRIMSON);
@@ -114,8 +116,8 @@ public class FXMLServerController extends FXMLServerBase {
     protected void updatePieChart() {
         usersCount = DataAccessLayer.getUsersCount();
         onlineUsersCount = clients.size();
-        System.out.println("Total users count: " + DataAccessLayer.getUsersCount());
-        System.out.println(onlineUsersCount);
+        System.out.println("Total users count: " + usersCount);
+        System.out.println("Total online users count: " + onlineUsersCount);
         // Prepare the pie chart data
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
                 new PieChart.Data(AppStrings.ONLINE, onlineUsersCount),
