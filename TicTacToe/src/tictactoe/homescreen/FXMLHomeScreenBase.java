@@ -68,12 +68,12 @@ public abstract class FXMLHomeScreenBase extends StackPane {
         region1 = new Region();
         chatBtn = new Button();
 
-        getStylesheets().add("/tictactoe/homescreen/../../../resources/styling/generalStyle.css");
+        getStylesheets().add("/styling/generalStyle.css");
 
         imageView.setFitHeight(720.0);
         imageView.setPickOnBounds(true);
         imageView.setPreserveRatio(true);
-        imageView.setImage(new Image(getClass().getResource("../../../resources/assets/icons/hsBackground.jpg").toExternalForm()));
+        imageView.setImage(new Image(getClass().getResource("/assets/icons/hsBackground.jpg").toExternalForm()));
 
         borderPane.setMaxHeight(USE_PREF_SIZE);
         borderPane.setMaxWidth(USE_PREF_SIZE);
@@ -83,6 +83,8 @@ public abstract class FXMLHomeScreenBase extends StackPane {
         borderPane.setPrefWidth(720.0);
 
         BorderPane.setAlignment(header, javafx.geometry.Pos.CENTER);
+        header.setOnMouseDragged(this::dragWindow);
+        header.setOnMousePressed(this::getOffset);
         header.setSpacing(20.0);
 
         HBox.setHgrow(region, javafx.scene.layout.Priority.ALWAYS);
@@ -136,7 +138,7 @@ public abstract class FXMLHomeScreenBase extends StackPane {
         logoImageViewer.setLayoutY(56.0);
         logoImageViewer.setPickOnBounds(true);
         logoImageViewer.setPreserveRatio(true);
-        logoImageViewer.setImage(new Image(getClass().getResource("../../../resources/assets/icons/icon.png").toExternalForm()));
+        logoImageViewer.setImage(new Image(getClass().getResource("/assets/icons/icon.png").toExternalForm()));
 
         playVsplayBtn.setLayoutX(92.0);
         playVsplayBtn.setLayoutY(312.0);
@@ -165,7 +167,7 @@ public abstract class FXMLHomeScreenBase extends StackPane {
         connectionIndicatorImageView.setFitWidth(40.0);
         connectionIndicatorImageView.setPickOnBounds(true);
         connectionIndicatorImageView.setPreserveRatio(true);
-        connectionIndicatorImageView.setImage(new Image(getClass().getResource("../../../resources/assets/icons/Wifi-off.png").toExternalForm()));
+        connectionIndicatorImageView.setImage(new Image(getClass().getResource("/assets/icons/Wifi-off.png").toExternalForm()));
 
         connectionLabel.setText("Offline");
 
@@ -215,6 +217,10 @@ public abstract class FXMLHomeScreenBase extends StackPane {
         getChildren().add(borderPane);
 
     }
+
+    protected abstract void dragWindow(javafx.scene.input.MouseEvent mouseEvent);
+
+    protected abstract void getOffset(javafx.scene.input.MouseEvent mouseEvent);
 
     protected abstract void openSettingsScreen(javafx.event.ActionEvent actionEvent);
 

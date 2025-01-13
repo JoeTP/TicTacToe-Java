@@ -13,25 +13,22 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 import javafx.application.Platform;
 import models.DataModel;
-import models.UserModel;
-
 
 /**
  *
  * @author Ayat Gamal
  */
-public class Client {
+public class ClientConnection {
 
-  
     public static DataInputStream dis;
     public static PrintStream ps;
     public static Socket socket;
     public static boolean serverStatus = false;
-   
+
     public static ObjectOutputStream oos;
+
     public void connectToServer() throws IOException {
         socket = new Socket("127.0.0.1", 5001);
         System.out.println("Cleint connection Established !");
@@ -48,7 +45,7 @@ public class Client {
                     serverStatus = socket.isClosed();
                     System.out.println(serverStatus);
                 } catch (IOException ex) {
-                    Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ClientConnection.class.getName()).log(Level.SEVERE, null, ex);
 
                 }
             }*/
@@ -61,17 +58,19 @@ public class Client {
         try {
             ps.close();
             dis.close();
-            oos.close();           
+            oos.close();
             Platform.exit();
         } catch (IOException ex) {
-            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClientConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public static void sendData(DataModel d) throws IOException{
-        System.out.println("sendd Dataaa" +d.getUser().getName());
+
+    public static void sendData(DataModel d) throws IOException {
+        System.out.println("sendd Dataaa" + d.getUser().getName());
         oos.writeObject(d);
     }
-    public static boolean receveResponse() throws IOException{
+
+    public static boolean receveResponse() throws IOException {
         boolean response = dis.readBoolean();
         return response;
     }
