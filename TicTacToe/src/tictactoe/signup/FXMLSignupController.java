@@ -96,7 +96,7 @@ public class FXMLSignupController extends FXMLSignupBase {
                         AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage));
                     }
                 });
-            }).start(); // Start the background thread
+            }).start();
         }
     }
 
