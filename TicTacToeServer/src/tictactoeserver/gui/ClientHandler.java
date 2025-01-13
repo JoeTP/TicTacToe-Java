@@ -139,12 +139,13 @@ public class ClientHandler extends Thread {
 
     void disconnect() {
         try {
-            synchronized (usernames) {
-                usernames.remove(user.getName());
-            }
             synchronized (clients) {
                 clients.remove(this);
             }
+            synchronized (usernames) {
+                usernames.remove(user.getName());
+            }
+            
             dis.close();
             ps.close();
             ois.close();
