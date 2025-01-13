@@ -1,12 +1,11 @@
 package tictactoe;
 
-import clientconnection.Client;
+import clientconnection.ClientConnection;
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import shared.AppString;
-import tictactoe.signin.FXMLSigninController;
  
 
 
@@ -29,7 +28,7 @@ public class TicTacToe extends Application {
     
     @Override
     public void stop(){
-        Client.stopThreads();
+        ClientConnection.stopThreads();
     }
 
     public static void main(String[] args) {

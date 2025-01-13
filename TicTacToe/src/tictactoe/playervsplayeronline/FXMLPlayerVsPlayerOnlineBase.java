@@ -105,5 +105,7 @@ public abstract class FXMLPlayerVsPlayerOnlineBase extends BorderPane {
     protected abstract void openGameBoard(javafx.event.ActionEvent actionEvent);
 
     protected abstract void handlerefreshBtn(javafx.event.ActionEvent actionEvent);
+    
+    
 
 }

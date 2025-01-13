@@ -28,7 +28,7 @@ public class Player extends UserModel {
     public void setChar(String c) {
         character = c;
     }
-    public String getChat() {
+    public String getChar() {
         return character;
     }
 

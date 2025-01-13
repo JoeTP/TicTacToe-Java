@@ -13,8 +13,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import java.net.Socket;
-import java.sql.SQLException;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -67,13 +65,14 @@ public class ClientHandler extends Thread {
                 System.out.println("State: " + state);
                 //   sendActiveUsersList();
                 // Handle requests based on state
-                UserModel user = data.getUser();
+
+                user = data.getUser();
 
                 System.out.println(user.getName());
                 System.out.println(user.getEmail());
                 switch (state) {
                     case 1: // Sign-up
-                        boolean response = false;
+                        response = false;
                         response = DataAccessLayer.insertData(user);
                         ps.writeBoolean(response);
                         break;
@@ -92,11 +91,13 @@ public class ClientHandler extends Thread {
                         ps.writeUTF("Unknown request");
                         ps.flush();
                 }
+                synchronized (usernames) {
+                    usernames.add(user.getName());
+                }
             }
-        } catch (EOFException e) {
-            System.out.println("Client disconnected.");
-        } catch (IOException e) {
-            Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, e);
+
+        } catch (IOException ex) {
+            disconnect();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -115,19 +116,23 @@ public class ClientHandler extends Thread {
 
     private void handleNewUser(String username) {
         synchronized (usernames) {
-            usernames.add(username);  
+            System.out.println("add user in handleNewUser");
+            usernames.add(username);
         }
 
-        
         sendActiveUsersList();
     }
 
     private void sendActiveUsersList() {
         synchronized (usernames) {
             try {
+                System.out.println("the count in sendActiveUsersList " + usernames.size());
                 ps.writeInt(usernames.size());
+
                 for (String username : usernames) {
+                    System.out.println("username in sendActiveUsersList" + username);
                     ps.writeUTF(username);
+
                 }
                 ps.flush();
             } catch (IOException ex) {
@@ -136,17 +141,31 @@ public class ClientHandler extends Thread {
         }
     }
 
+    public String getUserName() {
+        return user != null ? user.getName() : "Unknown User";
+    }
+
     void disconnect() {
         try {
+
+            synchronized (usernames) {
+                usernames.remove(user.getName());
+            }
 
             synchronized (clients) {
                 clients.remove(this);
             }
             dis.close();
             ps.close();
+
+            ois.close();
             client.close();
+            this.stop();
+            this.join();
             System.out.println("## Number of Clients: " + clients.size());
         } catch (IOException ex) {
+            Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InterruptedException ex) {
             Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

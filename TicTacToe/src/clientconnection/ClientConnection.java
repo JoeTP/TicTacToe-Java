@@ -25,7 +25,7 @@ import models.UserModel;
  *
  * @author Ayat Gamal
  */
-public class Client {
+public class ClientConnection {
 
   
     public static DataInputStream dis;
@@ -34,8 +34,12 @@ public class Client {
     public static PrintStream ps;
     public static Socket socket;
     public static boolean serverStatus = false;
+
     public static ObjectInputStream ois;
     
+
+   
+
     public static ObjectOutputStream oos;
     public void connectToServer() throws IOException {
         socket = new Socket("127.0.0.1", 5001);
@@ -54,7 +58,7 @@ public class Client {
                     serverStatus = socket.isClosed();
                     System.out.println(serverStatus);
                 } catch (IOException ex) {
-                    Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ClientConnection.class.getName()).log(Level.SEVERE, null, ex);
 
                 }
             }*/
@@ -67,37 +71,37 @@ public class Client {
         try {
             ps.close();
             dis.close();
-            oos.close();
+            oos.close();           
             Platform.exit();
         } catch (IOException ex) {
-            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClientConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     public static void sendData(DataModel d) throws IOException{
-        System.out.println("sendd Dataaa" +d.getUser().getName());
+//        System.out.println("sendd Dataaa" +d.getUser().getName());
         oos.writeObject(d);
     }
     public static boolean receveResponse() throws IOException{
         boolean response = dis.readBoolean();
         return response;
     }
-      public static int receveResponseInt() throws IOException{
-        int response = dis.readInt();
-        return response;
-    }
-            public static String receveResponseString() throws IOException{
-        String response = dis.readUTF();
-        return response;
-    }
-      public static DataModel recieveObject() throws IOException{
-          DataModel response=null;
-        try {
-             response = (DataModel) ois.readObject();
-          
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
-        }
-          return response;
-    }
+//      public static int receveResponseInt() throws IOException{
+//        int response = dis.readInt();
+//        return response;
+//    }
+//            public static String receveResponseString() throws IOException{
+//        String response = dis.readUTF();
+//        return response;
+//    }
+//      public static DataModel recieveObject() throws IOException{
+//          DataModel response=null;
+//        try {
+//             response = (DataModel) ois.readObject();
+//          
+//        } catch (ClassNotFoundException ex) {
+//            Logger.getLogger(ClientConnection.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//          return response;
+//    }
       
 }
