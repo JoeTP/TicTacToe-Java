@@ -103,8 +103,7 @@ public class ClientHandler extends Thread {
         }
     }
 
-    void broadCastMsg(String msg
-    ) {
+    void broadCastMsg(String msg) {
         for (ClientHandler client : clients) {
             try {
                 client.ps.writeUTF(msg);

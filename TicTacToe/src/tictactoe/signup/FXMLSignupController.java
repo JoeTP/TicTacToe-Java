@@ -53,50 +53,49 @@ public class FXMLSignupController extends FXMLSignupBase {
 
     @Override
 
-    
     protected void goToActiveUsers(ActionEvent actionEvent) {
-    UserModel user = getNewUserData();
-    if (user != null) {
-        DataModel data = new DataModel(user, 1);
+        UserModel user = getNewUserData();
+        if (user != null) {
+            DataModel data = new DataModel(user, 1);
 
-        new Thread(() -> {
-    ClientConnection client = new ClientConnection();
-    boolean response = false;
+            new Thread(() -> {
+                ClientConnection client = new ClientConnection();
+                boolean response = false;
 
-    try {
-        client.connectToServer();
-        client.sendData(data);
-        response = client.receveResponse();
-    } catch (IOException ex) {
-        Platform.runLater(() -> {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Couldn't connect to server.");
-            alert.showAndWait();
-        });
-        ex.printStackTrace();
-        return; // Exit the thread early on failure
-    }
+                try {
+                    client.connectToServer();
+                    client.sendData(data);
+                    response = client.receveResponse();
+                } catch (IOException ex) {
+                    Platform.runLater(() -> {
+                        Alert alert = new Alert(Alert.AlertType.ERROR, "Couldn't connect to server.");
+                        alert.showAndWait();
+                    });
+                    ex.printStackTrace();
+                    return; // Exit the thread early on failure
+                }
 
-    boolean finalResponse = response;
-    Platform.runLater(() -> {
-        if (finalResponse) {
-            try {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Signup was successful.");
-                alert.showAndWait();
-                AppFunctions.closePopup(actionEvent);
-                AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Username or email are already used.");
-            alert.showAndWait();
-            AppFunctions.closePopup(actionEvent);
-            AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage));
+                boolean finalResponse = response;
+                Platform.runLater(() -> {
+                    if (finalResponse) {
+                        try {
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Signup was successful.");
+                            alert.showAndWait();
+                            AppFunctions.closePopup(actionEvent);
+                            AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage));
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Username or email are already used.");
+                        alert.showAndWait();
+                        AppFunctions.closePopup(actionEvent);
+                        AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage));
+                    }
+                });
+            }).start();
         }
-    });
-}).start();
     }
-}
 
     @Override
     protected void showPreviousIcon(ActionEvent actionEvent) {
