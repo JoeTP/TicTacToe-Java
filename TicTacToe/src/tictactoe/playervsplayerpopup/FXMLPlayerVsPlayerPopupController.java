@@ -34,7 +34,7 @@ public class FXMLPlayerVsPlayerPopupController extends FXMLPlayerVsPlayerPopupBa
 
     @Override
     protected void handleOnlineButton(ActionEvent actionEvent) {
-        AppFunctions.goTo(actionEvent, new FXMLSigninController(stage));
+        AppFunctions.goTo(actionEvent, new FXMLSigninController(stage,true));
 
     }
 }

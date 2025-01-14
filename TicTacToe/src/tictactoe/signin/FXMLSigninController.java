@@ -43,9 +43,12 @@ public class FXMLSigninController extends FXMLSigninBase {
 
     ClientConnection c = new ClientConnection();
 
-    public FXMLSigninController(Stage stage) {
+    boolean signInFromInside;
+
+    public FXMLSigninController(Stage stage, boolean state) {
 
         this.stage = stage;
+        this.signInFromInside = state;
 
     }
 
@@ -81,46 +84,40 @@ public class FXMLSigninController extends FXMLSigninBase {
             System.out.println("get state : " + data.getState());
             boolean response = false;
 
-        
-   
+            System.out.println("get user and state " + data.getUser().getName());
+            System.out.println("get user and state pass " + data.getUser().getPassword());
 
-              
-                System.out.println("get user and state " + data.getUser().getName());
-                System.out.println("get user and state pass " + data.getUser().getPassword());
+            try {
 
-                try {
+                client.sendData(data);
 
-                    client.sendData(data);
+                response = client.receveResponse();
 
-                    response = client.receveResponse();
+            } catch (IOException ex) {
+                Logger.getLogger(FXMLSigninController.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
-                } catch (IOException ex) {
-                    Logger.getLogger(FXMLSigninController.class.getName()).log(Level.SEVERE, null, ex);
-                }
+            if (response == true) {
+                System.out.println("response: should be true :" + response);
 
-                if (response==true) {
-                    System.out.println("response: should be true :" + response);
-
-                    //user = JSONConverters.jsonToUserModel(response);
+                //user = JSONConverters.jsonToUserModel(response);
+                if (signInFromInside) {
                     AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage));
-
                 } else {
-                    System.out.println("should be failure " + response);
-
-                    wrongLabel.setVisible(true);
-                    wrongLabel.setStyle("-fx-text-fill: red; -fx-font-size: 20px;");
-                    wrongLabel.setText("Please Enter Correct Info");
-
+                    AppFunctions.closePopup(actionEvent);
                 }
 
-
-                wrongLabel.setVisible(true);
-                wrongLabel.setStyle("-fx-text-fill: red; -fx-font-size: 20px;");
-                wrongLabel.setText("Please Enter Correct Info");
+            } else {
+                System.out.println("should be failure " + response);
 
             }
+
+            wrongLabel.setVisible(true);
+            wrongLabel.setStyle("-fx-text-fill: red; -fx-font-size: 20px;");
+            wrongLabel.setText("Please Enter Correct Info");
 
         }
 
     }
 
+}
