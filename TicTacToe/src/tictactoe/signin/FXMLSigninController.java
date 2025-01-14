@@ -30,6 +30,7 @@ import models.UserModel;
 import shared.AppFunctions;
 
 import shared.*;
+import sounds.AudioController;
 
 import tictactoe.gameboard.GameBoardController;
 
@@ -51,16 +52,19 @@ public class FXMLSigninController extends FXMLSigninBase {
 
     @Override
     public void goToSignup(ActionEvent event) {
+         AudioController.clickSound();
         AppFunctions.goTo(event, new FXMLSignupController(stage));
     }
 
     @Override
     protected void handleBackButton(ActionEvent actionEvent) {
+         AudioController.clickSound();
         AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerPopupController(stage));
     }
 
     @Override
     protected void goToActiveUsers(ActionEvent actionEvent) {
+         AudioController.clickSound();
 
         ClientConnection client = new ClientConnection();
 

@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import models.Player;
 import shared.AppFunctions;
+import sounds.AudioController;
 import tictactoe.homescreen.FXMLHomeScreenController;
 
 /*TODO:
@@ -31,6 +32,7 @@ public class GameBoardController extends FXMLGameBoardBase {
     private boolean isEndOfGame = false;
     private Timeline timeLine;
     private int countdownTime;
+    boolean isTimeOut = false;
     //  String startLine;
     //String endLine;
 
@@ -65,11 +67,16 @@ public class GameBoardController extends FXMLGameBoardBase {
     }
 
     private void setTurn(Button b) {
-        String soundFile = getClass().getResource("/audios/gameClick.wav").toExternalForm();
-        if (b.getText().isEmpty()) {
-        
-            Media media = new Media(soundFile);
-            
+        Media media = null;
+        String clickSound = getClass().getResource("/audios/gameClick.wav").toExternalForm();
+        String timeOutSound = getClass().getResource("/audios/turnTimeOut.wav").toExternalForm();
+        if (b.getText().isEmpty() && isEndOfGame==false) {
+            if (isTimeOut == false) {
+                media = new Media(clickSound);
+            } else {
+                media = new Media(timeOutSound);
+            }
+
             MediaPlayer mediaPlayer = new MediaPlayer(media);
             mediaPlayer.play();
             System.out.println("current char: " + (playerOne.hisTurn ? playerOne.getChar() : playerTwo.getChar()));
@@ -103,18 +110,21 @@ public class GameBoardController extends FXMLGameBoardBase {
 //       
         timeLine = new Timeline(
                 new KeyFrame(Duration.seconds(1), (ActionEvent event) -> {
-                    timer.setText("" + countdownTime + "");
-                    countdownTime--;
+                      timer.setStyle("-fx-text-fill: #3E5879;");
+                    timer.setText(" " + countdownTime + "");
+                   
                     if (countdownTime < 4) {
                         timer.setStyle("-fx-text-fill: red;");
                     }
-
-                    if (countdownTime <= 0) {
+ countdownTime--;
+                    if (countdownTime < 0) {
                         timeLine.stop();
+                        isTimeOut = true;
                         makeAutomaticMove();
                         timer.setText("Oops! Time is up!");
 
                     }
+                     isTimeOut = false;
 
                 })
         );
@@ -158,6 +168,7 @@ public class GameBoardController extends FXMLGameBoardBase {
     }
 
     private void makeAutomaticMove() {
+
         String currentChar = playerOne.hisTurn ? playerOne.getChar() : playerTwo.getChar();
         System.out.println("automatic char: " + currentChar);
         System.out.println("automatic Move: " + move);
@@ -168,6 +179,7 @@ public class GameBoardController extends FXMLGameBoardBase {
                     // board[r][c] = move; 
                     Button button = getButtonsByRowAndColumn(c, r);
                     if (button != null) {
+
                         System.out.println("insiidee makeAutomaticMove and the button existt");
                         setTurn(button);
 
@@ -235,9 +247,15 @@ public class GameBoardController extends FXMLGameBoardBase {
         }
     }
 
-    private void endGame(String winner) {
+//    private void endGame(String winner) {
+//        isEndOfGame = true;
+//        System.out.println("End of the game, Winner is" + winner);
+//
+//    }
+    
+    private void endGame() {
         isEndOfGame = true;
-        System.out.println("End of the game, Winner is" + winner);
+        System.out.println("End of the game");
 
     }
 
@@ -329,6 +347,9 @@ public class GameBoardController extends FXMLGameBoardBase {
 
     @Override
     protected void handleLeaveButton(ActionEvent actionEvent) {
+        
+        endGame();
+        AudioController.clickSound();
         AppFunctions.goTo(actionEvent, new FXMLHomeScreenController(stage));
     }
 

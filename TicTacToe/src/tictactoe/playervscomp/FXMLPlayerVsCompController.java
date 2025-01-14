@@ -15,6 +15,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import shared.AppFunctions;
+import sounds.AudioController;
 import tictactoe.gameboard.GameBoardController;
 import tictactoe.homescreen.FXMLHomeScreenController;
 import tictactoe.offlinegameboard.FXMLOfflineGameBoardController;
@@ -55,12 +56,14 @@ public class FXMLPlayerVsCompController extends FXMLPlayerVsCompBase {
     @FXML
     @Override
     protected void openGameBoard(ActionEvent actionEvent) {
+         AudioController.clickSound();
         AppFunctions.closeAndGo(actionEvent,stage, new GameBoardController(stage));
     }
 
     @FXML
     @Override
     protected void handleBackButton(ActionEvent actionEvent) {
+         AudioController.clickSound();
         AppFunctions.closePopup(actionEvent);
     }
 

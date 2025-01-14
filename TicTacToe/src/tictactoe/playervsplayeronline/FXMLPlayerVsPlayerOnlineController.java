@@ -18,6 +18,7 @@ import javafx.event.ActionEvent;
 import javafx.stage.Stage;
 import models.DataModel;
 import shared.AppFunctions;
+import sounds.AudioController;
 import tictactoe.onlinegmaeboard.FXMLGameBoardOnlineController;
 
 public class FXMLPlayerVsPlayerOnlineController extends FXMLPlayerVsPlayerOnlineBase {
@@ -35,12 +36,14 @@ public class FXMLPlayerVsPlayerOnlineController extends FXMLPlayerVsPlayerOnline
 
     @Override
     protected void handleBackButton(ActionEvent actionEvent) {
+         AudioController.clickSound();
       
         AppFunctions.closePopup(actionEvent);
     }
 
     @Override
     protected void openGameBoard(ActionEvent actionEvent) {
+         AudioController.clickSound();
         AppFunctions.closePopup(actionEvent);
         AppFunctions.goTo(actionEvent, new FXMLGameBoardOnlineController(stage));
     }
