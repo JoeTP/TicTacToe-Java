@@ -6,9 +6,7 @@ import java.util.List;
 import java.util.Random;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
@@ -61,15 +59,14 @@ public class GameBoardController extends FXMLGameBoardBase {
             playerTwo.setChar(X_CHAR);
             playerTwo.hisTurn = true;
         }
+        startCountdownTimer();
     }
 
     private void setTurn(Button b) {
         if (b.getText().isEmpty()) {
-               if (!isEndOfGame) {
 
-                startCountdownTimer(b);
-            } 
-               
+            System.out.println("current char: " + (playerOne.hisTurn ? playerOne.getChar() : playerTwo.getChar()));
+            System.out.println("current Move: " + move);
             if (playerOne.hisTurn) {
                 b.setText(playerOne.getChar());
             } else {
@@ -84,85 +81,154 @@ public class GameBoardController extends FXMLGameBoardBase {
 
             checkPlayerWinner();
             printGame();
+            startCountdownTimer();
 
-         
         }
 
     }
 
-    private void startCountdownTimer(Button b) {
-         countdownTime = 7;
-//        if (timeLine != null ) {
-//            timeLine.stop();   //3l4an law startCountdownTimer 3mnlnlha call multiple time
+//    private Button getButtonsByRowAndColumn(int c , int r){
+//        Button btn =null ;
+//        if(c==0 && r==0){
+//            btn =b00;
 //        }
-//
+//        return btn;
+//        
+//        
+//    }
+    private void startCountdownTimer() {
+        countdownTime = 7;
+        if (timeLine != null) {
+            timeLine.stop();   //3l4an law startCountdownTimer 3mnlnlha call multiple time
+        }
+
 //       
         timeLine = new Timeline(
                 new KeyFrame(Duration.seconds(1), (ActionEvent event) -> {
-                    timer.setText(countdownTime+"");
+                    timer.setText("" + countdownTime + "");
                     countdownTime--;
                     if (countdownTime < 4) {
                         timer.setStyle("-fx-text-fill: red;");
                     }
-                    
-                    if (countdownTime < 0) {
+
+                    if (countdownTime <= 0) {
                         timeLine.stop();
-                        makeAutomaticMove(b);
+                        makeAutomaticMove();
                         timer.setText("Oops! Time is up!");
-                        
+
                     }
-                    countdownTime=7;
-                    
-        })
+
+                })
         );
 
         timeLine.setCycleCount(Timeline.INDEFINITE);
         timeLine.play();
     }
 
-    private void makeAutomaticMove(Button b) {
-        System.out.println("Automatic move caused");
-        List<int[]> emptyCells = new ArrayList<>();
+    private Button getButtonsByRowAndColumn(int c, int r) {
 
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                if (board[i][j] == null) {
-                    emptyCells.add(new int[]{i, j});
-                    System.out.println("nnnull cell at: (" + i + ", " + j + ")");
+        if (c == 0 && r == 0) {
+            return b00;
+        }
+        if (c == 0 && r == 1) {
+            return b01;
+        }
+        if (c == 0 && r == 2) {
+            return b02;
+        }
+        if (c == 1 && r == 0) {
+            return b10;
+        }
+        if (c == 1 && r == 1) {
+            return b11;
+        }
+        if (c == 1 && r == 2) {
+            return b12;
+        }
+        if (c == 2 && r == 0) {
+            return b20;
+        }
+        if (c == 2 && r == 1) {
+            return b21;
+        }
+        if (c == 2 && r == 2) {
+            return b22;
+        }
+
+        return null;
+
+    }
+
+    private void makeAutomaticMove() {
+        String currentChar = playerOne.hisTurn ? playerOne.getChar() : playerTwo.getChar();
+        System.out.println("automatic char: " + currentChar);
+        System.out.println("automatic Move: " + move);
+
+        for (int r = 0; r < board.length; r++) {
+            for (int c = 0; c < board[r].length; c++) {
+                if (board[r][c] == null) {
+                    // board[r][c] = move; 
+                    Button button = getButtonsByRowAndColumn(c, r);
+                    if (button != null) {
+                        System.out.println("insiidee makeAutomaticMove and the button existt");
+                        setTurn(button);
+
+                    } else {
+                        System.out.println("insiidee makeAutomaticMove and the button not existt");
+                    }
+
+                    return;
                 }
             }
         }
-
-        if (!emptyCells.isEmpty()) {
-            Random random = new Random();
-            int[] selectedCell = emptyCells.get(random.nextInt(emptyCells.size()));
-            System.out.println("Selected cell for move: (" + selectedCell[0] + ", " + selectedCell[1] + ")");
-
-            System.out.println("player1.hisTun : " + playerOne.hisTurn);
-            System.out.println("player2.hisTun : " + playerTwo.hisTurn);
-
-            board[selectedCell[0]][selectedCell[1]] = move;
-            System.out.println("currentMove : " + move);
-           if (playerOne.hisTurn) {
-                b.setText(playerOne.getChar());
-            } else {
-                b.setText(playerTwo.getChar());
-            }
-            playerTwo.hisTurn = !playerTwo.hisTurn;
-            playerOne.hisTurn = !playerOne.hisTurn;
-            move++;
-            System.out.println("next move : " + move);
-            
-            //  move++;
-            ///  playerTwo.hisTurn = !playerTwo.hisTurn;
-            //playerOne.hisTurn = !playerOne.hisTurn;
-
-            //fillBoard(selectedCell[0],selectedCell[1]);
-        } else {
-            System.out.println("No empty cells found.");
-        }
+        System.out.println("No empty cells available for automatic move.");
+        return;
     }
 
+    
+    
+     //   private void makeAutomaticMove(Button b) {
+//        System.out.println("Automatic move caused");
+//        List<int[]> emptyCells = new ArrayList<>();
+//
+//        for (int i = 0; i < 3; i++) {
+//            for (int j = 0; j < 3; j++) {
+//                if (board[i][j] == null) {
+//                    emptyCells.add(new int[]{i, j});
+//                    System.out.println("nnnull cell at: (" + i + ", " + j + ")");
+//                }
+//            }
+//        }
+//
+//        if (!emptyCells.isEmpty()) {
+//            Random random = new Random();
+//            int[] selectedCell = emptyCells.get(random.nextInt(emptyCells.size()));
+//            System.out.println("Selected cell for move: (" + selectedCell[0] + ", " + selectedCell[1] + ")");
+//
+//            System.out.println("player1.hisTun : " + playerOne.hisTurn);
+//            System.out.println("player2.hisTun : " + playerTwo.hisTurn);
+//
+//            board[selectedCell[0]][selectedCell[1]] = move;
+//            System.out.println("currentMove : " + move);
+//           if (playerOne.hisTurn) {
+//                b.setText(playerOne.getChar());
+//            } else {
+//                b.setText(playerTwo.getChar());
+//            }
+//            playerTwo.hisTurn = !playerTwo.hisTurn;
+//            playerOne.hisTurn = !playerOne.hisTurn;
+//            move++;
+//            System.out.println("next move : " + move);
+//            
+//            //  move++;
+//            ///  playerTwo.hisTurn = !playerTwo.hisTurn;
+//            //playerOne.hisTurn = !playerOne.hisTurn;
+//
+//            //fillBoard(selectedCell[0],selectedCell[1]);
+//        } else {
+//            System.out.println("No empty cells found.");
+//        }
+//    }
     private void printGame() {
 
         for (int i = 0; i < 3; i++) {
@@ -252,35 +318,6 @@ public class GameBoardController extends FXMLGameBoardBase {
         return null;
     }
 
-//    public String checkRowsAndColumns(int[][] board) {
-//        for (int i = 0; i < 3; i++) {
-//            //rows
-//            if (checkLine(board[i][0], board[i][1], board[i][2])) {
-//                //get the winner in the current itration
-//                return getWinnerCharacter(board[i][0]);
-//            }
-//            //columns
-//            if (checkLine(board[0][i], board[1][i], board[2][i])) {
-//                return getWinnerCharacter(board[0][i]);
-//            }
-//        }
-//        return null;
-//    }
-
-    /*
-                    [x - -] [- - x]
-                    [- x -] [- x -]
-                    [- - x] [x - -]
-     */
-//    public String checkDiagonals(int[][] board) {
-//        if (checkLine(board[0][0], board[1][1], board[2][2])) {
-//            return getWinnerCharacter(board[0][0]);
-//        }
-//        if (checkLine(board[0][2], board[1][1], board[2][0])) {
-//            return getWinnerCharacter(board[0][2]);
-//        }
-//        return null;
-//    }
     private boolean checkLine(Integer a, Integer b, Integer c) {
         if (a == null || b == null || c == null) {
             return false;
