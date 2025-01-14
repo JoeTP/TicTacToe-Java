@@ -8,6 +8,7 @@ package tictactoe.playervsplayerpopup;
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
 import shared.AppFunctions;
+import sounds.AudioController;
 import tictactoe.playervsplayerlocal.FXMLPlayerVsPlayerLocalController;
 import tictactoe.signin.FXMLSigninController;
 /**
@@ -24,17 +25,23 @@ public class FXMLPlayerVsPlayerPopupController extends FXMLPlayerVsPlayerPopupBa
 
     @Override
     protected void handleBackButton(ActionEvent actionEvent) {
+         AudioController.clickSound();
         AppFunctions.closePopup(actionEvent);
     }
 
     @Override
     protected void handleLocalButton(ActionEvent actionEvent) {
+         AudioController.clickSound();
         AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerLocalController(stage));
     }
 
     @Override
     protected void handleOnlineButton(ActionEvent actionEvent) {
+
+         AudioController.clickSound();
+
         AppFunctions.goTo(actionEvent, new FXMLSigninController(stage,true));
+
 
     }
 }

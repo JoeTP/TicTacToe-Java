@@ -21,8 +21,8 @@
             <Insets left="20.0" right="20.0" />
          </BorderPane.margin>
          <children>
-            <Region prefHeight="70.0" prefWidth="300.0" />
-            <Label fx:id="timer" prefHeight="77.0" prefWidth="74.0" text="Timer" textAlignment="CENTER" />
+            <Region prefHeight="70.0" prefWidth="250.0" />
+            <Label fx:id="timer" prefHeight="70.0" prefWidth="216.0" text="Timer left for : 7" textAlignment="CENTER" />
             <Region prefHeight="70.0" HBox.hgrow="ALWAYS" />
             <VBox alignment="CENTER">
                <children>
