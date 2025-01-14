@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Chicle&family=Quantico:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+
+
+
+
+.label {
+    -fx-font-family: "Chicle", serif;
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-border-width: 1;
+    -fx-text-fill: #fff;
+}
+
+#nameLabel {
+    -fx-font-family: "Chicle", serif;
+    -fx-font-weight: bold;
+    -fx-font-size: 20px;
+    -fx-border-width: 1;
+    -fx-text-fill: #fff;
+}
+
+.rect {
+    -fx-background-color: #3e5879;
+    -fx-background-radius: 0 0 50px 0;
+}
+
+.buttons {
+    -fx-background-radius: 15px;
+    -fx-background-color: #3e5879;
+    -fx-font-family: "Chicle", serif;
+    -fx-text-fill: #f5efe7;
+    /* -fx-font-size: 10px; */
+    -fx-effect: dropshadow(gaussian, #233144, 7, 0, 0.0, 0.0);
+}
+.buttons:hover {}
+
+#logoutButton{
+    -fx-text-fill: #f04140;
+}
+
+
+
+
+
+.mainBackground {
+    -fx-background-color: #F5EFE7;
+}
+
+.list-view {
+    -fx-padding: 10;
+    -fx-background-color: #f0f4f8;
+    -fx-border-color: #3e5879;
+    -fx-border-width: 2;
+    -fx-border-radius: 5;
+}
+
+.list-cell {
+    -fx-font-family: "Chicle", serif;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-text-fill: #3e5879;
+}

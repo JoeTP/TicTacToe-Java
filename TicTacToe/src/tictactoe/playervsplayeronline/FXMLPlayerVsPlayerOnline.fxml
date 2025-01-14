@@ -7,28 +7,30 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="500.0" maxWidth="450.0" minHeight="500.0" minWidth="450.0" prefHeight="500.0" prefWidth="450.0" styleClass="mainBackground" stylesheets="@../../../resources/styling/generalStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.playervsplayer.FXMLPlayerVsPlayerController">
+<BorderPane maxHeight="500.0" maxWidth="450.0" minHeight="500.0" minWidth="450.0" prefHeight="500.0" prefWidth="450.0" styleClass="mainBackground" stylesheets="@../../../resources/styling/generalStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.playervsplayeronline.FXMLPlayerVsPlayerOnlineController">
    <top>
       <AnchorPane prefHeight="0.0" prefWidth="450.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="backBtn" layoutX="14.0" layoutY="7.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="30.0" prefWidth="30.0" style="-fx-border-radius: 30px; -fx-background-radius: 30px;" styleClass="bigBtn" text="B" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="7.0" />
+            <Button fx:id="backBtn1" layoutX="24.0" layoutY="17.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="30.0" prefWidth="30.0" style="-fx-border-radius: 30px; -fx-background-radius: 30px;" styleClass="bigBtn" text="B" />
          </children>
       </AnchorPane>
    </top>
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="startBtn" layoutX="131.0" layoutY="367.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="188.0" styleClass="bigBtn" text="Send request">
+            <Button fx:id="startBtn" layoutX="131.0" layoutY="367.0" mnemonicParsing="false" onAction="#openGameBoard" prefHeight="33.0" prefWidth="188.0" styleClass="bigBtn" text="Send request">
                <font>
                   <Font size="20.0" />
                </font>
             </Button>
-            <Text fx:id="playerVsPlayerLabel" fill="#3e5879" layoutX="145.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="bigLabel" text="Player Vs Player" textAlignment="CENTER">
+            <Text fx:id="playerVsPlayerLabel" fill="#3e5879" layoutX="55.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="bigLabel" text="Click to the player who you need to play with" textAlignment="CENTER" wrappingWidth="312.830078125">
                <font>
                   <Font size="36.0" />
                </font>
             </Text>
-            <ListView layoutX="37.0" layoutY="77.0" prefHeight="248.0" prefWidth="368.0" />
+            <!-- Added fx:id to ListView for referencing in the controller -->
+            <ListView fx:id="activePlayersListView" layoutX="41.0" layoutY="106.0" prefHeight="248.0" prefWidth="368.0" />
+            <Button fx:id="refreshBtn" layoutX="352.0" layoutY="48.0" mnemonicParsing="false" onAction="#handlerefreshBtn" prefHeight="47.0" prefWidth="68.0" style="-fx-border-radius: 30px; -fx-background-radius: 30px;" styleClass="bigBtn" text="refresh" />
          </children>
       </AnchorPane>
    </center>

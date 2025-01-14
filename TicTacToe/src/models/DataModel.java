@@ -11,10 +11,18 @@ import java.io.Serializable;
  *
  * @author Kimo Store
  */
-public class DataModel implements Serializable{
+public class DataModel implements Serializable {
+
     UserModel user;
     GameModel game;
     int state;
+
+    public DataModel() {
+    }
+
+    public DataModel(int state) {
+        this.state = state;
+    }
 
     public DataModel(UserModel user, int state) {
         this.user = user;
@@ -49,5 +57,5 @@ public class DataModel implements Serializable{
     public void setState(int state) {
         this.state = state;
     }
-    
+
 }

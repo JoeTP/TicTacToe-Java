@@ -13,7 +13,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
-import shared.AppString;
 
 public abstract class FXMLGameBoardBase extends BorderPane {
 
@@ -85,11 +84,11 @@ public abstract class FXMLGameBoardBase extends BorderPane {
         BorderPane.setMargin(hBox, new Insets(0.0, 20.0, 0.0, 20.0));
 
         region.setPrefHeight(70.0);
-        region.setPrefWidth(300.0);
+        region.setPrefWidth(250.0);
 
-        timer.setPrefHeight(77.0);
-        timer.setPrefWidth(74.0);
-        timer.setText("Timer");
+        timer.setPrefHeight(70.0);
+        timer.setPrefWidth(216.0);
+        timer.setText("  Start  ");
         timer.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
 
         HBox.setHgrow(region0, javafx.scene.layout.Priority.ALWAYS);
@@ -117,7 +116,7 @@ public abstract class FXMLGameBoardBase extends BorderPane {
         label0.setLayoutY(10.0);
         label0.setText("Player2Name");
         setTop(hBox0);
-        getStylesheets().add(AppString.GENERAL_STYLE_FILE_PATH);
+        getStylesheets().add("/styling/generalStyle.css");
         getStylesheets().add("/tictactoe/gameboard/style.css");
 
         BorderPane.setAlignment(anchorPane, javafx.geometry.Pos.CENTER);
@@ -220,6 +219,8 @@ public abstract class FXMLGameBoardBase extends BorderPane {
         b00.setLayoutY(10.0);
         b00.setMnemonicParsing(false);
         b00.setOnAction(this::handleB00);
+        b00.setPrefHeight(153.0);
+        b00.setPrefWidth(192.0);
         b00.setStyle("-fx-border-radius: 30 0 0 0;");
         BorderPane.setMargin(anchorPane, new Insets(0.0, 20.0, 0.0, 20.0));
         setCenter(anchorPane);

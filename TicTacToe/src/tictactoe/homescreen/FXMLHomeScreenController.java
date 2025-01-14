@@ -5,20 +5,29 @@
  */
 package tictactoe.homescreen;
 
-import clientconnection.Client;
+import clientconnection.ClientConnection;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import models.UserModel;
+import static shared.AppConstants.CONNECTION_FLAG;
 import shared.AppFunctions;
 import shared.AppString;
-import static shared.AppString.LOGO;
+import sounds.AudioController;
 import tictactoe.playervscomp.FXMLPlayerVsCompController;
 import tictactoe.playervsplayerpopup.FXMLPlayerVsPlayerPopupController;
 import tictactoe.setting.FXMLSettingController;
-import tictactoe.signup.FXMLSignupController;
+import tictactoe.signin.FXMLSigninController;
 
 /**
  * FXML Controller class
@@ -27,95 +36,104 @@ import tictactoe.signup.FXMLSignupController;
  */
 public class FXMLHomeScreenController extends FXMLHomeScreenBase {
 
-    boolean isOffline;
     Stage stage;
     private double xOffset;
     private double yOffset;
+    ClientConnection client;
 
     public FXMLHomeScreenController(Stage stage) {
         this.stage = stage;
-        //stage.initStyle(StageStyle.DECORATED.UNDECORATED);
-
-        dragWindow();
-        checkConnection();
-        setLogo();
+        observeConnection();
     }
 
-    public FXMLHomeScreenController(Stage stage, boolean isOffline) {
-        this.isOffline = isOffline;
-        this.stage = stage;
-        // stage.initStyle(StageStyle.DECORATED.UNDECORATED);
-
-        dragWindow();
-        checkConnection();
-        setLogo();
-    }
-
-    void setLogo() {
-        logoImageViewer.setImage(new Image(getClass().getResourceAsStream(LOGO)));
-    }
-
-    void checkConnection() {
-        Image image;
-        String imgPath;
-        if (isOffline) {
-            imgPath = "/assets/icons/offline.png";
-            chatBtn.setDisable(isOffline);
-            connectionLabel.setText(AppString.OFFLINE);
-         //   profileImageView.setImage(new Image(getClass().getResourceAsStream("/assets/icons/profile.png")));
-        } else {
-            imgPath = "/assets/icons/online.png";
-            chatBtn.setDisable(isOffline);
-            connectionLabel.setText(AppString.ONLINE);
-            ///TODO: get the user profile image from server
-           // profileImageView.setImage(new Image(getClass().getResourceAsStream("/assets/icons/profile.png")));
+    private void observeConnection() {
+        if (CONNECTION_FLAG == null) {
+            CONNECTION_FLAG = new SimpleBooleanProperty(false);
         }
-        image = new Image(getClass().getResourceAsStream(imgPath));
-
-        connectionIndicatorImageView.setImage(image);
-    }
-
-    void dragWindow() {
-
-        header.setOnMousePressed((event) -> {
-            xOffset = event.getSceneX();
-            yOffset = event.getSceneY();
+        chatBtn.disableProperty().bind(CONNECTION_FLAG.not());
+        accInfoRect.visibleProperty().bind(CONNECTION_FLAG);
+        CONNECTION_FLAG.addListener((observable, oldValue, newValue) -> {
+            //to keep updating
+            updateConnectionLabel();
         });
 
-        header.setOnMouseDragged((event) -> {
-            stage.setX(event.getScreenX() - xOffset);
-            stage.setY(event.getScreenY() - yOffset);
-        });
+        //applied on initial
+        updateConnectionLabel();
     }
-@FXML
+
+    private void updateConnectionLabel() {
+        Platform.runLater(() -> {
+            if (CONNECTION_FLAG.get()) {
+                nameLabel.setText(ClientConnection.user.getName());
+                connectionIndicatorImageView.setImage(new Image("/assets/icons/Wifi-on.png"));
+                connectionLabel.setText(AppString.ONLINE);
+            } else {
+                nameLabel.setText("FAIL");
+                connectionIndicatorImageView.setImage(new Image("/assets/icons/Wifi-off.png"));
+                connectionLabel.setText(AppString.OFFLINE);
+            }
+        });
+
+    }
+
     @Override
     protected void exitApp(ActionEvent actionEvent) {
-        Client.stopThreads();
+        System.exit(0);
     }
-@FXML
-    @Override
-    protected void openChat(ActionEvent actionEvent) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-@FXML
+
     @Override
     protected void openSettingsScreen(ActionEvent actionEvent) {
+         AudioController.clickSound();
         AppFunctions.goTo(actionEvent, new FXMLSettingController(stage));
     }
-@FXML
+
     @Override
     protected void openPlayerVsComputerPopup(ActionEvent actionEvent) {
-
+         AudioController.clickSound();
         AppFunctions.openPopup(stage, new FXMLPlayerVsCompController(stage));
-
     }
-    @FXML
+
     @Override
     protected void openPlayerVsPlayerPopup(ActionEvent actionEvent) {
+         AudioController.clickSound();
         AppFunctions.openPopup(stage, new FXMLPlayerVsPlayerPopupController(stage));
     }
 
 
-  
-  
+
+    @Override
+    protected void openChat(ActionEvent actionEvent) {
+         AudioController.clickSound();
+        CONNECTION_FLAG.set(false);
+
+    }
+
+    @Override
+    protected void dragWindow(MouseEvent mouseEvent) {
+        stage.setX(mouseEvent.getScreenX() - xOffset);
+        stage.setY(mouseEvent.getScreenY() - yOffset);
+    }
+
+    @Override
+    protected void getOffset(MouseEvent mouseEvent) {
+        xOffset = mouseEvent.getSceneX();
+        yOffset = mouseEvent.getSceneY();
+    }
+
+    @Override
+    public void handleSignInButton(ActionEvent actionEvent) {
+        AppFunctions.openPopup(stage, new FXMLSigninController(stage, false));
+//        CONNECTION_FLAG.set(true);
+
+    }
+
+    @Override
+    protected void handleHistoryButton(ActionEvent actionEvent) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    protected void handleLogoutButton(ActionEvent actionEvent) {
+        CONNECTION_FLAG.set(false);
+    }
 }
