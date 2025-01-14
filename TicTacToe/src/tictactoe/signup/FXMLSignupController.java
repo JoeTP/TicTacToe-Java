@@ -53,73 +53,19 @@ public class FXMLSignupController extends FXMLSignupBase {
 
     @Override
 
-    
     protected void goToActiveUsers(ActionEvent actionEvent) {
-    UserModel user = getNewUserData();
-    if (user != null) {
-        DataModel data = new DataModel(user, 1);
-
-        // Start a new thread for background operations
-        new Thread(() -> {
-    ClientConnection client = new ClientConnection();
-    boolean response = false;
-
-    try {
-        // Perform network operations
-        client.connectToServer();
-        client.sendData(data);
-        response = client.receveResponse();
-        System.out.println("Received response: " + response); // Debugging output
-    } catch (IOException ex) {
-        Platform.runLater(() -> {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Couldn't connect to server.");
-            alert.showAndWait();
-        });
-        ex.printStackTrace();
-        return; // Exit the thread early on failure
-    }
-
-    boolean finalResponse = response;
-    System.out.println("Final response: " + finalResponse); // Debugging output
-
-    // Update the UI on the JavaFX Application Thread
-    Platform.runLater(() -> {
-        System.out.println("Updating UI with finalResponse: " + finalResponse); // Debugging output
-        if (finalResponse) {
-            try {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Signup was successful.");
-                alert.showAndWait();
-                AppFunctions.closePopup(actionEvent);
-                AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage, client));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Username or email are already used.");
-            alert.showAndWait();
-            AppFunctions.closePopup(actionEvent);
-            AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage,client));
-        }
-    });
-}).start(); // Start the background thread
-    }
-}
- /*
-@Override
-protected void goToActiveUsers(ActionEvent actionEvent) {
         UserModel user = getNewUserData();
         if (user != null) {
             DataModel data = new DataModel(user, 1);
-            // Start a new thread for background operations
+
             new Thread(() -> {
                 ClientConnection client = new ClientConnection();
                 boolean response = false;
+
                 try {
-                    // Perform network operations
                     client.connectToServer();
                     client.sendData(data);
                     response = client.receveResponse();
-                    System.out.println("Received response: " + response); // Debugging output
                 } catch (IOException ex) {
                     Platform.runLater(() -> {
                         Alert alert = new Alert(Alert.AlertType.ERROR, "Couldn't connect to server.");
@@ -128,18 +74,15 @@ protected void goToActiveUsers(ActionEvent actionEvent) {
                     ex.printStackTrace();
                     return; // Exit the thread early on failure
                 }
-                boolean finalResponse = response;
-                System.out.println("Final response: " + finalResponse); // Debugging output
 
-                // Update the UI on the JavaFX Application Thread
+                boolean finalResponse = response;
                 Platform.runLater(() -> {
-                    System.out.println("Updating UI with finalResponse: " + finalResponse); // Debugging output
                     if (finalResponse) {
                         try {
                             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Signup was successful.");
                             alert.showAndWait();
                             AppFunctions.closePopup(actionEvent);
-                            AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage,client));
+                            AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage));
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -147,13 +90,13 @@ protected void goToActiveUsers(ActionEvent actionEvent) {
                         Alert alert = new Alert(Alert.AlertType.INFORMATION, "Username or email are already used.");
                         alert.showAndWait();
                         AppFunctions.closePopup(actionEvent);
-                      //  AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage));
+                        AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage));
                     }
                 });
             }).start();
         }
     }
-*/
+
     @Override
     protected void showPreviousIcon(ActionEvent actionEvent) {
         currentImageIndex = (currentImageIndex - 1 + ICON_PATHS.length) % ICON_PATHS.length;

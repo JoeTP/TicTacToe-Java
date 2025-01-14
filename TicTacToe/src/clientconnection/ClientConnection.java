@@ -79,6 +79,11 @@ public class ClientConnection {
         boolean response = dis.readBoolean();
         return response;
     }
+
+    public static void sendGameRequest(String username){
+        ps.print(username);
+    }
+
 //      public static int receveResponseInt() throws IOException{
 //        int response = dis.readInt();
 //        return response;
@@ -98,4 +103,5 @@ public class ClientConnection {
 //          return response;
 //    }
       
+
 }

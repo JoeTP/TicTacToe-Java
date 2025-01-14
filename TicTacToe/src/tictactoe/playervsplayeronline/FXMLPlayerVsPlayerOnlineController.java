@@ -6,15 +6,15 @@ import javafx.stage.Stage;
 import shared.AppFunctions;
 import tictactoe.gameboard.GameBoardController;
 
-
+ 
 public class FXMLPlayerVsPlayerOnlineController extends FXMLPlayerVsPlayerOnlineBase {
 
     private Stage stage;
    
     ClientConnection client;
 
-    public FXMLPlayerVsPlayerOnlineController(Stage stage, ClientConnection c) {
-        this.client = c;
+    public FXMLPlayerVsPlayerOnlineController(Stage stage) {
+        //this.client = c;
         this.stage = stage;
 
        // startListeningForUpdates();
@@ -22,7 +22,6 @@ public class FXMLPlayerVsPlayerOnlineController extends FXMLPlayerVsPlayerOnline
 
     @Override
     protected void handleBackButton(ActionEvent actionEvent) {
-      
         AppFunctions.closePopup(actionEvent);
     }
 
