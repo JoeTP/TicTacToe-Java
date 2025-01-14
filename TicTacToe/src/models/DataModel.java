@@ -17,6 +17,9 @@ public class DataModel implements Serializable {
     GameModel game;
     int state;
 
+    public DataModel() {
+    }
+
     public DataModel(int state) {
         this.state = state;
     }

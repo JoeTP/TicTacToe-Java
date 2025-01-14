@@ -31,6 +31,7 @@ import models.UserModel;
 import shared.AppFunctions;
 
 import shared.*;
+import static shared.AppConstants.CONNECTION_FLAG;
 
 import tictactoe.gameboard.GameBoardController;
 
@@ -99,7 +100,10 @@ public class FXMLSigninController extends FXMLSigninBase {
                         try {
                             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Signin was successful.");
                             alert.showAndWait();
+                            DataModel newData = (DataModel) ClientConnection.ois.readObject();
+                            ClientConnection.user = newData.getUser();
                             AppFunctions.closePopup(actionEvent);
+                            Platform.runLater(() -> CONNECTION_FLAG.set(true));
                             AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage, client));
                         } catch (Exception e) {
                             e.printStackTrace();
