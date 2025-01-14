@@ -61,12 +61,11 @@ public class ClientHandler extends Thread {
                 ois = new ObjectInputStream(client.getInputStream());
                 DataModel data = (DataModel) ois.readObject();
                 state = data.getState();
-                user = data.getUser();
-
-                System.out.println(user.getName());
-                System.out.println(user.getEmail());
+                System.out.println(state);
                 switch (state) {
                     case 1: // Sign-up
+                        user = data.getUser();
+                        System.out.println(user.getName());     
                         response = DataAccessLayer.insertData(user);
                         if (response.equals(AppStrings.SIGNUP_DONE)) {
                             synchronized (usernames) {
@@ -74,8 +73,11 @@ public class ClientHandler extends Thread {
                             }
                         }
                         ps.writeUTF(response);
+                        ps.flush();
                         break;
                     case 2: // sign in
+                        user = data.getUser();
+                        System.out.println(user.getName());     
                         response = DataAccessLayer.getUserDataLogin(user.getName(), user.getPassword());
                         boolean isNotLoggedin = isNotLoggedin(user.getName());
                         if (isNotLoggedin == false) {
@@ -87,12 +89,12 @@ public class ClientHandler extends Thread {
                             }
                         }
                         ps.writeUTF(response);
-
+                        ps.flush();
                         break;
-//                    case 3:
-//                        System.out.println("in case 3 : ");
-//                        sendActiveUsersList();
-
+                    case 3:
+                        System.out.println("in case 3 : ");
+                        sendActiveUsersList();
+                        break;
                     default:
                         System.out.println("Unknown state: " + state);
                         ps.writeUTF("Unknown request");
@@ -102,7 +104,7 @@ public class ClientHandler extends Thread {
             }
 
         } catch (IOException ex) {
-            disconnect();
+            //disconnect();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -117,15 +119,15 @@ public class ClientHandler extends Thread {
             }
         }
     }
-//
-//    private void sendActiveUsersList() {
-//       
+
+    private void sendActiveUsersList() {
+       
+        try {
+            oos.writeObject(usernames);
 //            try {
-//                System.out.println("the count in sendActiveUsersList " + usernames.size());
 //                ps.writeInt(usernames.size());
 //
-//                for (String username : usernames) {
-//                    System.out.println("username in sendActiveUsersList" + username);
+//                for (String username : usernames) { 
 //                    ps.writeUTF(username);
 //
 //                }
@@ -133,8 +135,11 @@ public class ClientHandler extends Thread {
 //            } catch (IOException ex) {
 //                Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
 //            }
-//        
-//    }
+        } catch (IOException ex) {
+            Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
 
     public String getUserName() {
         return user != null ? user.getName() : "Unknown User";

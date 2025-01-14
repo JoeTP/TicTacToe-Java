@@ -18,6 +18,10 @@ public class DataModel implements Serializable{
     GameModel game;
     String activePlayers;
 
+    public DataModel(int state) {
+        this.state = state;
+    }
+
     public void setUsernames(ObservableList<String> usernames) {
         this.usernames = usernames;
     }

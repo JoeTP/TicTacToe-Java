@@ -37,7 +37,7 @@ public class FXMLSignupController extends FXMLSignupBase {
 
     Parent singingParent;
     Stage stage;
-
+    
     public FXMLSignupController(Stage stage) {
         this.stage = stage;
     }
@@ -83,7 +83,7 @@ public class FXMLSignupController extends FXMLSignupBase {
                             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Signup was successful.");
                             alert.showAndWait();
                             AppFunctions.closePopup(actionEvent);
-                            AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage));
+                            AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage,client));
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

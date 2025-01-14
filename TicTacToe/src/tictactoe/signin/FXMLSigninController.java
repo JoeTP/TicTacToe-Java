@@ -42,7 +42,7 @@ public class FXMLSigninController extends FXMLSigninBase {
 
     Stage stage;
 
-    ClientConnection c = new ClientConnection();
+   
 
     public FXMLSigninController(Stage stage) {
 
@@ -89,7 +89,7 @@ public class FXMLSigninController extends FXMLSigninBase {
                             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Signin was successful.");
                             alert.showAndWait();
                             AppFunctions.closePopup(actionEvent);
-                            AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage));
+                            AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage,client));
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
