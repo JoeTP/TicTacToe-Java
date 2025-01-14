@@ -12,9 +12,6 @@ import javafx.application.Platform;
 
 import javafx.animation.PauseTransition;
 
-
-
-
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -41,12 +38,9 @@ public class GameBoardController extends FXMLGameBoardBase {
     private Player playerTwo = new Player();
     private boolean isEndOfGame = false;
 
-
     private Timeline timeLine;
     private int countdownTime;
     boolean isTimeOut = false;
-
-
 
     //  String startLine;
     //String endLine;
@@ -85,7 +79,7 @@ public class GameBoardController extends FXMLGameBoardBase {
         Media media = null;
         String clickSound = getClass().getResource("/audios/gameClick.wav").toExternalForm();
         String timeOutSound = getClass().getResource("/audios/turnTimeOut.wav").toExternalForm();
-        if (b.getText().isEmpty() && isEndOfGame==false) {
+        if (b.getText().isEmpty() && isEndOfGame == false) {
             if (isTimeOut == false) {
                 media = new Media(clickSound);
             } else {
@@ -116,37 +110,38 @@ public class GameBoardController extends FXMLGameBoardBase {
 
     }
 
-
     private void startCountdownTimer() {
         countdownTime = 7;
+
         if (timeLine != null) {
             timeLine.stop();   //3l4an law startCountdownTimer 3mnlnlha call multiple time
         }
 
-//       
-        timeLine = new Timeline(
-                new KeyFrame(Duration.seconds(1), (ActionEvent event) -> {
-                      timer.setStyle("-fx-text-fill: #3E5879;");
-                    timer.setText(" " + countdownTime + "");
-                   
-                    if (countdownTime < 4) {
-                        timer.setStyle("-fx-text-fill: red;");
-                    }
- countdownTime--;
-                    if (countdownTime < 0) {
-                        timeLine.stop();
-                        isTimeOut = true;
-                        makeAutomaticMove();
-                        timer.setText("Oops! Time is up!");
+        if (!isEndOfGame) {
+            timeLine = new Timeline(
+                    new KeyFrame(Duration.seconds(1), (ActionEvent event) -> {
+                        timer.setStyle("-fx-text-fill: #3E5879;");
+                        timer.setText(" " + countdownTime + "");
 
-                    }
-                     isTimeOut = false;
+                        if (countdownTime < 4) {
+                            timer.setStyle("-fx-text-fill: red;");
+                        }
+                        countdownTime--;
+                        if (countdownTime < 0) {
+                            timeLine.stop();
+                            isTimeOut = true;
+                            makeAutomaticMove();
+                            timer.setText("Oops! Time is up!");
 
-                })
-        );
+                        }
+                        isTimeOut = false;
 
-        timeLine.setCycleCount(Timeline.INDEFINITE);
-        timeLine.play();
+                    })
+            );
+
+            timeLine.setCycleCount(Timeline.INDEFINITE);
+            timeLine.play();
+        }
     }
 
     private Button getButtonsByRowAndColumn(int c, int r) {
@@ -211,8 +206,6 @@ public class GameBoardController extends FXMLGameBoardBase {
         return;
     }
 
-
-
     private void printGame() {
 
         for (int i = 0; i < 3; i++) {
@@ -223,16 +216,18 @@ public class GameBoardController extends FXMLGameBoardBase {
         }
     }
 
-
 //    private void endGame(String winner) {
 //        isEndOfGame = true;
 //        System.out.println("End of the game, Winner is" + winner);
 //
 //    }
-    
     private void endGame() {
 
         isEndOfGame = true;
+        playerOne.hisTurn = false;
+        playerTwo.hisTurn = false;
+        timeLine.stop();
+        timer.setText("--");
         System.out.println("End of the game");
 
     }
@@ -264,20 +259,15 @@ public class GameBoardController extends FXMLGameBoardBase {
         if (playerOne.getChar() == winner) {
             WinningLine.drawWinningLine(WinningLine.getStartLine(), WinningLine.getEndLine(), grid);
 
-
-
-
             System.out.println("PLAYER ONE WINNER");
             AppFunctions.waitAndShowPopup(stage, this.getScene(), true);
-
+            endGame();
         } else if (playerTwo.getChar() == winner) {
             WinningLine.drawWinningLine(WinningLine.getStartLine(), WinningLine.getEndLine(), grid);
 
-
-
             System.out.println("PLAYER TWO WINNER");
             AppFunctions.waitAndShowPopup(stage, this.getScene(), true);
-
+            endGame();
         } else if (move > 9) {
             WinningLine.drawWinningLine(WinningLine.getStartLine(), WinningLine.getEndLine(), grid);
 
@@ -334,7 +324,7 @@ public class GameBoardController extends FXMLGameBoardBase {
 
     @Override
     protected void handleLeaveButton(ActionEvent actionEvent) {
-        
+
         endGame();
         AudioController.clickSound();
         AppFunctions.goTo(actionEvent, new FXMLHomeScreenController(stage));
