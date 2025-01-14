@@ -15,6 +15,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import shared.AppFunctions;
+import sounds.AudioController;
 import tictactoe.homescreen.FXMLHomeScreenController;
 
 /**
@@ -50,6 +51,7 @@ public class FXMLSettingController extends FXMLSettingBase implements Initializa
 
     @Override
     protected void handleBackBtn(ActionEvent actionEvent) {
+         AudioController.clickSound();
             AppFunctions.goTo(actionEvent, new FXMLHomeScreenController(stage));
     }
 

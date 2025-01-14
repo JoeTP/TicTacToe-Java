@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 import static shared.AppConstants.CONNECTION_FLAG;
 import shared.AppFunctions;
 import shared.AppString;
+import sounds.AudioController;
 import tictactoe.playervscomp.FXMLPlayerVsCompController;
 import tictactoe.playervsplayerpopup.FXMLPlayerVsPlayerPopupController;
 import tictactoe.setting.FXMLSettingController;
@@ -74,21 +75,27 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
 
     @Override
     protected void openSettingsScreen(ActionEvent actionEvent) {
+         AudioController.clickSound();
         AppFunctions.goTo(actionEvent, new FXMLSettingController(stage));
     }
 
     @Override
     protected void openPlayerVsComputerPopup(ActionEvent actionEvent) {
+         AudioController.clickSound();
         AppFunctions.openPopup(stage, new FXMLPlayerVsCompController(stage));
     }
 
     @Override
     protected void openPlayerVsPlayerPopup(ActionEvent actionEvent) {
+         AudioController.clickSound();
         AppFunctions.openPopup(stage, new FXMLPlayerVsPlayerPopupController(stage));
     }
 
+
+
     @Override
     protected void openChat(ActionEvent actionEvent) {
+         AudioController.clickSound();
         CONNECTION_FLAG.set(false);
 
     }

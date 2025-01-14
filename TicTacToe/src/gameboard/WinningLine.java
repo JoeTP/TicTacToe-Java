@@ -50,10 +50,12 @@ public class WinningLine {
     }
 
     public static void drawWinningLine(String startLine, String endLine, GridPane grid) {
+
         int r1 = getRow(startLine);
         int c1 = getCol(startLine);
         int r2 = getRow(endLine);
         int c2 = getCol(endLine);
+
         //start point
         double btnWidth = grid.getWidth() / 3;
         double btnHeight = grid.getHeight() / 3;

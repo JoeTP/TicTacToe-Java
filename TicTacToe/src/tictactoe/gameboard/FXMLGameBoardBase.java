@@ -88,7 +88,7 @@ public abstract class FXMLGameBoardBase extends BorderPane {
 
         timer.setPrefHeight(70.0);
         timer.setPrefWidth(216.0);
-        timer.setText("Timer left for : 7");
+        timer.setText("  Start  ");
         timer.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
 
         HBox.setHgrow(region0, javafx.scene.layout.Priority.ALWAYS);
