@@ -83,14 +83,8 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
     }
 
     @Override
-    protected void singIn(ActionEvent actionEvent) {
-        AppFunctions.openPopup(stage, new FXMLSigninController(stage));
-        CONNECTION_FLAG.set(true);
-    }
-
-    @Override
     protected void openChat(ActionEvent actionEvent) {
-        CONNECTION_FLAG.set(false);
+         CONNECTION_FLAG.set(false);
 
     }
 
@@ -104,5 +98,20 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
     protected void getOffset(MouseEvent mouseEvent) {
         xOffset = mouseEvent.getSceneX();
         yOffset = mouseEvent.getSceneY();
+    }
+
+//    @Override
+//    protected void handleHistoryButton(ActionEvent actionEvent) {
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//    }
+//
+//    @Override
+//    protected void handleLogoutButton(ActionEvent actionEvent) {
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//    }
+    @Override
+    protected void handleSignInButton(ActionEvent actionEvent) {
+        //AppFunctions.openPopup(stage, new FXMLSigninController(stage,false));
+        CONNECTION_FLAG.set(true);
     }
 }

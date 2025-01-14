@@ -23,6 +23,7 @@ import javafx.stage.Stage;
 import models.DataModel;
 import models.UserModel;
 import shared.AppFunctions;
+import shared.AppString;
 import static shared.AppString.ICON_PATHS;
 import tictactoe.playervsplayeronline.FXMLPlayerVsPlayerOnlineController;
 import tictactoe.signin.FXMLSigninController;
@@ -36,7 +37,8 @@ public class FXMLSignupController extends FXMLSignupBase {
 
     Parent singingParent;
     Stage stage;
-
+    public ClientConnection client;
+    
     public FXMLSignupController(Stage stage) {
         this.stage = stage;
     }
@@ -48,7 +50,7 @@ public class FXMLSignupController extends FXMLSignupBase {
 
     @Override
     protected void goToSignin(ActionEvent actionEvent) {
-        AppFunctions.goTo(actionEvent, new FXMLSigninController(stage));
+        AppFunctions.goTo(actionEvent, new FXMLSigninController(stage,true));
     }
 
     @Override
@@ -57,13 +59,23 @@ public class FXMLSignupController extends FXMLSignupBase {
         UserModel user = getNewUserData();
         if (user != null) {
             DataModel data = new DataModel(user, 1);
-
+            client = new ClientConnection();
+            try {
+                client.connectToServer();
+            } catch (IOException ex) {
+                Platform.runLater(() -> {
+                        Alert alert = new Alert(Alert.AlertType.ERROR, "Couldn't connect to server.");
+                        alert.showAndWait();
+                    });
+                    ex.printStackTrace();
+                    return;
+            }
             new Thread(() -> {
-                ClientConnection client = new ClientConnection();
-                boolean response = false;
+                
+                String response = "";
 
                 try {
-                    client.connectToServer();
+                    
                     client.sendData(data);
                     response = client.receveResponse();
                 } catch (IOException ex) {
@@ -75,22 +87,21 @@ public class FXMLSignupController extends FXMLSignupBase {
                     return; // Exit the thread early on failure
                 }
 
-                boolean finalResponse = response;
+                String finalResponse = response;
                 Platform.runLater(() -> {
-                    if (finalResponse) {
+                    if (finalResponse.equals(AppString.SIGNUP_DONE)) {
                         try {
                             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Signup was successful.");
                             alert.showAndWait();
                             AppFunctions.closePopup(actionEvent);
-                            AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage));
+                            AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage,client));
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     } else {
                         Alert alert = new Alert(Alert.AlertType.INFORMATION, "Username or email are already used.");
                         alert.showAndWait();
-                        AppFunctions.closePopup(actionEvent);
-                        AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage));
+                        ClientConnection.terminateClient();
                     }
                 });
             }).start();

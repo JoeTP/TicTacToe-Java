@@ -37,6 +37,11 @@ public interface AppString {
         "/assets/icons/turtle.png"
     };
     String SERVER_HOST = "127.0.0.1";
+    final String SIGNIN_DONE = "SIGNIN_DONE";
+    final String SIGNIN_FAILED = "SIGNIN_FAILED";
+    final String SIGNIN_ALREADY_FOUND = "SIGNIN_ALREADY_FOUND";
+    final String SIGNUP_DONE = "SIGNUP_DONE";
+    final String SIGNUP_FAILED = "SIGNUP_FAILED";
 
     String WIN_VIDEO_URL = "/media/winVideo.mp4";
     String LOSE_VIDEO_URL = "/media/winVideo.mp4";
