@@ -74,12 +74,22 @@ public class ClientHandler extends Thread {
                     case 1: // Sign-up
                         response = false;
                         response = DataAccessLayer.insertData(user);
+                        if (response) {
+                            synchronized (usernames) {
+                                usernames.add(user.getName());
+                            }
+                        }
                         ps.writeBoolean(response);
                         break;
                     case 2:
-                        boolean responseLogin = false;
-                        responseLogin = DataAccessLayer.getUserDataLogin(user.getName(), user.getPassword());
-                        ps.writeBoolean(responseLogin);
+                        response = false;
+                        response = DataAccessLayer.getUserDataLogin(user.getName(), user.getPassword());
+                        if (response) {
+                            synchronized (usernames) {
+                                usernames.add(user.getName());
+                            }
+                        }
+                        ps.writeBoolean(response);
 
                         break;
 //                    case 3:
@@ -91,9 +101,7 @@ public class ClientHandler extends Thread {
                         ps.writeUTF("Unknown request");
                         ps.flush();
                 }
-                synchronized (usernames) {
-                    usernames.add(user.getName());
-                }
+
             }
 
         } catch (IOException ex) {
@@ -143,7 +151,7 @@ public class ClientHandler extends Thread {
             synchronized (usernames) {
                 usernames.remove(user.getName());
             }
-            
+
             dis.close();
             ps.close();
             ois.close();

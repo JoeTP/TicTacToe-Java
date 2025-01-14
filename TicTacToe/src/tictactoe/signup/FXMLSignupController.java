@@ -89,8 +89,7 @@ public class FXMLSignupController extends FXMLSignupBase {
                     } else {
                         Alert alert = new Alert(Alert.AlertType.INFORMATION, "Username or email are already used.");
                         alert.showAndWait();
-                        AppFunctions.closePopup(actionEvent);
-                        AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage));
+                        ClientConnection.terminateClient();
                     }
                 });
             }).start();

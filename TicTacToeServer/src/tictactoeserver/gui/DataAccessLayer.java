@@ -28,7 +28,6 @@ public class DataAccessLayer {
     }
 
     public static Boolean getUserDataLogin(String userName, String pass) {
-
         Boolean isExist = false;
         try {
 
