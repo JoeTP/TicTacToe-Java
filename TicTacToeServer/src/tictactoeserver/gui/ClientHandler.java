@@ -143,7 +143,7 @@ public class ClientHandler extends Thread {
         return user != null ? user.getName() : "Unknown User";
     }
 
-    void disconnect() {
+    public void disconnect() {
         try {
             synchronized (clients) {
                 clients.remove(this);
@@ -164,6 +164,14 @@ public class ClientHandler extends Thread {
         } catch (InterruptedException ex) {
             Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    public boolean isNotLoggedin(String username){
+        for(String u : usernames){
+            if(user.getName().equals(username)){
+                return false;
+            }
+        }
+        return true;
     }
 
 }

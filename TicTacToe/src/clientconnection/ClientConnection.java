@@ -78,6 +78,7 @@ public class ClientConnection {
             dis.close();
             oos.close();
             socket.close();
+            System.out.println("client killed");
         } catch (IOException ex) {
             Logger.getLogger(ClientConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
