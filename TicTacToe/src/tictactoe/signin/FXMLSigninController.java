@@ -43,9 +43,12 @@ public class FXMLSigninController extends FXMLSigninBase {
     Stage stage;
     public ClientConnection client;
 
-    public FXMLSigninController(Stage stage) {
+    boolean signInFromInside;
+
+    public FXMLSigninController(Stage stage, boolean state) {
 
         this.stage = stage;
+        this.signInFromInside = state;
 
     }
 
@@ -114,7 +117,7 @@ public class FXMLSigninController extends FXMLSigninBase {
             }).start();
         }
     }
-
+            
     protected UserModel getNewUserData() {
         UserModel user = new UserModel();
         boolean valid = true;
@@ -136,9 +139,11 @@ public class FXMLSigninController extends FXMLSigninBase {
             return user;
         } else {
             return null;
+
         }
 
     }
+
 
 //    @Override
 //    protected void goToActiveUsers(ActionEvent actionEvent) {
@@ -197,4 +202,5 @@ public class FXMLSigninController extends FXMLSigninBase {
 //        }
 //
 //    }
+
 }
