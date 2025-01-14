@@ -15,9 +15,10 @@ import javafx.scene.shape.Line;
  * @author Ayat Gamal
  */
 public class WinningLine {
+
     static String startLine;
-   static String endLine;
- 
+    static String endLine;
+
     public static int getCol(String btnString) {
         char c = btnString.charAt(1);
         int col = Character.getNumericValue(c);
@@ -41,17 +42,16 @@ public class WinningLine {
     public static String getStartLine() {
         return startLine;
     }
- 
+
     public static String getEndLine() {
         return endLine;
     }
- 
-    
-    public static void drawWinningLine(String startLine, String endLine,GridPane grid) {
-        int r1 = WinningLine.getRow(startLine);
-        int c1 = WinningLine.getCol(startLine);
-        int r2 = WinningLine.getRow(endLine);
-        int c2 = WinningLine.getCol(endLine);
+
+    public static void drawWinningLine(String startLine, String endLine, GridPane grid) {
+        int r1 = getRow(startLine);
+        int c1 = getCol(startLine);
+        int r2 = getRow(endLine);
+        int c2 = getCol(endLine);
         //start point
         double btnWidth = grid.getWidth() / 3;
         double btnHeight = grid.getHeight() / 3;
@@ -66,7 +66,7 @@ public class WinningLine {
         double y2 = gridY + (r2 * btnHeight) + btnHeight / 2;
 
         Line line = new Line(x1, y1, x2, y2);
-     AnchorPane  anchorPane =   (AnchorPane)grid.getParent();
+        AnchorPane anchorPane = (AnchorPane) grid.getParent();
         anchorPane.getChildren().add(line);
 
         line.setStroke(Color.GREENYELLOW.darker());

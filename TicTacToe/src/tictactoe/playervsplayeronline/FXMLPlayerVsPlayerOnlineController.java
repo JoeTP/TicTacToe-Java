@@ -1,24 +1,11 @@
 package tictactoe.playervsplayeronline;
 
 import clientconnection.ClientConnection;
-import static clientconnection.ClientConnection.socket;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
-import models.DataModel;
 import shared.AppFunctions;
-import tictactoe.onlinegmaeboard.FXMLGameBoardOnlineController;
+import tictactoe.gameboard.GameBoardController;
+
 
 public class FXMLPlayerVsPlayerOnlineController extends FXMLPlayerVsPlayerOnlineBase {
 
@@ -42,7 +29,7 @@ public class FXMLPlayerVsPlayerOnlineController extends FXMLPlayerVsPlayerOnline
     @Override
     protected void openGameBoard(ActionEvent actionEvent) {
         AppFunctions.closePopup(actionEvent);
-        AppFunctions.goTo(actionEvent, new FXMLGameBoardOnlineController(stage));
+        AppFunctions.goTo(actionEvent, new GameBoardController(stage));
     }
 
     @Override
