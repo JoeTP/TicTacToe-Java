@@ -41,9 +41,14 @@ public class FXMLSigninController extends FXMLSigninBase {
 
     Stage stage;
 
-    public FXMLSigninController(Stage stage) {
+    ClientConnection c = new ClientConnection();
+
+    boolean signInFromInside;
+
+    public FXMLSigninController(Stage stage, boolean state) {
 
         this.stage = stage;
+        this.signInFromInside = state;
 
     }
 
@@ -59,34 +64,56 @@ public class FXMLSigninController extends FXMLSigninBase {
 
     @Override
     protected void goToActiveUsers(ActionEvent actionEvent) {
-   
-            ClientConnection c = new ClientConnection();
 
+        ClientConnection c = new ClientConnection();
+
+        try {
+            c.connectToServer();
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLSigninController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println("" + c.serverStatus);
+        if (c.serverStatus == false) {  //connect
+            System.out.println("connect connection");
+            UserModel user = new UserModel();
+
+            user.setName(usernameTextField.getText());
+            user.setPassword(passwordField.getText());
+            System.out.println("AL --before sendLoginRequest " + user.getName());
+            DataModel data = new DataModel(user, 2);
+            System.out.println("get state : " + data.getState());
+            boolean response = false;
+
+            System.out.println("get user and state " + data.getUser().getName());
+            System.out.println("get user and state pass " + data.getUser().getPassword());
+            // String jsonRequest = JSONConverters.DataModelToJson(data);
+            // System.out.println("jsonRequest " + jsonRequest);
             try {
-                c.connectToServer();
+
+                c.sendData(data);
+
+                response = c.receveResponse();
+
             } catch (IOException ex) {
                 Logger.getLogger(FXMLSigninController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            System.out.println("" + c.serverStatus);
-            if (c.serverStatus == false) {  //connect
-                System.out.println("connect connection");
-                UserModel user = new UserModel();
 
+            if (response == true) {
+                System.out.println("response: should be true :" + response);
 
-                user.setName(usernameTextField.getText());
-                user.setPassword(passwordField.getText());
-                System.out.println("AL --before sendLoginRequest " + user.getName());
-                DataModel data = new DataModel(user, 2);
-                System.out.println("get state : " + data.getState());
-                boolean response = false;
+                //user = JSONConverters.jsonToUserModel(response);
+                AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage));
 
-   
+            } else {
+                System.out.println("should be failure " + response);
 
-              
+                wrongLabel.setVisible(true);
+                wrongLabel.setStyle("-fx-text-fill: red; -fx-font-size: 20px;");
+                wrongLabel.setText("Please Enter Correct Info");
+
                 System.out.println("get user and state " + data.getUser().getName());
                 System.out.println("get user and state pass " + data.getUser().getPassword());
-                // String jsonRequest = JSONConverters.DataModelToJson(data);
-                // System.out.println("jsonRequest " + jsonRequest);
+
                 try {
 
                     c.sendData(data);
@@ -97,25 +124,29 @@ public class FXMLSigninController extends FXMLSigninBase {
                     Logger.getLogger(FXMLSigninController.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
-                if (response==true) {
+                if (response == true) {
                     System.out.println("response: should be true :" + response);
 
                     //user = JSONConverters.jsonToUserModel(response);
-                    AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage));
+                    if (signInFromInside) {
+                        AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage));
+                    } else {
+                        AppFunctions.closePopup(actionEvent);
+                    }
 
                 } else {
                     System.out.println("should be failure " + response);
 
-                    wrongLabel.setVisible(true);
-                    wrongLabel.setStyle("-fx-text-fill: red; -fx-font-size: 20px;");
-                    wrongLabel.setText("Please Enter Correct Info");
-
                 }
-
 
             }
 
-        
+            wrongLabel.setVisible(true);
+            wrongLabel.setStyle("-fx-text-fill: red; -fx-font-size: 20px;");
+            wrongLabel.setText("Please Enter Correct Info");
+
         }
+
+    }
 
 }

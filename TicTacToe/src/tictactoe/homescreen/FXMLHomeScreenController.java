@@ -81,13 +81,13 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
 
     @Override
     protected void singIn(ActionEvent actionEvent) {
-        AppFunctions.openPopup(stage, new FXMLSigninController(stage));
+        AppFunctions.openPopup(stage, new FXMLSigninController(stage,false));
         CONNECTION_FLAG.set(true);
     }
 
     @Override
     protected void openChat(ActionEvent actionEvent) {
-        CONNECTION_FLAG.set(false);
+       // CONNECTION_FLAG.set(false);
 
     }
 
