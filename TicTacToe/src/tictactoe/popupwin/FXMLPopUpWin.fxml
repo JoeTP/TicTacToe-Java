@@ -1,52 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.net.URL?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.media.MediaView?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="winOrLosePopUp" prefHeight="450.0" prefWidth="450.0" styleClass="mainBackground" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.popupwin.FXMLPopUpWinController">
+<AnchorPane id="AnchorPane" fx:id="winOrLosePopUp" prefHeight="500.0" prefWidth="500.0" styleClass="mainBackground" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.popupwin.FXMLPopUpWinController">
     <stylesheets>
         <URL value="@fxmlpopupwin.css" />
     </stylesheets>
     <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f5efe7" height="350.0" layoutX="50.0" layoutY="51.0" stroke="#88f5e6" strokeType="INSIDE" styleClass="rect" width="350.0" AnchorPane.leftAnchor="50.0" />
-      <ImageView fx:id="winnerImg" fitHeight="50.0" fitWidth="50.0" layoutX="194.0" layoutY="91.0" pickOnBounds="true" preserveRatio="true">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f5efe7" height="84.0" layoutX="14.0" layoutY="18.0" stroke="#88f5e6" strokeType="INSIDE" styleClass="rect" width="613.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f5efe7" height="93.0" layoutX="47.0" layoutY="384.0" stroke="#88f5e6" strokeType="INSIDE" styleClass="rect" width="613.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" />
+      <MediaView fx:id="winOrLoseVideo" fitHeight="250.0" fitWidth="430.0" layoutX="105.0" layoutY="120.0" nodeOrientation="INHERIT" />
+      <ImageView fx:id="leftCupIcon" fitHeight="62.0" fitWidth="62.0" layoutX="89.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="70.0">
          <image>
             <Image url="@../../../resources/assets/icons/winner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="replayBtn" fitHeight="30.0" fitWidth="30.0" layoutX="138.0" layoutY="268.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="rightCupIcon" fitHeight="62.0" fitWidth="62.0" layoutX="527.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="70.0">
          <image>
-            <Image url="@../../../resources/assets/icons/replay.png" />
+            <Image url="@../../../resources/assets/icons/winner.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="saveVideoBtn" fitHeight="30.0" fitWidth="30.0" layoutX="204.0" layoutY="268.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../resources/assets/icons/save.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="homeBtn" fitHeight="30.0" fitWidth="30.0" layoutX="272.0" layoutY="268.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../resources/assets/icons/cancel.png" />
-         </image>
-      </ImageView>
-      <Label fx:id="winAndLoseLabel" alignment="CENTER" layoutX="90.0" layoutY="161.0" text="🎉 Congratulations! You Win!" textFill="#3e5879" AnchorPane.leftAnchor="90.0">
+      <Button fx:id="rematchBtn" layoutX="287.0" layoutY="399.0" mnemonicParsing="false" style="-fx-background-color: transparent;">
+         <graphic>
+            <ImageView fx:id="rematchImg" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../resources/assets/icons/replay.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="saveGameBtn" layoutX="74.0" layoutY="399.0" mnemonicParsing="false" style="-fx-background-color: transparent;">
+         <graphic>
+            <ImageView fx:id="saveGameImg" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../resources/assets/icons/save.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="leaveBtn" layoutX="530.0" layoutY="399.0" mnemonicParsing="false" style="-fx-background-color: transparent;" wrapText="true">
+         <graphic>
+            <ImageView fx:id="leaveImg" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../resources/assets/icons/cancel.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Label fx:id="congratsLable" alignment="CENTER" layoutX="190.0" layoutY="25.0" prefHeight="30.0" prefWidth="301.0" text="🎉 Congratulations! 🎉" textFill="#3e5879" wrapText="true" AnchorPane.leftAnchor="190.0">
+         <font>
+            <Font name="Stencil" size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="256.0" layoutY="446.0" text="Your score:" textFill="#3e5879">
          <font>
             <Font name="Stencil" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="153.0" layoutY="208.0" text="Your score:" textFill="#3e5879">
-         <font>
-            <Font name="Stencil" size="15.0" />
-         </font>
-      </Label>
-      <Label fx:id="scoreLabel" layoutX="253.0" layoutY="206.0" text="0" textFill="#3e5879">
+      <Label fx:id="scoreLabel" layoutX="378.0" layoutY="447.0" text="0" textFill="#3e5879">
          <font>
             <Font name="Stencil" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="winAndLoseLabel" alignment="CENTER" layoutX="270.0" layoutY="55.0" text="You Win!" textFill="#3e5879">
+         <font>
+            <Font name="Stencil" size="24.0" />
          </font>
       </Label>
     </children>
