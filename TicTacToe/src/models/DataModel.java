@@ -16,6 +16,8 @@ public class DataModel implements Serializable {
     UserModel user;
     GameModel game;
     int state;
+    String player;
+    String rival;
 
     public DataModel(int state) {
         this.state = state;
@@ -29,6 +31,28 @@ public class DataModel implements Serializable {
     public DataModel(GameModel game, int state) {
         this.game = game;
         this.state = state;
+    }
+
+    public DataModel(int state, String player, String rival) {
+        this.state = state;
+        this.player = player;
+        this.rival = rival;
+    }
+
+    public String getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(String player) {
+        this.player = player;
+    }
+
+    public String getRival() {
+        return rival;
+    }
+
+    public void setRival(String rival) {
+        this.rival = rival;
     }
 
     public UserModel getUser() {
