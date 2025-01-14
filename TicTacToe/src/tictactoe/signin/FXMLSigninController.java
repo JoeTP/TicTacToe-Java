@@ -41,8 +41,7 @@ import tictactoe.signup.FXMLSignupController;
 public class FXMLSigninController extends FXMLSigninBase {
 
     Stage stage;
-
-   
+    public ClientConnection client;
 
     public FXMLSigninController(Stage stage) {
 
@@ -64,13 +63,22 @@ public class FXMLSigninController extends FXMLSigninBase {
         UserModel user = getNewUserData();
         if (user != null) {
             DataModel data = new DataModel(user, 2);
-
+            client = new ClientConnection();
+            try {
+                client.connectToServer();
+            } catch (IOException ex) {
+                Platform.runLater(() -> {
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Couldn't connect to server.");
+                    alert.showAndWait();
+                });
+                ex.printStackTrace();
+                return;
+            }
             new Thread(() -> {
-                ClientConnection client = new ClientConnection();
+
                 String response = "";
 
                 try {
-                    client.connectToServer();
                     client.sendData(data);
                     response = client.receveResponse();
                 } catch (IOException ex) {
@@ -89,15 +97,15 @@ public class FXMLSigninController extends FXMLSigninBase {
                             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Signin was successful.");
                             alert.showAndWait();
                             AppFunctions.closePopup(actionEvent);
-                            AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage,client));
+                            AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage, client));
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                    } else if(finalResponse.equals(AppString.SIGNIN_ALREADY_FOUND)){
+                    } else if (finalResponse.equals(AppString.SIGNIN_ALREADY_FOUND)) {
                         Alert alert = new Alert(Alert.AlertType.INFORMATION, "You are logged in from another device");
                         alert.showAndWait();
                         ClientConnection.terminateClient();
-                    }else{
+                    } else {
                         Alert alert = new Alert(Alert.AlertType.INFORMATION, "Username orpassword are incorrect.");
                         alert.showAndWait();
                         ClientConnection.terminateClient();

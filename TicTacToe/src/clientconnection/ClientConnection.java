@@ -86,6 +86,7 @@ public class ClientConnection {
 
     public static void sendData(DataModel d) throws IOException {       
         oos.writeObject(d);
+        oos.flush();
     }
 
     public static String receveResponse() throws IOException {

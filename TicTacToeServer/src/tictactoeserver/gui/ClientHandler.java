@@ -104,7 +104,8 @@ public class ClientHandler extends Thread {
             }
 
         } catch (IOException ex) {
-            //disconnect();
+            disconnect();
+            Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -121,23 +122,19 @@ public class ClientHandler extends Thread {
     }
 
     private void sendActiveUsersList() {
-       
+        
         try {
-            oos.writeObject(usernames);
-//            try {
-//                ps.writeInt(usernames.size());
-//
-//                for (String username : usernames) { 
-//                    ps.writeUTF(username);
-//
-//                }
-//                ps.flush();
-//            } catch (IOException ex) {
-//                Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-        } catch (IOException ex) {
-            Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
-        }
+                      
+                ps.writeInt(usernames.size());
+
+                for (String username : usernames) { 
+                    ps.writeUTF(username);
+
+                }
+                ps.flush();
+            } catch (IOException ex) {
+                Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);            
+        } 
         
     }
 

@@ -37,6 +37,7 @@ public class FXMLSignupController extends FXMLSignupBase {
 
     Parent singingParent;
     Stage stage;
+    public ClientConnection client;
     
     public FXMLSignupController(Stage stage) {
         this.stage = stage;
@@ -58,13 +59,23 @@ public class FXMLSignupController extends FXMLSignupBase {
         UserModel user = getNewUserData();
         if (user != null) {
             DataModel data = new DataModel(user, 1);
-
+            client = new ClientConnection();
+            try {
+                client.connectToServer();
+            } catch (IOException ex) {
+                Platform.runLater(() -> {
+                        Alert alert = new Alert(Alert.AlertType.ERROR, "Couldn't connect to server.");
+                        alert.showAndWait();
+                    });
+                    ex.printStackTrace();
+                    return;
+            }
             new Thread(() -> {
-                ClientConnection client = new ClientConnection();
+                
                 String response = "";
 
                 try {
-                    client.connectToServer();
+                    
                     client.sendData(data);
                     response = client.receveResponse();
                 } catch (IOException ex) {

@@ -6,51 +6,18 @@
 package models;
 
 import java.io.Serializable;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 /**
  *
  * @author Kimo Store
  */
-public class DataModel implements Serializable{
-     private static final long serialVersionUID = -5159020983329262064L;
-     private transient ObservableList<String> usernames = FXCollections.observableArrayList();
+public class DataModel implements Serializable {
 
     UserModel user;
     GameModel game;
-    String activePlayers;
-
-   public DataModel(int state) {
-        this.state = state;
-    }
-   
-
-    public void setUsernames(ObservableList<String> usernames) {
-        this.usernames = usernames;
-    }
-
-    public void setActivePlayers(String activePlayers) {
-        this.activePlayers = activePlayers;
-    }
-
-    public DataModel(String activePlayers, int state) {
-        this.activePlayers = activePlayers;
-        this.state = state;
-    }
-
-    public ObservableList<String> getUsernames() {
-        return usernames;
-    }
-
-    public String getActivePlayers() {
-        return activePlayers;
-    }
-    
-    
     int state;
-      public DataModel(ObservableList<String> usernames, int state) {
-        this.usernames = FXCollections.observableArrayList(usernames); // Create a new ObservableList
+
+    public DataModel(int state) {
         this.state = state;
     }
 
@@ -87,5 +54,5 @@ public class DataModel implements Serializable{
     public void setState(int state) {
         this.state = state;
     }
-    
+
 }

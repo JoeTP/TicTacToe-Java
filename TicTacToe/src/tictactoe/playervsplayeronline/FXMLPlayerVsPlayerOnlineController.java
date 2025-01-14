@@ -1,13 +1,17 @@
 package tictactoe.playervsplayeronline;
 
 import clientconnection.ClientConnection;
+import static clientconnection.ClientConnection.dis;
 import static clientconnection.ClientConnection.ois;
 import static clientconnection.ClientConnection.oos;
+import static clientconnection.ClientConnection.ps;
 import static clientconnection.ClientConnection.socket;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -59,20 +63,30 @@ public class FXMLPlayerVsPlayerOnlineController extends FXMLPlayerVsPlayerOnline
     protected void getActiveUsers() {
         new Thread(() -> {
             try {
-                oos.writeObject(new DataModel(3));
-                Object obj = ois.readObject();
-                if (obj instanceof ObservableList) {
-                    ObservableList<String> activeUsers = (ObservableList<String>) obj;
+                
+                oos = new ObjectOutputStream(socket.getOutputStream());
+                
+                if (oos == null) {
+                    throw new IllegalStateException("ObjectOutputStream (oos) is not initialized.");
+                }
+                client.sendData(new DataModel(3));
+                System.out.println("Object successfully written to server.");
+                int activeUsersCount = dis.readInt();
+                List<String> activeUsers = new ArrayList<>();
+                String user;
+                for(int i = 0; i < activeUsersCount; i++){
+                    user = dis.readUTF();
+                    activeUsers.add(user);
+                     System.out.println(user);
+                }
+                
+                
                     Platform.runLater(() -> {
                         activePlayersListView.getItems().addAll(activeUsers);
-                    });
-                }
-
+                    });             
             } catch (IOException ex) {
                 Logger.getLogger(FXMLPlayerVsPlayerOnlineController.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(FXMLPlayerVsPlayerOnlineController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            } 
         }).start();
 
     }
