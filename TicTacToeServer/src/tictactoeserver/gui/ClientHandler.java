@@ -21,6 +21,7 @@ import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
 import models.DataModel;
 import models.UserModel;
+import shared.AppStrings;
 
 public class ClientHandler extends Thread {
 
@@ -30,7 +31,7 @@ public class ClientHandler extends Thread {
 
     ObjectOutputStream oos;
     UserModel user;
-    boolean response;
+    String response;
 
     Socket client;  // Add a reference to the client socket
     int state;
@@ -72,24 +73,26 @@ public class ClientHandler extends Thread {
                 System.out.println(user.getEmail());
                 switch (state) {
                     case 1: // Sign-up
-                        response = false;
                         response = DataAccessLayer.insertData(user);
-                        if (response) {
+                        if (response.equals(AppStrings.SIGNUP_DONE)) {
                             synchronized (usernames) {
                                 usernames.add(user.getName());
                             }
                         }
-                        ps.writeBoolean(response);
+                        ps.writeUTF(response);
                         break;
-                    case 2:
-                        response = false;
+                    case 2:                        
                         response = DataAccessLayer.getUserDataLogin(user.getName(), user.getPassword());
-                        if (response) {
+                        boolean isNotLoggedin = isNotLoggedin(user.getName());
+                        if(isNotLoggedin == false){
+                            response = AppStrings.SIGNIN_ALREADY_FOUND;
+                        }
+                        if (response.equals(AppStrings.SIGNIN_DONE)) {
                             synchronized (usernames) {
                                 usernames.add(user.getName());
                             }
                         }
-                        ps.writeBoolean(response);
+                        ps.writeUTF(response);
 
                         break;
 //                    case 3:
