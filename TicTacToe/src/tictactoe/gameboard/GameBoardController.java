@@ -6,8 +6,10 @@ import java.util.List;
 import java.util.Random;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -79,46 +81,83 @@ public class GameBoardController extends FXMLGameBoardBase {
             printGame();
 
             if (!isEndOfGame) {
-           
-                startCountdownTimer(playerOne.hisTurn ? playerOne : playerTwo);
+
+                startCountdownTimer();
             }
         }
 
     }
 
- private void startCountdownTimer(Player currentPlayer) {
-    if (countdownTimer != null) {
-        countdownTimer.stop();   //3l4an law startCountdownTimer 3mnlnlha call multiple time
+    private void startCountdownTimer() {
+        if (countdownTimer != null) {
+            countdownTimer.stop();   //3l4an law startCountdownTimer 3mnlnlha call multiple time
+        }
+
+        countdownTime = 7;
+        countdownTimer = new Timeline(
+                new KeyFrame(Duration.seconds(1), event -> {
+                    timer.setText("Timer is: " + countdownTime);
+                    countdownTime--;
+                    if (countdownTime < 4) {
+                        timer.setStyle("-fx-text-fill: red;");
+                    }
+
+                    
+
+                    if (countdownTime < 0) {
+                        countdownTimer.stop();
+                        makeAutomaticMove();
+                        timer.setText("Oops! Time is up!");
+
+                    }
+                })
+        );
+
+        countdownTimer.setCycleCount(Timeline.INDEFINITE);
+        countdownTimer.play();
     }
 
-    countdownTime = 7; 
+    private void makeAutomaticMove() {
+        System.out.println("Automatic move caused");
+        List<int[]> emptyCells = new ArrayList<>();
 
-    
-    countdownTimer = new Timeline(
-        new KeyFrame(Duration.seconds(1), event -> {
-           
-            timer.setText("Timer is: " + countdownTime);
-            countdownTime--; 
-       if(countdownTime <4){
-               timer.setStyle("-fx-text-fill: red;");
-           }
-           
-            System.out.println("Time left for " + currentPlayer.getChar() + ": " + countdownTime);
-
-            
-            if (countdownTime < 0) {
-                countdownTimer.stop(); 
-                // makeAutomaticMove();
-                  timer.setText("Oops! Time is up!");
-            
-                
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (board[i][j] == null) {
+                    emptyCells.add(new int[]{i, j});
+                    System.out.println("nnnull cell at: (" + i + ", " + j + ")");
+                }
             }
-        })
-    );
+        }
 
-    countdownTimer.setCycleCount(Timeline.INDEFINITE); // Set to repeat indefinitely
-    countdownTimer.play(); // Start the timer
-}
+        if (!emptyCells.isEmpty()) {
+            Random random = new Random();
+            int[] selectedCell = emptyCells.get(random.nextInt(emptyCells.size()));
+            System.out.println("Selected cell for move: (" + selectedCell[0] + ", " + selectedCell[1] + ")");
+
+            
+            
+            
+            System.out.println("player1.hisTun : "+playerOne.hisTurn);
+            System.out.println("player2.hisTun : "+playerTwo.hisTurn);
+            
+            
+            board[selectedCell[0]][selectedCell[1]] = move;
+               System.out.println("currentMove : "+move);
+          //  move++;
+            ///  playerTwo.hisTurn = !playerTwo.hisTurn;
+            //playerOne.hisTurn = !playerOne.hisTurn;
+
+      
+         
+            //fillBoard(selectedCell[0],selectedCell[1]);
+         
+
+        } else {
+            System.out.println("No empty cells found.");
+        }
+    }
+
     private void printGame() {
 
         for (int i = 0; i < 3; i++) {
