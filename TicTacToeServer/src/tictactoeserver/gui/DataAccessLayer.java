@@ -27,9 +27,7 @@ public class DataAccessLayer {
         }
     }
 
-    public static Boolean getUserDataLogin(String userName, String pass) {
-
-        Boolean isExist = false;
+    public static String getUserDataLogin(String userName, String pass) {        
         try {
 
             PreparedStatement pst = conection.prepareStatement("SELECT * FROM USERS WHERE USER_NAME = ? AND USER_PASSWORD = ?");
@@ -39,17 +37,18 @@ public class DataAccessLayer {
             rs = pst.executeQuery();
             if (rs.next()) {
                 System.out.println("User found: " + rs.getString("USER_NAME"));
-                return true;
+                return AppStrings.SIGNIN_DONE;
             } else {
                 System.out.println("No user found with the given credentials.");
+                return AppStrings.SIGNIN_FAILED; 
             }
 
-        } catch (SQLException ex) {
-                  System.out.println("not on try on DataAccessLayer");
+        } catch (SQLException ex) {                 
             Logger.getLogger(DataAccessLayer.class.getName()).log(Level.SEVERE, null, ex);
+            return AppStrings.SIGNIN_FAILED; 
         } catch (NullPointerException ex) {
-
             Logger.getLogger(DataAccessLayer.class.getName()).log(Level.SEVERE, null, ex);
+            return AppStrings.SIGNIN_FAILED; 
         } finally {
             try {
                 if (rs != null) {
@@ -59,9 +58,7 @@ public class DataAccessLayer {
                 System.out.println("rs != null");
                 Logger.getLogger(DataAccessLayer.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
-
-        return isExist;
+        }     
     }
 
     public static int getUsersCount() {
@@ -80,7 +77,7 @@ public class DataAccessLayer {
 
     }
 
-    public static boolean insertData(UserModel u) {
+    public static String insertData(UserModel u) {
         try {
             PreparedStatement pst = conection.prepareStatement("INSERT INTO USERS (USER_NAME,USER_EMAIL,USER_PASSWORD,USER_IMG) VALUES (?,?,?,?)");
 
@@ -91,14 +88,14 @@ public class DataAccessLayer {
             int isUpdate = pst.executeUpdate();
             if (isUpdate > 0) {
                 System.out.println("Inserted succ.");
-                return true;
+                return AppStrings.SIGNUP_DONE;
             } else {
                 System.out.println("Inserted failed");
-                return false;
+                return AppStrings.SIGNUP_FAILED;
             }
         } catch (SQLException ex) {
             Logger.getLogger(DataAccessLayer.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
+            return AppStrings.SIGNUP_FAILED;
         }
 
     }
