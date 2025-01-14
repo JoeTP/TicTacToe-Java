@@ -67,7 +67,7 @@ public class FXMLSigninController extends FXMLSigninBase {
 
             new Thread(() -> {
                 ClientConnection client = new ClientConnection();
-                boolean response = false;
+                String response = "";
 
                 try {
                     client.connectToServer();
@@ -82,9 +82,9 @@ public class FXMLSigninController extends FXMLSigninBase {
                     return; // Exit the thread early on failure
                 }
 
-                boolean finalResponse = response;
+                String finalResponse = response;
                 Platform.runLater(() -> {
-                    if (finalResponse) {
+                    if (finalResponse.equals(AppString.SIGNIN_DONE)) {
                         try {
                             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Signin was successful.");
                             alert.showAndWait();
@@ -93,7 +93,11 @@ public class FXMLSigninController extends FXMLSigninBase {
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                    } else {
+                    } else if(finalResponse.equals(AppString.SIGNIN_ALREADY_FOUND)){
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION, "You are logged in from another device");
+                        alert.showAndWait();
+                        ClientConnection.terminateClient();
+                    }else{
                         Alert alert = new Alert(Alert.AlertType.INFORMATION, "Username orpassword are incorrect.");
                         alert.showAndWait();
                         ClientConnection.terminateClient();

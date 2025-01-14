@@ -88,8 +88,8 @@ public class ClientConnection {
         oos.writeObject(d);
     }
 
-    public static boolean receveResponse() throws IOException {
-        boolean response = dis.readBoolean();
+    public static String receveResponse() throws IOException {
+        String response = dis.readUTF();
         return response;
     }
 

@@ -23,6 +23,7 @@ import javafx.stage.Stage;
 import models.DataModel;
 import models.UserModel;
 import shared.AppFunctions;
+import shared.AppString;
 import static shared.AppString.ICON_PATHS;
 import tictactoe.playervsplayeronline.FXMLPlayerVsPlayerOnlineController;
 import tictactoe.signin.FXMLSigninController;
@@ -60,7 +61,7 @@ public class FXMLSignupController extends FXMLSignupBase {
 
             new Thread(() -> {
                 ClientConnection client = new ClientConnection();
-                boolean response = false;
+                String response = "";
 
                 try {
                     client.connectToServer();
@@ -75,9 +76,9 @@ public class FXMLSignupController extends FXMLSignupBase {
                     return; // Exit the thread early on failure
                 }
 
-                boolean finalResponse = response;
+                String finalResponse = response;
                 Platform.runLater(() -> {
-                    if (finalResponse) {
+                    if (finalResponse.equals(AppString.SIGNUP_DONE)) {
                         try {
                             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Signup was successful.");
                             alert.showAndWait();

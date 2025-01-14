@@ -61,12 +61,6 @@ public class ClientHandler extends Thread {
                 ois = new ObjectInputStream(client.getInputStream());
                 DataModel data = (DataModel) ois.readObject();
                 state = data.getState();
-                System.out.println("Waiting for client input...");
-
-                System.out.println("State: " + state);
-                //   sendActiveUsersList();
-                // Handle requests based on state
-
                 user = data.getUser();
 
                 System.out.println(user.getName());
@@ -81,10 +75,10 @@ public class ClientHandler extends Thread {
                         }
                         ps.writeUTF(response);
                         break;
-                    case 2:                        
+                    case 2: // sign in
                         response = DataAccessLayer.getUserDataLogin(user.getName(), user.getPassword());
                         boolean isNotLoggedin = isNotLoggedin(user.getName());
-                        if(isNotLoggedin == false){
+                        if (isNotLoggedin == false) {
                             response = AppStrings.SIGNIN_ALREADY_FOUND;
                         }
                         if (response.equals(AppStrings.SIGNIN_DONE)) {
@@ -149,12 +143,15 @@ public class ClientHandler extends Thread {
     public void disconnect() {
         try {
             synchronized (clients) {
-                clients.remove(this);
+                    clients.remove(this);
+                }
+            if (!response.equals(AppStrings.SIGNIN_ALREADY_FOUND) && !response.equals(AppStrings.SIGNUP_FAILED)&&!response.equals(AppStrings.SIGNIN_FAILED)) {
+                
+                synchronized (usernames) {
+                    usernames.remove(user.getName());
+                }
             }
-            synchronized (usernames) {
-                usernames.remove(user.getName());
-            }
-
+            
             dis.close();
             ps.close();
             ois.close();
@@ -168,9 +165,10 @@ public class ClientHandler extends Thread {
             Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public boolean isNotLoggedin(String username){
-        for(String u : usernames){
-            if(user.getName().equals(username)){
+
+    public boolean isNotLoggedin(String username) {
+        for (String u : usernames) {
+            if (user.getName().equals(username)) {
                 return false;
             }
         }
