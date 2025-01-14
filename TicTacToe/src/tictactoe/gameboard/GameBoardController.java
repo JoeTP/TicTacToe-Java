@@ -29,8 +29,8 @@ public class GameBoardController extends FXMLGameBoardBase {
     private Player playerOne = new Player();
     private Player playerTwo = new Player();
     private boolean isEndOfGame = false;
-    private Timeline countdownTimer;
-    private int countdownTime = 5;
+    private Timeline timeLine;
+    private int countdownTime;
     //  String startLine;
     //String endLine;
 
@@ -65,6 +65,11 @@ public class GameBoardController extends FXMLGameBoardBase {
 
     private void setTurn(Button b) {
         if (b.getText().isEmpty()) {
+               if (!isEndOfGame) {
+
+                startCountdownTimer(b);
+            } 
+               
             if (playerOne.hisTurn) {
                 b.setText(playerOne.getChar());
             } else {
@@ -80,44 +85,42 @@ public class GameBoardController extends FXMLGameBoardBase {
             checkPlayerWinner();
             printGame();
 
-            if (!isEndOfGame) {
-
-                startCountdownTimer();
-            }
+         
         }
 
     }
 
-    private void startCountdownTimer() {
-        if (countdownTimer != null) {
-            countdownTimer.stop();   //3l4an law startCountdownTimer 3mnlnlha call multiple time
-        }
-
-        countdownTime = 7;
-        countdownTimer = new Timeline(
-                new KeyFrame(Duration.seconds(1), event -> {
-                    timer.setText("Timer is: " + countdownTime);
+    private void startCountdownTimer(Button b) {
+         countdownTime = 7;
+//        if (timeLine != null ) {
+//            timeLine.stop();   //3l4an law startCountdownTimer 3mnlnlha call multiple time
+//        }
+//
+//       
+        timeLine = new Timeline(
+                new KeyFrame(Duration.seconds(1), (ActionEvent event) -> {
+                    timer.setText(countdownTime+"");
                     countdownTime--;
                     if (countdownTime < 4) {
                         timer.setStyle("-fx-text-fill: red;");
                     }
-
                     
-
                     if (countdownTime < 0) {
-                        countdownTimer.stop();
-                        makeAutomaticMove();
+                        timeLine.stop();
+                        makeAutomaticMove(b);
                         timer.setText("Oops! Time is up!");
-
+                        
                     }
-                })
+                    countdownTime=7;
+                    
+        })
         );
 
-        countdownTimer.setCycleCount(Timeline.INDEFINITE);
-        countdownTimer.play();
+        timeLine.setCycleCount(Timeline.INDEFINITE);
+        timeLine.play();
     }
 
-    private void makeAutomaticMove() {
+    private void makeAutomaticMove(Button b) {
         System.out.println("Automatic move caused");
         List<int[]> emptyCells = new ArrayList<>();
 
@@ -135,24 +138,26 @@ public class GameBoardController extends FXMLGameBoardBase {
             int[] selectedCell = emptyCells.get(random.nextInt(emptyCells.size()));
             System.out.println("Selected cell for move: (" + selectedCell[0] + ", " + selectedCell[1] + ")");
 
-            
-            
-            
-            System.out.println("player1.hisTun : "+playerOne.hisTurn);
-            System.out.println("player2.hisTun : "+playerTwo.hisTurn);
-            
-            
+            System.out.println("player1.hisTun : " + playerOne.hisTurn);
+            System.out.println("player2.hisTun : " + playerTwo.hisTurn);
+
             board[selectedCell[0]][selectedCell[1]] = move;
-               System.out.println("currentMove : "+move);
-          //  move++;
+            System.out.println("currentMove : " + move);
+           if (playerOne.hisTurn) {
+                b.setText(playerOne.getChar());
+            } else {
+                b.setText(playerTwo.getChar());
+            }
+            playerTwo.hisTurn = !playerTwo.hisTurn;
+            playerOne.hisTurn = !playerOne.hisTurn;
+            move++;
+            System.out.println("next move : " + move);
+            
+            //  move++;
             ///  playerTwo.hisTurn = !playerTwo.hisTurn;
             //playerOne.hisTurn = !playerOne.hisTurn;
 
-      
-         
             //fillBoard(selectedCell[0],selectedCell[1]);
-         
-
         } else {
             System.out.println("No empty cells found.");
         }
