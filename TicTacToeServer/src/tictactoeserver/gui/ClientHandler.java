@@ -21,6 +21,7 @@ import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
 import models.DataModel;
 import models.UserModel;
+import shared.AppStrings;
 
 public class ClientHandler extends Thread {
 
@@ -30,7 +31,7 @@ public class ClientHandler extends Thread {
 
     ObjectOutputStream oos;
     UserModel user;
-    boolean response;
+    String response;
 
     Socket client;  // Add a reference to the client socket
     int state;
@@ -60,51 +61,57 @@ public class ClientHandler extends Thread {
                 ois = new ObjectInputStream(client.getInputStream());
                 DataModel data = (DataModel) ois.readObject();
                 state = data.getState();
-                System.out.println("Waiting for client input...");
-
-                System.out.println("State: " + state);
-                //   sendActiveUsersList();
-                // Handle requests based on state
-
-                user = data.getUser();
-
-                System.out.println(user.getName());
-                System.out.println(user.getEmail());
+                System.out.println(state);
                 switch (state) {
                     case 1: // Sign-up
-                        response = false;
+                        user = data.getUser();
+                        System.out.println(user.getName());     
                         response = DataAccessLayer.insertData(user);
-                        ps.writeBoolean(response);
+                        if (response.equals(AppStrings.SIGNUP_DONE)) {
+                            synchronized (usernames) {
+                                usernames.add(user.getName());
+                            }
+                        }
+                        ps.writeUTF(response);
+                        ps.flush();
                         break;
-                    case 2:
-                        boolean responseLogin = false;
-                        responseLogin = DataAccessLayer.getUserDataLogin(user.getName(), user.getPassword());
-                        ps.writeBoolean(responseLogin);
-
+                    case 2: // sign in
+                        user = data.getUser();
+                        System.out.println(user.getName());     
+                        response = DataAccessLayer.getUserDataLogin(user.getName(), user.getPassword());
+                        boolean isNotLoggedin = isNotLoggedin(user.getName());
+                        if (isNotLoggedin == false) {
+                            response = AppStrings.SIGNIN_ALREADY_FOUND;
+                        }
+                        if (response.equals(AppStrings.SIGNIN_DONE)) {
+                            synchronized (usernames) {
+                                usernames.add(user.getName());
+                            }
+                        }
+                        ps.writeUTF(response);
+                        ps.flush();
                         break;
-//                    case 3:
-//                        System.out.println("in case 3 : ");
-//                        sendActiveUsersList();
-
+                    case 3:
+                        System.out.println("in case 3 : ");
+                        sendActiveUsersList();
+                        break;
                     default:
                         System.out.println("Unknown state: " + state);
                         ps.writeUTF("Unknown request");
                         ps.flush();
                 }
-                synchronized (usernames) {
-                    usernames.add(user.getName());
-                }
+
             }
 
         } catch (IOException ex) {
             disconnect();
+            Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    void broadCastMsg(String msg
-    ) {
+    void broadCastMsg(String msg) {
         for (ClientHandler client : clients) {
             try {
                 client.ps.writeUTF(msg);
@@ -113,42 +120,42 @@ public class ClientHandler extends Thread {
             }
         }
     }
-//
-//    private void sendActiveUsersList() {
-//       
-//            try {
-//                System.out.println("the count in sendActiveUsersList " + usernames.size());
-//                ps.writeInt(usernames.size());
-//
-//                for (String username : usernames) {
-//                    System.out.println("username in sendActiveUsersList" + username);
-//                    ps.writeUTF(username);
-//
-//                }
-//                ps.flush();
-//            } catch (IOException ex) {
-//                Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        
-//    }
+
+    private void sendActiveUsersList() {
+        
+        try {
+                      
+                ps.writeInt(usernames.size());
+
+                for (String username : usernames) { 
+                    ps.writeUTF(username);
+
+                }
+                ps.flush();
+            } catch (IOException ex) {
+                Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);            
+        } 
+        
+    }
 
     public String getUserName() {
         return user != null ? user.getName() : "Unknown User";
     }
 
-    void disconnect() {
+    public void disconnect() {
         try {
-
-            synchronized (usernames) {
-                usernames.remove(user.getName());
-            }
-
             synchronized (clients) {
-                clients.remove(this);
+                    clients.remove(this);
+                }
+            if (!response.equals(AppStrings.SIGNIN_ALREADY_FOUND) && !response.equals(AppStrings.SIGNUP_FAILED)&&!response.equals(AppStrings.SIGNIN_FAILED)) {
+                
+                synchronized (usernames) {
+                    usernames.remove(user.getName());
+                }
             }
+            
             dis.close();
             ps.close();
-
             ois.close();
             client.close();
             this.stop();
@@ -159,6 +166,15 @@ public class ClientHandler extends Thread {
         } catch (InterruptedException ex) {
             Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public boolean isNotLoggedin(String username) {
+        for (String u : usernames) {
+            if (user.getName().equals(username)) {
+                return false;
+            }
+        }
+        return true;
     }
 
 }

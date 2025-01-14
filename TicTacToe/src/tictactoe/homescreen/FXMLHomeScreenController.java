@@ -6,12 +6,15 @@
 package tictactoe.homescreen;
 
 import clientconnection.ClientConnection;
-
 import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import static shared.AppConstants.CONNECTION_FLAG;
 import shared.AppFunctions;
@@ -43,6 +46,7 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
             CONNECTION_FLAG = new SimpleBooleanProperty(false);
         }
         chatBtn.disableProperty().bind(CONNECTION_FLAG.not());
+        accInfoRect.visibleProperty().bind(CONNECTION_FLAG);
         CONNECTION_FLAG.addListener((observable, oldValue, newValue) -> {
             //to keep updating
             updateConnectionLabel();
@@ -50,7 +54,9 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
 
         //applied on initial
         Platform.runLater(this::updateConnectionLabel);
-    }
+    } 
+    
+    
 
     private void updateConnectionLabel() {
         if (CONNECTION_FLAG.get()) {
@@ -85,12 +91,7 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
         AppFunctions.openPopup(stage, new FXMLPlayerVsPlayerPopupController(stage));
     }
 
-    @Override
-    protected void singIn(ActionEvent actionEvent) {
-         AudioController.clickSound();
-        AppFunctions.openPopup(stage, new FXMLSigninController(stage));
-        CONNECTION_FLAG.set(true);
-    }
+
 
     @Override
     protected void openChat(ActionEvent actionEvent) {
@@ -110,4 +111,22 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
         xOffset = mouseEvent.getSceneX();
         yOffset = mouseEvent.getSceneY();
     }
+
+    @Override
+    public void handleSignInButton(ActionEvent actionEvent) {
+                CONNECTION_FLAG.set(true);
+
+    }
+
+    @Override
+    protected void handleHistoryButton(ActionEvent actionEvent) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    protected void handleLogoutButton(ActionEvent actionEvent) {
+        CONNECTION_FLAG.set(false);
+    }
 }
+
+

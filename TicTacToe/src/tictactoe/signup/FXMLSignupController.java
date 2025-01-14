@@ -23,6 +23,7 @@ import javafx.stage.Stage;
 import models.DataModel;
 import models.UserModel;
 import shared.AppFunctions;
+import shared.AppString;
 import static shared.AppString.ICON_PATHS;
 import sounds.AudioController;
 import tictactoe.playervsplayeronline.FXMLPlayerVsPlayerOnlineController;
@@ -37,7 +38,8 @@ public class FXMLSignupController extends FXMLSignupBase {
 
     Parent singingParent;
     Stage stage;
-
+    public ClientConnection client;
+    
     public FXMLSignupController(Stage stage) {
         this.stage = stage;
     }
@@ -51,79 +53,35 @@ public class FXMLSignupController extends FXMLSignupBase {
     @Override
     protected void goToSignin(ActionEvent actionEvent) {
          AudioController.clickSound();
-        AppFunctions.goTo(actionEvent, new FXMLSigninController(stage));
+        AppFunctions.goTo(actionEvent, new FXMLSigninController(stage,true));
     }
 
     @Override
 
-    
     protected void goToActiveUsers(ActionEvent actionEvent) {
          AudioController.clickSound();
-    UserModel user = getNewUserData();
-    if (user != null) {
-        DataModel data = new DataModel(user, 1);
-
-        // Start a new thread for background operations
-        new Thread(() -> {
-    ClientConnection client = new ClientConnection();
-    boolean response = false;
-
-    try {
-        // Perform network operations
-        client.connectToServer();
-        client.sendData(data);
-        response = client.receveResponse();
-        System.out.println("Received response: " + response); // Debugging output
-    } catch (IOException ex) {
-        Platform.runLater(() -> {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Couldn't connect to server.");
-            alert.showAndWait();
-        });
-        ex.printStackTrace();
-        return; // Exit the thread early on failure
-    }
-
-    boolean finalResponse = response;
-    System.out.println("Final response: " + finalResponse); // Debugging output
-
-    // Update the UI on the JavaFX Application Thread
-    Platform.runLater(() -> {
-        System.out.println("Updating UI with finalResponse: " + finalResponse); // Debugging output
-        if (finalResponse) {
-            try {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Signup was successful.");
-                alert.showAndWait();
-                AppFunctions.closePopup(actionEvent);
-                AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Username or email are already used.");
-            alert.showAndWait();
-            AppFunctions.closePopup(actionEvent);
-            AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage));
-        }
-    });
-}).start(); // Start the background thread
-    }
-}
- /*
-@Override
-protected void goToActiveUsers(ActionEvent actionEvent) {
         UserModel user = getNewUserData();
         if (user != null) {
             DataModel data = new DataModel(user, 1);
-            // Start a new thread for background operations
+            client = new ClientConnection();
+            try {
+                client.connectToServer();
+            } catch (IOException ex) {
+                Platform.runLater(() -> {
+                        Alert alert = new Alert(Alert.AlertType.ERROR, "Couldn't connect to server.");
+                        alert.showAndWait();
+                    });
+                    ex.printStackTrace();
+                    return;
+            }
             new Thread(() -> {
-                ClientConnection client = new ClientConnection();
-                boolean response = false;
+                
+                String response = "";
+
                 try {
-                    // Perform network operations
-                    client.connectToServer();
+                    
                     client.sendData(data);
                     response = client.receveResponse();
-                    System.out.println("Received response: " + response); // Debugging output
                 } catch (IOException ex) {
                     Platform.runLater(() -> {
                         Alert alert = new Alert(Alert.AlertType.ERROR, "Couldn't connect to server.");
@@ -132,32 +90,28 @@ protected void goToActiveUsers(ActionEvent actionEvent) {
                     ex.printStackTrace();
                     return; // Exit the thread early on failure
                 }
-                boolean finalResponse = response;
-                System.out.println("Final response: " + finalResponse); // Debugging output
 
-                // Update the UI on the JavaFX Application Thread
+                String finalResponse = response;
                 Platform.runLater(() -> {
-                    System.out.println("Updating UI with finalResponse: " + finalResponse); // Debugging output
-                    if (finalResponse) {
+                    if (finalResponse.equals(AppString.SIGNUP_DONE)) {
                         try {
                             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Signup was successful.");
                             alert.showAndWait();
                             AppFunctions.closePopup(actionEvent);
-                            AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage));
+                            AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage,client));
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     } else {
                         Alert alert = new Alert(Alert.AlertType.INFORMATION, "Username or email are already used.");
                         alert.showAndWait();
-                        AppFunctions.closePopup(actionEvent);
-                      //  AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage));
+                        ClientConnection.terminateClient();
                     }
                 });
             }).start();
         }
     }
-*/
+
     @Override
     protected void showPreviousIcon(ActionEvent actionEvent) {
         currentImageIndex = (currentImageIndex - 1 + ICON_PATHS.length) % ICON_PATHS.length;
