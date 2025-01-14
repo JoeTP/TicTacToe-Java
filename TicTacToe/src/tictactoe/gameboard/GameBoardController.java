@@ -10,6 +10,8 @@ import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import models.Player;
@@ -63,8 +65,13 @@ public class GameBoardController extends FXMLGameBoardBase {
     }
 
     private void setTurn(Button b) {
+        String soundFile = getClass().getResource("/audios/gameClick.wav").toExternalForm();
         if (b.getText().isEmpty()) {
-
+        
+            Media media = new Media(soundFile);
+            
+            MediaPlayer mediaPlayer = new MediaPlayer(media);
+            mediaPlayer.play();
             System.out.println("current char: " + (playerOne.hisTurn ? playerOne.getChar() : playerTwo.getChar()));
             System.out.println("current Move: " + move);
             if (playerOne.hisTurn) {
@@ -87,15 +94,6 @@ public class GameBoardController extends FXMLGameBoardBase {
 
     }
 
-//    private Button getButtonsByRowAndColumn(int c , int r){
-//        Button btn =null ;
-//        if(c==0 && r==0){
-//            btn =b00;
-//        }
-//        return btn;
-//        
-//        
-//    }
     private void startCountdownTimer() {
         countdownTime = 7;
         if (timeLine != null) {
@@ -185,9 +183,7 @@ public class GameBoardController extends FXMLGameBoardBase {
         return;
     }
 
-    
-    
-     //   private void makeAutomaticMove(Button b) {
+    //   private void makeAutomaticMove(Button b) {
 //        System.out.println("Automatic move caused");
 //        List<int[]> emptyCells = new ArrayList<>();
 //
