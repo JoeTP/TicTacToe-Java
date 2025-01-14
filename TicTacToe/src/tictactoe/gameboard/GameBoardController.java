@@ -1,29 +1,35 @@
 package tictactoe.gameboard;
 
 import gameboard.WinningLine;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
-import javafx.geometry.Bounds;
+import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import models.Player;
 import shared.AppFunctions;
 import tictactoe.homescreen.FXMLHomeScreenController;
 
 /*TODO:
     - end game when A player wins / draw (9 moves) => show popup 
-    - draw line for winner 
+
  */
+//https://docs.oracle.com/javase/8/javafx/api/javafx/animation/Timeline.html
 public class GameBoardController extends FXMLGameBoardBase {
 
     Stage stage;
     private Player playerOne = new Player();
     private Player playerTwo = new Player();
     private boolean isEndOfGame = false;
-  //  String startLine;
+    private Timeline countdownTimer;
+    private int countdownTime = 5;
+    //  String startLine;
     //String endLine;
 
     /*
@@ -71,25 +77,64 @@ public class GameBoardController extends FXMLGameBoardBase {
 
             checkPlayerWinner();
             printGame();
+
+            if (!isEndOfGame) {
+           
+                startCountdownTimer(playerOne.hisTurn ? playerOne : playerTwo);
+            }
         }
-        
+
     }
 
-    private void printGame(){
-        
-        for(int i = 0 ; i<3 ; i++){
-            for(int j = 0; j<3 ;j++){
+ private void startCountdownTimer(Player currentPlayer) {
+    if (countdownTimer != null) {
+        countdownTimer.stop();   //3l4an law startCountdownTimer 3mnlnlha call multiple time
+    }
+
+    countdownTime = 7; 
+
+    
+    countdownTimer = new Timeline(
+        new KeyFrame(Duration.seconds(1), event -> {
+           
+            timer.setText("Timer is: " + countdownTime);
+            countdownTime--; 
+       if(countdownTime <4){
+               timer.setStyle("-fx-text-fill: red;");
+           }
+           
+            System.out.println("Time left for " + currentPlayer.getChar() + ": " + countdownTime);
+
+            
+            if (countdownTime < 0) {
+                countdownTimer.stop(); 
+                // makeAutomaticMove();
+                  timer.setText("Oops! Time is up!");
+            
+                
+            }
+        })
+    );
+
+    countdownTimer.setCycleCount(Timeline.INDEFINITE); // Set to repeat indefinitely
+    countdownTimer.play(); // Start the timer
+}
+    private void printGame() {
+
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
                 System.out.print(board[i][j] + " ");
             }
             System.out.println(" ");
         }
     }
+
     private void endGame(String winner) {
         isEndOfGame = true;
         System.out.println("End of the game, Winner is" + winner);
 
     }
-    
+
     private void setPlayerXMove() {
 
     }
@@ -115,20 +160,21 @@ public class GameBoardController extends FXMLGameBoardBase {
     private void checkPlayerWinner() {
         String winner = checkWinnerChar(board);
         if (playerOne.getChar() == winner) {
-           WinningLine.drawWinningLine(WinningLine.getStartLine(), WinningLine.getEndLine(), grid);
-            
+            WinningLine.drawWinningLine(WinningLine.getStartLine(), WinningLine.getEndLine(), grid);
+
             //do popup
             System.out.println("PLAYER ONE WINNER");
         } else if (playerTwo.getChar() == winner) {
-           WinningLine.drawWinningLine(WinningLine.getStartLine(), WinningLine.getEndLine(),grid);
+            WinningLine.drawWinningLine(WinningLine.getStartLine(), WinningLine.getEndLine(), grid);
             //do popup
             System.out.println("PLAYER TWO WINNER");
         } else if (move > 9) {
-           WinningLine.drawWinningLine(WinningLine.getStartLine(), WinningLine.getEndLine(),grid);
+            WinningLine.drawWinningLine(WinningLine.getStartLine(), WinningLine.getEndLine(), grid);
             //do popup
             System.out.println("NO WINNER ITS DRAW");
         }
     }
+
     private String checkWinnerChar(Integer[][] board) {
 
         if (move > 5) {
@@ -137,7 +183,7 @@ public class GameBoardController extends FXMLGameBoardBase {
                 if (checkLine(board[i][0], board[i][1], board[i][2])) {
                     //get the winner in the current itration
                     WinningLine.setStartLine(i + "0"); // extract index off BUTTONS
-                   WinningLine.setEndLine(i + "2");
+                    WinningLine.setEndLine(i + "2");
                     return getWinnerCharacter(board[i][0]);
                 }
                 //columns
