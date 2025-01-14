@@ -32,6 +32,8 @@ public class ClientConnection {
     public static boolean serverStatus = false;
     public static ObjectInputStream ois;
     public static ObjectOutputStream oos;
+    
+    
     public void connectToServer() throws IOException {
         socket = new Socket("127.0.0.1", 5001);
         System.out.println("Cleint connection Established !");
@@ -39,11 +41,11 @@ public class ClientConnection {
         ps = new PrintStream(socket.getOutputStream());
         oos = new ObjectOutputStream(socket.getOutputStream());
        
-
+/*
         // thread for each client
         Thread th;
         th = new Thread(() -> {
-            /*while (true) {
+            while (true) {
                 try {
                     String reply = dis.readLine();
                     serverStatus = socket.isClosed();
@@ -52,10 +54,10 @@ public class ClientConnection {
                     Logger.getLogger(ClientConnection.class.getName()).log(Level.SEVERE, null, ex);
 
                 }
-            }*/
+            }
         }
         );
-        th.start();
+        th.start();*/
     }
 
     public static void stopThreads() {
@@ -63,22 +65,39 @@ public class ClientConnection {
             ps.close();
             dis.close();
             oos.close();
+            socket.close();
             Platform.exit();
         } catch (IOException ex) {
             Logger.getLogger(ClientConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    public static void sendData(DataModel d) throws IOException {
-        System.out.println("sendd Dataaa" + d.getUser().getName());
-
-        oos.writeObject(d);
+    
+    public static void terminateClient() {
+        try {
+            ps.close();
+            dis.close();
+            oos.close();
+            socket.close();
+            System.out.println("client killed");
+        } catch (IOException ex) {
+            Logger.getLogger(ClientConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
-    public static boolean receveResponse() throws IOException {
-        boolean response = dis.readBoolean();
+    public static void sendData(DataModel d) throws IOException {       
+        oos.writeObject(d);
+        oos.flush();
+    }
+
+    public static String receveResponse() throws IOException {
+        String response = dis.readUTF();
         return response;
     }
+
+    public static void sendGameRequest(String username){
+        ps.print(username);
+    }
+
 //      public static int receveResponseInt() throws IOException{
 //        int response = dis.readInt();
 //        return response;
@@ -98,4 +117,5 @@ public class ClientConnection {
 //          return response;
 //    }
       
+
 }

@@ -4,9 +4,13 @@ import gameboard.WinningLine;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+
+import javafx.animation.PauseTransition;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -17,6 +21,7 @@ import javafx.util.Duration;
 import models.Player;
 import shared.AppFunctions;
 import tictactoe.homescreen.FXMLHomeScreenController;
+import tictactoe.popupwin.FXMLPopUpWinController;
 
 /*TODO:
     - end game when A player wins / draw (9 moves) => show popup 
@@ -29,8 +34,10 @@ public class GameBoardController extends FXMLGameBoardBase {
     private Player playerOne = new Player();
     private Player playerTwo = new Player();
     private boolean isEndOfGame = false;
+
     private Timeline countdownTimer;
     private int countdownTime = 5;
+
     //  String startLine;
     //String endLine;
 
@@ -87,6 +94,7 @@ public class GameBoardController extends FXMLGameBoardBase {
         }
 
     }
+
 
     private void startCountdownTimer() {
         if (countdownTimer != null) {
@@ -158,6 +166,7 @@ public class GameBoardController extends FXMLGameBoardBase {
         }
     }
 
+
     private void printGame() {
 
         for (int i = 0; i < 3; i++) {
@@ -201,16 +210,19 @@ public class GameBoardController extends FXMLGameBoardBase {
         if (playerOne.getChar() == winner) {
             WinningLine.drawWinningLine(WinningLine.getStartLine(), WinningLine.getEndLine(), grid);
 
-            //do popup
             System.out.println("PLAYER ONE WINNER");
+            AppFunctions.waitAndShowPopup(stage, this.getScene(), true);
+
         } else if (playerTwo.getChar() == winner) {
             WinningLine.drawWinningLine(WinningLine.getStartLine(), WinningLine.getEndLine(), grid);
-            //do popup
+
             System.out.println("PLAYER TWO WINNER");
+            AppFunctions.waitAndShowPopup(stage, this.getScene(), true);
+
         } else if (move > 9) {
             WinningLine.drawWinningLine(WinningLine.getStartLine(), WinningLine.getEndLine(), grid);
-            //do popup
-            System.out.println("NO WINNER ITS DRAW");
+
+            AppFunctions.waitAndShowPopup(stage, this.getScene(), true);
         }
     }
 
