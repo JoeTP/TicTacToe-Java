@@ -21,11 +21,13 @@ public abstract class FXMLHomeScreenBase extends StackPane {
     protected final ImageView imageView;
     protected final BorderPane borderPane;
     protected final HBox header;
+    protected final VBox vBox;
+    protected final Button signInButton;
     protected final Region region;
     protected final Button settingsBtn;
     protected final Button exitBtn;
     protected final AnchorPane anchorPane;
-    protected final VBox vBox;
+    protected final VBox vBox0;
     protected final StackPane stackPane;
     protected final Rectangle rectangle;
     protected final DropShadow dropShadow;
@@ -34,12 +36,12 @@ public abstract class FXMLHomeScreenBase extends StackPane {
     protected final Button playVsplayBtn;
     protected final Button playVscompBtn;
     protected final HBox header1;
-    protected final VBox vBox0;
+    protected final VBox vBox1;
     protected final ImageView connectionIndicatorImageView;
+    protected final VBox vBox2;
     protected final Label connectionLabel;
     protected final Region region0;
-    protected final Button signInBtn;
-    protected final Region region1;
+    protected final VBox vBox3;
     protected final Button chatBtn;
 
     public FXMLHomeScreenBase() {
@@ -47,11 +49,13 @@ public abstract class FXMLHomeScreenBase extends StackPane {
         imageView = new ImageView();
         borderPane = new BorderPane();
         header = new HBox();
+        vBox = new VBox();
+        signInButton = new Button();
         region = new Region();
         settingsBtn = new Button();
         exitBtn = new Button();
         anchorPane = new AnchorPane();
-        vBox = new VBox();
+        vBox0 = new VBox();
         stackPane = new StackPane();
         rectangle = new Rectangle();
         dropShadow = new DropShadow();
@@ -60,12 +64,12 @@ public abstract class FXMLHomeScreenBase extends StackPane {
         playVsplayBtn = new Button();
         playVscompBtn = new Button();
         header1 = new HBox();
-        vBox0 = new VBox();
+        vBox1 = new VBox();
         connectionIndicatorImageView = new ImageView();
+        vBox2 = new VBox();
         connectionLabel = new Label();
         region0 = new Region();
-        signInBtn = new Button();
-        region1 = new Region();
+        vBox3 = new VBox();
         chatBtn = new Button();
 
         getStylesheets().add("/styling/generalStyle.css");
@@ -87,13 +91,32 @@ public abstract class FXMLHomeScreenBase extends StackPane {
         header.setOnMousePressed(this::getOffset);
         header.setSpacing(20.0);
 
+        vBox.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+        vBox.setPrefHeight(130.0);
+        vBox.setPrefWidth(321.0);
+        vBox.setSpacing(5.0);
+        vBox.getStyleClass().add("rect");
+        vBox.getStylesheets().add("/tictactoe/homescreen/style.css");
+
+        signInButton.setMnemonicParsing(false);
+        signInButton.setOnAction(this::handleSignInButton);
+        signInButton.setText("Sign in");
+        VBox.setMargin(signInButton, new Insets(0.0, 0.0, 0.0, 20.0));
+        vBox.setOpaqueInsets(new Insets(0.0));
+        HBox.setMargin(vBox, new Insets(0.0));
+
         HBox.setHgrow(region, javafx.scene.layout.Priority.ALWAYS);
+        region.setPrefHeight(47.0);
+        region.setPrefWidth(248.0);
 
         HBox.setHgrow(settingsBtn, javafx.scene.layout.Priority.NEVER);
         settingsBtn.setMnemonicParsing(false);
         settingsBtn.setOnAction(this::openSettingsScreen);
+        settingsBtn.setPrefHeight(47.0);
+        settingsBtn.setPrefWidth(97.0);
         settingsBtn.getStyleClass().add("bigBtn");
         settingsBtn.setText("Settings");
+        HBox.setMargin(settingsBtn, new Insets(20.0, 0.0, 0.0, 0.0));
 
         exitBtn.setLayoutX(645.0);
         exitBtn.setLayoutY(30.0);
@@ -101,19 +124,20 @@ public abstract class FXMLHomeScreenBase extends StackPane {
         exitBtn.setOnAction(this::exitApp);
         exitBtn.getStyleClass().add("bigBtn");
         exitBtn.setText("X");
-        header.setPadding(new Insets(20.0, 20.0, 0.0, 0.0));
+        HBox.setMargin(exitBtn, new Insets(20.0, 0.0, 0.0, 0.0));
+        header.setPadding(new Insets(0.0, 20.0, 0.0, 0.0));
         borderPane.setTop(header);
 
         BorderPane.setAlignment(anchorPane, javafx.geometry.Pos.CENTER);
-        anchorPane.setPrefHeight(200.0);
-        anchorPane.setPrefWidth(200.0);
+        anchorPane.setMaxHeight(523.0);
+        anchorPane.setMinHeight(485.0);
+        anchorPane.setPrefHeight(523.0);
+        anchorPane.setPrefWidth(720.0);
 
-        vBox.setAlignment(javafx.geometry.Pos.CENTER);
-        vBox.setLayoutX(215.0);
-        vBox.setLayoutY(92.0);
-        vBox.setPrefHeight(368.0);
-        vBox.setPrefWidth(274.0);
-        vBox.setSpacing(20.0);
+        vBox0.setAlignment(javafx.geometry.Pos.CENTER);
+        vBox0.setLayoutX(205.0);
+        vBox0.setLayoutY(88.0);
+        vBox0.setSpacing(20.0);
 
         rectangle.setArcHeight(40.0);
         rectangle.setArcWidth(40.0);
@@ -161,42 +185,36 @@ public abstract class FXMLHomeScreenBase extends StackPane {
         BorderPane.setAlignment(header1, javafx.geometry.Pos.CENTER);
         header1.setSpacing(20.0);
 
-        vBox0.setAlignment(javafx.geometry.Pos.CENTER);
+        vBox1.setAlignment(javafx.geometry.Pos.BOTTOM_CENTER);
 
         connectionIndicatorImageView.setFitHeight(40.0);
         connectionIndicatorImageView.setFitWidth(40.0);
         connectionIndicatorImageView.setPickOnBounds(true);
         connectionIndicatorImageView.setPreserveRatio(true);
         connectionIndicatorImageView.setImage(new Image(getClass().getResource("/assets/icons/Wifi-off.png").toExternalForm()));
+        vBox1.setOpaqueInsets(new Insets(0.0));
+        vBox1.setPadding(new Insets(0.0, 0.0, 20.0, 0.0));
+
+        vBox2.setAlignment(javafx.geometry.Pos.BOTTOM_CENTER);
 
         connectionLabel.setText("Offline");
+        vBox2.setPadding(new Insets(0.0, 0.0, 20.0, 0.0));
 
         HBox.setHgrow(region0, javafx.scene.layout.Priority.ALWAYS);
-        region0.setPrefHeight(47.0);
-        region0.setPrefWidth(132.0);
 
-        signInBtn.setLayoutX(645.0);
-        signInBtn.setLayoutY(30.0);
-        signInBtn.setMnemonicParsing(false);
-        signInBtn.setOnAction(this::singIn);
-        signInBtn.getStyleClass().add("bigBtn");
-        signInBtn.setText("Sign in");
+        vBox3.setAlignment(javafx.geometry.Pos.BOTTOM_CENTER);
 
-        region1.setLayoutX(175.0);
-        region1.setLayoutY(10.0);
-        region1.setPrefHeight(47.0);
-        region1.setPrefWidth(219.0);
-
-        chatBtn.setLayoutX(175.0);
-        chatBtn.setLayoutY(10.0);
         chatBtn.setMnemonicParsing(false);
         chatBtn.setOnAction(this::openChat);
         chatBtn.getStyleClass().add("bigBtn");
         chatBtn.setText("Chat");
-        header1.setPadding(new Insets(0.0, 20.0, 20.0, 20.0));
+        HBox.setMargin(vBox3, new Insets(0.0, 0.0, 20.0, 0.0));
+        header1.setPadding(new Insets(0.0, 20.0, 0.0, 20.0));
         borderPane.setBottom(header1);
 
         getChildren().add(imageView);
+        vBox.getChildren().add(signInButton);
+        header.getChildren().add(vBox);
         header.getChildren().add(region);
         header.getChildren().add(settingsBtn);
         header.getChildren().add(exitBtn);
@@ -205,15 +223,15 @@ public abstract class FXMLHomeScreenBase extends StackPane {
         anchorPane0.getChildren().add(playVsplayBtn);
         anchorPane0.getChildren().add(playVscompBtn);
         stackPane.getChildren().add(anchorPane0);
-        vBox.getChildren().add(stackPane);
-        anchorPane.getChildren().add(vBox);
-        vBox0.getChildren().add(connectionIndicatorImageView);
-        header1.getChildren().add(vBox0);
-        header1.getChildren().add(connectionLabel);
+        vBox0.getChildren().add(stackPane);
+        anchorPane.getChildren().add(vBox0);
+        vBox1.getChildren().add(connectionIndicatorImageView);
+        header1.getChildren().add(vBox1);
+        vBox2.getChildren().add(connectionLabel);
+        header1.getChildren().add(vBox2);
         header1.getChildren().add(region0);
-        header1.getChildren().add(signInBtn);
-        header1.getChildren().add(region1);
-        header1.getChildren().add(chatBtn);
+        vBox3.getChildren().add(chatBtn);
+        header1.getChildren().add(vBox3);
         getChildren().add(borderPane);
 
     }
@@ -222,6 +240,8 @@ public abstract class FXMLHomeScreenBase extends StackPane {
 
     protected abstract void getOffset(javafx.scene.input.MouseEvent mouseEvent);
 
+    protected abstract void handleSignInButton(javafx.event.ActionEvent actionEvent);
+
     protected abstract void openSettingsScreen(javafx.event.ActionEvent actionEvent);
 
     protected abstract void exitApp(javafx.event.ActionEvent actionEvent);
@@ -229,8 +249,6 @@ public abstract class FXMLHomeScreenBase extends StackPane {
     protected abstract void openPlayerVsPlayerPopup(javafx.event.ActionEvent actionEvent);
 
     protected abstract void openPlayerVsComputerPopup(javafx.event.ActionEvent actionEvent);
-
-    protected abstract void singIn(javafx.event.ActionEvent actionEvent);
 
     protected abstract void openChat(javafx.event.ActionEvent actionEvent);
 

@@ -51,17 +51,18 @@ public abstract class FXMLAccountInfoBase extends VBox {
         imageView0 = new ImageView();
 
         setAlignment(javafx.geometry.Pos.TOP_CENTER);
-        setPrefHeight(125.0);
-        setPrefWidth(350.0);
+        setPrefHeight(130.0);
+        setPrefWidth(321.0);
         setSpacing(5.0);
         getStyleClass().add("rect");
         getStylesheets().add("/tictactoe/homescreen/style.css");
 
         nameLabel.setPrefHeight(28.0);
-        nameLabel.setPrefWidth(157.0);
+        nameLabel.setPrefWidth(274.0);
         nameLabel.setText("Name");
-        VBox.setMargin(nameLabel, new Insets(0.0));
+        VBox.setMargin(nameLabel, new Insets(10.0, 0.0, 0.0, 0.0));
 
+        hBox.setPrefHeight(30.0);
         hBox.setSpacing(5.0);
 
         profileImageView.setFitHeight(50.0);
@@ -72,7 +73,7 @@ public abstract class FXMLAccountInfoBase extends VBox {
 
         HBox.setHgrow(hBox0, javafx.scene.layout.Priority.ALWAYS);
         hBox0.setAlignment(javafx.geometry.Pos.CENTER);
-        hBox0.setPrefHeight(45.0);
+        hBox0.setPrefHeight(30.0);
         hBox0.setPrefWidth(163.0);
         hBox0.setSpacing(40.0);
 
@@ -103,13 +104,11 @@ public abstract class FXMLAccountInfoBase extends VBox {
         HBox.setMargin(hBox0, new Insets(0.0, 10.0, 0.0, 10.0));
 
         VBox.setVgrow(hBox1, javafx.scene.layout.Priority.NEVER);
-        hBox1.setAlignment(javafx.geometry.Pos.CENTER);
+        hBox1.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
         hBox1.setSpacing(20.0);
 
         historyButton.setMnemonicParsing(false);
         historyButton.setOnAction(this::handleHistoryButton);
-        historyButton.getStyleClass().add("buttons");
-        historyButton.setText("History");
 
         imageView.setFitHeight(15.0);
         imageView.setFitWidth(15.0);
@@ -120,8 +119,6 @@ public abstract class FXMLAccountInfoBase extends VBox {
 
         logoutButton.setMnemonicParsing(false);
         logoutButton.setOnAction(this::handleLogoutButton);
-        logoutButton.getStyleClass().add("buttons");
-        logoutButton.setText("Logout");
 
         imageView0.setFitHeight(15.0);
         imageView0.setFitWidth(15.0);
@@ -129,7 +126,7 @@ public abstract class FXMLAccountInfoBase extends VBox {
         imageView0.setPreserveRatio(true);
         imageView0.setImage(new Image(getClass().getResource("../../../resources/assets/icons/logout.png").toExternalForm()));
         logoutButton.setGraphic(imageView0);
-        hBox1.setPadding(new Insets(5.0, 0.0, 5.0, 0.0));
+        hBox1.setPadding(new Insets(0.0, 0.0, 10.0, 20.0));
 
         getChildren().add(nameLabel);
         hBox.getChildren().add(profileImageView);
