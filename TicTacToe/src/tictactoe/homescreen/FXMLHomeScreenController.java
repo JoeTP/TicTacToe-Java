@@ -67,11 +67,9 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
         Platform.runLater(() -> {
             if (CONNECTION_FLAG.get()) {
                 nameLabel.setText(ClientConnection.user.getName());
-
-                 wonGamesLabel.setText(ClientConnection.user.getWins()+"");
-         playedGamesLabel.setText(ClientConnection.user.getNumOfGames()+"");
-
-
+                wonGamesLabel.setText(ClientConnection.user.getWins() + "");
+                playedGamesLabel.setText(ClientConnection.user.getNumOfGames() + "");
+                profileImageView.setImage(new Image(AppString.ICON_PATHS[Integer.parseInt(ClientConnection.user.getImage())]));
                 connectionIndicatorImageView.setImage(new Image("/assets/icons/Wifi-on.png"));
                 connectionLabel.setText(AppString.ONLINE);
             } else {
@@ -91,26 +89,26 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
 
     @Override
     protected void openSettingsScreen(ActionEvent actionEvent) {
-         AudioController.clickSound();
+        AudioController.clickSound();
         AppFunctions.goTo(actionEvent, new FXMLSettingController(stage));
     }
 
     @Override
     protected void openPlayerVsComputerPopup(ActionEvent actionEvent) {
-         AudioController.clickSound();
+        AudioController.clickSound();
         AppFunctions.openPopup(stage, new FXMLPlayerVsCompController(stage));
     }
 
     @Override
     protected void openPlayerVsPlayerPopup(ActionEvent actionEvent) {
-         AudioController.clickSound();
+        AudioController.clickSound();
         AppFunctions.openPopup(stage, new FXMLPlayerVsPlayerPopupController(stage));
     }
 
 
     @Override
     protected void openChat(ActionEvent actionEvent) {
-         AudioController.clickSound();
+        AudioController.clickSound();
         CONNECTION_FLAG.set(false);
 
     }
@@ -129,10 +127,7 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
 
     @Override
     public void handleSignInButton(ActionEvent actionEvent) {
-        AppFunctions.openPopup(stage, new FXMLSigninController(stage, false));
-        
-//        CONNECTION_FLAG.set(true);
-
+        AppFunctions.openPopup(stage, new FXMLSigninController(stage, true));
     }
      protected void handleUserInfo() {
          System.out.println("handleUserInfo");
@@ -154,6 +149,9 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
 
     @Override
     protected void handleLogoutButton(ActionEvent actionEvent) {
-        CONNECTION_FLAG.set(false);
+        if (ClientConnection.user != null) {
+            ClientConnection.terminateClient();
+            CONNECTION_FLAG.set(false);
+        }
     }
 }

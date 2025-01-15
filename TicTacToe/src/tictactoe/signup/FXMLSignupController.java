@@ -23,6 +23,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import models.DataModel;
 import models.UserModel;
+import static shared.AppConstants.CONNECTION_FLAG;
 import shared.AppFunctions;
 import shared.AppString;
 import static shared.AppString.ICON_PATHS;
@@ -40,21 +41,21 @@ public class FXMLSignupController extends FXMLSignupBase {
     Parent singingParent;
     Stage stage;
     public ClientConnection client;
-    
+
     public FXMLSignupController(Stage stage) {
         this.stage = stage;
     }
 
     @Override
     protected void handleBackButton(ActionEvent actionEvent) {
-         AudioController.clickSound();
+        AudioController.clickSound();
         AppFunctions.closePopup(actionEvent);
     }
 
     @Override
     protected void goToSignin(ActionEvent actionEvent) {
-         AudioController.clickSound();
-        AppFunctions.goTo(actionEvent, new FXMLSigninController(stage,true));
+        AudioController.clickSound();
+        AppFunctions.goTo(actionEvent, new FXMLSigninController(stage, true));
     }
 
     @Override
@@ -63,7 +64,7 @@ public class FXMLSignupController extends FXMLSignupBase {
 
         ClientConnection.user = getNewUserData();
 
-         AudioController.clickSound();
+        AudioController.clickSound();
 
         if (user != null) {
             DataModel data = new DataModel(user, 1);
@@ -72,18 +73,18 @@ public class FXMLSignupController extends FXMLSignupBase {
                 client.connectToServer();
             } catch (IOException ex) {
                 Platform.runLater(() -> {
-                        Alert alert = new Alert(Alert.AlertType.ERROR, "Couldn't connect to server.");
-                        alert.showAndWait();
-                    });
-                    ex.printStackTrace();
-                    return;
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Couldn't connect to server.");
+                    alert.showAndWait();
+                });
+                ex.printStackTrace();
+                return;
             }
             new Thread(() -> {
-                
+
                 String response = "";
 
                 try {
-                    
+
                     client.sendData(data);
                     DataModel newData = ClientConnection.receveData();
                     user = newData.getUser();
@@ -103,8 +104,14 @@ public class FXMLSignupController extends FXMLSignupBase {
                         try {
                             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Signup was successful.");
                             alert.showAndWait();
-                            AppFunctions.closePopup(actionEvent);
-                            AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage,client));
+                            if (!FXMLSigninController.signInFromHomeScreen) {
+                                AppFunctions.closePopup(actionEvent);
+                                AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage, client));
+                            } else {
+                                AppFunctions.closePopup(actionEvent);
+
+                            }
+                            CONNECTION_FLAG.set(true);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
