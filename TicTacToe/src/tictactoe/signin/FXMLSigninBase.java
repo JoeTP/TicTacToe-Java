@@ -60,8 +60,9 @@ public abstract class FXMLSigninBase extends BorderPane {
         backBtn.setLayoutY(44.0);
         backBtn.setMnemonicParsing(false);
         backBtn.setOnAction(this::handleBackButton);
+        backBtn.setStyle("-fx-border-radius: 50; -fx-background-radius: 50;");
         backBtn.getStyleClass().add("bigBtn");
-        backBtn.setText("Back");
+        backBtn.setText("B");
 
         signinTitle.setFill(javafx.scene.paint.Color.valueOf("#3e5879"));
         signinTitle.setLayoutX(143.0);
@@ -107,7 +108,7 @@ public abstract class FXMLSigninBase extends BorderPane {
         text.setLayoutY(372.0);
         text.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         text.setStrokeWidth(0.0);
-        text.setText("Don�t you have an account?");
+        text.setText("Don't you have an account?");
         text.setFont(new Font("Stencil", 12.0));
 
         signupBtn.setLayoutX(263.0);

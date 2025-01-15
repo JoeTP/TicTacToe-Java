@@ -129,8 +129,7 @@ public abstract class FXMLHomeScreenBase extends StackPane {
         header.setOnMousePressed(this::getOffset);
         header.setSpacing(20.0);
 
-        stackPane.setAlignment(javafx.geometry.Pos.TOP_LEFT); 
-//        stackPane.setAlignment(javafx.scene.Node.TOP_LEFT);(javafx.scene.Node.TOP_LEFT);
+        stackPane.setAlignment(javafx.geometry.Pos.TOP_LEFT);
         HBox.setMargin(stackPane, new Insets(0.0));
 
         signInButton.setMnemonicParsing(false);
@@ -149,6 +148,7 @@ public abstract class FXMLHomeScreenBase extends StackPane {
         nameLabel.setPrefHeight(28.0);
         nameLabel.setPrefWidth(230.0);
         nameLabel.setText("Name");
+        nameLabel.setStyle("-fx-font-size: 20px;");
         VBox.setMargin(nameLabel, new Insets(10.0, 0.0, 0.0, 20.0));
 
         hBox.setPrefHeight(30.0);
@@ -173,7 +173,7 @@ public abstract class FXMLHomeScreenBase extends StackPane {
 
         rankStarLabel.setLayoutX(23.0);
         rankStarLabel.setLayoutY(10.0);
-        rankStarLabel.setText("?");
+        rankStarLabel.setText("★");
 
         HBox.setHgrow(vBox0, javafx.scene.layout.Priority.ALWAYS);
         vBox0.setAlignment(javafx.geometry.Pos.TOP_CENTER);

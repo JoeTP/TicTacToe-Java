@@ -23,7 +23,7 @@ import models.UserModel;
  *
  * @author Ayat Gamal
  */
-public class ClientConnection {
+public class  ClientConnection {
 
     public static DataInputStream dis;
 
@@ -33,7 +33,9 @@ public class ClientConnection {
     public static boolean serverStatus = false;
     public static ObjectInputStream ois;
     public static ObjectOutputStream oos;
+
     public static UserModel user;
+
 
     public void connectToServer() throws IOException {
         socket = new Socket("127.0.0.1", 5001);
