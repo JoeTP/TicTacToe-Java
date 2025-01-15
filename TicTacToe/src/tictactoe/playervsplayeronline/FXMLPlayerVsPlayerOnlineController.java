@@ -74,10 +74,7 @@ public class FXMLPlayerVsPlayerOnlineController extends FXMLPlayerVsPlayerOnline
 
     protected void getActiveUsers() {
         new Thread(() -> {
-            try {
-
-                oos = new ObjectOutputStream(socket.getOutputStream());
-
+            try {               
                 if (oos == null) {
                     throw new IllegalStateException("ObjectOutputStream (oos) is not initialized.");
                 }

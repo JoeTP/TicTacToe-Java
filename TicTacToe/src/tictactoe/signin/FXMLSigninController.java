@@ -100,7 +100,6 @@ public class FXMLSigninController extends FXMLSigninBase {
                     DataModel newData = ClientConnection.receveData();
                     user = newData.getUser();
                     response = newData.getResponse();
-                    System.out.println(user.getEmail());
                 } catch (IOException ex) {
                     Platform.runLater(() -> {
                         Alert alert = new Alert(Alert.AlertType.ERROR, "Couldn't connect to server.");
