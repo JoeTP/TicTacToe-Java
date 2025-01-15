@@ -95,42 +95,48 @@ public class FXMLSigninController extends FXMLSigninBase {
                 String response = "";
 
 
-                client.sendData(data);
-                DataModel newData = ClientConnection.receveData();
-                user = newData.getUser();
-                response = newData.getResponse();
-                System.out.println(user.getEmail());
-
-
+                try {
+                    client.sendData(data);
+                    DataModel newData = ClientConnection.receveData();
+                    user = newData.getUser();
+                    response = newData.getResponse();
+                    System.out.println(user.getEmail());
+                } catch (IOException ex) {
+                    Platform.runLater(() -> {
+                        Alert alert = new Alert(Alert.AlertType.ERROR, "Couldn't connect to server.");
+                        alert.showAndWait();
+                    });
+                    ex.printStackTrace();
+                    return;
+                }
                 String finalResponse = response;
 
-                if (finalResponse.equals(AppString.SIGNIN_DONE)) {
-                    try {
-//                        DataModel newData = (DataModel) ClientConnection.ois.readObject();
-//                        ClientConnection.user = newData.getUser();
+                switch (finalResponse) {
+                    case AppString.SIGNIN_DONE:                        
+                        try {
+                            Platform.runLater(() -> {
+                                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Signin was successful.");
+                                alert.showAndWait();
+                                AppFunctions.closePopup(actionEvent);
+                                CONNECTION_FLAG.set(true);
+                                AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage, client));
+                            });
+                            
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }   break;
+                    case AppString.SIGNIN_ALREADY_FOUND:
                         Platform.runLater(() -> {
-                            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Signin was successful.");
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION, "You are logged in from another device");
                             alert.showAndWait();
-                            //AppFunctions.closePopup(actionEvent);
-                            //CONNECTION_FLAG.set(true);
-                            AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage, client));
-                        });
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                } else if (finalResponse.equals(AppString.SIGNIN_ALREADY_FOUND)) {
-                    Platform.runLater(() -> {
-                        Alert alert = new Alert(Alert.AlertType.INFORMATION, "You are logged in from another device");
-                        alert.showAndWait();
-                        ClientConnection.terminateClient();
-                    });
-                } else {
-                    Platform.runLater(() -> {
-                        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Username or password are incorrect.");
-                        alert.showAndWait();
-                        ClientConnection.terminateClient();
-                    });
+                            ClientConnection.terminateClient();
+                        }); break;
+                    default:
+                        Platform.runLater(() -> {
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Username or password are incorrect.");
+                            alert.showAndWait();
+                            ClientConnection.terminateClient();
+                        }); break;
                 }
 
             }).start();
@@ -162,62 +168,4 @@ public class FXMLSigninController extends FXMLSigninBase {
         }
 
     }
-
-//    @Override
-//    protected void goToActiveUsers(ActionEvent actionEvent) {
-//
-//        ClientConnection client = new ClientConnection();
-//
-//        try {
-//            client.connectToServer();
-//        } catch (IOException ex) {
-//            Logger.getLogger(FXMLSigninController.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        System.out.println("" + client.serverStatus);
-//        if (client.serverStatus == false) {  //connect
-//            System.out.println("connect connection");
-//            UserModel user = new UserModel();
-//
-//            user.setName(usernameTextField.getText());
-//            user.setPassword(passwordField.getText());
-//            System.out.println("AL --before sendLoginRequest " + user.getName());
-//            DataModel data = new DataModel(user, 2);
-//            System.out.println("get state : " + data.getState());
-//            boolean response = false;
-//
-//            System.out.println("get user and state " + data.getUser().getName());
-//            System.out.println("get user and state pass " + data.getUser().getPassword());
-//
-//            try {
-//
-//                client.sendData(data);
-//
-//                response = client.receveResponse();
-//
-//            } catch (IOException ex) {
-//                Logger.getLogger(FXMLSigninController.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//
-//            if (response == true) {
-//                System.out.println("response: should be true :" + response);
-//
-//                //user = JSONConverters.jsonToUserModel(response);
-//                AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage));
-//
-//            } else {
-//                System.out.println("should be failure " + response);
-//
-//                wrongLabel.setVisible(true);
-//                wrongLabel.setStyle("-fx-text-fill: red; -fx-font-size: 20px;");
-//                wrongLabel.setText("Please Enter Correct Info");
-//
-//            }
-//
-//            wrongLabel.setVisible(true);
-//            wrongLabel.setStyle("-fx-text-fill: red; -fx-font-size: 20px;");
-//            wrongLabel.setText("Please Enter Correct Info");
-//
-//        }
-//
-//    }
 }
