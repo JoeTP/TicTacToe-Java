@@ -21,6 +21,7 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
     Stage stage;
     Player playerOne;
     Player playerTwo;
+
     MediaPlayer mediaPlayer;
 
     public FXMLPopUpWinController(Stage stage, Boolean isWinner, Player playerOne, Player playerTwo) {

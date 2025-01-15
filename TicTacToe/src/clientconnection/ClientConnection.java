@@ -39,7 +39,7 @@ public class  ClientConnection {
 
     public void connectToServer() throws IOException {
         socket = new Socket("127.0.0.1", 5001);
-        System.out.println("Cleint connection Established !");        
+        System.out.println("Cleint connection Established !");
         ois = new ObjectInputStream(socket.getInputStream());
         oos = new ObjectOutputStream(socket.getOutputStream());
 
@@ -47,7 +47,6 @@ public class  ClientConnection {
 
     public static void stopThreads() {
         try {
-            oos.close();
             socket.close();
             Platform.exit();
         } catch (IOException ex) {
@@ -68,7 +67,6 @@ public class  ClientConnection {
     public static void sendData(DataModel d) throws IOException {
         oos.writeObject(d);
         oos.flush();
-
     }
 
     public static String receveResponse() throws IOException {
@@ -85,7 +83,6 @@ public class  ClientConnection {
             Logger.getLogger(ClientConnection.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ClientConnection.class.getName()).log(Level.SEVERE, null, ex);
-
         }
         return data;
     }

@@ -141,6 +141,7 @@ public abstract class FXMLPopUpWinBase extends VBox {
         leaveButton.setGraphic(imageView1);
         VBox.setMargin(hBox0, new Insets(0.0, 0.0, 10.0, 0.0));
         getStylesheets().add("/tictactoe/popupwin/fxmlpopupwin.css");
+
         getStylesheets().add("/styling/generalStyle.css");
 
         stackPane.getChildren().add(rectangle);

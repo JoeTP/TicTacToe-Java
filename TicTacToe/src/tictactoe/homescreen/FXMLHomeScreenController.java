@@ -44,6 +44,7 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
     public FXMLHomeScreenController(Stage stage) {
         this.stage = stage;
 
+
 //        if(ClientConnection.user != null ){
 //              accInfoRect.setVisible(true);
 //            handleUserInfo();
@@ -86,6 +87,10 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
         });
 
     }
+
+          
+
+
 
     @Override
     protected void exitApp(ActionEvent actionEvent) {

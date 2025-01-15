@@ -150,6 +150,7 @@ public class GameBoardController extends FXMLGameBoardBase {
                         isTimeOut = false;
 
 
+
                     })
             );
             timeLine.setCycleCount(Timeline.INDEFINITE);
@@ -279,6 +280,7 @@ public class GameBoardController extends FXMLGameBoardBase {
             pause.setOnFinished(event -> {
                 AppFunctions.openPopup(stage, new FXMLPopUpWinController(stage, true, playerOne, playerTwo));
             });
+
             pause.play();
         }
     }
