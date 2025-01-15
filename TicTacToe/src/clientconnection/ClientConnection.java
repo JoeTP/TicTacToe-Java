@@ -22,7 +22,7 @@ import models.DataModel;
  *
  * @author Ayat Gamal
  */
-public class ClientConnection {
+public class  ClientConnection {
 
     public static DataInputStream dis;
       
@@ -32,6 +32,8 @@ public class ClientConnection {
     public static boolean serverStatus = false;
     public static ObjectInputStream ois;
     public static ObjectOutputStream oos;
+    
+    
     
     
     public void connectToServer() throws IOException {
