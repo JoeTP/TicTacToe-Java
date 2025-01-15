@@ -6,10 +6,13 @@
 package tictactoe.signin;
 
 import clientconnection.ClientConnection;
+import static clientconnection.ClientConnection.oos;
+import static clientconnection.ClientConnection.socket;
 import static clientconnection.ClientConnection.user;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.net.URL;
@@ -74,6 +77,7 @@ public class FXMLSigninController extends FXMLSigninBase {
 
         if (user != null) {
 
+            System.out.println("User is not null"+ user.getName());
             DataModel data = new DataModel(user, 2);
             client = new ClientConnection();
             try {
@@ -90,18 +94,13 @@ public class FXMLSigninController extends FXMLSigninBase {
 
                 String response = "";
 
-                try {
-                    client.sendData(data);
-                    response = client.receveResponse();
-                    System.out.println(response);                    
-                } catch (IOException ex) {
-                    Platform.runLater(() -> {
-                        Alert alert = new Alert(Alert.AlertType.ERROR, "Couldn't connect to server.");
-                        alert.showAndWait();
-                    });
-                    ex.printStackTrace();
-                    return; // Exit the thread early on failure
-                }
+
+                client.sendData(data);
+                DataModel newData = ClientConnection.receveData();
+                user = newData.getUser();
+                response = newData.getResponse();
+                System.out.println(user.getEmail());
+
 
                 String finalResponse = response;
 

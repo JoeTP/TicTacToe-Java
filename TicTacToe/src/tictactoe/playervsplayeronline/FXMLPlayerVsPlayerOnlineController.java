@@ -75,23 +75,23 @@ public class FXMLPlayerVsPlayerOnlineController extends FXMLPlayerVsPlayerOnline
 
     protected void getActiveUsers() {
         new Thread(() -> {
-            try {
-                oos = new ObjectOutputStream(socket.getOutputStream());
-            } catch (IOException ex) {
-                Logger.getLogger(FXMLPlayerVsPlayerOnlineController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+//            try {
+////                oos = new ObjectOutputStream(socket.getOutputStream());
+//            } catch (IOException ex) {
+//                Logger.getLogger(FXMLPlayerVsPlayerOnlineController.class.getName()).log(Level.SEVERE, null, ex);
+//            }
             try {
                 if (oos == null) {
                     throw new IllegalStateException("ObjectOutputStream (oos) is not initialized.");
                 }
                 client.sendData(new DataModel(ClientConnection.user,3));
                 System.out.println("Object successfully written to server.");
-                int activeUsersCount = dis.readInt();
+                int activeUsersCount = ois.readInt();
                 System.out.println(activeUsersCount);
                 List<String> activeUsers = new ArrayList<>();
                 String user;
                 for(int i = 0; i < activeUsersCount-1; i++){
-                    user = dis.readUTF();
+                    user = ois.readUTF();
                     activeUsers.add(user);
                     System.out.println(user);
                 }
