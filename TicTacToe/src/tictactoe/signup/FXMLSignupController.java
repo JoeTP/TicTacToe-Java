@@ -6,6 +6,7 @@
 package tictactoe.signup;
 
 import clientconnection.ClientConnection;
+import static clientconnection.ClientConnection.user;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -56,7 +57,7 @@ public class FXMLSignupController extends FXMLSignupBase {
     @Override
 
     protected void goToActiveUsers(ActionEvent actionEvent) {
-        UserModel user = getNewUserData();
+        ClientConnection.user = getNewUserData();
         if (user != null) {
             DataModel data = new DataModel(user, 1);
             client = new ClientConnection();

@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 
 import javafx.application.Platform;
 import models.DataModel;
+import models.UserModel;
 
 /**
  *
@@ -32,6 +33,7 @@ public class ClientConnection {
     public static boolean serverStatus = false;
     public static ObjectInputStream ois;
     public static ObjectOutputStream oos;
+    public static UserModel user;
     
     
     public void connectToServer() throws IOException {
@@ -93,11 +95,7 @@ public class ClientConnection {
         String response = dis.readUTF();
         return response;
     }
-
-    public static void sendGameRequest(String username){
-        ps.print(username);
-    }
-
+    
 //      public static int receveResponseInt() throws IOException{
 //        int response = dis.readInt();
 //        return response;

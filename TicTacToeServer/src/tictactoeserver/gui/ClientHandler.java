@@ -28,11 +28,9 @@ public class ClientHandler extends Thread {
     DataInputStream dis;
     DataOutputStream ps;
     ObjectInputStream ois;
-
     ObjectOutputStream oos;
     UserModel user;
     String response;
-
     Socket client;  // Add a reference to the client socket
     int state;
     static ObservableList<ClientHandler> clients = FXCollections.synchronizedObservableList(FXCollections.observableArrayList());
@@ -65,7 +63,7 @@ public class ClientHandler extends Thread {
                 switch (state) {
                     case 1: // Sign-up
                         user = data.getUser();
-                        System.out.println(user.getName());     
+                        System.out.println(user.getName());
                         response = DataAccessLayer.insertData(user);
                         if (response.equals(AppStrings.SIGNUP_DONE)) {
                             synchronized (usernames) {
@@ -77,7 +75,7 @@ public class ClientHandler extends Thread {
                         break;
                     case 2: // sign in
                         user = data.getUser();
-                        System.out.println(user.getName());     
+                        System.out.println(user.getName());
                         response = DataAccessLayer.getUserDataLogin(user.getName(), user.getPassword());
                         boolean isNotLoggedin = isNotLoggedin(user.getName());
                         if (isNotLoggedin == false) {
@@ -93,7 +91,8 @@ public class ClientHandler extends Thread {
                         break;
                     case 3:
                         System.out.println("in case 3 : ");
-                        sendActiveUsersList();
+                        user = data.getUser();
+                        findClientHandler(user.getName()).sendActiveUsersList();
                         break;
                     default:
                         System.out.println("Unknown state: " + state);
@@ -121,39 +120,48 @@ public class ClientHandler extends Thread {
         }
     }
 
-    private void sendActiveUsersList() {
-        
+    protected void sendActiveUsersList() {
         try {
-                      
-                ps.writeInt(usernames.size());
-
-                for (String username : usernames) { 
+            ps.writeInt(usernames.size());
+            System.out.println(usernames.size());
+            for (String username : usernames) {
+                System.out.println(username);
+                if (!username.equals(user.getName())) {
                     ps.writeUTF(username);
-
                 }
-                ps.flush();
-            } catch (IOException ex) {
-                Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);            
-        } 
-        
+            }
+            ps.flush();
+        } catch (IOException ex) {
+            Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     public String getUserName() {
         return user != null ? user.getName() : "Unknown User";
     }
 
+    public ClientHandler findClientHandler(String username) {
+        int index = usernames.indexOf(username);
+        if (index == -1) {
+            return null;
+        } else {
+            return clients.get(index);
+        }
+    }
+
     public void disconnect() {
         try {
             synchronized (clients) {
-                    clients.remove(this);
-                }
-            if (!response.equals(AppStrings.SIGNIN_ALREADY_FOUND) && !response.equals(AppStrings.SIGNUP_FAILED)&&!response.equals(AppStrings.SIGNIN_FAILED)) {
-                
+                clients.remove(this);
+            }
+            if (!response.equals(AppStrings.SIGNIN_ALREADY_FOUND) && !response.equals(AppStrings.SIGNUP_FAILED) && !response.equals(AppStrings.SIGNIN_FAILED)) {
+
                 synchronized (usernames) {
                     usernames.remove(user.getName());
                 }
             }
-            
+
             dis.close();
             ps.close();
             ois.close();
@@ -170,7 +178,7 @@ public class ClientHandler extends Thread {
 
     public boolean isNotLoggedin(String username) {
         for (String u : usernames) {
-            if (user.getName().equals(username)) {
+            if (username.equals(u)) {
                 return false;
             }
         }
