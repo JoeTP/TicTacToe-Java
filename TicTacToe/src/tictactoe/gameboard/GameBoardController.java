@@ -13,8 +13,7 @@ import javafx.application.Platform;
 import javafx.animation.PauseTransition;
 
 import javafx.event.ActionEvent;
-import javafx.scene.Node;
-import javafx.scene.Scene;
+
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.media.Media;
@@ -25,6 +24,7 @@ import javafx.util.Duration;
 import models.Player;
 import shared.AppFunctions;
 import sounds.AudioController;
+import static shared.AppFunctions.openPopup;
 import tictactoe.homescreen.FXMLHomeScreenController;
 import tictactoe.popupwin.FXMLPopUpWinController;
 
@@ -151,7 +151,6 @@ public class GameBoardController extends FXMLGameBoardBase {
 
                     })
             );
-
             timeLine.setCycleCount(Timeline.INDEFINITE);
             timeLine.play();
         }
@@ -229,11 +228,6 @@ public class GameBoardController extends FXMLGameBoardBase {
         }
     }
 
-//    private void endGame(String winner) {
-//        isEndOfGame = true;
-//        System.out.println("End of the game, Winner is" + winner);
-//
-//    }
     private void endGame() {
 
         isEndOfGame = true;
@@ -281,6 +275,10 @@ public class GameBoardController extends FXMLGameBoardBase {
             PauseTransition pause = new PauseTransition(Duration.seconds(2));
             pause.setOnFinished(event -> {
                 AppFunctions.openPopup(stage, new FXMLPopUpWinController(stage, true, playerOne, playerTwo));
+            });
+
+            pause.setOnFinished(event -> {
+                openPopup(stage, new FXMLPopUpWinController(stage, true, playerOne, playerTwo));
             });
             pause.play();
         }
@@ -354,6 +352,8 @@ public class GameBoardController extends FXMLGameBoardBase {
 
         endGame();
         AudioController.clickSound();
+        FXMLPopUpWinController.mediaPlayer.stop();
+        FXMLPopUpWinController.mediaPlayer.stopTimeProperty();
         AppFunctions.goTo(actionEvent, new FXMLHomeScreenController(stage));
     }
 
