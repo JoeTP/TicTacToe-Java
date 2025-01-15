@@ -40,11 +40,17 @@ public class  ClientConnection {
     public void connectToServer() throws IOException {
         socket = new Socket("127.0.0.1", 5001);
         System.out.println("Cleint connection Established !");
-        dis = new DataInputStream(socket.getInputStream());
-        ps = new PrintStream(socket.getOutputStream());
-        oos = new ObjectOutputStream(socket.getOutputStream());
+        //dis = new DataInputStream(socket.getInputStream());
+        //ps = new PrintStream(socket.getOutputStream());
         ois = new ObjectInputStream(socket.getInputStream());
+        oos = new ObjectOutputStream(socket.getOutputStream());
+
         /*
+=======
+       
+       
+/*
+>>>>>>> M-sendrequest
         // thread for each client
         Thread th;
         th = new Thread(() -> {
@@ -64,9 +70,7 @@ public class  ClientConnection {
     }
 
     public static void stopThreads() {
-        try {
-            ps.close();
-            dis.close();
+        try {            
             oos.close();
             socket.close();
             Platform.exit();
@@ -76,9 +80,7 @@ public class  ClientConnection {
     }
 
     public static void terminateClient() {
-        try {
-            ps.close();
-            dis.close();
+        try { 
             oos.close();
             socket.close();
             System.out.println("client killed");
@@ -87,9 +89,23 @@ public class  ClientConnection {
         }
     }
 
-    public static void sendData(DataModel d) throws IOException {
-        oos.writeObject(d);
-        oos.flush();
+
+    public static void sendData(DataModel d) {
+        try {
+            oos.writeObject(d);
+            oos.flush();
+        } catch (IOException ex) {
+            Logger.getLogger(ClientConnection.class.getName()).log(Level.SEVERE, null, ex);
+//        }finally {
+//        if (oos != null) {
+//            try {
+//                oos.close();
+//            } catch (IOException ex) {
+//                Logger.getLogger(ClientConnection.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
+    }
+
     }
 
     public static String receveResponse() throws IOException {
@@ -97,10 +113,27 @@ public class  ClientConnection {
         return response;
     }
 
-    public static void sendGameRequest(String username) {
-        ps.print(username);
+    public static DataModel receveData() {       
+        DataModel data = null;
+        try {
+            
+            data = (DataModel) ois.readObject();
+        } catch (IOException ex) {
+            Logger.getLogger(ClientConnection.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ClientConnection.class.getName()).log(Level.SEVERE, null, ex);
+//        }finally {
+//        if (ois != null) {
+//            try {
+//                ois.close();
+//            } catch (IOException ex) {
+//                Logger.getLogger(ClientConnection.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
     }
-
+        return data;
+    }
+    
 //      public static int receveResponseInt() throws IOException{
 //        int response = dis.readInt();
 //        return response;
@@ -119,4 +152,6 @@ public class  ClientConnection {
 //        }
 //          return response;
 //    }
+      
+
 }
