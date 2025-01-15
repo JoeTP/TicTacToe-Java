@@ -145,9 +145,11 @@ public class GameBoardController extends FXMLGameBoardBase {
                             isTimeOut = true;
                             makeAutomaticMove();
                             timer.setText("Oops! Time is up!");
-
                         }
                         isTimeOut = false;
+
+
+
 
                     })
             );
@@ -277,9 +279,6 @@ public class GameBoardController extends FXMLGameBoardBase {
                 AppFunctions.openPopup(stage, new FXMLPopUpWinController(stage, true, playerOne, playerTwo));
             });
 
-            pause.setOnFinished(event -> {
-                openPopup(stage, new FXMLPopUpWinController(stage, true, playerOne, playerTwo));
-            });
             pause.play();
         }
     }
@@ -349,11 +348,8 @@ public class GameBoardController extends FXMLGameBoardBase {
 
     @Override
     protected void handleLeaveButton(ActionEvent actionEvent) {
-
         endGame();
         AudioController.clickSound();
-        FXMLPopUpWinController.mediaPlayer.stop();
-        FXMLPopUpWinController.mediaPlayer.stopTimeProperty();
         AppFunctions.goTo(actionEvent, new FXMLHomeScreenController(stage));
     }
 
@@ -401,5 +397,4 @@ public class GameBoardController extends FXMLGameBoardBase {
     protected void handleB00(ActionEvent actionEvent) {
         setTurn(b00);
     }
-
 }
