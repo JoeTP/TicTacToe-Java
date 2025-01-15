@@ -47,14 +47,14 @@ import tictactoe.signup.FXMLSignupController;
 public class FXMLSigninController extends FXMLSigninBase {
 
     Stage stage;
-    public ClientConnection client;
+    public static ClientConnection client;
 
-    boolean signInFromInside;
+    public static boolean signInFromHomeScreen;
 
     public FXMLSigninController(Stage stage, boolean state) {
 
         this.stage = stage;
-        this.signInFromInside = state;
+        this.signInFromHomeScreen = state;
 
     }
 
@@ -79,7 +79,7 @@ public class FXMLSigninController extends FXMLSigninBase {
 
         if (user != null) {
 
-            System.out.println("User is not null"+ user.getName());
+            System.out.println("User is not null" + user.getName());
             DataModel data = new DataModel(user, 2);
             client = new ClientConnection();
             try {
@@ -95,7 +95,6 @@ public class FXMLSigninController extends FXMLSigninBase {
             new Thread(() -> {
 
                 String response = "";
-
 
                 try {
                     client.sendData(data);
@@ -113,31 +112,38 @@ public class FXMLSigninController extends FXMLSigninBase {
                 String finalResponse = response;
 
                 switch (finalResponse) {
-                    case AppString.SIGNIN_DONE:                        
+                    case AppString.SIGNIN_DONE:
                         try {
                             Platform.runLater(() -> {
                                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "Signin was successful.");
                                 alert.showAndWait();
-                                AppFunctions.closePopup(actionEvent);
+                                if (!signInFromHomeScreen) {
+                                    AppFunctions.closePopup(actionEvent);
+                                    AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage, client));
+                                } else {
+                                    AppFunctions.closePopup(actionEvent);
+                                }
                                 CONNECTION_FLAG.set(true);
-                                AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage, client));
                             });
-                            
+
                         } catch (Exception e) {
                             e.printStackTrace();
-                        }   break;
+                        }
+                        break;
                     case AppString.SIGNIN_ALREADY_FOUND:
                         Platform.runLater(() -> {
                             Alert alert = new Alert(Alert.AlertType.INFORMATION, "You are logged in from another device");
                             alert.showAndWait();
                             ClientConnection.terminateClient();
-                        }); break;
+                        });
+                        break;
                     default:
                         Platform.runLater(() -> {
                             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Username or password are incorrect.");
                             alert.showAndWait();
                             ClientConnection.terminateClient();
-                        }); break;
+                        });
+                        break;
                 }
 
             }).start();

@@ -86,6 +86,7 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
 
                 wonGamesLabel.setText(ClientConnection.user.getWins() + "");
                 playedGamesLabel.setText(ClientConnection.user.getNumOfGames() + "");
+                profileImageView.setImage(new Image(AppString.ICON_PATHS[Integer.parseInt(ClientConnection.user.getImage())]));
 
                 connectionIndicatorImageView.setImage(new Image("/assets/icons/Wifi-on.png"));
                 connectionLabel.setText(AppString.ONLINE);
@@ -142,9 +143,9 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
 
     @Override
     public void handleSignInButton(ActionEvent actionEvent) {
-        AppFunctions.openPopup(stage, new FXMLSigninController(stage, false));
 
-//        CONNECTION_FLAG.set(true);
+        AppFunctions.openPopup(stage, new FXMLSigninController(stage, true));
+
     }
 
     protected void handleUserInfo() {
@@ -164,6 +165,9 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
 
     @Override
     protected void handleLogoutButton(ActionEvent actionEvent) {
-        CONNECTION_FLAG.set(false);
+        if (ClientConnection.user != null) {
+            ClientConnection.terminateClient();
+            CONNECTION_FLAG.set(false);
+        }
     }
 }
