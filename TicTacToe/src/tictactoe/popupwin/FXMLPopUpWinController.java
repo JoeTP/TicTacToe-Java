@@ -22,7 +22,7 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
     Player playerOne;
     Player playerTwo;
 
-    public static MediaPlayer mediaPlayer;
+    MediaPlayer mediaPlayer;
 
     public FXMLPopUpWinController(Stage stage, Boolean isWinner, Player playerOne, Player playerTwo) {
         this.stage = stage;
@@ -62,7 +62,6 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
 
             mediaPlayer.setVolume(0.5);
             mediaPlayer.play();
-
         }
     }
 
@@ -79,7 +78,6 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
     @Override
     protected void handleLeaveButton(ActionEvent actionEvent) {
         mediaPlayer.pause();
-
         AppFunctions.closeAndGo(actionEvent, stage, new FXMLHomeScreenController(stage));
     }
 

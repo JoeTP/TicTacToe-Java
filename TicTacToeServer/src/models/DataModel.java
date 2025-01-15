@@ -12,11 +12,13 @@ import java.io.Serializable;
  * @author Kimo Store
  */
 public class DataModel implements Serializable {
-
+private static final long serialVersionUID = 1L;
     UserModel user;
     GameModel game;
     int state;
-
+    String player;
+    String rival;
+    String response;
     public DataModel(int state) {
         this.state = state;
     }
@@ -26,9 +28,36 @@ public class DataModel implements Serializable {
         this.state = state;
     }
 
+    public DataModel(UserModel user, String response) {
+        this.user = user;
+        this.response = response;
+    }
+
     public DataModel(GameModel game, int state) {
         this.game = game;
         this.state = state;
+    }
+
+    public DataModel(int state, String player, String rival) {
+        this.state = state;
+        this.player = player;
+        this.rival = rival;
+    }
+
+    public String getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(String player) {
+        this.player = player;
+    }
+
+    public String getRival() {
+        return rival;
+    }
+
+    public void setRival(String rival) {
+        this.rival = rival;
     }
 
     public UserModel getUser() {
@@ -53,6 +82,14 @@ public class DataModel implements Serializable {
 
     public void setState(int state) {
         this.state = state;
+    }
+
+    public String getResponse() {
+        return response;
+    }
+
+    public void setResponse(String response) {
+        this.response = response;
     }
 
 }

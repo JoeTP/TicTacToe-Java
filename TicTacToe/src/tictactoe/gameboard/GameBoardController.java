@@ -348,11 +348,8 @@ public class GameBoardController extends FXMLGameBoardBase {
 
     @Override
     protected void handleLeaveButton(ActionEvent actionEvent) {
-
         endGame();
         AudioController.clickSound();
-        FXMLPopUpWinController.mediaPlayer.stop();
-        FXMLPopUpWinController.mediaPlayer.stopTimeProperty();
         AppFunctions.goTo(actionEvent, new FXMLHomeScreenController(stage));
     }
 
