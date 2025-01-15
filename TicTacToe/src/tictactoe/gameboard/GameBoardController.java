@@ -192,33 +192,78 @@ public class GameBoardController extends FXMLGameBoardBase {
 
     }
 
+//    private void makeAutomaticMove() {
+//
+//        String currentChar = playerOne.hisTurn ? playerOne.getChar() : playerTwo.getChar();
+//        System.out.println("automatic char: " + currentChar);
+//        System.out.println("automatic Move: " + move);
+//
+//        for (int r = 0; r < board.length; r++) {
+//            for (int c = 0; c < board[r].length; c++) {
+//                if (board[r][c] == null) {
+//                    // board[r][c] = move; 
+//                    Button button = getButtonsByRowAndColumn(c, r);
+//                    if (button != null) {
+//
+//                        System.out.println("insiidee makeAutomaticMove and the button existt");
+//                        setTurn(button);
+//
+//                    } else {
+//                        System.out.println("insiidee makeAutomaticMove and the button not existt");
+//                    }
+//
+//                    return;
+//                }
+//            }
+//        }
+//        System.out.println("No empty cells available for automatic move.");
+//        return;
+//    }
+    
+    
+    
     private void makeAutomaticMove() {
-
         String currentChar = playerOne.hisTurn ? playerOne.getChar() : playerTwo.getChar();
         System.out.println("automatic char: " + currentChar);
         System.out.println("automatic Move: " + move);
+        System.out.println("Automatic move caused");
+        List<int[]> emptyCells = new ArrayList<>();
 
-        for (int r = 0; r < board.length; r++) {
-            for (int c = 0; c < board[r].length; c++) {
-                if (board[r][c] == null) {
-                    // board[r][c] = move; 
-                    Button button = getButtonsByRowAndColumn(c, r);
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (board[i][j] == null) {
+                    emptyCells.add(new int[]{i, j});
+                    System.out.println("nnnull cell at: (" + i + ", " + j + ")");
+                }
+            }
+        }
+
+        if (!emptyCells.isEmpty()) {
+            Random random = new Random();
+            int[] selectedCell = emptyCells.get(random.nextInt(emptyCells.size()));
+            System.out.println("Selected cell for move: (" + selectedCell[0] + ", " + selectedCell[1] + ")");
+                  Button button = getButtonsByRowAndColumn(selectedCell[1], selectedCell[0]);
                     if (button != null) {
-
+                          emptyCells.remove(selectedCell);
                         System.out.println("insiidee makeAutomaticMove and the button existt");
                         setTurn(button);
+                       
 
                     } else {
                         System.out.println("insiidee makeAutomaticMove and the button not existt");
                     }
 
                     return;
-                }
-            }
+          
+
+ 
+           
+           
+        } else {
+            System.out.println("No empty cells found.");
         }
-        System.out.println("No empty cells available for automatic move.");
-        return;
     }
+
 
     private void printGame() {
 
