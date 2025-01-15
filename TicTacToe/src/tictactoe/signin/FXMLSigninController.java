@@ -31,6 +31,7 @@ import models.UserModel;
 import shared.AppFunctions;
 
 import shared.*;
+import static shared.AppConstants.CONNECTION_FLAG;
 import sounds.AudioController;
 
 import tictactoe.gameboard.GameBoardController;
@@ -55,20 +56,19 @@ public class FXMLSigninController extends FXMLSigninBase {
 
     @Override
     public void goToSignup(ActionEvent event) {
-         AudioController.clickSound();
+        AudioController.clickSound();
         AppFunctions.goTo(event, new FXMLSignupController(stage));
     }
 
     @Override
     protected void handleBackButton(ActionEvent actionEvent) {
-         AudioController.clickSound();
+        AudioController.clickSound();
         AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerPopupController(stage));
     }
 
     protected void goToActiveUsers(ActionEvent actionEvent) {
 
-         AudioController.clickSound();
-
+        AudioController.clickSound();
 
         UserModel user = getNewUserData();
         if (user != null) {
@@ -107,7 +107,10 @@ public class FXMLSigninController extends FXMLSigninBase {
                         try {
                             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Signin was successful.");
                             alert.showAndWait();
+                            DataModel newData = (DataModel) ClientConnection.ois.readObject();
+                            ClientConnection.user = newData.getUser();
                             AppFunctions.closePopup(actionEvent);
+                            Platform.runLater(() -> CONNECTION_FLAG.set(true));
                             AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage, client));
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -125,7 +128,7 @@ public class FXMLSigninController extends FXMLSigninBase {
             }).start();
         }
     }
-            
+
     protected UserModel getNewUserData() {
         UserModel user = new UserModel();
         boolean valid = true;
@@ -151,7 +154,6 @@ public class FXMLSigninController extends FXMLSigninBase {
         }
 
     }
-
 
 //    @Override
 //    protected void goToActiveUsers(ActionEvent actionEvent) {
@@ -210,5 +212,4 @@ public class FXMLSigninController extends FXMLSigninBase {
 //        }
 //
 //    }
-
 }

@@ -65,7 +65,7 @@ public class ClientHandler extends Thread {
                 switch (state) {
                     case 1: // Sign-up
                         user = data.getUser();
-                        System.out.println(user.getName());     
+                        System.out.println(user.getName());
                         response = DataAccessLayer.insertData(user);
                         if (response.equals(AppStrings.SIGNUP_DONE)) {
                             synchronized (usernames) {
@@ -77,7 +77,7 @@ public class ClientHandler extends Thread {
                         break;
                     case 2: // sign in
                         user = data.getUser();
-                        System.out.println(user.getName());     
+                        System.out.println(user.getName());
                         response = DataAccessLayer.getUserDataLogin(user.getName(), user.getPassword());
                         boolean isNotLoggedin = isNotLoggedin(user.getName());
                         if (isNotLoggedin == false) {
@@ -90,15 +90,24 @@ public class ClientHandler extends Thread {
                         }
                         ps.writeUTF(response);
                         ps.flush();
+                        if (response.equals(AppStrings.SIGNIN_DONE)) {
+                            updateUserData();
+                            sendUserData(user);
+                        }
                         break;
                     case 3:
                         System.out.println("in case 3 : ");
                         sendActiveUsersList();
                         break;
-                    default:
-                        System.out.println("Unknown state: " + state);
-                        ps.writeUTF("Unknown request");
-                        ps.flush();
+                    case 4:
+                        updateUserData();
+                        sendUserData(user);
+                        System.out.println("USER IS UPDATED AND SENT TO CLIENT");
+                        break;
+//                    default:
+//                        System.out.println("Unknown state: " + state);
+//                        ps.writeUTF("Unknown request");
+//                        ps.flush();
                 }
 
             }
@@ -122,20 +131,20 @@ public class ClientHandler extends Thread {
     }
 
     private void sendActiveUsersList() {
-        
+
         try {
-                      
-                ps.writeInt(usernames.size());
 
-                for (String username : usernames) { 
-                    ps.writeUTF(username);
+            ps.writeInt(usernames.size());
 
-                }
-                ps.flush();
-            } catch (IOException ex) {
-                Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);            
-        } 
-        
+            for (String username : usernames) {
+                ps.writeUTF(username);
+
+            }
+            ps.flush();
+        } catch (IOException ex) {
+            Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     public String getUserName() {
@@ -145,15 +154,15 @@ public class ClientHandler extends Thread {
     public void disconnect() {
         try {
             synchronized (clients) {
-                    clients.remove(this);
-                }
-            if (!response.equals(AppStrings.SIGNIN_ALREADY_FOUND) && !response.equals(AppStrings.SIGNUP_FAILED)&&!response.equals(AppStrings.SIGNIN_FAILED)) {
-                
+                clients.remove(this);
+            }
+            if (!response.equals(AppStrings.SIGNIN_ALREADY_FOUND) && !response.equals(AppStrings.SIGNUP_FAILED) && !response.equals(AppStrings.SIGNIN_FAILED)) {
+
                 synchronized (usernames) {
                     usernames.remove(user.getName());
                 }
             }
-            
+
             dis.close();
             ps.close();
             ois.close();
@@ -175,6 +184,18 @@ public class ClientHandler extends Thread {
             }
         }
         return true;
+    }
+
+    private void sendUserData(UserModel user) throws IOException {
+        DataModel data = new DataModel(user, 1);
+        oos.writeObject(data);
+        oos.flush();
+    }
+
+    private void updateUserData() {
+
+        user = DataAccessLayer.getUserData(user.getName(), user.getPassword());
+
     }
 
 }

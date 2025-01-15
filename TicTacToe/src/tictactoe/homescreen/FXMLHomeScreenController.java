@@ -6,6 +6,9 @@
 package tictactoe.homescreen;
 
 import clientconnection.ClientConnection;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
@@ -16,6 +19,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import models.UserModel;
 import static shared.AppConstants.CONNECTION_FLAG;
 import shared.AppFunctions;
 import shared.AppString;
@@ -35,12 +39,23 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
     Stage stage;
     private double xOffset;
     private double yOffset;
+    
 
     public FXMLHomeScreenController(Stage stage) {
         this.stage = stage;
         observeConnection();
     }
 
+    //================================
+    
+    
+    
+    
+    //==============================
+    
+    
+    
+    
     private void observeConnection() {
         if (CONNECTION_FLAG == null) {
             CONNECTION_FLAG = new SimpleBooleanProperty(false);
@@ -53,19 +68,23 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
         });
 
         //applied on initial
-        Platform.runLater(this::updateConnectionLabel);
-    } 
-    
-    
+        updateConnectionLabel();
+    }
 
     private void updateConnectionLabel() {
-        if (CONNECTION_FLAG.get()) {
-            connectionIndicatorImageView.setImage(new Image("/assets/icons/Wifi-on.png"));
-            connectionLabel.setText(AppString.ONLINE);
-        } else {
-            connectionIndicatorImageView.setImage(new Image("/assets/icons/Wifi-off.png"));
-            connectionLabel.setText(AppString.OFFLINE);
-        }
+        Platform.runLater(() -> {
+            if (CONNECTION_FLAG.get()) {
+                nameLabel.setText(ClientConnection.user.getName());
+                connectionIndicatorImageView.setImage(new Image("/assets/icons/Wifi-on.png"));
+                connectionLabel.setText(AppString.ONLINE);
+            } else {
+                nameLabel.setText("FAIL");
+                connectionIndicatorImageView.setImage(new Image("/assets/icons/Wifi-off.png"));
+                connectionLabel.setText(AppString.OFFLINE);
+            }
+            //ClientConnection.user.
+        });
+
     }
 
     @Override
@@ -114,7 +133,9 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
 
     @Override
     public void handleSignInButton(ActionEvent actionEvent) {
-                CONNECTION_FLAG.set(true);
+        AppFunctions.openPopup(stage, new FXMLSigninController(stage, false));
+        
+//        CONNECTION_FLAG.set(true);
 
     }
 
@@ -128,5 +149,3 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
         CONNECTION_FLAG.set(false);
     }
 }
-
-
