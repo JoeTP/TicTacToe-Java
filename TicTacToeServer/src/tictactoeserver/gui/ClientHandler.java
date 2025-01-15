@@ -28,11 +28,9 @@ public class ClientHandler extends Thread {
     DataInputStream dis;
     DataOutputStream ps;
     ObjectInputStream ois;
-
     ObjectOutputStream oos;
     UserModel user;
     String response;
-
     Socket client;  // Add a reference to the client socket
     int state;
     static ObservableList<ClientHandler> clients = FXCollections.synchronizedObservableList(FXCollections.observableArrayList());
@@ -41,8 +39,11 @@ public class ClientHandler extends Thread {
     public ClientHandler(Socket client) {
         this.client = client;
         try {
-            dis = new DataInputStream(client.getInputStream());
-            ps = new DataOutputStream(client.getOutputStream());
+            //dis = new DataInputStream(client.getInputStream());
+            //ps = new DataOutputStream(client.getOutputStream());
+            oos = new ObjectOutputStream(client.getOutputStream());
+            ois = new ObjectInputStream(client.getInputStream());
+
             synchronized (clients) {
                 clients.add(this);
             }
@@ -57,8 +58,6 @@ public class ClientHandler extends Thread {
     public void run() {
         try {
             while (true) {
-
-                ois = new ObjectInputStream(client.getInputStream());
                 DataModel data = (DataModel) ois.readObject();
                 state = data.getState();
                 System.out.println(state);
@@ -72,8 +71,9 @@ public class ClientHandler extends Thread {
                                 usernames.add(user.getName());
                             }
                         }
-                        ps.writeUTF(response);
-                        ps.flush();
+                        updateUserData();
+                        sendUserData(user, response);
+
                         break;
                     case 2: // sign in
                         user = data.getUser();
@@ -88,22 +88,19 @@ public class ClientHandler extends Thread {
                                 usernames.add(user.getName());
                             }
                         }
-                        ps.writeUTF(response);
-                        ps.flush();
-                        if (response.equals(AppStrings.SIGNIN_DONE)) {
-                            updateUserData();
-                            sendUserData(user);
-                        }
+
+
+                        updateUserData();
+                        sendUserData(user, response);
+
+
                         break;
                     case 3:
                         System.out.println("in case 3 : ");
-                        sendActiveUsersList();
+                        user = data.getUser();
+                        findClientHandler(user.getName()).sendActiveUsersList();
                         break;
-                    case 4:
-                        updateUserData();
-                        sendUserData(user);
-                        System.out.println("USER IS UPDATED AND SENT TO CLIENT");
-                        break;
+
 //                    default:
 //                        System.out.println("Unknown state: " + state);
 //                        ps.writeUTF("Unknown request");
@@ -113,8 +110,9 @@ public class ClientHandler extends Thread {
             }
 
         } catch (IOException ex) {
-            disconnect();
+
             Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
+            disconnect();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -130,17 +128,19 @@ public class ClientHandler extends Thread {
         }
     }
 
-    private void sendActiveUsersList() {
 
+    protected void sendActiveUsersList() {
         try {
-
-            ps.writeInt(usernames.size());
-
+            oos.writeInt(usernames.size());
+            System.out.println(usernames.size());
             for (String username : usernames) {
-                ps.writeUTF(username);
+                System.out.println(username);
+                if (!username.equals(user.getName())) {
+                    oos.writeUTF(username);
+                }
 
             }
-            ps.flush();
+            oos.flush();
         } catch (IOException ex) {
             Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -151,45 +151,77 @@ public class ClientHandler extends Thread {
         return user != null ? user.getName() : "Unknown User";
     }
 
+    public ClientHandler findClientHandler(String username) {
+        int index = usernames.indexOf(username);
+        if (index == -1) {
+            return null;
+        } else {
+            return clients.get(index);
+        }
+    }
+
     public void disconnect() {
         try {
             synchronized (clients) {
                 clients.remove(this);
             }
-            if (!response.equals(AppStrings.SIGNIN_ALREADY_FOUND) && !response.equals(AppStrings.SIGNUP_FAILED) && !response.equals(AppStrings.SIGNIN_FAILED)) {
+            if (response != null && !response.equals(AppStrings.SIGNIN_ALREADY_FOUND)
+                    && !response.equals(AppStrings.SIGNUP_FAILED)
+                    && !response.equals(AppStrings.SIGNIN_FAILED)) {
 
                 synchronized (usernames) {
-                    usernames.remove(user.getName());
+                    if (user != null && user.getName() != null) {
+                        usernames.remove(user.getName());
+                    }
                 }
             }
-
-            dis.close();
-            ps.close();
-            ois.close();
-            client.close();
+            if (ois != null) {
+                ois.close();
+            }
+            if (oos != null) {
+                oos.close();
+            }
+            if (client != null) {
+                client.close();
+            }
             this.stop();
-            this.join();
             System.out.println("## Number of Clients: " + clients.size());
         } catch (IOException ex) {
-            Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InterruptedException ex) {
             Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     public boolean isNotLoggedin(String username) {
         for (String u : usernames) {
-            if (user.getName().equals(username)) {
+            if (username.equals(u)) {
                 return false;
             }
         }
         return true;
     }
 
-    private void sendUserData(UserModel user) throws IOException {
-        DataModel data = new DataModel(user, 1);
-        oos.writeObject(data);
-        oos.flush();
+
+    private void sendUserData(UserModel user, String response) throws IOException {
+        if (client != null && client.isConnected() && !client.isClosed()) {
+            if (oos != null) {  // Check if ObjectOutputStream is initialized
+                try {
+                    DataModel data = new DataModel(user, response);
+                    oos.writeObject(data);  // Send data
+                    oos.flush();  // Ensure it's sent
+                    System.out.println("User data sent successfully");
+                } catch (IOException ex) {
+                    Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, "Failed to send user data", ex);
+                    disconnect();  // Disconnect in case of failure
+                }
+            } else {
+                Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, "ObjectOutputStream is not initialized or is closed");
+                disconnect();  // Handle uninitialized or closed ObjectOutputStream
+            }
+        } else {
+            Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, "Client disconnected or socket is closed, cannot send data");
+            disconnect();  // Disconnect if client socket is not connected or closed
+        }
+
     }
 
     private void updateUserData() {

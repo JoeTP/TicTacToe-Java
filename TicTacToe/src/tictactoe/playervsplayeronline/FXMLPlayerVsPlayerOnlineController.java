@@ -48,7 +48,7 @@ public class FXMLPlayerVsPlayerOnlineController extends FXMLPlayerVsPlayerOnline
         this.stage = stage;
         this.client = client;
         getActiveUsers();
-        // startListeningForUpdates();
+
     }
 
     @Override
@@ -62,17 +62,23 @@ public class FXMLPlayerVsPlayerOnlineController extends FXMLPlayerVsPlayerOnline
     @Override
     protected void openGameBoard(ActionEvent actionEvent) {
         AudioController.clickSound();
+
         AppFunctions.closePopup(actionEvent);
         AppFunctions.goTo(actionEvent, new GameBoardController(stage, playerOne, playerTwo));
     }
 
     @Override
     protected void handlerefreshBtn(ActionEvent actionEvent) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        getActiveUsers();
     }
 
     protected void getActiveUsers() {
         new Thread(() -> {
+//            try {
+////                oos = new ObjectOutputStream(socket.getOutputStream());
+//            } catch (IOException ex) {
+//                Logger.getLogger(FXMLPlayerVsPlayerOnlineController.class.getName()).log(Level.SEVERE, null, ex);
+//            }
             try {
 
                 oos = new ObjectOutputStream(socket.getOutputStream());
@@ -80,18 +86,19 @@ public class FXMLPlayerVsPlayerOnlineController extends FXMLPlayerVsPlayerOnline
                 if (oos == null) {
                     throw new IllegalStateException("ObjectOutputStream (oos) is not initialized.");
                 }
-                client.sendData(new DataModel(3));
+                client.sendData(new DataModel(ClientConnection.user, 3));
                 System.out.println("Object successfully written to server.");
-                int activeUsersCount = dis.readInt();
+                int activeUsersCount = ois.readInt();
+                System.out.println(activeUsersCount);
                 List<String> activeUsers = new ArrayList<>();
                 String user;
-                for (int i = 0; i < activeUsersCount; i++) {
-                    user = dis.readUTF();
+                for (int i = 0; i < activeUsersCount - 1; i++) {
+                    user = ois.readUTF();
                     activeUsers.add(user);
                     System.out.println(user);
                 }
-
                 Platform.runLater(() -> {
+                    activePlayersListView.getItems().clear();
                     activePlayersListView.getItems().addAll(activeUsers);
                 });
             } catch (IOException ex) {
@@ -101,4 +108,8 @@ public class FXMLPlayerVsPlayerOnlineController extends FXMLPlayerVsPlayerOnline
 
     }
 
+    protected void sendGameRequest() {
+        String rival = (String) activePlayersListView.getSelectionModel().getSelectedItem();
+
+    }
 }

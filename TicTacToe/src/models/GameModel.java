@@ -5,13 +5,14 @@
  */
 package models;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  *
  * @author Youssif
  */
-public class GameModel {
+public class GameModel implements Serializable{
 
     int id;
     int userOneId;

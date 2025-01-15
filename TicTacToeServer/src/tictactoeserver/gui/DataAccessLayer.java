@@ -100,8 +100,8 @@ public class DataAccessLayer {
         }
 
     }
-
     public static UserModel getUserData(String userName, String pass) {
+
 
         UserModel user = new UserModel();
         try {

@@ -6,6 +6,7 @@
 package tictactoe.signup;
 
 import clientconnection.ClientConnection;
+import static clientconnection.ClientConnection.user;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -59,8 +60,11 @@ public class FXMLSignupController extends FXMLSignupBase {
     @Override
 
     protected void goToActiveUsers(ActionEvent actionEvent) {
+
+        ClientConnection.user = getNewUserData();
+
          AudioController.clickSound();
-        UserModel user = getNewUserData();
+
         if (user != null) {
             DataModel data = new DataModel(user, 1);
             client = new ClientConnection();
@@ -97,7 +101,7 @@ public class FXMLSignupController extends FXMLSignupBase {
                         try {
                             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Signup was successful.");
                             alert.showAndWait();
-                            AppFunctions.closePopup(actionEvent);
+                            //AppFunctions.closePopup(actionEvent);
                             AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage,client));
                         } catch (Exception e) {
                             e.printStackTrace();
