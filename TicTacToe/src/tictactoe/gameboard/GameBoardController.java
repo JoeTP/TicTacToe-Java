@@ -2,7 +2,9 @@ package tictactoe.gameboard;
 
 import gameboard.WinningLine;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import javafx.animation.KeyFrame;
@@ -21,6 +23,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import models.ComputerPlayer;
 import models.Player;
 import shared.AppFunctions;
 import sounds.AudioController;
@@ -43,9 +46,6 @@ public class GameBoardController extends FXMLGameBoardBase {
     private Timeline timeLine;
     private int countdownTime;
     boolean isTimeOut = false;
-
-    //  String startLine;
-    //String endLine;
 
     /*
         [b00 b01 b02]
@@ -71,17 +71,22 @@ public class GameBoardController extends FXMLGameBoardBase {
         playerOneLabel.setText(playerOne.getName());
         playerTwoLabel.setText(playerTwo.getName());
 
+        if (playerTwo instanceof ComputerPlayer) {
+            playerTwoLabel.setText("Computer");
+            playerOneLabel.setText("Player");
+        }
+
         Random random = new Random();
         if (random.nextBoolean()) {
             playerOne.setChar(X_CHAR);
             playerTwo.setChar(O_CHAR);
-            playerOne.hisTurn = true;
 
         } else {
             playerOne.setChar(O_CHAR);
             playerTwo.setChar(X_CHAR);
-            playerTwo.hisTurn = true;
         }
+        playerOne.hisTurn = true;
+        playerTwo.hisTurn = false;
 
         startCountdownTimer();
     }
@@ -90,6 +95,7 @@ public class GameBoardController extends FXMLGameBoardBase {
         Media media = null;
         String clickSound = getClass().getResource("/audios/gameClick.wav").toExternalForm();
         String timeOutSound = getClass().getResource("/audios/turnTimeOut.wav").toExternalForm();
+
         if (b.getText().isEmpty() && isEndOfGame == false) {
             if (isTimeOut == false) {
                 media = new Media(clickSound);
@@ -101,26 +107,35 @@ public class GameBoardController extends FXMLGameBoardBase {
             mediaPlayer.play();
             System.out.println("current char: " + (playerOne.hisTurn ? playerOne.getChar() : playerTwo.getChar()));
             System.out.println("current Move: " + move);
+
             if (playerOne.hisTurn) {
                 b.setText(playerOne.getChar());
+
             } else {
                 b.setText(playerTwo.getChar());
-            }
-            changingLabelsStyles();
 
-            playerTwo.hisTurn = !playerTwo.hisTurn;
+            }
+
             playerOne.hisTurn = !playerOne.hisTurn;
+            playerTwo.hisTurn = !playerTwo.hisTurn;
+
+            changingLabelsStyles();
 
             Integer c = GridPane.getColumnIndex(b);
             Integer r = GridPane.getRowIndex(b);
             fillBoard(r, c);
 
             checkPlayerWinner();
+
+            if (!isEndOfGame) {
+                if (playerTwo instanceof ComputerPlayer && playerTwo.hisTurn) {
+                    makeComputerMove();
+                }
+            }
             printGame();
             startCountdownTimer();
 
         }
-
     }
 
     private void startCountdownTimer() {
@@ -129,7 +144,6 @@ public class GameBoardController extends FXMLGameBoardBase {
         if (timeLine != null) {
             timeLine.stop();   //3l4an law startCountdownTimer 3mnlnlha call multiple time
         }
-
 
         if (!isEndOfGame) {
             timeLine = new Timeline(
@@ -148,9 +162,6 @@ public class GameBoardController extends FXMLGameBoardBase {
                             timer.setText("Oops! Time is up!");
                         }
                         isTimeOut = false;
-
-
-
                     })
             );
             timeLine.setCycleCount(Timeline.INDEFINITE);
@@ -219,9 +230,6 @@ public class GameBoardController extends FXMLGameBoardBase {
 //        System.out.println("No empty cells available for automatic move.");
 //        return;
 //    }
-    
-    
-    
     private void makeAutomaticMove() {
         String currentChar = playerOne.hisTurn ? playerOne.getChar() : playerTwo.getChar();
         System.out.println("automatic char: " + currentChar);
@@ -242,28 +250,46 @@ public class GameBoardController extends FXMLGameBoardBase {
             Random random = new Random();
             int[] selectedCell = emptyCells.get(random.nextInt(emptyCells.size()));
             System.out.println("Selected cell for move: (" + selectedCell[0] + ", " + selectedCell[1] + ")");
-                  Button button = getButtonsByRowAndColumn(selectedCell[1], selectedCell[0]);
-                    if (button != null) {
-                          emptyCells.remove(selectedCell);
-                        System.out.println("insiidee makeAutomaticMove and the button existt");
-                        setTurn(button);
-                       
+            Button button = getButtonsByRowAndColumn(selectedCell[1], selectedCell[0]);
+            if (button != null) {
+                emptyCells.remove(selectedCell);
+                System.out.println("insiidee makeAutomaticMove and the button existt");
+                setTurn(button);
 
-                    } else {
-                        System.out.println("insiidee makeAutomaticMove and the button not existt");
-                    }
+            } else {
+                System.out.println("insiidee makeAutomaticMove and the button not existt");
+            }
 
-                    return;
-          
+            return;
 
- 
-           
-           
         } else {
             System.out.println("No empty cells found.");
         }
     }
 
+    private void makeComputerMove() {
+        Random random = new Random();
+        String currentChar = playerOne.hisTurn ? playerOne.getChar() : playerTwo.getChar();
+        System.out.println("Automatic char: " + currentChar);
+
+        Map<Button, Integer> cells = new HashMap<>();
+        for (int r = 0; r < 3; r++) {
+            for (int c = 0; c < 3; c++) {
+                if (board[r][c] == null) {
+                    Button b = getButtonsByRowAndColumn(c, r);
+                    cells.put(b, random.nextInt());
+                }
+            }
+        }
+
+        if (!cells.isEmpty()) {
+            int randMapValue = random.nextInt(cells.size());
+            Button compButton = (Button) cells.keySet().toArray()[randMapValue];
+            setTurn(compButton); // Ensure setTurn toggles turns
+        } else {
+            System.out.println("No empty cells available for automatic move.");
+        }
+    }
 
     private void printGame() {
 
@@ -274,8 +300,6 @@ public class GameBoardController extends FXMLGameBoardBase {
             System.out.println(" ");
         }
     }
-
-
 
     private void endGame() {
 
@@ -308,6 +332,7 @@ public class GameBoardController extends FXMLGameBoardBase {
             endGame();
             waitAndShowPopup(winner);
         } else if (playerTwo.getChar() == winner) {
+
             WinningLine.drawWinningLine(WinningLine.getStartLine(), WinningLine.getEndLine(), grid);
 
             System.out.println("PLAYER TWO WINNER");
@@ -320,14 +345,16 @@ public class GameBoardController extends FXMLGameBoardBase {
     }
 
     private void waitAndShowPopup(String winnerChar) {
-        if (playerOne.getChar() == winnerChar || playerTwo.getChar() == winnerChar) {
+        if (playerOne.getChar() == winnerChar || playerTwo.getChar() == winnerChar ) {
             PauseTransition pause = new PauseTransition(Duration.seconds(2));
-            pause.setOnFinished(event -> {
-                AppFunctions.openPopup(stage, new FXMLPopUpWinController(stage, true, playerOne, playerTwo));
-            });
+ 
+                pause.setOnFinished(event -> {
+                    AppFunctions.openPopup(stage, new FXMLPopUpWinController(stage, true, playerOne, playerTwo));
+                });
 
-            pause.play();
+                pause.play();
         }
+        
     }
 
     private String checkWinnerChar(Integer[][] board) {
@@ -395,7 +422,6 @@ public class GameBoardController extends FXMLGameBoardBase {
 
     @Override
     protected void handleLeaveButton(ActionEvent actionEvent) {
-
 
         endGame();
         AudioController.clickSound();
