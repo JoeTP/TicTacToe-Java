@@ -65,6 +65,9 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
         Platform.runLater(() -> {
             if (CONNECTION_FLAG.get()) {
                 nameLabel.setText(ClientConnection.user.getName());
+                wonGamesLabel.setText(ClientConnection.user.getWins() + "");
+                playedGamesLabel.setText(ClientConnection.user.getNumOfGames() + "");
+                profileImageView.setImage(new Image(AppString.ICON_PATHS[Integer.parseInt(ClientConnection.user.getImage())]));
                 connectionIndicatorImageView.setImage(new Image("/assets/icons/Wifi-on.png"));
                 connectionLabel.setText(AppString.ONLINE);
             } else {
