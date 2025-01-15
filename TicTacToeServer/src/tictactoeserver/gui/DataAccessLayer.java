@@ -99,5 +99,50 @@ public class DataAccessLayer {
         }
 
     }
+    public static UserModel getUserData(String userName, String pass) {
 
+        UserModel user = new UserModel();
+        try {
+
+            PreparedStatement pst = conection.prepareStatement("SELECT * FROM USERS WHERE USER_NAME = ? AND USER_PASSWORD = ?");
+            pst.setString(1, userName);
+            pst.setString(2, pass);
+
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                user.setId(rs.getInt(AppStrings.USER_ID));
+                user.setName(rs.getString(AppStrings.USER_NAME));
+                user.setEmail(rs.getString(AppStrings.USER_EMAIL));
+                user.setImage(rs.getString(AppStrings.USER_IMG));
+                user.setIsInGame(rs.getBoolean(AppStrings.IS_INGAME));
+                user.setIsOnline(rs.getBoolean(AppStrings.IS_ONLINE));
+                user.setLosses(rs.getInt(AppStrings.NO_OF_LOSSES));
+                user.setWins(rs.getInt(AppStrings.NO_OF_WINS));
+                user.setScore(rs.getInt(AppStrings.USER_SCORE));
+                user.setNumOfGames(rs.getInt(AppStrings.NO_OF_GAMES));
+                System.out.println("User found: " + rs.getString("USER_NAME"));
+                return user;
+            } else {
+                System.out.println("No user found with the given credentials.");
+                return null;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DataAccessLayer.class.getName()).log(Level.SEVERE, null, ex);
+
+        } catch (NullPointerException ex) {
+            Logger.getLogger(DataAccessLayer.class.getName()).log(Level.SEVERE, null, ex);
+
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException ex) {
+                System.out.println("rs != null");
+                Logger.getLogger(DataAccessLayer.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return null;
+    }
 }
