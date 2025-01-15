@@ -45,14 +45,6 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
         this.stage = stage;
 
 
-//        if(ClientConnection.user != null ){
-//              accInfoRect.setVisible(true);
-//            handleUserInfo();
-//          
-//        }
-        //observeConnection();
-    
-
         observeConnection();
     }
 
@@ -75,8 +67,11 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
         Platform.runLater(() -> {
             if (CONNECTION_FLAG.get()) {
                 nameLabel.setText(ClientConnection.user.getName());
+
                  wonGamesLabel.setText(ClientConnection.user.getWins()+"");
          playedGamesLabel.setText(ClientConnection.user.getNumOfGames()+"");
+
+
                 connectionIndicatorImageView.setImage(new Image("/assets/icons/Wifi-on.png"));
                 connectionLabel.setText(AppString.ONLINE);
             } else {
@@ -87,9 +82,6 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
         });
 
     }
-
-          
-
 
 
     @Override
