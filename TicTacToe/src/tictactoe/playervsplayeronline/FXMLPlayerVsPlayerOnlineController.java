@@ -62,9 +62,10 @@ public class FXMLPlayerVsPlayerOnlineController extends FXMLPlayerVsPlayerOnline
     @Override
     protected void openGameBoard(ActionEvent actionEvent) {
         AudioController.clickSound();
-
-        AppFunctions.closePopup(actionEvent);
-        AppFunctions.goTo(actionEvent, new GameBoardController(stage, playerOne, playerTwo));
+        String rival = (String) activePlayersListView.getSelectionModel().getSelectedItem();
+        System.out.println(rival);
+        //AppFunctions.closePopup(actionEvent);
+        //AppFunctions.goTo(actionEvent, new GameBoardController(stage, playerOne, playerTwo));
     }
 
     @Override
@@ -74,7 +75,6 @@ public class FXMLPlayerVsPlayerOnlineController extends FXMLPlayerVsPlayerOnline
 
     protected void getActiveUsers() {
         new Thread(() -> {
-
             try {               
                 if (oos == null) {
                     throw new IllegalStateException("ObjectOutputStream (oos) is not initialized.");
