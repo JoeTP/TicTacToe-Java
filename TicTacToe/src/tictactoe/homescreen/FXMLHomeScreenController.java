@@ -39,11 +39,9 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
     Stage stage;
     private double xOffset;
     private double yOffset;
-    
 
     public FXMLHomeScreenController(Stage stage) {
         this.stage = stage;
-
 
         observeConnection();
     }
@@ -66,11 +64,28 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
     private void updateConnectionLabel() {
         Platform.runLater(() -> {
             if (CONNECTION_FLAG.get()) {
+                int numOfGames = ClientConnection.user.getNumOfGames();
+                int wins = ClientConnection.user.getWins();
+
+                if (numOfGames > 0) { 
+                    double winRate = (wins / numOfGames) * 100;
+
+                    if (winRate > 70) {
+                        rankStarLabel.setStyle("-fx-text-fill: #FFD700;");
+                    } else if (winRate > 50) {
+                        rankStarLabel.setStyle("-fx-text-fill: #C0C0C0;"); 
+                    } else {
+                        rankStarLabel.setStyle("-fx-text-fill: #8B4513;");
+                    }
+                } else {
+                   
+                    rankStarLabel.setStyle("-fx-text-fill: #8B4513;"); 
+                }
+
                 nameLabel.setText(ClientConnection.user.getName());
 
-                 wonGamesLabel.setText(ClientConnection.user.getWins()+"");
-         playedGamesLabel.setText(ClientConnection.user.getNumOfGames()+"");
-
+                wonGamesLabel.setText(ClientConnection.user.getWins() + "");
+                playedGamesLabel.setText(ClientConnection.user.getNumOfGames() + "");
 
                 connectionIndicatorImageView.setImage(new Image("/assets/icons/Wifi-on.png"));
                 connectionLabel.setText(AppString.ONLINE);
@@ -83,7 +98,6 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
 
     }
 
-
     @Override
     protected void exitApp(ActionEvent actionEvent) {
         System.exit(0);
@@ -91,26 +105,25 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
 
     @Override
     protected void openSettingsScreen(ActionEvent actionEvent) {
-         AudioController.clickSound();
+        AudioController.clickSound();
         AppFunctions.goTo(actionEvent, new FXMLSettingController(stage));
     }
 
     @Override
     protected void openPlayerVsComputerPopup(ActionEvent actionEvent) {
-         AudioController.clickSound();
+        AudioController.clickSound();
         AppFunctions.openPopup(stage, new FXMLPlayerVsCompController(stage));
     }
 
     @Override
     protected void openPlayerVsPlayerPopup(ActionEvent actionEvent) {
-         AudioController.clickSound();
+        AudioController.clickSound();
         AppFunctions.openPopup(stage, new FXMLPlayerVsPlayerPopupController(stage));
     }
 
-
     @Override
     protected void openChat(ActionEvent actionEvent) {
-         AudioController.clickSound();
+        AudioController.clickSound();
         CONNECTION_FLAG.set(false);
 
     }
@@ -130,23 +143,20 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
     @Override
     public void handleSignInButton(ActionEvent actionEvent) {
         AppFunctions.openPopup(stage, new FXMLSigninController(stage, false));
-        
-//        CONNECTION_FLAG.set(true);
 
+//        CONNECTION_FLAG.set(true);
     }
-     protected void handleUserInfo() {
-         System.out.println("handleUserInfo");
-        
-         System.out.println(" not null ");
-         nameLabel.setText(ClientConnection.user.getName());
-        
-           //profileImageView.set
-         //rankStarLabel
-      
-       
-         
-     
-     }
+
+    protected void handleUserInfo() {
+        System.out.println("handleUserInfo");
+
+        System.out.println(" not null ");
+        nameLabel.setText(ClientConnection.user.getName());
+
+        //profileImageView.set
+        //rankStarLabel
+    }
+
     @Override
     protected void handleHistoryButton(ActionEvent actionEvent) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

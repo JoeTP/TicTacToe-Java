@@ -173,7 +173,7 @@ public abstract class FXMLHomeScreenBase extends StackPane {
 
         rankStarLabel.setLayoutX(23.0);
         rankStarLabel.setLayoutY(10.0);
-        rankStarLabel.setText("?");
+        rankStarLabel.setText("★");
 
         HBox.setHgrow(vBox0, javafx.scene.layout.Priority.ALWAYS);
         vBox0.setAlignment(javafx.geometry.Pos.TOP_CENTER);
