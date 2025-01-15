@@ -83,27 +83,25 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
 
     @Override
     protected void openSettingsScreen(ActionEvent actionEvent) {
-         AudioController.clickSound();
+        AudioController.clickSound();
         AppFunctions.goTo(actionEvent, new FXMLSettingController(stage));
     }
 
     @Override
     protected void openPlayerVsComputerPopup(ActionEvent actionEvent) {
-         AudioController.clickSound();
+        AudioController.clickSound();
         AppFunctions.openPopup(stage, new FXMLPlayerVsCompController(stage));
     }
 
     @Override
     protected void openPlayerVsPlayerPopup(ActionEvent actionEvent) {
-         AudioController.clickSound();
+        AudioController.clickSound();
         AppFunctions.openPopup(stage, new FXMLPlayerVsPlayerPopupController(stage));
     }
 
-
-
     @Override
     protected void openChat(ActionEvent actionEvent) {
-         AudioController.clickSound();
+        AudioController.clickSound();
         CONNECTION_FLAG.set(false);
 
     }
@@ -122,9 +120,7 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
 
     @Override
     public void handleSignInButton(ActionEvent actionEvent) {
-        AppFunctions.openPopup(stage, new FXMLSigninController(stage, false));
-//        CONNECTION_FLAG.set(true);
-
+        AppFunctions.openPopup(stage, new FXMLSigninController(stage, true));
     }
 
     @Override
@@ -134,6 +130,9 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
 
     @Override
     protected void handleLogoutButton(ActionEvent actionEvent) {
-        CONNECTION_FLAG.set(false);
+        if (ClientConnection.user != null) {
+            ClientConnection.terminateClient();
+            CONNECTION_FLAG.set(false);
+        }
     }
 }
