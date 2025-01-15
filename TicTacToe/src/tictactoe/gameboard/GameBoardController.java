@@ -334,27 +334,49 @@ public class GameBoardController extends FXMLGameBoardBase {
         } else if (playerTwo.getChar() == winner) {
 
             WinningLine.drawWinningLine(WinningLine.getStartLine(), WinningLine.getEndLine(), grid);
-
             System.out.println("PLAYER TWO WINNER");
             endGame();
             waitAndShowPopup(winner);
         } else if (move > 9) {
-            WinningLine.drawWinningLine(WinningLine.getStartLine(), WinningLine.getEndLine(), grid);
+            winner = "draw";
+            endGame();
             waitAndShowPopup(winner);
         }
     }
 
     private void waitAndShowPopup(String winnerChar) {
-        if (playerOne.getChar() == winnerChar || playerTwo.getChar() == winnerChar ) {
-            PauseTransition pause = new PauseTransition(Duration.seconds(2));
- 
-                pause.setOnFinished(event -> {
-                    AppFunctions.openPopup(stage, new FXMLPopUpWinController(stage, true, playerOne, playerTwo));
-                });
 
+        switch (winnerChar) {
+            case "X": {
+                if (playerOne.getChar() == winnerChar || playerTwo.getChar() == winnerChar) {
+                    PauseTransition pause = new PauseTransition(Duration.seconds(2));
+                    pause.setOnFinished(event -> {
+                        AppFunctions.openPopup(stage, new FXMLPopUpWinController(stage, winnerChar, playerOne, playerTwo));
+                    });
+                    pause.play();
+                }
+            }
+            break;
+            case "O": {
+                if (playerOne.getChar() == winnerChar || playerTwo.getChar() == winnerChar) {
+                    PauseTransition pause = new PauseTransition(Duration.seconds(2));
+                    pause.setOnFinished(event -> {
+                        AppFunctions.openPopup(stage, new FXMLPopUpWinController(stage, winnerChar, playerOne, playerTwo));
+                    });
+
+                    pause.play();
+                }
+            }
+            break;
+            case "draw": {
+                PauseTransition pause = new PauseTransition(Duration.seconds(2));
+                pause.setOnFinished(event -> {
+                    AppFunctions.openPopup(stage, new FXMLPopUpWinController(stage, winnerChar, playerOne, playerTwo));
+                });
                 pause.play();
+            }
+            break;
         }
-        
     }
 
     private String checkWinnerChar(Integer[][] board) {
@@ -422,7 +444,6 @@ public class GameBoardController extends FXMLGameBoardBase {
 
     @Override
     protected void handleLeaveButton(ActionEvent actionEvent) {
-
         endGame();
         AudioController.clickSound();
         AppFunctions.goTo(actionEvent, new FXMLHomeScreenController(stage));
