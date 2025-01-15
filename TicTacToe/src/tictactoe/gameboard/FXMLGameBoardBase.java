@@ -23,8 +23,8 @@ public abstract class FXMLGameBoardBase extends BorderPane {
     protected final VBox vBox;
     protected final Button leaveButton;
     protected final HBox hBox0;
-    protected final Label label;
-    protected final Label label0;
+    protected final Label playerOneLabel;
+    protected final Label playerTwoLabel;
     protected final AnchorPane anchorPane;
     protected final GridPane grid;
     protected final ColumnConstraints columnConstraints;
@@ -52,8 +52,8 @@ public abstract class FXMLGameBoardBase extends BorderPane {
         vBox = new VBox();
         leaveButton = new Button();
         hBox0 = new HBox();
-        label = new Label();
-        label0 = new Label();
+        playerOneLabel = new Label();
+        playerTwoLabel = new Label();
         anchorPane = new AnchorPane();
         grid = new GridPane();
         columnConstraints = new ColumnConstraints();
@@ -110,11 +110,11 @@ public abstract class FXMLGameBoardBase extends BorderPane {
         hBox0.setSpacing(50.0);
         BorderPane.setMargin(hBox0, new Insets(0.0, 20.0, 0.0, 20.0));
 
-        label.setText("Player1Name");
+        playerOneLabel.setText("Player1Name");
 
-        label0.setLayoutX(10.0);
-        label0.setLayoutY(10.0);
-        label0.setText("Player2Name");
+        playerTwoLabel.setLayoutX(10.0);
+        playerTwoLabel.setLayoutY(10.0);
+        playerTwoLabel.setText("Player2Name");
         setTop(hBox0);
         getStylesheets().add("/styling/generalStyle.css");
         getStylesheets().add("/tictactoe/gameboard/style.css");
@@ -230,8 +230,8 @@ public abstract class FXMLGameBoardBase extends BorderPane {
         hBox.getChildren().add(region0);
         vBox.getChildren().add(leaveButton);
         hBox.getChildren().add(vBox);
-        hBox0.getChildren().add(label);
-        hBox0.getChildren().add(label0);
+        hBox0.getChildren().add(playerOneLabel);
+        hBox0.getChildren().add(playerTwoLabel);
         grid.getColumnConstraints().add(columnConstraints);
         grid.getColumnConstraints().add(columnConstraints0);
         grid.getColumnConstraints().add(columnConstraints1);

@@ -2,7 +2,6 @@ package tictactoe.playervsplayeronline;
 
 import clientconnection.ClientConnection;
 
-
 import static clientconnection.ClientConnection.dis;
 import static clientconnection.ClientConnection.ois;
 import static clientconnection.ClientConnection.oos;
@@ -27,6 +26,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
 import models.DataModel;
+import models.Player;
 import shared.AppFunctions;
 
 import sounds.AudioController;
@@ -34,11 +34,12 @@ import tictactoe.onlinegmaeboard.FXMLGameBoardOnlineController;
 
 import tictactoe.gameboard.GameBoardController;
 
-
- 
 public class FXMLPlayerVsPlayerOnlineController extends FXMLPlayerVsPlayerOnlineBase {
 
     private Stage stage;
+
+    private Player playerOne = new Player();
+    private Player playerTwo = new Player();
 
     ClientConnection client;
 
@@ -53,17 +54,16 @@ public class FXMLPlayerVsPlayerOnlineController extends FXMLPlayerVsPlayerOnline
     @Override
     protected void handleBackButton(ActionEvent actionEvent) {
 
-         AudioController.clickSound();
-      
+        AudioController.clickSound();
 
         AppFunctions.closePopup(actionEvent);
     }
 
     @Override
     protected void openGameBoard(ActionEvent actionEvent) {
-         AudioController.clickSound();
+        AudioController.clickSound();
         AppFunctions.closePopup(actionEvent);
-        AppFunctions.goTo(actionEvent, new GameBoardController(stage));
+        AppFunctions.goTo(actionEvent, new GameBoardController(stage, playerOne, playerTwo));
     }
 
     @Override
@@ -74,9 +74,9 @@ public class FXMLPlayerVsPlayerOnlineController extends FXMLPlayerVsPlayerOnline
     protected void getActiveUsers() {
         new Thread(() -> {
             try {
-                
+
                 oos = new ObjectOutputStream(socket.getOutputStream());
-                
+
                 if (oos == null) {
                     throw new IllegalStateException("ObjectOutputStream (oos) is not initialized.");
                 }
@@ -85,19 +85,18 @@ public class FXMLPlayerVsPlayerOnlineController extends FXMLPlayerVsPlayerOnline
                 int activeUsersCount = dis.readInt();
                 List<String> activeUsers = new ArrayList<>();
                 String user;
-                for(int i = 0; i < activeUsersCount; i++){
+                for (int i = 0; i < activeUsersCount; i++) {
                     user = dis.readUTF();
                     activeUsers.add(user);
-                     System.out.println(user);
+                    System.out.println(user);
                 }
-                
-                
-                    Platform.runLater(() -> {
-                        activePlayersListView.getItems().addAll(activeUsers);
-                    });             
+
+                Platform.runLater(() -> {
+                    activePlayersListView.getItems().addAll(activeUsers);
+                });
             } catch (IOException ex) {
                 Logger.getLogger(FXMLPlayerVsPlayerOnlineController.class.getName()).log(Level.SEVERE, null, ex);
-            } 
+            }
         }).start();
 
     }

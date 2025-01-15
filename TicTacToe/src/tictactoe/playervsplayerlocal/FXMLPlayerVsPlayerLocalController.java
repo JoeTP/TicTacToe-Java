@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.stage.Stage;
+import models.Player;
 import shared.AppFunctions;
 import sounds.AudioController;
 import tictactoe.gameboard.GameBoardController;
@@ -28,20 +29,25 @@ public class FXMLPlayerVsPlayerLocalController extends FXMLPlayerVsPlayerLocalBa
      */
     private final Stage stage;
 
+    private Player playerOne = new Player();
+    private Player playerTwo = new Player();
+
     public FXMLPlayerVsPlayerLocalController(Stage stage) {
         this.stage = stage;
     }
 
     @Override
     protected void handleBackButton(ActionEvent actionEvent) {
-         AudioController.clickSound();
+        AudioController.clickSound();
         AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerPopupController(stage));
     }
 
     @Override
     protected void openGameBoard(ActionEvent actionEvent) {
-         AudioController.clickSound();
-        AppFunctions.closeAndGo(actionEvent, stage, new GameBoardController(stage));
+        AudioController.clickSound();
+        playerOne.setName(playerOneTextField.getText());
+        playerTwo.setName(playerTwoTextField.getText());
+        AppFunctions.closeAndGo(actionEvent, stage, new GameBoardController(stage, playerOne, playerTwo));
     }
 
 }

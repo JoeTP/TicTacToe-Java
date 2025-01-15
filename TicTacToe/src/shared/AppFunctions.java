@@ -52,15 +52,13 @@ public abstract class AppFunctions {
         stage.setScene(new Scene(root));
     }
 
-      public static void waitAndShowPopup(Stage stage,Scene currentScene, boolean isWinner) {
-
-        PauseTransition pause = new PauseTransition(Duration.seconds(2));
-        pause.setOnFinished(event -> {
-            stage.setScene(currentScene);
-            AppFunctions.openPopup(stage, new FXMLPopUpWinController(stage, isWinner));
-        });
-        pause.play();
-
-    }
+//      public static void waitAndShowPopup(Stage stage,Scene currentScene, boolean isWinner) {
+//        PauseTransition pause = new PauseTransition(Duration.seconds(2));
+//        pause.setOnFinished(event -> {
+//            stage.setScene(currentScene);
+//            AppFunctions.openPopup(stage, new FXMLPopUpWinController(stage, isWinner, platerOne, playerTwo));
+//        });
+//        pause.play();
+//    }
     
 }
