@@ -5,6 +5,8 @@ import java.util.Random;
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.geometry.Bounds;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -13,6 +15,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import models.Player;
 import shared.AppFunctions;
+import static shared.AppFunctions.openPopup;
 import tictactoe.homescreen.FXMLHomeScreenController;
 import tictactoe.popupwin.FXMLPopUpWinController;
 
@@ -121,16 +124,16 @@ public class GameBoardController extends FXMLGameBoardBase {
         if (playerOne.getChar() == winner) {
             WinningLine.drawWinningLine(WinningLine.getStartLine(), WinningLine.getEndLine(), grid);
             System.out.println("PLAYER ONE WINNER");
-            AppFunctions.waitAndShowPopup(stage, this.getScene(), true);
+            waitAndShowPopup(stage, this.getScene(), true);
 
         } else if (playerTwo.getChar() == winner) {
             WinningLine.drawWinningLine(WinningLine.getStartLine(), WinningLine.getEndLine(), grid);
             System.out.println("PLAYER TWO WINNER");
-            AppFunctions.waitAndShowPopup(stage, this.getScene(), true);
+            waitAndShowPopup(stage, this.getScene(), true);
 
         } else if (move > 9) {
             WinningLine.drawWinningLine(WinningLine.getStartLine(), WinningLine.getEndLine(), grid);
-            AppFunctions.waitAndShowPopup(stage, this.getScene(), true);
+            waitAndShowPopup(stage, this.getScene(), true);
         }
     }
 
@@ -165,6 +168,20 @@ public class GameBoardController extends FXMLGameBoardBase {
         }
         //last condition if no winner
         return null;
+    }
+
+    public void waitAndShowPopup(Stage stage, Scene currentScene, boolean isWinner) {
+
+        PauseTransition pause = new PauseTransition(Duration.seconds(2));
+        pause.setOnFinished(event -> {
+            stage.setScene(currentScene);
+            openPopup(stage, new FXMLPopUpWinController(stage, isWinner));
+            currentScene.setOnMouseExited(e -> {
+                FXMLPopUpWinController.mediaPlayer.stop();
+            });
+        });
+        pause.play();
+
     }
 
 //    public String checkRowsAndColumns(int[][] board) {
