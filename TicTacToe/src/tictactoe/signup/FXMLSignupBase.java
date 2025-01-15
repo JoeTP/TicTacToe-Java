@@ -13,7 +13,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import static shared.AppString.ICON_PATHS;
+import shared.AppString;
 
 public abstract class FXMLSignupBase extends BorderPane {
 
@@ -35,9 +35,7 @@ public abstract class FXMLSignupBase extends BorderPane {
     protected final ImageView imageView;
     protected final ImageView characterImageView;
     protected final Button nextImageBtn;
- 
     protected final ImageView imageView0;
- 
     protected int currentImageIndex = 0;
 
     public FXMLSignupBase() {
@@ -60,9 +58,7 @@ public abstract class FXMLSignupBase extends BorderPane {
         imageView = new ImageView();
         characterImageView = new ImageView();
         nextImageBtn = new Button();
- 
         imageView0 = new ImageView();
- 
 
         setPrefHeight(552.0);
         setPrefWidth(400.0);
@@ -79,8 +75,9 @@ public abstract class FXMLSignupBase extends BorderPane {
         backBtn.setLayoutY(44.0);
         backBtn.setMnemonicParsing(false);
         backBtn.setOnAction(this::handleBackButton);
+        backBtn.setStyle("-fx-background-radius: 50;");
         backBtn.getStyleClass().add("bigBtn");
-        backBtn.setText("Back");
+        backBtn.setText("B");
 
         signupTitle.setFill(javafx.scene.paint.Color.valueOf("#3e5879"));
         signupTitle.setLayoutX(144.0);
@@ -170,7 +167,7 @@ public abstract class FXMLSignupBase extends BorderPane {
         characterImageView.setFitWidth(64.0);
         characterImageView.setPickOnBounds(true);
         characterImageView.setPreserveRatio(true);
-        characterImageView.setImage(new Image(ICON_PATHS[currentImageIndex]));
+        characterImageView.setImage(new Image(AppString.ICON_PATHS[currentImageIndex]));
 
         nextImageBtn.setMnemonicParsing(false);
         nextImageBtn.setOnAction(this::showNextIcon);
@@ -200,11 +197,6 @@ public abstract class FXMLSignupBase extends BorderPane {
         anchorPane0.getChildren().add(hBox0);
         vBox.getChildren().add(anchorPane0);
 
- 
-        characterImageView.setFitWidth(64);
-        characterImageView.setFitHeight(64);
-        characterImageView.setImage(new Image(ICON_PATHS[currentImageIndex]));
- 
     }
 
     protected abstract void handleBackButton(javafx.event.ActionEvent actionEvent);
