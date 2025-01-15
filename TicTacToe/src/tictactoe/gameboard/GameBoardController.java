@@ -62,9 +62,6 @@ public class GameBoardController extends FXMLGameBoardBase {
         this.stage = stage;
         this.playerOne = playerOne;
         this.playerTwo = playerTwo;
-        if (playerTwo instanceof ComputerPlayer) {
-            this.playerTwo = new ComputerPlayer();
-        }
         assignPlayers();
         changingLabelsStyles();
 
@@ -74,17 +71,22 @@ public class GameBoardController extends FXMLGameBoardBase {
         playerOneLabel.setText(playerOne.getName());
         playerTwoLabel.setText(playerTwo.getName());
 
+        if (playerTwo instanceof ComputerPlayer) {
+            playerTwoLabel.setText("Computer");
+            playerOneLabel.setText("Player");
+        }
+
         Random random = new Random();
         if (random.nextBoolean()) {
             playerOne.setChar(X_CHAR);
             playerTwo.setChar(O_CHAR);
-            playerOne.hisTurn = true;
 
         } else {
             playerOne.setChar(O_CHAR);
             playerTwo.setChar(X_CHAR);
-            playerTwo.hisTurn = true;
         }
+            playerOne.hisTurn = true;
+            playerTwo.hisTurn = false;
 
         startCountdownTimer();
     }
@@ -109,15 +111,14 @@ public class GameBoardController extends FXMLGameBoardBase {
             if (playerOne.hisTurn) {
                 b.setText(playerOne.getChar());
 
-                playerTwo.hisTurn = !playerTwo.hisTurn;
-                playerOne.hisTurn = !playerOne.hisTurn;
-
             } else {
                 b.setText(playerTwo.getChar());
-                playerTwo.hisTurn = !playerTwo.hisTurn;
-                playerOne.hisTurn = !playerOne.hisTurn;
 
             }
+
+            playerOne.hisTurn = !playerOne.hisTurn;
+            playerTwo.hisTurn = !playerTwo.hisTurn;
+
             changingLabelsStyles();
 
             Integer c = GridPane.getColumnIndex(b);
@@ -125,13 +126,13 @@ public class GameBoardController extends FXMLGameBoardBase {
             fillBoard(r, c);
 
             checkPlayerWinner();
-            printGame();
+
             if (!isEndOfGame) {
                 if (playerTwo instanceof ComputerPlayer && playerTwo.hisTurn) {
-
                     makeComputerMove();
                 }
             }
+            printGame();
             startCountdownTimer();
 
         }
@@ -233,27 +234,25 @@ public class GameBoardController extends FXMLGameBoardBase {
     private void makeComputerMove() {
         Random random = new Random();
         String currentChar = playerOne.hisTurn ? playerOne.getChar() : playerTwo.getChar();
-        System.out.println("automatic char: " + currentChar);
-        System.out.println("automatic Move: " + move);
+        System.out.println("Automatic char: " + currentChar);
+
         Map<Button, Integer> cells = new HashMap<>();
         for (int r = 0; r < 3; r++) {
             for (int c = 0; c < 3; c++) {
                 if (board[r][c] == null) {
                     Button b = getButtonsByRowAndColumn(c, r);
                     cells.put(b, random.nextInt());
-                    System.out.println("found nulls CELLS");
                 }
             }
         }
+
         if (!cells.isEmpty()) {
             int randMapValue = random.nextInt(cells.size());
-            Button compButon = (Button) cells.keySet().toArray()[randMapValue];
-            System.out.println("auto butn click");
-            setTurn(compButon);
+            Button compButton = (Button) cells.keySet().toArray()[randMapValue];
+            setTurn(compButton); // Ensure setTurn toggles turns
+        } else {
+            System.out.println("No empty cells available for automatic move.");
         }
-
-        System.out.println("No empty cells available for automatic move.");
-        return;
     }
 
     private void printGame() {
