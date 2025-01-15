@@ -13,7 +13,7 @@
     -fx-text-fill: #fff;
 }
 
-#name {
+#nameLabel {
     -fx-font-family: "Chicle", serif;
     -fx-font-weight: bold;
     -fx-font-size: 20px;
@@ -23,18 +23,18 @@
 
 .rect {
     -fx-background-color: #3e5879;
-    -fx-background-radius: 15px 15px 0 0;
+    -fx-background-radius: 0 0 50px 0;
 }
 
 .buttons {
     -fx-background-radius: 15px;
-    -fx-background-color: #f5efe7;
+    -fx-background-color: #3e5879;
     -fx-font-family: "Chicle", serif;
-    -fx-text-fill: #3e5879;
+    -fx-text-fill: #f5efe7;
+    /* -fx-font-size: 10px; */
     -fx-effect: dropshadow(gaussian, #233144, 7, 0, 0.0, 0.0);
-
-
 }
+.buttons:hover {}
 
 #logoutButton{
     -fx-text-fill: #f04140;

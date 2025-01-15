@@ -26,7 +26,7 @@ import models.UserModel;
 public class ClientConnection {
 
     public static DataInputStream dis;
-      
+
     public static DataOutputStream dos;
     public static PrintStream ps;
     public static Socket socket;
@@ -34,16 +34,15 @@ public class ClientConnection {
     public static ObjectInputStream ois;
     public static ObjectOutputStream oos;
     public static UserModel user;
-    
-    
+
     public void connectToServer() throws IOException {
         socket = new Socket("127.0.0.1", 5001);
         System.out.println("Cleint connection Established !");
         dis = new DataInputStream(socket.getInputStream());
         ps = new PrintStream(socket.getOutputStream());
         oos = new ObjectOutputStream(socket.getOutputStream());
-       
-/*
+        ois = new ObjectInputStream(socket.getInputStream());
+        /*
         // thread for each client
         Thread th;
         th = new Thread(() -> {
@@ -73,7 +72,7 @@ public class ClientConnection {
             Logger.getLogger(ClientConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public static void terminateClient() {
         try {
             ps.close();
@@ -86,7 +85,7 @@ public class ClientConnection {
         }
     }
 
-    public static void sendData(DataModel d) throws IOException {       
+    public static void sendData(DataModel d) throws IOException {
         oos.writeObject(d);
         oos.flush();
     }
@@ -95,25 +94,24 @@ public class ClientConnection {
         String response = dis.readUTF();
         return response;
     }
-    
-//      public static int receveResponseInt() throws IOException{
-//        int response = dis.readInt();
-//        return response;
-//    }
-//            public static String receveResponseString() throws IOException{
-//        String response = dis.readUTF();
-//        return response;
-//    }
-//      public static DataModel recieveObject() throws IOException{
-//          DataModel response=null;
-//        try {
-//             response = (DataModel) ois.readObject();
-//          
-//        } catch (ClassNotFoundException ex) {
-//            Logger.getLogger(ClientConnection.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//          return response;
-//    }
-      
+
+ //      public static int receveResponseInt() throws IOException{
+            //        int response = dis.readInt();
+            //        return response;
+            //    }
+            //            public static String receveResponseString() throws IOException{
+            //        String response = dis.readUTF();
+            //        return response;
+            //    }
+            //      public static DataModel recieveObject() throws IOException{
+            //          DataModel response=null;
+            //        try {
+            //             response = (DataModel) ois.readObject();
+            //          
+            //        } catch (ClassNotFoundException ex) {
+            //            Logger.getLogger(ClientConnection.class.getName()).log(Level.SEVERE, null, ex);
+            //        }
+            //          return response;
+            //    }
 
 }

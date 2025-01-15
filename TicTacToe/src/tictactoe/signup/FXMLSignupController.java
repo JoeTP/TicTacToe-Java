@@ -26,6 +26,7 @@ import models.UserModel;
 import shared.AppFunctions;
 import shared.AppString;
 import static shared.AppString.ICON_PATHS;
+import sounds.AudioController;
 import tictactoe.playervsplayeronline.FXMLPlayerVsPlayerOnlineController;
 import tictactoe.signin.FXMLSigninController;
 
@@ -46,18 +47,24 @@ public class FXMLSignupController extends FXMLSignupBase {
 
     @Override
     protected void handleBackButton(ActionEvent actionEvent) {
+         AudioController.clickSound();
         AppFunctions.closePopup(actionEvent);
     }
 
     @Override
     protected void goToSignin(ActionEvent actionEvent) {
+         AudioController.clickSound();
         AppFunctions.goTo(actionEvent, new FXMLSigninController(stage,true));
     }
 
     @Override
 
     protected void goToActiveUsers(ActionEvent actionEvent) {
+
         ClientConnection.user = getNewUserData();
+
+         AudioController.clickSound();
+
         if (user != null) {
             DataModel data = new DataModel(user, 1);
             client = new ClientConnection();
@@ -94,7 +101,7 @@ public class FXMLSignupController extends FXMLSignupBase {
                         try {
                             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Signup was successful.");
                             alert.showAndWait();
-                            AppFunctions.closePopup(actionEvent);
+                            //AppFunctions.closePopup(actionEvent);
                             AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage,client));
                         } catch (Exception e) {
                             e.printStackTrace();

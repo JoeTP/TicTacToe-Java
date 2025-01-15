@@ -1,5 +1,6 @@
 package shared;
 
+import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -10,8 +11,10 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 import tictactoe.gameboard.GameBoardController;
 import tictactoe.offlinegameboard.FXMLOfflineGameBoardController;
+import tictactoe.popupwin.FXMLPopUpWinController;
 
 /**
  * Here we handle commonly used functions like navigating to another scene.
@@ -35,7 +38,7 @@ public abstract class AppFunctions {
         newStage.show();
 
     }
-
+    
     public static void closePopup(ActionEvent actionEvent) {
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.close();
@@ -49,4 +52,15 @@ public abstract class AppFunctions {
         stage.setScene(new Scene(root));
     }
 
+      public static void waitAndShowPopup(Stage stage,Scene currentScene, boolean isWinner) {
+
+        PauseTransition pause = new PauseTransition(Duration.seconds(2));
+        pause.setOnFinished(event -> {
+            stage.setScene(currentScene);
+            AppFunctions.openPopup(stage, new FXMLPopUpWinController(stage, isWinner));
+        });
+        pause.play();
+
+    }
+    
 }

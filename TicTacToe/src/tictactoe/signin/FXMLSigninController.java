@@ -32,6 +32,8 @@ import models.UserModel;
 import shared.AppFunctions;
 
 import shared.*;
+import static shared.AppConstants.CONNECTION_FLAG;
+import sounds.AudioController;
 
 import tictactoe.gameboard.GameBoardController;
 
@@ -55,17 +57,23 @@ public class FXMLSigninController extends FXMLSigninBase {
 
     @Override
     public void goToSignup(ActionEvent event) {
+        AudioController.clickSound();
         AppFunctions.goTo(event, new FXMLSignupController(stage));
     }
 
     @Override
     protected void handleBackButton(ActionEvent actionEvent) {
+        AudioController.clickSound();
         AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerPopupController(stage));
     }
 
     protected void goToActiveUsers(ActionEvent actionEvent) {
         ClientConnection.user = getNewUserData();
+
+        AudioController.clickSound();
+
         if (user != null) {
+
             DataModel data = new DataModel(user, 2);
             client = new ClientConnection();
             try {
@@ -85,6 +93,7 @@ public class FXMLSigninController extends FXMLSigninBase {
                 try {
                     client.sendData(data);
                     response = client.receveResponse();
+                    System.out.println(response);                    
                 } catch (IOException ex) {
                     Platform.runLater(() -> {
                         Alert alert = new Alert(Alert.AlertType.ERROR, "Couldn't connect to server.");
@@ -95,30 +104,40 @@ public class FXMLSigninController extends FXMLSigninBase {
                 }
 
                 String finalResponse = response;
-                Platform.runLater(() -> {
-                    if (finalResponse.equals(AppString.SIGNIN_DONE)) {
-                        try {
+
+                if (finalResponse.equals(AppString.SIGNIN_DONE)) {
+                    try {
+//                        DataModel newData = (DataModel) ClientConnection.ois.readObject();
+//                        ClientConnection.user = newData.getUser();
+                        Platform.runLater(() -> {
                             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Signin was successful.");
                             alert.showAndWait();
-                            AppFunctions.closePopup(actionEvent);
+                            //AppFunctions.closePopup(actionEvent);
+                            //CONNECTION_FLAG.set(true);
                             AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage, client));
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    } else if (finalResponse.equals(AppString.SIGNIN_ALREADY_FOUND)) {
+                        });
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else if (finalResponse.equals(AppString.SIGNIN_ALREADY_FOUND)) {
+                    Platform.runLater(() -> {
                         Alert alert = new Alert(Alert.AlertType.INFORMATION, "You are logged in from another device");
                         alert.showAndWait();
                         ClientConnection.terminateClient();
-                    } else {
-                        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Username orpassword are incorrect.");
+                    });
+                } else {
+                    Platform.runLater(() -> {
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Username or password are incorrect.");
                         alert.showAndWait();
                         ClientConnection.terminateClient();
-                    }
-                });
+                    });
+                }
+
             }).start();
         }
     }
-            
+
     protected UserModel getNewUserData() {
         UserModel user = new UserModel();
         boolean valid = true;
@@ -144,7 +163,6 @@ public class FXMLSigninController extends FXMLSigninBase {
         }
 
     }
-
 
 //    @Override
 //    protected void goToActiveUsers(ActionEvent actionEvent) {
@@ -203,5 +221,4 @@ public class FXMLSigninController extends FXMLSigninBase {
 //        }
 //
 //    }
-
 }

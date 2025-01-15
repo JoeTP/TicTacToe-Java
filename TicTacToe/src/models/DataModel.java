@@ -19,6 +19,9 @@ public class DataModel implements Serializable {
     String player;
     String rival;
 
+    public DataModel() {
+    }
+
     public DataModel(int state) {
         this.state = state;
     }

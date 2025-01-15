@@ -88,16 +88,25 @@ public class ClientHandler extends Thread {
                         }
                         ps.writeUTF(response);
                         ps.flush();
+                        if (response.equals(AppStrings.SIGNIN_DONE)) {
+//                            updateUserData();
+//                            sendUserData(user);
+                        }
                         break;
                     case 3:
                         System.out.println("in case 3 : ");
                         user = data.getUser();
                         findClientHandler(user.getName()).sendActiveUsersList();
                         break;
-                    default:
-                        System.out.println("Unknown state: " + state);
-                        ps.writeUTF("Unknown request");
-                        ps.flush();
+                    case 4:
+                        updateUserData();
+                        sendUserData(user);
+                        System.out.println("USER IS UPDATED AND SENT TO CLIENT");
+                        break;
+//                    default:
+//                        System.out.println("Unknown state: " + state);
+//                        ps.writeUTF("Unknown request");
+//                        ps.flush();
                 }
 
             }
@@ -120,6 +129,7 @@ public class ClientHandler extends Thread {
         }
     }
 
+
     protected void sendActiveUsersList() {
         try {
             ps.writeInt(usernames.size());
@@ -129,6 +139,7 @@ public class ClientHandler extends Thread {
                 if (!username.equals(user.getName())) {
                     ps.writeUTF(username);
                 }
+
             }
             ps.flush();
         } catch (IOException ex) {
@@ -183,6 +194,19 @@ public class ClientHandler extends Thread {
             }
         }
         return true;
+    }
+
+    private void sendUserData(UserModel user) throws IOException {
+        DataModel data = new DataModel(user, 1);
+        System.out.println(user.getName());
+        oos.writeObject(data);
+        oos.flush();
+    }
+
+    private void updateUserData() {
+
+        user = DataAccessLayer.getUserData(user.getName(), user.getPassword());
+
     }
 
 }
