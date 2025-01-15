@@ -148,6 +148,9 @@ public class GameBoardController extends FXMLGameBoardBase {
                         }
                         isTimeOut = false;
 
+
+
+
                     })
             );
             timeLine.setCycleCount(Timeline.INDEFINITE);
@@ -275,6 +278,7 @@ public class GameBoardController extends FXMLGameBoardBase {
             pause.setOnFinished(event -> {
                 AppFunctions.openPopup(stage, new FXMLPopUpWinController(stage, true, playerOne, playerTwo));
             });
+
             pause.play();
         }
     }
@@ -344,8 +348,11 @@ public class GameBoardController extends FXMLGameBoardBase {
 
     @Override
     protected void handleLeaveButton(ActionEvent actionEvent) {
+
         endGame();
         AudioController.clickSound();
+        FXMLPopUpWinController.mediaPlayer.stop();
+        FXMLPopUpWinController.mediaPlayer.stopTimeProperty();
         AppFunctions.goTo(actionEvent, new FXMLHomeScreenController(stage));
     }
 

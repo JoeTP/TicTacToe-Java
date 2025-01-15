@@ -99,6 +99,7 @@ public class FXMLPlayerVsPlayerOnlineController extends FXMLPlayerVsPlayerOnline
                 }
                 Platform.runLater(() -> {
                     activePlayersListView.getItems().clear();
+
                     activePlayersListView.getItems().addAll(activeUsers);
                 });
             } catch (IOException ex) {
