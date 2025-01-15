@@ -21,7 +21,7 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
     Stage stage;
     Player playerOne;
     Player playerTwo;
-    public static MediaPlayer mediaPlayer;
+    MediaPlayer mediaPlayer;
 
     public FXMLPopUpWinController(Stage stage, Boolean isWinner, Player playerOne, Player playerTwo) {
         this.stage = stage;
@@ -36,20 +36,18 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
 
         //winOrLosePopUp.setVisible(true);
         if (isWinner) {
-            try {
-                winAndLoseLabel.setText(AppString.WIN_LABLE);
-                congratsLable.setText(AppString.CONGRATS);
-                rightCupIcon.setImage(new Image(getClass().getResource("/assets/icons/winner.png").toExternalForm()));
-                leftCupIcon.setImage(new Image(getClass().getResource("/assets/icons/winner.png").toExternalForm()));
 
-                Media loadVideo = new Media(getClass().getResource(AppString.WIN_VIDEO_URL).toURI().toString());
-                mediaPlayer = new MediaPlayer(loadVideo);
-                mediaPlayer.setAutoPlay(true);
-                winOrLoseVideo.setMediaPlayer(mediaPlayer);
-                stage.setOnCloseRequest(e -> mediaPlayer.stop());
-            } catch (URISyntaxException ex) {
-                Logger.getLogger(FXMLPopUpWinController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            winAndLoseLabel.setText(AppString.WIN_LABLE);
+            congratsLable.setText(AppString.CONGRATS);
+            rightCupIcon.setImage(new Image(getClass().getResource("/assets/icons/winner.png").toExternalForm()));
+            leftCupIcon.setImage(new Image(getClass().getResource("/assets/icons/winner.png").toExternalForm()));
+
+            Media loadVideo = new Media(this.getClass().getResource(AppString.WIN_VIDEO_URL).toExternalForm());
+            mediaPlayer = new MediaPlayer(loadVideo);
+
+            mediaPlayer.setVolume(0.5);
+            mediaPlayer.play();
+            winOrLoseVideo.setMediaPlayer(mediaPlayer);
 
         } else {
 
@@ -57,12 +55,12 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
             congratsLable.setText(AppString.BAD_LUCK);
             rightCupIcon.setImage(new Image(getClass().getResource("/assets/icons/gameOver.png").toExternalForm()));
             leftCupIcon.setImage(new Image(getClass().getResource("/assets/icons/gameOver.png").toExternalForm()));
+
             mediaPlayer = new MediaPlayer(new Media(this.getClass().getResource(AppString.WIN_VIDEO_URL).toExternalForm()));
-            mediaPlayer.setAutoPlay(true);
             winOrLoseVideo.setMediaPlayer(mediaPlayer);
 
-            stage.setOnCloseRequest(e -> mediaPlayer.stop());
-
+            mediaPlayer.setVolume(0.5);
+            mediaPlayer.play();
         }
     }
 
@@ -78,6 +76,7 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
 
     @Override
     protected void handleLeaveButton(ActionEvent actionEvent) {
+        mediaPlayer.pause();
         AppFunctions.closeAndGo(actionEvent, stage, new FXMLHomeScreenController(stage));
     }
 
