@@ -14,9 +14,9 @@ public abstract class FXMLPlayerVsPlayerLocalBase extends BorderPane {
     protected final AnchorPane anchorPane;
     protected final Button backBtn;
     protected final AnchorPane anchorPane0;
-    protected final TextField textField;
+    protected final TextField playerOneTextField;
     protected final Label label;
-    protected final TextField textField0;
+    protected final TextField playerTwoTextField;
     protected final Label label0;
     protected final Button startBtn;
     protected final Text playerVsPlayerLabel;
@@ -26,9 +26,9 @@ public abstract class FXMLPlayerVsPlayerLocalBase extends BorderPane {
         anchorPane = new AnchorPane();
         backBtn = new Button();
         anchorPane0 = new AnchorPane();
-        textField = new TextField();
+        playerOneTextField = new TextField();
         label = new Label();
-        textField0 = new TextField();
+        playerTwoTextField = new TextField();
         label0 = new Label();
         startBtn = new Button();
         playerVsPlayerLabel = new Text();
@@ -63,11 +63,11 @@ public abstract class FXMLPlayerVsPlayerLocalBase extends BorderPane {
         anchorPane0.setPrefHeight(200.0);
         anchorPane0.setPrefWidth(200.0);
 
-        textField.setLayoutX(92.0);
-        textField.setLayoutY(129.0);
-        textField.setPrefHeight(40.0);
-        textField.setPrefWidth(280.0);
-        textField.setPromptText("Player 1 name");
+        playerOneTextField.setLayoutX(92.0);
+        playerOneTextField.setLayoutY(129.0);
+        playerOneTextField.setPrefHeight(40.0);
+        playerOneTextField.setPrefWidth(280.0);
+        playerOneTextField.setPromptText("Player 1 name");
 
         label.setLayoutX(193.0);
         label.setLayoutY(78.0);
@@ -75,11 +75,11 @@ public abstract class FXMLPlayerVsPlayerLocalBase extends BorderPane {
         label.setText("Player 1");
         label.setFont(new Font(24.0));
 
-        textField0.setLayoutX(92.0);
-        textField0.setLayoutY(246.0);
-        textField0.setPrefHeight(40.0);
-        textField0.setPrefWidth(280.0);
-        textField0.setPromptText("Player 2 name");
+        playerTwoTextField.setLayoutX(92.0);
+        playerTwoTextField.setLayoutY(246.0);
+        playerTwoTextField.setPrefHeight(40.0);
+        playerTwoTextField.setPrefWidth(280.0);
+        playerTwoTextField.setPromptText("Player 2 name");
 
         label0.setLayoutX(190.0);
         label0.setLayoutY(191.0);
@@ -109,9 +109,9 @@ public abstract class FXMLPlayerVsPlayerLocalBase extends BorderPane {
         setCenter(anchorPane0);
 
         anchorPane.getChildren().add(backBtn);
-        anchorPane0.getChildren().add(textField);
+        anchorPane0.getChildren().add(playerOneTextField);
         anchorPane0.getChildren().add(label);
-        anchorPane0.getChildren().add(textField0);
+        anchorPane0.getChildren().add(playerTwoTextField);
         anchorPane0.getChildren().add(label0);
         anchorPane0.getChildren().add(startBtn);
         anchorPane0.getChildren().add(playerVsPlayerLabel);

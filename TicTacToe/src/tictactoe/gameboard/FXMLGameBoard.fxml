@@ -33,15 +33,25 @@
       </HBox>
    </bottom>
    <top>
-      <HBox alignment="CENTER" prefHeight="73.0" spacing="50.0" BorderPane.alignment="CENTER">
-         <BorderPane.margin>
-            <Insets left="20.0" right="20.0" />
-         </BorderPane.margin>
+      <VBox>
          <children>
-            <Label text="Player1Name" />
-            <Label layoutX="10.0" layoutY="10.0" text="Player2Name" />
+            <HBox spacing="15.0">
+               <children>
+                  <Label layoutX="10.0" layoutY="10.0" text="O" />
+                  <Label fx:id="playerOneLabel" text="Player1Name" />
+               </children>
+            </HBox>
+            <HBox spacing="15.0">
+               <children>
+                  <Label layoutX="10.0" layoutY="10.0" text="X" />
+                  <Label fx:id="playerTwoLabel" text="Player2Name" />
+               </children>
+            </HBox>
          </children>
-      </HBox>
+         <padding>
+            <Insets left="20.0" />
+         </padding>
+      </VBox>
    </top>
    <styleClass>
       <String fx:value="mainBackground" />
