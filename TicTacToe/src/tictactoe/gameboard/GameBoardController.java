@@ -19,6 +19,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import models.Player;
@@ -62,22 +63,26 @@ public class GameBoardController extends FXMLGameBoardBase {
         this.playerOne = playerOne;
         this.playerTwo = playerTwo;
         assignPlayers();
+        changingLabelsStyles();
+
     }
 
     private void assignPlayers() {
         playerOneLabel.setText(playerOne.getName());
         playerTwoLabel.setText(playerTwo.getName());
-        
+
         Random random = new Random();
         if (random.nextBoolean()) {
             playerOne.setChar(X_CHAR);
             playerTwo.setChar(O_CHAR);
             playerOne.hisTurn = true;
+
         } else {
             playerOne.setChar(O_CHAR);
             playerTwo.setChar(X_CHAR);
             playerTwo.hisTurn = true;
         }
+
         startCountdownTimer();
     }
 
@@ -101,6 +106,8 @@ public class GameBoardController extends FXMLGameBoardBase {
             } else {
                 b.setText(playerTwo.getChar());
             }
+            changingLabelsStyles();
+
             playerTwo.hisTurn = !playerTwo.hisTurn;
             playerOne.hisTurn = !playerOne.hisTurn;
 
@@ -238,17 +245,6 @@ public class GameBoardController extends FXMLGameBoardBase {
 
     }
 
-    private void setPlayerXMove() {
-
-    }
-
-    private void setPlayerOMove() {
-
-    }
-
-    private void traceMoves(Integer r, Integer c) {
-    }
-
     private void fillBoard(Integer r, Integer c) {
         if (r == null) {
             r = 0;
@@ -267,28 +263,27 @@ public class GameBoardController extends FXMLGameBoardBase {
 
             System.out.println("PLAYER ONE WINNER");
             endGame();
-            waitAndShowPopup();
+            waitAndShowPopup(winner);
         } else if (playerTwo.getChar() == winner) {
             WinningLine.drawWinningLine(WinningLine.getStartLine(), WinningLine.getEndLine(), grid);
 
             System.out.println("PLAYER TWO WINNER");
             endGame();
-            waitAndShowPopup();
+            waitAndShowPopup(winner);
         } else if (move > 9) {
             WinningLine.drawWinningLine(WinningLine.getStartLine(), WinningLine.getEndLine(), grid);
-
-            waitAndShowPopup();
-
+            waitAndShowPopup(winner);
         }
-
     }
 
-    private void waitAndShowPopup() {
-        PauseTransition pause = new PauseTransition(Duration.seconds(2));
-        pause.setOnFinished(event -> {
-            AppFunctions.openPopup(stage, new FXMLPopUpWinController(stage, true, playerOne, playerTwo));
-        });
-        pause.play();
+    private void waitAndShowPopup(String winnerChar) {
+        if (playerOne.getChar() == winnerChar || playerTwo.getChar() == winnerChar) {
+            PauseTransition pause = new PauseTransition(Duration.seconds(2));
+            pause.setOnFinished(event -> {
+                AppFunctions.openPopup(stage, new FXMLPopUpWinController(stage, true, playerOne, playerTwo));
+            });
+            pause.play();
+        }
     }
 
     private String checkWinnerChar(Integer[][] board) {
@@ -335,6 +330,23 @@ public class GameBoardController extends FXMLGameBoardBase {
     private String getWinnerCharacter(int value) {
         //return the value of the 1st itration
         return (value % 2 == 0) ? X_CHAR : O_CHAR;
+    }
+
+    void changingLabelsStyles() {
+        Platform.runLater(() -> {
+            if (playerOne.hisTurn) {
+                playerOneLabel.setTextFill(Paint.valueOf("#21bd5c")); //green
+                playerOneCharacter.setTextFill(Paint.valueOf("#3e5879"));
+                playerTwoLabel.setTextFill(Paint.valueOf("#3e5879"));
+                playerTwoCharacter.setTextFill(Paint.valueOf("#21bd5c")); //green
+            }
+            if (playerTwo.hisTurn) {
+                playerTwoLabel.setTextFill(Paint.valueOf("#21bd5c")); //green
+                playerTwoCharacter.setTextFill(Paint.valueOf("#3e5879"));
+                playerOneLabel.setTextFill(Paint.valueOf("#3e5879"));
+                playerOneCharacter.setTextFill(Paint.valueOf("#21bd5c")); //green
+            }
+        });
     }
 
     @Override
