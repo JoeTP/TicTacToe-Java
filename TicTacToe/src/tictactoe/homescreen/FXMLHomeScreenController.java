@@ -43,46 +43,49 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
 
     public FXMLHomeScreenController(Stage stage) {
         this.stage = stage;
-        if(ClientConnection.user != null ){
-              accInfoRect.setVisible(true);
-            handleUserInfo();
-          
-        }
+
+//        if(ClientConnection.user != null ){
+//              accInfoRect.setVisible(true);
+//            handleUserInfo();
+//          
+//        }
         //observeConnection();
+    
+
+        observeConnection();
     }
 
+    private void observeConnection() {
+        if (CONNECTION_FLAG == null) {
+            CONNECTION_FLAG = new SimpleBooleanProperty(false);
+        }
+        chatBtn.disableProperty().bind(CONNECTION_FLAG.not());
+        accInfoRect.visibleProperty().bind(CONNECTION_FLAG);
+        CONNECTION_FLAG.addListener((observable, oldValue, newValue) -> {
+            //to keep updating
+            updateConnectionLabel();
+        });
 
+        //applied on initial
+        updateConnectionLabel();
+    }
 
-//    private void observeConnection() {
-//        if (CONNECTION_FLAG == null) {
-//            CONNECTION_FLAG = new SimpleBooleanProperty(false);
-//        }
-//        chatBtn.disableProperty().bind(CONNECTION_FLAG.not());
-//        accInfoRect.visibleProperty().bind(CONNECTION_FLAG);
-//        CONNECTION_FLAG.addListener((observable, oldValue, newValue) -> {
-//            //to keep updating
-//            updateConnectionLabel();
-//        });
-//
-//        //applied on initial
-//        updateConnectionLabel();
-//    }
-//
-//    private void updateConnectionLabel() {
-//        Platform.runLater(() -> {
-//            if (CONNECTION_FLAG.get()) {
-//                nameLabel.setText(ClientConnection.user.getName());
-//                connectionIndicatorImageView.setImage(new Image("/assets/icons/Wifi-on.png"));
-//                connectionLabel.setText(AppString.ONLINE);
-//            } else {
-//                nameLabel.setText("FAIL");
-//                connectionIndicatorImageView.setImage(new Image("/assets/icons/Wifi-off.png"));
-//                connectionLabel.setText(AppString.OFFLINE);
-//            }
-//        });
-//
-//    }
+    private void updateConnectionLabel() {
+        Platform.runLater(() -> {
+            if (CONNECTION_FLAG.get()) {
+                nameLabel.setText(ClientConnection.user.getName());
+                 wonGamesLabel.setText(ClientConnection.user.getWins()+"");
+         playedGamesLabel.setText(ClientConnection.user.getNumOfGames()+"");
+                connectionIndicatorImageView.setImage(new Image("/assets/icons/Wifi-on.png"));
+                connectionLabel.setText(AppString.ONLINE);
+            } else {
+                nameLabel.setText("FAIL");
+                connectionIndicatorImageView.setImage(new Image("/assets/icons/Wifi-off.png"));
+                connectionLabel.setText(AppString.OFFLINE);
+            }
+        });
 
+    }
 
     @Override
     protected void exitApp(ActionEvent actionEvent) {
@@ -139,8 +142,7 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
         
          System.out.println(" not null ");
          nameLabel.setText(ClientConnection.user.getName());
-         wonGamesLabel.setText(ClientConnection.user.getWins()+"");
-         playedGamesLabel.setText(ClientConnection.user.getNumOfGames()+"");
+        
            //profileImageView.set
          //rankStarLabel
       

@@ -85,7 +85,9 @@ public class FXMLSignupController extends FXMLSignupBase {
                 try {
                     
                     client.sendData(data);
-                    response = client.receveResponse();
+                    DataModel newData = ClientConnection.receveData();
+                    user = newData.getUser();
+                    response = newData.getResponse();
                 } catch (IOException ex) {
                     Platform.runLater(() -> {
                         Alert alert = new Alert(Alert.AlertType.ERROR, "Couldn't connect to server.");
@@ -101,7 +103,7 @@ public class FXMLSignupController extends FXMLSignupBase {
                         try {
                             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Signup was successful.");
                             alert.showAndWait();
-                            //AppFunctions.closePopup(actionEvent);
+                            AppFunctions.closePopup(actionEvent);
                             AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage,client));
                         } catch (Exception e) {
                             e.printStackTrace();

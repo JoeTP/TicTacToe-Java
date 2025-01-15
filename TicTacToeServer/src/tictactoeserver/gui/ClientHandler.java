@@ -39,8 +39,6 @@ public class ClientHandler extends Thread {
     public ClientHandler(Socket client) {
         this.client = client;
         try {
-            //dis = new DataInputStream(client.getInputStream());
-            //ps = new DataOutputStream(client.getOutputStream());
             oos = new ObjectOutputStream(client.getOutputStream());
             ois = new ObjectInputStream(client.getInputStream());
 
@@ -88,11 +86,8 @@ public class ClientHandler extends Thread {
                                 usernames.add(user.getName());
                             }
                         }
-
-
                         updateUserData();
                         sendUserData(user, response);
-
 
                         break;
                     case 3:
@@ -110,8 +105,6 @@ public class ClientHandler extends Thread {
             }
 
         } catch (IOException ex) {
-
-            Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
             disconnect();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
@@ -128,7 +121,6 @@ public class ClientHandler extends Thread {
         }
     }
 
-
     protected void sendActiveUsersList() {
         try {
             oos.writeInt(usernames.size());
@@ -138,7 +130,6 @@ public class ClientHandler extends Thread {
                 if (!username.equals(user.getName())) {
                     oos.writeUTF(username);
                 }
-
             }
             oos.flush();
         } catch (IOException ex) {
@@ -165,7 +156,7 @@ public class ClientHandler extends Thread {
             synchronized (clients) {
                 clients.remove(this);
             }
-            if (response != null && !response.equals(AppStrings.SIGNIN_ALREADY_FOUND)
+            if (response != null && !response.equals(AppStrings.SIGNIN_ALREADY_FOUND) 
                     && !response.equals(AppStrings.SIGNUP_FAILED)
                     && !response.equals(AppStrings.SIGNIN_FAILED)) {
 
@@ -199,7 +190,6 @@ public class ClientHandler extends Thread {
         }
         return true;
     }
-
 
     private void sendUserData(UserModel user, String response) throws IOException {
         if (client != null && client.isConnected() && !client.isClosed()) {

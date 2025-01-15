@@ -13,16 +13,18 @@ import javafx.application.Platform;
 import javafx.animation.PauseTransition;
 
 import javafx.event.ActionEvent;
-import javafx.scene.Node;
+
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import models.Player;
 import shared.AppFunctions;
 import sounds.AudioController;
+import static shared.AppFunctions.openPopup;
 import tictactoe.homescreen.FXMLHomeScreenController;
 import tictactoe.popupwin.FXMLPopUpWinController;
 
@@ -56,22 +58,31 @@ public class GameBoardController extends FXMLGameBoardBase {
     private final String O_CHAR = "O";
     private int move = 1;
 
-    public GameBoardController(Stage stage) {
+    public GameBoardController(Stage stage, Player playerOne, Player playerTwo) {
         this.stage = stage;
+        this.playerOne = playerOne;
+        this.playerTwo = playerTwo;
         assignPlayers();
+        changingLabelsStyles();
+
     }
 
     private void assignPlayers() {
+        playerOneLabel.setText(playerOne.getName());
+        playerTwoLabel.setText(playerTwo.getName());
+
         Random random = new Random();
         if (random.nextBoolean()) {
             playerOne.setChar(X_CHAR);
             playerTwo.setChar(O_CHAR);
             playerOne.hisTurn = true;
+
         } else {
             playerOne.setChar(O_CHAR);
             playerTwo.setChar(X_CHAR);
             playerTwo.hisTurn = true;
         }
+
         startCountdownTimer();
     }
 
@@ -95,6 +106,8 @@ public class GameBoardController extends FXMLGameBoardBase {
             } else {
                 b.setText(playerTwo.getChar());
             }
+            changingLabelsStyles();
+
             playerTwo.hisTurn = !playerTwo.hisTurn;
             playerOne.hisTurn = !playerOne.hisTurn;
 
@@ -112,34 +125,36 @@ public class GameBoardController extends FXMLGameBoardBase {
 
     private void startCountdownTimer() {
         countdownTime = 7;
+
         if (timeLine != null) {
             timeLine.stop();   //3l4an law startCountdownTimer 3mnlnlha call multiple time
         }
 
-//       
-        timeLine = new Timeline(
-                new KeyFrame(Duration.seconds(1), (ActionEvent event) -> {
-                    timer.setStyle("-fx-text-fill: #3E5879;");
-                    timer.setText(" " + countdownTime + "");
 
-                    if (countdownTime < 4) {
-                        timer.setStyle("-fx-text-fill: red;");
-                    }
-                    countdownTime--;
-                    if (countdownTime < 0) {
-                        timeLine.stop();
-                        isTimeOut = true;
-                        makeAutomaticMove();
-                        timer.setText("Oops! Time is up!");
+        if (!isEndOfGame) {
+            timeLine = new Timeline(
+                    new KeyFrame(Duration.seconds(1), (ActionEvent event) -> {
+                        timer.setStyle("-fx-text-fill: #3E5879;");
+                        timer.setText(" " + countdownTime + "");
 
-                    }
-                    isTimeOut = false;
+                        if (countdownTime < 4) {
+                            timer.setStyle("-fx-text-fill: red;");
+                        }
+                        countdownTime--;
+                        if (countdownTime < 0) {
+                            timeLine.stop();
+                            isTimeOut = true;
+                            makeAutomaticMove();
+                            timer.setText("Oops! Time is up!");
+                        }
+                        isTimeOut = false;
 
-                })
-        );
 
-        timeLine.setCycleCount(Timeline.INDEFINITE);
-        timeLine.play();
+                    })
+            );
+            timeLine.setCycleCount(Timeline.INDEFINITE);
+            timeLine.play();
+        }
     }
 
     private Button getButtonsByRowAndColumn(int c, int r) {
@@ -214,27 +229,17 @@ public class GameBoardController extends FXMLGameBoardBase {
         }
     }
 
-//    private void endGame(String winner) {
-//        isEndOfGame = true;
-//        System.out.println("End of the game, Winner is" + winner);
-//
-//    }
+
+
     private void endGame() {
 
         isEndOfGame = true;
+        playerOne.hisTurn = false;
+        playerTwo.hisTurn = false;
+        timeLine.stop();
+        timer.setText("--");
         System.out.println("End of the game");
 
-    }
-
-    private void setPlayerXMove() {
-
-    }
-
-    private void setPlayerOMove() {
-
-    }
-
-    private void traceMoves(Integer r, Integer c) {
     }
 
     private void fillBoard(Integer r, Integer c) {
@@ -254,19 +259,27 @@ public class GameBoardController extends FXMLGameBoardBase {
             WinningLine.drawWinningLine(WinningLine.getStartLine(), WinningLine.getEndLine(), grid);
 
             System.out.println("PLAYER ONE WINNER");
-            AppFunctions.waitAndShowPopup(stage, this.getScene(), true);
-
+            endGame();
+            waitAndShowPopup(winner);
         } else if (playerTwo.getChar() == winner) {
             WinningLine.drawWinningLine(WinningLine.getStartLine(), WinningLine.getEndLine(), grid);
 
             System.out.println("PLAYER TWO WINNER");
-            AppFunctions.waitAndShowPopup(stage, this.getScene(), true);
-
+            endGame();
+            waitAndShowPopup(winner);
         } else if (move > 9) {
             WinningLine.drawWinningLine(WinningLine.getStartLine(), WinningLine.getEndLine(), grid);
+            waitAndShowPopup(winner);
+        }
+    }
 
-            AppFunctions.waitAndShowPopup(stage, this.getScene(), true);
-
+    private void waitAndShowPopup(String winnerChar) {
+        if (playerOne.getChar() == winnerChar || playerTwo.getChar() == winnerChar) {
+            PauseTransition pause = new PauseTransition(Duration.seconds(2));
+            pause.setOnFinished(event -> {
+                AppFunctions.openPopup(stage, new FXMLPopUpWinController(stage, true, playerOne, playerTwo));
+            });
+            pause.play();
         }
     }
 
@@ -316,8 +329,26 @@ public class GameBoardController extends FXMLGameBoardBase {
         return (value % 2 == 0) ? X_CHAR : O_CHAR;
     }
 
+    void changingLabelsStyles() {
+        Platform.runLater(() -> {
+            if (playerOne.hisTurn) {
+                playerOneLabel.setTextFill(Paint.valueOf("#21bd5c")); //green
+                playerOneCharacter.setTextFill(Paint.valueOf("#3e5879"));
+                playerTwoLabel.setTextFill(Paint.valueOf("#3e5879"));
+                playerTwoCharacter.setTextFill(Paint.valueOf("#21bd5c")); //green
+            }
+            if (playerTwo.hisTurn) {
+                playerTwoLabel.setTextFill(Paint.valueOf("#21bd5c")); //green
+                playerTwoCharacter.setTextFill(Paint.valueOf("#3e5879"));
+                playerOneLabel.setTextFill(Paint.valueOf("#3e5879"));
+                playerOneCharacter.setTextFill(Paint.valueOf("#21bd5c")); //green
+            }
+        });
+    }
+
     @Override
     protected void handleLeaveButton(ActionEvent actionEvent) {
+
 
         endGame();
         AudioController.clickSound();
@@ -368,5 +399,4 @@ public class GameBoardController extends FXMLGameBoardBase {
     protected void handleB00(ActionEvent actionEvent) {
         setTurn(b00);
     }
-
 }
