@@ -43,17 +43,15 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
 
     public FXMLHomeScreenController(Stage stage) {
         this.stage = stage;
+        if(ClientConnection.user != null ){
+              accInfoRect.setVisible(true);
+            handleUserInfo();
+          
+        }
         //observeConnection();
     }
 
 
-    //================================
-    
-    
-    
-    
-    //==============================
-    
 
 //    private void observeConnection() {
 //        if (CONNECTION_FLAG == null) {
@@ -110,7 +108,6 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
     }
 
 
-
     @Override
     protected void openChat(ActionEvent actionEvent) {
          AudioController.clickSound();
@@ -137,7 +134,20 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
 //        CONNECTION_FLAG.set(true);
 
     }
-
+     protected void handleUserInfo() {
+         System.out.println("handleUserInfo");
+        
+         System.out.println(" not null ");
+         nameLabel.setText(ClientConnection.user.getName());
+         wonGamesLabel.setText(ClientConnection.user.getWins()+"");
+         playedGamesLabel.setText(ClientConnection.user.getNumOfGames()+"");
+           //profileImageView.set
+         //rankStarLabel
+      
+       
+         
+     
+     }
     @Override
     protected void handleHistoryButton(ActionEvent actionEvent) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
