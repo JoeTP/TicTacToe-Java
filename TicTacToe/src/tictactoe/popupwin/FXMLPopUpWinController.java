@@ -3,12 +3,15 @@ package tictactoe.popupwin;
 import java.net.URISyntaxException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 
 import javafx.scene.image.Image;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+import models.ComputerPlayer;
 import models.Player;
 import shared.AppFunctions;
 import shared.AppString;
@@ -21,24 +24,28 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
     Stage stage;
     Player playerOne;
     Player playerTwo;
-
     MediaPlayer mediaPlayer;
 
-    public FXMLPopUpWinController(Stage stage, String Winner, Player playerOne, Player playerTwo) {
+    public FXMLPopUpWinController(Stage stage, String roundState, Player playerOne , Player playerTwo) {
         this.stage = stage;
-        this.playerOne = playerOne;
+         this.playerOne = playerOne;
         this.playerTwo = playerTwo;
-        System.out.println("Winner string : " + Winner);
-        showPopup(Winner);
+        if(playerTwo instanceof ComputerPlayer){
+            this.playerTwo = playerTwo;
+        }
+        System.out.println("Round State string : " + roundState);
+        showPopup(roundState);
 
     }
 
-    public void showPopup(String Winner) {
+    private void showPopup(String roundState) {
 
         //winOrLosePopUp.setVisible(true);
-        switch (Winner) {
-            case "X": {
-                winAndLoseLabel.setText(AppString.WIN_LABLE);
+        switch (roundState) {
+            case "X": { // normal player
+                System.out.println("Round State string in popup: X player " + roundState);
+
+                winAndLoseLabel.setText(playerOne.getName()+"Wins !" );
                 congratsLable.setText(AppString.CONGRATS);
                 rightCupIcon.setImage(new Image(getClass().getResource("/assets/icons/winner.png").toExternalForm()));
                 leftCupIcon.setImage(new Image(getClass().getResource("/assets/icons/winner.png").toExternalForm()));
@@ -51,7 +58,8 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
                 winOrLoseVideo.setMediaPlayer(mediaPlayer);
             }
             break;
-            case "O": {
+            case "O": { // normal player
+                System.out.println("Round State string  in popup: : O Player" + roundState);
 
                 winAndLoseLabel.setText(AppString.LOSE_LABLE);
                 congratsLable.setText(AppString.BAD_LUCK);
@@ -65,8 +73,23 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
                 mediaPlayer.play();
             }
             break;
-            case "draw": {
-                System.out.println("Winner string : " + Winner);
+            case "computer": { // computer wins over player
+                System.out.println("Round State string : in popup: comp " + roundState);
+
+                winAndLoseLabel.setText("Lose against Computer!");
+                congratsLable.setText("OH,NOooo!");
+                rightCupIcon.setImage(new Image(getClass().getResource("/assets/icons/gameOver.png").toExternalForm()));
+                leftCupIcon.setImage(new Image(getClass().getResource("/assets/icons/gameOver.png").toExternalForm()));
+
+                mediaPlayer = new MediaPlayer(new Media(this.getClass().getResource(AppString.WIN_VIDEO_URL).toExternalForm()));
+                winOrLoseVideo.setMediaPlayer(mediaPlayer);
+
+                mediaPlayer.setVolume(0.5);
+                mediaPlayer.play();
+            }
+            break;
+            case "draw": { // draw in all cases
+                System.out.println("Round State string draw  : " + roundState);
 
                 winAndLoseLabel.setText("It's DRAW ");
                 congratsLable.setText("OH, No Winner!");
@@ -78,7 +101,6 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
 
                 mediaPlayer.setVolume(0.5);
                 mediaPlayer.play();
-
             }
         }
 

@@ -37,13 +37,13 @@
          <children>
             <HBox spacing="15.0">
                <children>
-                  <Label layoutX="10.0" layoutY="10.0" text="O" />
+                  <Label fx:id="playerOneChar" layoutX="10.0" layoutY="10.0" text="O" />
                   <Label fx:id="playerOneLabel" text="Player1Name" />
                </children>
             </HBox>
             <HBox spacing="15.0">
                <children>
-                  <Label layoutX="10.0" layoutY="10.0" text="X" />
+                  <Label fx:id="playerTwoChar" layoutX="10.0" layoutY="10.0" text="X" />
                   <Label fx:id="playerTwoLabel" text="Player2Name" />
                </children>
             </HBox>
