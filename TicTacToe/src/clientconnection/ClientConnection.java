@@ -12,6 +12,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintStream;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,6 +23,7 @@ import models.UserModel;
 import shared.AppFunctions;
 import tictactoe.playervscomp.FXMLPlayerVsCompController;
 import tictactoe.playervsplayerlocal.FXMLRequestToPlayController;
+import tictactoe.playervsplayeronline.FXMLPlayerVsPlayerOnlineController;
 
 /**
  *
@@ -38,13 +41,13 @@ public class ClientConnection {
     public static ObjectOutputStream oos;
     public static Thread listeningThread;
     public static UserModel user;
-
+    public static List<String> activeUsers = new ArrayList<>();
     public void connectToServer() throws IOException {
         socket = new Socket("127.0.0.1", 5001);
         System.out.println("Cleint connection Established !");
         ois = new ObjectInputStream(socket.getInputStream());
         oos = new ObjectOutputStream(socket.getOutputStream());
-
+        
     }
 
     public static void stopThreads() {
@@ -60,7 +63,9 @@ public class ClientConnection {
         try {
             oos.close();
             ois.close();
-            listeningThread.stop();
+            if(listeningThread.isAlive()){
+              listeningThread.stop();  
+            }           
             socket.close();
             System.out.println("client killed");
         } catch (IOException ex) {
@@ -81,7 +86,6 @@ public class ClientConnection {
     public synchronized static DataModel receveData() {
         DataModel data = null;
         try {
-
             data = (DataModel) ois.readObject();
         } catch (IOException ex) {
             Logger.getLogger(ClientConnection.class.getName()).log(Level.SEVERE, null, ex);
@@ -98,14 +102,29 @@ public class ClientConnection {
                 System.out.println("startListeningThread");
                 DataModel newData = ClientConnection.receveData();
                 String newResponse = newData.getResponse();
-                System.out.println(newResponse + " " + newData.getRival());
+                System.out.println(newResponse);
 
                 if (newResponse.equals("Game_Request")) {
                     Platform.runLater(() -> {
-
                         AppFunctions.openReqPopup(new FXMLRequestToPlayController());
                     });
                 }
+                if(newResponse.equals("Active_Users"))
+                try {                                             
+                synchronized (ois) {
+                    int activeUsersCount = ois.readInt();
+                    System.out.println(activeUsersCount);
+                    String user;
+                    for (int i = 0; i < activeUsersCount - 1; i++) {
+                        user = ois.readUTF();
+                        activeUsers.add(user);
+                        System.out.println(user);
+                    }                    
+                }
+
+            } catch (IOException ex) {
+                Logger.getLogger(FXMLPlayerVsPlayerOnlineController.class.getName()).log(Level.SEVERE, null, ex);
+            }
             }
         });
         listeningThread.start();

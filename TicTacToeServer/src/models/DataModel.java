@@ -23,6 +23,10 @@ private static final long serialVersionUID = 1L;
         this.state = state;
     }
 
+    public DataModel(String response) {
+        this.response = response;
+    }
+
     public DataModel(String rival, String response) {
         this.rival = rival;
         this.response = response;

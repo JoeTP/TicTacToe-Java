@@ -84,7 +84,7 @@ public class FXMLSignupController extends FXMLSignupBase {
                 ex.printStackTrace();
                 return;
             }
-            new Thread(() -> {
+            Thread th = new Thread(() -> {
 
                 String response = "";
 
@@ -126,8 +126,10 @@ public class FXMLSignupController extends FXMLSignupBase {
                         ClientConnection.terminateClient();
                     }
                 });
-                ClientConnection.startListeningThread();
-            }).start();
+                if (finalResponse.equals(AppString.SIGNUP_DONE)){
+                 ClientConnection.startListeningThread();
+            }
+            });
         }
         
     }

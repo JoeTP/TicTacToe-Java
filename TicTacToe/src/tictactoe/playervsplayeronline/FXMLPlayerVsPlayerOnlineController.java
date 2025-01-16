@@ -1,6 +1,7 @@
 package tictactoe.playervsplayeronline;
 
 import clientconnection.ClientConnection;
+import static clientconnection.ClientConnection.activeUsers;
 
 import static clientconnection.ClientConnection.dis;
 import static clientconnection.ClientConnection.ois;
@@ -49,7 +50,11 @@ public class FXMLPlayerVsPlayerOnlineController extends FXMLPlayerVsPlayerOnline
         //this.client = c;
         this.stage = stage;
         this.client = client;
-        getActiveUsers();
+        //getActiveUsers();
+        Platform.runLater(() -> {
+                        activePlayersListView.getItems().clear();
+                        activePlayersListView.getItems().addAll(activeUsers);
+                    });
 
     }
 
@@ -57,7 +62,6 @@ public class FXMLPlayerVsPlayerOnlineController extends FXMLPlayerVsPlayerOnline
     protected void handleBackButton(ActionEvent actionEvent) {
 
         AudioController.clickSound();
-
         AppFunctions.closePopup(actionEvent);
     }
 
@@ -92,35 +96,39 @@ public class FXMLPlayerVsPlayerOnlineController extends FXMLPlayerVsPlayerOnline
     }
 
     protected void getActiveUsers() {
-        ClientConnection.stopListeningThread();
-        new Thread(() -> {
-            try {
-                if (oos == null) {
-                    throw new IllegalStateException("ObjectOutputStream (oos) is not initialized.");
-                }
-                client.sendData(new DataModel(ClientConnection.user, 3));
-                System.out.println("Object successfully written to server.");
-                synchronized (ois) {
-                    int activeUsersCount = ois.readInt();
-                    System.out.println(activeUsersCount);
-                    List<String> activeUsers = new ArrayList<>();
-                    String user;
-                    for (int i = 0; i < activeUsersCount - 1; i++) {
-                        user = ois.readUTF();
-                        activeUsers.add(user);
-                        System.out.println(user);
-                    }
-                    Platform.runLater(() -> {
+        //ClientConnection.stopListeningThread();
+//        new Thread(() -> {
+//            try {
+//                if (oos == null) {
+//                    throw new IllegalStateException("ObjectOutputStream (oos) is not initialized.");
+//                }
+//                client.sendData(new DataModel(ClientConnection.user, 3));
+//                System.out.println("Object successfully written to server.");
+//                synchronized (ois) {
+//                    int activeUsersCount = ois.readInt();
+//                    System.out.println(activeUsersCount);
+//                    List<String> activeUsers = new ArrayList<>();
+//                    String user;
+//                    for (int i = 0; i < activeUsersCount - 1; i++) {
+//                        user = ois.readUTF();
+//                        activeUsers.add(user);
+//                        System.out.println(user);
+//                    }
+//                    Platform.runLater(() -> {
+//                        activePlayersListView.getItems().clear();
+//                        activePlayersListView.getItems().addAll(activeUsers);
+//                    });
+//                }
+//
+//            } catch (IOException ex) {
+//                Logger.getLogger(FXMLPlayerVsPlayerOnlineController.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }).start();
+        //ClientConnection.startListeningThread();
+        Platform.runLater(() -> {
                         activePlayersListView.getItems().clear();
                         activePlayersListView.getItems().addAll(activeUsers);
                     });
-                }
-
-            } catch (IOException ex) {
-                Logger.getLogger(FXMLPlayerVsPlayerOnlineController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }).start();
-        ClientConnection.startListeningThread();
     }
 
     protected void sendGameRequest() {

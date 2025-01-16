@@ -92,7 +92,7 @@ public class FXMLSigninController extends FXMLSigninBase {
                 ex.printStackTrace();
                 return;
             }
-            new Thread(() -> {
+            Thread th = new Thread(() -> {
 
                 String response = "";
 
@@ -101,6 +101,7 @@ public class FXMLSigninController extends FXMLSigninBase {
                     DataModel newData = ClientConnection.receveData();
                     user = newData.getUser();
                     response = newData.getResponse();
+                    System.out.println(response);
                 } catch (IOException ex) {
                     Platform.runLater(() -> {
                         Alert alert = new Alert(Alert.AlertType.ERROR, "Couldn't connect to server.");
@@ -129,6 +130,7 @@ public class FXMLSigninController extends FXMLSigninBase {
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
+                        ClientConnection.startListeningThread();
                         break;
                     case AppString.SIGNIN_ALREADY_FOUND:
                         Platform.runLater(() -> {
@@ -145,8 +147,13 @@ public class FXMLSigninController extends FXMLSigninBase {
                         });
                         break;
                 }
-                ClientConnection.startListeningThread();
-            }).start();
+            });
+            th.start();
+//            try {
+//                th.join();
+//            } catch (InterruptedException ex) {
+//                Logger.getLogger(FXMLSigninController.class.getName()).log(Level.SEVERE, null, ex);
+//            }
         }
 
     }

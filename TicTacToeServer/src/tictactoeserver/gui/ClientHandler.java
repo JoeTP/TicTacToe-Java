@@ -63,14 +63,14 @@ public class ClientHandler extends Thread {
                     case 1: // Sign-up
                         user = data.getUser();
                         System.out.println(user.getName());
-                        response = DataAccessLayer.insertData(user);
+                        response = DataAccessLayer.insertData(user);                       
+                        updateUserData();
+                        sendUserData(user, response);
                         if (response.equals(AppStrings.SIGNUP_DONE)) {
                             synchronized (usernames) {
                                 usernames.add(user.getName());
                             }
                         }
-                        updateUserData();
-                        sendUserData(user, response);
 
                         break;
                     case 2: // sign in
@@ -81,13 +81,14 @@ public class ClientHandler extends Thread {
                         if (isNotLoggedin == false) {
                             response = AppStrings.SIGNIN_ALREADY_FOUND;
                         }
+                         updateUserData();
+                        sendUserData(user, response);
                         if (response.equals(AppStrings.SIGNIN_DONE)) {
                             synchronized (usernames) {
                                 usernames.add(user.getName());
                             }
                         }
-                        updateUserData();
-                        sendUserData(user, response);
+                       
 
                         break;
                     case 3:
@@ -126,6 +127,7 @@ public class ClientHandler extends Thread {
 
     protected void sendActiveUsersList() {
         try {
+            oos.writeObject(new DataModel("Active_Users"));
             oos.writeInt(usernames.size());
             System.out.println(usernames.size());
             for (String username : usernames) {
@@ -226,5 +228,10 @@ public class ClientHandler extends Thread {
         DataModel data = new DataModel(rival,"Game_Request");
         oos.writeObject(data);
         oos.flush();
+    }
+    public static void broadCastActiveUsers(){
+        clients.forEach((c) -> {
+            c.sendActiveUsersList();
+        });
     }
 }

@@ -24,6 +24,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.chart.PieChart;
 import shared.AppStrings;
 import tictactoeserver.MainServer;
+import static tictactoeserver.gui.ClientHandler.broadCastActiveUsers;
 import static tictactoeserver.gui.ClientHandler.clients;
 import static tictactoeserver.gui.ClientHandler.usernames;
 
@@ -58,8 +59,9 @@ public class FXMLServerController extends FXMLServerBase {
                     }
                 }
             }
+            ClientHandler.broadCastActiveUsers();
         });
-        updatePieChart();
+        updatePieChart();        
         serverIndicator.setFill(Color.CRIMSON);
     }
 
