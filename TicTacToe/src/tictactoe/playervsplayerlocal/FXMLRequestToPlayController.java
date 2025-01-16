@@ -26,7 +26,6 @@ public class FXMLRequestToPlayController extends FXMLRequestToPlayBase {
     @FXML
     private Text playerNameTextField;
 
-    /**
-     * Initializes the controller class.
-     */
+   
+    
 }

@@ -140,7 +140,6 @@ public class GameBoardController extends FXMLGameBoardBase {
 
     private void startCountdownTimer() {
         countdownTime = 7;
-
         if (timeLine != null) {
             timeLine.stop();   //3l4an law startCountdownTimer 3mnlnlha call multiple time
         }

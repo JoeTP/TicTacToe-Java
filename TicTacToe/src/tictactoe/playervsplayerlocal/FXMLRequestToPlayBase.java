@@ -49,7 +49,7 @@ public abstract class FXMLRequestToPlayBase extends BorderPane {
         setMinWidth(USE_PREF_SIZE);
         setPrefHeight(300.0);
         setPrefWidth(468.0);
-        getStylesheets().add("/styling/invitationPageStyle.css");
+        getStylesheets().add("/tictactoe/playervsplayerlocal/../../../resources/styling/invitationPageStyle.css");
 
         BorderPane.setAlignment(hBox, javafx.geometry.Pos.CENTER);
         hBox.setPrefHeight(63.0);
@@ -98,7 +98,7 @@ public abstract class FXMLRequestToPlayBase extends BorderPane {
         imageView.setLayoutY(54.0);
         imageView.setPickOnBounds(true);
         imageView.setPreserveRatio(true);
-        imageView.setImage(new Image(getClass().getResource("/assets/icons/invite.png").toExternalForm()));
+        imageView.setImage(new Image(getClass().getResource("../../../resources/assets/icons/invite.png").toExternalForm()));
 
         playerNameTextField.setId("player-name");
         playerNameTextField.setLayoutX(166.0);
