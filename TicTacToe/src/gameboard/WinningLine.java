@@ -6,6 +6,7 @@
 package gameboard;
 
 import javafx.animation.PauseTransition;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
