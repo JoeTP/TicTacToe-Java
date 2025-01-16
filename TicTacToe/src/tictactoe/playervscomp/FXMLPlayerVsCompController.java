@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
+import models.ComputerPlayer;
 import models.Player;
 import shared.AppFunctions;
 import sounds.AudioController;
@@ -32,7 +33,7 @@ public class FXMLPlayerVsCompController extends FXMLPlayerVsCompBase {
     Stage stage;
 
     private Player playerOne = new Player();
-    private Player playerTwo = new Player();
+    private Player playerTwo = new ComputerPlayer();
 
     public FXMLPlayerVsCompController(Stage stage) {
         this.stage = stage;
