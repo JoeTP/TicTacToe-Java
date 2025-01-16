@@ -21,5 +21,6 @@ public class GameRecordController extends GameRecordBase {
      public GameRecordController(Stage stage) {
         this.stage = stage;  
     }  
+
     
 }

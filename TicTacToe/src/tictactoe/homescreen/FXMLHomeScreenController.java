@@ -25,6 +25,7 @@ import shared.AppFunctions;
 import shared.AppString;
 import sounds.AudioController;
 import tictactoe.gamerecord.GameRecordController;
+import tictactoe.historypopup.RecordListPopUpController;
 import tictactoe.playervscomp.FXMLPlayerVsCompController;
 import tictactoe.playervsplayerpopup.FXMLPlayerVsPlayerPopupController;
 import tictactoe.setting.FXMLSettingController;
@@ -161,7 +162,8 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
     @Override
     protected void handleHistoryButton(ActionEvent actionEvent) {
          AudioController.clickSound();
-         AppFunctions.goTo(actionEvent, new GameRecordController(stage));
+         AppFunctions.openPopup(stage, new RecordListPopUpController(stage));
+         
          
     }
 
