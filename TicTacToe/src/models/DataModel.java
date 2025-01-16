@@ -18,16 +18,18 @@ private static final long serialVersionUID = 1L;
     int state;
     String player;
     String rival;
-
-
-    public DataModel() {
-    }
-
-
     String response;
-
     public DataModel(int state) {
         this.state = state;
+    }
+
+    public DataModel(String response) {
+        this.response = response;
+    }
+
+    public DataModel(String rival, String response) {
+        this.rival = rival;
+        this.response = response;
     }
 
     public DataModel(UserModel user, int state) {

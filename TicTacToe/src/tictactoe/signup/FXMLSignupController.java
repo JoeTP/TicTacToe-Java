@@ -6,6 +6,10 @@
 package tictactoe.signup;
 
 import clientconnection.ClientConnection;
+import static clientconnection.ClientConnection.listeningThread;
+import static clientconnection.ClientConnection.ois;
+import static clientconnection.ClientConnection.startListeningThread;
+
 import static clientconnection.ClientConnection.user;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -28,6 +32,7 @@ import shared.AppFunctions;
 import shared.AppString;
 import static shared.AppString.ICON_PATHS;
 import sounds.AudioController;
+import tictactoe.playervsplayerlocal.FXMLRequestToPlayController;
 import tictactoe.playervsplayeronline.FXMLPlayerVsPlayerOnlineController;
 import tictactoe.signin.FXMLSigninController;
 
@@ -79,7 +84,7 @@ public class FXMLSignupController extends FXMLSignupBase {
                 ex.printStackTrace();
                 return;
             }
-            new Thread(() -> {
+            Thread th = new Thread(() -> {
 
                 String response = "";
 
@@ -121,8 +126,12 @@ public class FXMLSignupController extends FXMLSignupBase {
                         ClientConnection.terminateClient();
                     }
                 });
-            }).start();
+                if (finalResponse.equals(AppString.SIGNUP_DONE)){
+                 ClientConnection.startListeningThread();
+            }
+            });
         }
+        
     }
 
     @Override

@@ -6,6 +6,7 @@
 package tictactoe.signin;
 
 import clientconnection.ClientConnection;
+import static clientconnection.ClientConnection.ois;
 import static clientconnection.ClientConnection.oos;
 import static clientconnection.ClientConnection.socket;
 import static clientconnection.ClientConnection.user;
@@ -39,6 +40,7 @@ import static shared.AppConstants.CONNECTION_FLAG;
 import sounds.AudioController;
 
 import tictactoe.gameboard.GameBoardController;
+import tictactoe.playervsplayerlocal.FXMLRequestToPlayController;
 
 import tictactoe.playervsplayeronline.FXMLPlayerVsPlayerOnlineController;
 import tictactoe.playervsplayerpopup.FXMLPlayerVsPlayerPopupController;
@@ -75,8 +77,6 @@ public class FXMLSigninController extends FXMLSigninBase {
 
         AudioController.clickSound();
 
-
-
         if (user != null) {
 
             System.out.println("User is not null" + user.getName());
@@ -92,7 +92,7 @@ public class FXMLSigninController extends FXMLSigninBase {
                 ex.printStackTrace();
                 return;
             }
-            new Thread(() -> {
+            Thread th = new Thread(() -> {
 
                 String response = "";
 
@@ -101,6 +101,7 @@ public class FXMLSigninController extends FXMLSigninBase {
                     DataModel newData = ClientConnection.receveData();
                     user = newData.getUser();
                     response = newData.getResponse();
+                    System.out.println(response);
                 } catch (IOException ex) {
                     Platform.runLater(() -> {
                         Alert alert = new Alert(Alert.AlertType.ERROR, "Couldn't connect to server.");
@@ -129,6 +130,7 @@ public class FXMLSigninController extends FXMLSigninBase {
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
+                        ClientConnection.startListeningThread();
                         break;
                     case AppString.SIGNIN_ALREADY_FOUND:
                         Platform.runLater(() -> {
@@ -145,9 +147,15 @@ public class FXMLSigninController extends FXMLSigninBase {
                         });
                         break;
                 }
-
-            }).start();
+            });
+            th.start();
+//            try {
+//                th.join();
+//            } catch (InterruptedException ex) {
+//                Logger.getLogger(FXMLSigninController.class.getName()).log(Level.SEVERE, null, ex);
+//            }
         }
+
     }
 
     protected UserModel getNewUserData() {
