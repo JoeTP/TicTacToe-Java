@@ -24,10 +24,10 @@ public abstract class FXMLGameBoardBase extends BorderPane {
     protected final Button leaveButton;
     protected final VBox vBox0;
     protected final HBox hBox0;
-    protected final Label playerTwoCharacter;
+    protected final Label playerOneChar;
     protected final Label playerOneLabel;
     protected final HBox hBox1;
-    protected final Label playerOneCharacter;
+    protected final Label playerTwoChar;
     protected final Label playerTwoLabel;
     protected final AnchorPane anchorPane;
     protected final GridPane grid;
@@ -57,10 +57,10 @@ public abstract class FXMLGameBoardBase extends BorderPane {
         leaveButton = new Button();
         vBox0 = new VBox();
         hBox0 = new HBox();
-        playerTwoCharacter = new Label();
+        playerOneChar = new Label();
         playerOneLabel = new Label();
         hBox1 = new HBox();
-        playerOneCharacter = new Label();
+        playerTwoChar = new Label();
         playerTwoLabel = new Label();
         anchorPane = new AnchorPane();
         grid = new GridPane();
@@ -114,17 +114,17 @@ public abstract class FXMLGameBoardBase extends BorderPane {
 
         hBox0.setSpacing(15.0);
 
-        playerTwoCharacter.setLayoutX(10.0);
-        playerTwoCharacter.setLayoutY(10.0);
-        playerTwoCharacter.setText("O");
+        playerOneChar.setLayoutX(10.0);
+        playerOneChar.setLayoutY(10.0);
+        playerOneChar.setText("O");
 
         playerOneLabel.setText("Player1Name");
 
         hBox1.setSpacing(15.0);
 
-        playerOneCharacter.setLayoutX(10.0);
-        playerOneCharacter.setLayoutY(10.0);
-        playerOneCharacter.setText("X");
+        playerTwoChar.setLayoutX(10.0);
+        playerTwoChar.setLayoutY(10.0);
+        playerTwoChar.setText("X");
 
         playerTwoLabel.setText("Player2Name");
         vBox0.setPadding(new Insets(0.0, 0.0, 0.0, 20.0));
@@ -243,10 +243,10 @@ public abstract class FXMLGameBoardBase extends BorderPane {
         hBox.getChildren().add(region0);
         vBox.getChildren().add(leaveButton);
         hBox.getChildren().add(vBox);
-        hBox0.getChildren().add(playerTwoCharacter);
+        hBox0.getChildren().add(playerOneChar);
         hBox0.getChildren().add(playerOneLabel);
         vBox0.getChildren().add(hBox0);
-        hBox1.getChildren().add(playerOneCharacter);
+        hBox1.getChildren().add(playerTwoChar);
         hBox1.getChildren().add(playerTwoLabel);
         vBox0.getChildren().add(hBox1);
         grid.getColumnConstraints().add(columnConstraints);
