@@ -24,6 +24,7 @@ import static shared.AppConstants.CONNECTION_FLAG;
 import shared.AppFunctions;
 import shared.AppString;
 import sounds.AudioController;
+import tictactoe.gamerecord.GameRecordController;
 import tictactoe.playervscomp.FXMLPlayerVsCompController;
 import tictactoe.playervsplayerpopup.FXMLPlayerVsPlayerPopupController;
 import tictactoe.setting.FXMLSettingController;
@@ -159,7 +160,9 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
 
     @Override
     protected void handleHistoryButton(ActionEvent actionEvent) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         AudioController.clickSound();
+         AppFunctions.goTo(actionEvent, new GameRecordController(stage));
+         
     }
 
     @Override

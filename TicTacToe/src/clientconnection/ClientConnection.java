@@ -43,7 +43,7 @@ public class ClientConnection {
     public static UserModel user;
     public static List<String> activeUsers = new ArrayList<>();
     public void connectToServer() throws IOException {
-        socket = new Socket("10.191.242.80", 5001);
+        socket = new Socket("127.0.0.1", 5001);
         System.out.println("Cleint connection Established !");
         ois = new ObjectInputStream(socket.getInputStream());
         oos = new ObjectOutputStream(socket.getOutputStream());
