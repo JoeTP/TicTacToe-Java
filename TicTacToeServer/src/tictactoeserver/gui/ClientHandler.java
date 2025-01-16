@@ -31,7 +31,7 @@ public class ClientHandler extends Thread {
     ObjectOutputStream oos;
     UserModel user;
     String response;
-    Socket client;  // Add a reference to the client socket
+    Socket client; 
     int state;
     static ObservableList<ClientHandler> clients = FXCollections.synchronizedObservableList(FXCollections.observableArrayList());
     static ObservableList<String> usernames = FXCollections.synchronizedObservableList(FXCollections.observableArrayList());
