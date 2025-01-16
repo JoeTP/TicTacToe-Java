@@ -18,12 +18,15 @@ import java.util.logging.Logger;
 import javafx.application.Platform;
 import models.DataModel;
 import models.UserModel;
+import shared.AppFunctions;
+import tictactoe.playervscomp.FXMLPlayerVsCompController;
+import tictactoe.playervsplayerlocal.FXMLRequestToPlayController;
 
 /**
  *
  * @author Ayat Gamal
  */
-public class  ClientConnection {
+public class ClientConnection {
 
     public static DataInputStream dis;
 
@@ -33,9 +36,8 @@ public class  ClientConnection {
     public static boolean serverStatus = false;
     public static ObjectInputStream ois;
     public static ObjectOutputStream oos;
-
+    public static Thread listeningThread;
     public static UserModel user;
-
 
     public void connectToServer() throws IOException {
         socket = new Socket("127.0.0.1", 5001);
@@ -57,6 +59,8 @@ public class  ClientConnection {
     public static void terminateClient() {
         try {
             oos.close();
+            ois.close();
+            listeningThread.stop();
             socket.close();
             System.out.println("client killed");
         } catch (IOException ex) {
@@ -64,7 +68,7 @@ public class  ClientConnection {
         }
     }
 
-    public static void sendData(DataModel d) throws IOException {
+    public synchronized static void sendData(DataModel d) throws IOException {
         oos.writeObject(d);
         oos.flush();
     }
@@ -74,7 +78,7 @@ public class  ClientConnection {
         return response;
     }
 
-    public static DataModel receveData() {
+    public synchronized static DataModel receveData() {
         DataModel data = null;
         try {
 
@@ -87,4 +91,34 @@ public class  ClientConnection {
         return data;
     }
 
+    public static void startListeningThread() {
+
+        listeningThread = new Thread(() -> {
+            while (!Thread.currentThread().isInterrupted()) {
+                System.out.println("startListeningThread");
+                DataModel newData = ClientConnection.receveData();
+                String newResponse = newData.getResponse();
+                System.out.println(newResponse + " " + newData.getRival());
+
+                if (newResponse.equals("Game_Request")) {
+                    Platform.runLater(() -> {
+
+                        AppFunctions.openReqPopup(new FXMLRequestToPlayController());
+                    });
+                }
+            }
+        });
+        listeningThread.start();
+    }
+
+    public static void stopListeningThread() {
+        if (listeningThread != null && listeningThread.isAlive()) {
+            listeningThread.interrupt();
+            try {
+                listeningThread.join();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+    }
 }

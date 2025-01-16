@@ -39,6 +39,15 @@ public abstract class AppFunctions {
 
     }
     
+    public static void openReqPopup( Parent root) {
+        Stage newStage = new Stage();
+        // newStage.initStyle(StageStyle.UNDECORATED);
+        newStage.setResizable(false);
+        newStage.setScene(new Scene(root));
+        newStage.initModality(Modality.WINDOW_MODAL);
+        newStage.show();
+
+    }
     public static void closePopup(ActionEvent actionEvent) {
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.close();

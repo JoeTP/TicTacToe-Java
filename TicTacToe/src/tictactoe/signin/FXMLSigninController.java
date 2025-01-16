@@ -6,6 +6,7 @@
 package tictactoe.signin;
 
 import clientconnection.ClientConnection;
+import static clientconnection.ClientConnection.ois;
 import static clientconnection.ClientConnection.oos;
 import static clientconnection.ClientConnection.socket;
 import static clientconnection.ClientConnection.user;
@@ -39,6 +40,7 @@ import static shared.AppConstants.CONNECTION_FLAG;
 import sounds.AudioController;
 
 import tictactoe.gameboard.GameBoardController;
+import tictactoe.playervsplayerlocal.FXMLRequestToPlayController;
 
 import tictactoe.playervsplayeronline.FXMLPlayerVsPlayerOnlineController;
 import tictactoe.playervsplayerpopup.FXMLPlayerVsPlayerPopupController;
@@ -74,8 +76,6 @@ public class FXMLSigninController extends FXMLSigninBase {
         ClientConnection.user = getNewUserData();
 
         AudioController.clickSound();
-
-
 
         if (user != null) {
 
@@ -145,9 +145,10 @@ public class FXMLSigninController extends FXMLSigninBase {
                         });
                         break;
                 }
-
+                ClientConnection.startListeningThread();
             }).start();
         }
+
     }
 
     protected UserModel getNewUserData() {

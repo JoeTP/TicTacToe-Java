@@ -95,7 +95,10 @@ public class ClientHandler extends Thread {
                         user = data.getUser();
                         findClientHandler(user.getName()).sendActiveUsersList();
                         break;
-
+                    case 4:
+                        ClientHandler op = findClientHandler(data.getRival());
+                        op.sendRequest(data.getPlayer());
+                        break;
 //                    default:
 //                        System.out.println("Unknown state: " + state);
 //                        ps.writeUTF("Unknown request");
@@ -219,5 +222,9 @@ public class ClientHandler extends Thread {
         user = DataAccessLayer.getUserData(user.getName(), user.getPassword());
 
     }
-
+    private void sendRequest(String rival) throws IOException{
+        DataModel data = new DataModel(rival,"Game_Request");
+        oos.writeObject(data);
+        oos.flush();
+    }
 }
