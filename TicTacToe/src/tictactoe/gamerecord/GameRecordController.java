@@ -7,8 +7,12 @@ package tictactoe.gamerecord;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.stage.Stage;
+import shared.AppFunctions;
+import sounds.AudioController;
+import tictactoe.homescreen.FXMLHomeScreenController;
 
 /**
  * FXML Controller class
@@ -21,6 +25,12 @@ public class GameRecordController extends GameRecordBase {
      public GameRecordController(Stage stage) {
         this.stage = stage;  
     }  
+
+    @Override
+    protected void handleExitButton(ActionEvent actionEvent) {
+        AudioController.clickSound();
+       AppFunctions.goTo(actionEvent, new FXMLHomeScreenController(stage));
+    }
 
     
 }

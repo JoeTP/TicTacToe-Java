@@ -10,7 +10,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 
@@ -18,11 +17,9 @@ public abstract class GameRecordBase extends BorderPane {
 
     protected final HBox hBox;
     protected final Button prevBtn;
-    protected final Region region;
     protected final Button nextBtn;
-    protected final Region region0;
+    protected final Button exitBtn;
     protected final VBox vBox;
-    protected final VBox vBox0;
     protected final HBox hBox0;
     protected final Label label;
     protected final Label playerOneLabel;
@@ -51,11 +48,9 @@ public abstract class GameRecordBase extends BorderPane {
 
         hBox = new HBox();
         prevBtn = new Button();
-        region = new Region();
         nextBtn = new Button();
-        region0 = new Region();
+        exitBtn = new Button();
         vBox = new VBox();
-        vBox0 = new VBox();
         hBox0 = new HBox();
         label = new Label();
         playerOneLabel = new Label();
@@ -96,10 +91,7 @@ public abstract class GameRecordBase extends BorderPane {
         prevBtn.setPrefWidth(90.0);
         prevBtn.setText("Previous");
         prevBtn.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
-        HBox.setMargin(prevBtn, new Insets(0.0, 0.0, 0.0, 130.0));
-
-        region.setPrefHeight(70.0);
-        region.setPrefWidth(200.0);
+        HBox.setMargin(prevBtn, new Insets(0.0, 0.0, 0.0, 110.0));
 
         nextBtn.setLayoutX(260.0);
         nextBtn.setLayoutY(10.0);
@@ -108,12 +100,17 @@ public abstract class GameRecordBase extends BorderPane {
         nextBtn.setPrefWidth(90.0);
         nextBtn.setText("Next");
         nextBtn.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
-        HBox.setMargin(nextBtn, new Insets(0.0, 0.0, 0.0, 20.0));
+        HBox.setMargin(nextBtn, new Insets(0.0, 0.0, 0.0, 90.0));
 
-        HBox.setHgrow(region0, javafx.scene.layout.Priority.ALWAYS);
-        region0.setPrefHeight(70.0);
-
-        vBox.setAlignment(javafx.geometry.Pos.CENTER);
+        exitBtn.setLayoutX(120.0);
+        exitBtn.setLayoutY(10.0);
+        exitBtn.setMnemonicParsing(false);
+        exitBtn.setOnAction(this::handleExitButton);
+        exitBtn.setPrefHeight(47.0);
+        exitBtn.setPrefWidth(90.0);
+        exitBtn.setText("Exit");
+        exitBtn.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
+        HBox.setMargin(exitBtn, new Insets(0.0, 0.0, 0.0, 100.0));
         setBottom(hBox);
 
         hBox0.setSpacing(15.0);
@@ -131,8 +128,8 @@ public abstract class GameRecordBase extends BorderPane {
         label0.setText("X");
 
         playerTwoLabel.setText("Player2Name");
-        vBox0.setPadding(new Insets(0.0, 0.0, 0.0, 20.0));
-        setTop(vBox0);
+        vBox.setPadding(new Insets(0.0, 0.0, 0.0, 20.0));
+        setTop(vBox);
 
         BorderPane.setAlignment(anchorPane, javafx.geometry.Pos.CENTER);
         anchorPane.setPrefHeight(400.0);
@@ -230,20 +227,18 @@ public abstract class GameRecordBase extends BorderPane {
         b00.setStyle("-fx-border-radius: 30 0 0 0;");
         BorderPane.setMargin(anchorPane, new Insets(0.0, 20.0, 0.0, 20.0));
         setCenter(anchorPane);
-        getStylesheets().add("tictactoe/gameboard/style.css");
+        getStylesheets().add("/tictactoe/gameboard/style.css");
         getStylesheets().add("/styling/generalStyle.css");
 
         hBox.getChildren().add(prevBtn);
-        hBox.getChildren().add(region);
         hBox.getChildren().add(nextBtn);
-        hBox.getChildren().add(region0);
-        hBox.getChildren().add(vBox);
+        hBox.getChildren().add(exitBtn);
         hBox0.getChildren().add(label);
         hBox0.getChildren().add(playerOneLabel);
-        vBox0.getChildren().add(hBox0);
+        vBox.getChildren().add(hBox0);
         hBox1.getChildren().add(label0);
         hBox1.getChildren().add(playerTwoLabel);
-        vBox0.getChildren().add(hBox1);
+        vBox.getChildren().add(hBox1);
         grid.getColumnConstraints().add(columnConstraints);
         grid.getColumnConstraints().add(columnConstraints0);
         grid.getColumnConstraints().add(columnConstraints1);
@@ -262,4 +257,7 @@ public abstract class GameRecordBase extends BorderPane {
         anchorPane.getChildren().add(grid);
 
     }
+
+    protected abstract void handleExitButton(javafx.event.ActionEvent actionEvent);
+
 }

@@ -10,7 +10,6 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
@@ -23,17 +22,19 @@
          <children>
             <Button fx:id="prevBtn" mnemonicParsing="false" prefHeight="47.0" prefWidth="90.0" text="Previous" textAlignment="CENTER">
                <HBox.margin>
-                  <Insets left="130.0" />
+                  <Insets left="110.0" />
                </HBox.margin>
             </Button>
-            <Region prefHeight="70.0" prefWidth="200.0" />
             <Button fx:id="nextBtn" layoutX="260.0" layoutY="10.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="90.0" text="Next" textAlignment="CENTER">
                <HBox.margin>
-                  <Insets left="20.0" />
+                  <Insets left="90.0" />
                </HBox.margin>
             </Button>
-            <Region prefHeight="70.0" HBox.hgrow="ALWAYS" />
-            <VBox alignment="CENTER" />
+            <Button fx:id="exitBtn" layoutX="120.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleExitButton" prefHeight="47.0" prefWidth="90.0" text="Exit" textAlignment="CENTER">
+               <HBox.margin>
+                  <Insets left="100.0" />
+               </HBox.margin>
+            </Button>
          </children>
       </HBox>
    </bottom>
