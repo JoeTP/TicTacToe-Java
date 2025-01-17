@@ -102,11 +102,13 @@ public class ClientConnection {
                 System.out.println("startListeningThread");
                 DataModel newData = ClientConnection.receveData();
                 String newResponse = newData.getResponse();
+                String rival = newData.getRival();
                 System.out.println(newResponse);
 
                 if (newResponse.equals("Game_Request")) {
+                    System.out.println(rival);
                     Platform.runLater(() -> {
-                        AppFunctions.openReqPopup(new FXMLRequestToPlayController(newData.getRival()));
+                        AppFunctions.openReqPopup(new FXMLRequestToPlayController(rival));
                     });
                 }
                 if(newResponse.equals("Active_Users"))
