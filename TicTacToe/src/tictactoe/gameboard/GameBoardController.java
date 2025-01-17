@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -68,23 +70,25 @@ public class GameBoardController extends FXMLGameBoardBase {
     }
 
     private void assignPlayers() {
-        playerOneLabel.setText(playerOne.getName());
-        playerTwoLabel.setText(playerTwo.getName());
+
+        playerOne.setChar(X_CHAR);
+        playerTwo.setChar(O_CHAR);
 
         if (playerTwo instanceof ComputerPlayer) {
-            playerTwoLabel.setText("Computer");
-            playerOneLabel.setText("Player");
-        }
-
-        Random random = new Random();
-        if (random.nextBoolean()) {
-            playerOne.setChar(X_CHAR);
             playerTwo.setChar(O_CHAR);
+            playerOneLabel.setText("Player");
+            playerOneChar.setText(playerOne.getChar());
+            playerTwoLabel.setText("Computer");
+            playerTwoChar.setText(playerTwo.getChar());
 
         } else {
-            playerOne.setChar(O_CHAR);
-            playerTwo.setChar(X_CHAR);
+            playerTwo.setChar(O_CHAR);
+            playerOneLabel.setText(playerOne.getName());
+            playerOneChar.setText(playerOne.getChar());
+            playerTwoLabel.setText(playerTwo.getName());
+            playerTwoChar.setText(playerTwo.getChar());
         }
+
         playerOne.hisTurn = true;
         playerTwo.hisTurn = false;
 
@@ -113,7 +117,6 @@ public class GameBoardController extends FXMLGameBoardBase {
 
             } else {
                 b.setText(playerTwo.getChar());
-
             }
 
             playerOne.hisTurn = !playerOne.hisTurn;
@@ -129,7 +132,12 @@ public class GameBoardController extends FXMLGameBoardBase {
 
             if (!isEndOfGame) {
                 if (playerTwo instanceof ComputerPlayer && playerTwo.hisTurn) {
-                    makeComputerMove();
+                    Timeline timeline = new Timeline(new KeyFrame(
+                            Duration.seconds(1),
+                            event -> makeComputerMove()
+                    ));
+                    timeline.setCycleCount(1);
+                    timeline.play();
                 }
             }
             printGame();
@@ -140,7 +148,6 @@ public class GameBoardController extends FXMLGameBoardBase {
 
     private void startCountdownTimer() {
         countdownTime = 7;
-
         if (timeLine != null) {
             timeLine.stop();   //3l4an law startCountdownTimer 3mnlnlha call multiple time
         }
@@ -285,7 +292,7 @@ public class GameBoardController extends FXMLGameBoardBase {
         if (!cells.isEmpty()) {
             int randMapValue = random.nextInt(cells.size());
             Button compButton = (Button) cells.keySet().toArray()[randMapValue];
-            setTurn(compButton); // Ensure setTurn toggles turns
+            setTurn(compButton);
         } else {
             System.out.println("No empty cells available for automatic move.");
         }
@@ -325,6 +332,7 @@ public class GameBoardController extends FXMLGameBoardBase {
 
     private void checkPlayerWinner() {
         String winner = checkWinnerChar(board);
+
         if (playerOne.getChar() == winner) {
             WinningLine.drawWinningLine(WinningLine.getStartLine(), WinningLine.getEndLine(), grid);
 
@@ -332,7 +340,9 @@ public class GameBoardController extends FXMLGameBoardBase {
             endGame();
             waitAndShowPopup(winner);
         } else if (playerTwo.getChar() == winner) {
-
+            if (playerTwo instanceof ComputerPlayer) {
+                winner = "computer";
+            }
             WinningLine.drawWinningLine(WinningLine.getStartLine(), WinningLine.getEndLine(), grid);
             System.out.println("PLAYER TWO WINNER");
             endGame();
@@ -343,35 +353,49 @@ public class GameBoardController extends FXMLGameBoardBase {
             waitAndShowPopup(winner);
         }
     }
+ 
+    private void waitAndShowPopup(String roundState) {
+      
 
-    private void waitAndShowPopup(String winnerChar) {
+        switch (roundState) {
+            case "X": { // player one WINS or player two WINS (in Player Vs palyer mode)
 
-        switch (winnerChar) {
-            case "X": {
-                if (playerOne.getChar() == winnerChar || playerTwo.getChar() == winnerChar) {
-                    PauseTransition pause = new PauseTransition(Duration.seconds(2));
-                    pause.setOnFinished(event -> {
-                        AppFunctions.openPopup(stage, new FXMLPopUpWinController(stage, winnerChar, playerOne, playerTwo));
-                    });
-                    pause.play();
-                }
-            }
-            break;
-            case "O": {
-                if (playerOne.getChar() == winnerChar || playerTwo.getChar() == winnerChar) {
-                    PauseTransition pause = new PauseTransition(Duration.seconds(2));
-                    pause.setOnFinished(event -> {
-                        AppFunctions.openPopup(stage, new FXMLPopUpWinController(stage, winnerChar, playerOne, playerTwo));
-                    });
-
-                    pause.play();
-                }
-            }
-            break;
-            case "draw": {
+                System.out.println("RS in waitand show : X case");
                 PauseTransition pause = new PauseTransition(Duration.seconds(2));
                 pause.setOnFinished(event -> {
-                    AppFunctions.openPopup(stage, new FXMLPopUpWinController(stage, winnerChar, playerOne, playerTwo));
+                    AppFunctions.openPopup(stage, new FXMLPopUpWinController(stage, roundState, playerOne, playerTwo));
+                });
+                pause.play();
+
+            }
+            break;
+            case "O": { //player one WINS or player two WINS (in Player Vs palyer mode)
+                System.out.println("RS in waitand show : O case");
+
+                PauseTransition pause = new PauseTransition(Duration.seconds(2));
+                pause.setOnFinished(event -> {
+                    AppFunctions.openPopup(stage, new FXMLPopUpWinController(stage, roundState, playerOne, playerTwo));
+                });
+                pause.play();
+
+            }
+            break;
+            case "computer": { // comuter WINS over player in Playr vs player mode
+                System.out.println("RS in waitand show : Computer case");
+
+                PauseTransition pause = new PauseTransition(Duration.seconds(2));
+                pause.setOnFinished(event -> {
+                    AppFunctions.openPopup(stage, new FXMLPopUpWinController(stage, roundState, playerOne, playerTwo));
+                });
+                pause.play();
+            }
+            break;
+            case "draw": { // draw in all modes
+                System.out.println("RS in waitand show :Draw case");
+
+                PauseTransition pause = new PauseTransition(Duration.seconds(2));
+                pause.setOnFinished(event -> {
+                    AppFunctions.openPopup(stage, new FXMLPopUpWinController(stage, roundState, playerOne, playerTwo));
                 });
                 pause.play();
             }
@@ -422,22 +446,22 @@ public class GameBoardController extends FXMLGameBoardBase {
 
     private String getWinnerCharacter(int value) {
         //return the value of the 1st itration
-        return (value % 2 == 0) ? X_CHAR : O_CHAR;
+        return (value % 2 == 0) ?   O_CHAR:X_CHAR;
     }
 
     void changingLabelsStyles() {
         Platform.runLater(() -> {
             if (playerOne.hisTurn) {
                 playerOneLabel.setTextFill(Paint.valueOf("#21bd5c")); //green
-                playerOneCharacter.setTextFill(Paint.valueOf("#3e5879"));
+                playerOneChar.setTextFill(Paint.valueOf("#21bd5c"));
                 playerTwoLabel.setTextFill(Paint.valueOf("#3e5879"));
-                playerTwoCharacter.setTextFill(Paint.valueOf("#21bd5c")); //green
+                playerTwoChar.setTextFill(Paint.valueOf("#3e5879")); //green
             }
             if (playerTwo.hisTurn) {
                 playerTwoLabel.setTextFill(Paint.valueOf("#21bd5c")); //green
-                playerTwoCharacter.setTextFill(Paint.valueOf("#3e5879"));
+                playerTwoChar.setTextFill(Paint.valueOf("#21bd5c"));
                 playerOneLabel.setTextFill(Paint.valueOf("#3e5879"));
-                playerOneCharacter.setTextFill(Paint.valueOf("#21bd5c")); //green
+                playerOneChar.setTextFill(Paint.valueOf("#3e5879")); //green
             }
         });
     }

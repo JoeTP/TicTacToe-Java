@@ -1,4 +1,4 @@
-package tictactoe.gameboard;
+package tictactoe.gamerecord;
 
 import java.lang.String;
 import java.net.URL;
@@ -10,24 +10,21 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 
-public abstract class FXMLGameBoardBase extends BorderPane {
+public abstract class GameRecordBase extends BorderPane {
 
     protected final HBox hBox;
-    protected final Region region;
-    protected final Label timer;
-    protected final Region region0;
+    protected final Button prevBtn;
+    protected final Button nextBtn;
+    protected final Button exitBtn;
     protected final VBox vBox;
-    protected final Button leaveButton;
-    protected final VBox vBox0;
     protected final HBox hBox0;
-    protected final Label playerOneChar;
+    protected final Label label;
     protected final Label playerOneLabel;
     protected final HBox hBox1;
-    protected final Label playerTwoChar;
+    protected final Label label0;
     protected final Label playerTwoLabel;
     protected final AnchorPane anchorPane;
     protected final GridPane grid;
@@ -47,20 +44,18 @@ public abstract class FXMLGameBoardBase extends BorderPane {
     protected final Button b11;
     protected final Button b00;
 
-    public FXMLGameBoardBase() {
+    public GameRecordBase() {
 
         hBox = new HBox();
-        region = new Region();
-        timer = new Label();
-        region0 = new Region();
+        prevBtn = new Button();
+        nextBtn = new Button();
+        exitBtn = new Button();
         vBox = new VBox();
-        leaveButton = new Button();
-        vBox0 = new VBox();
         hBox0 = new HBox();
-        playerOneChar = new Label();
+        label = new Label();
         playerOneLabel = new Label();
         hBox1 = new HBox();
-        playerTwoChar = new Label();
+        label0 = new Label();
         playerTwoLabel = new Label();
         anchorPane = new AnchorPane();
         grid = new GridPane();
@@ -91,46 +86,50 @@ public abstract class FXMLGameBoardBase extends BorderPane {
         hBox.setPrefHeight(70.0);
         BorderPane.setMargin(hBox, new Insets(0.0, 20.0, 0.0, 20.0));
 
-        region.setPrefHeight(70.0);
-        region.setPrefWidth(250.0);
+        prevBtn.setMnemonicParsing(false);
+        prevBtn.setPrefHeight(47.0);
+        prevBtn.setPrefWidth(90.0);
+        prevBtn.setText("Previous");
+        prevBtn.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
+        HBox.setMargin(prevBtn, new Insets(0.0, 0.0, 0.0, 110.0));
 
-        timer.setPrefHeight(70.0);
-        timer.setPrefWidth(216.0);
-        timer.setText("Timer left for : 7");
-        timer.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
+        nextBtn.setLayoutX(260.0);
+        nextBtn.setLayoutY(10.0);
+        nextBtn.setMnemonicParsing(false);
+        nextBtn.setPrefHeight(47.0);
+        nextBtn.setPrefWidth(90.0);
+        nextBtn.setText("Next");
+        nextBtn.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
+        HBox.setMargin(nextBtn, new Insets(0.0, 0.0, 0.0, 90.0));
 
-        HBox.setHgrow(region0, javafx.scene.layout.Priority.ALWAYS);
-        region0.setPrefHeight(70.0);
-
-        vBox.setAlignment(javafx.geometry.Pos.CENTER);
-
-        leaveButton.setMnemonicParsing(false);
-        leaveButton.setOnAction(this::handleLeaveButton);
-        leaveButton.setPrefHeight(47.0);
-        leaveButton.setPrefWidth(70.0);
-        leaveButton.setText("Leave");
-        leaveButton.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
+        exitBtn.setLayoutX(120.0);
+        exitBtn.setLayoutY(10.0);
+        exitBtn.setMnemonicParsing(false);
+        exitBtn.setOnAction(this::handleExitButton);
+        exitBtn.setPrefHeight(47.0);
+        exitBtn.setPrefWidth(90.0);
+        exitBtn.setText("Exit");
+        exitBtn.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
+        HBox.setMargin(exitBtn, new Insets(0.0, 0.0, 0.0, 100.0));
         setBottom(hBox);
 
         hBox0.setSpacing(15.0);
 
-        playerOneChar.setLayoutX(10.0);
-        playerOneChar.setLayoutY(10.0);
-        playerOneChar.setText("O");
+        label.setLayoutX(10.0);
+        label.setLayoutY(10.0);
+        label.setText("O");
 
         playerOneLabel.setText("Player1Name");
 
         hBox1.setSpacing(15.0);
 
-        playerTwoChar.setLayoutX(10.0);
-        playerTwoChar.setLayoutY(10.0);
-        playerTwoChar.setText("X");
+        label0.setLayoutX(10.0);
+        label0.setLayoutY(10.0);
+        label0.setText("X");
 
         playerTwoLabel.setText("Player2Name");
-        vBox0.setPadding(new Insets(0.0, 0.0, 0.0, 20.0));
-        setTop(vBox0);
-        getStylesheets().add("/styling/generalStyle.css");
-        getStylesheets().add("/tictactoe/gameboard/style.css");
+        vBox.setPadding(new Insets(0.0, 0.0, 0.0, 20.0));
+        setTop(vBox);
 
         BorderPane.setAlignment(anchorPane, javafx.geometry.Pos.CENTER);
         anchorPane.setPrefHeight(400.0);
@@ -173,14 +172,12 @@ public abstract class FXMLGameBoardBase extends BorderPane {
         GridPane.setColumnIndex(b22, 2);
         GridPane.setRowIndex(b22, 2);
         b22.setMnemonicParsing(false);
-        b22.setOnAction(this::handleB22);
         b22.setStyle("-fx-border-radius: 0 0 30 0;");
 
         GridPane.setColumnIndex(b20, 2);
         b20.setLayoutX(10.0);
         b20.setLayoutY(10.0);
         b20.setMnemonicParsing(false);
-        b20.setOnAction(this::handleB20);
         b20.setStyle("-fx-border-radius: 0 30 0 0;");
 
         GridPane.setColumnIndex(b12, 1);
@@ -188,14 +185,12 @@ public abstract class FXMLGameBoardBase extends BorderPane {
         b12.setLayoutX(177.0);
         b12.setLayoutY(10.0);
         b12.setMnemonicParsing(false);
-        b12.setOnAction(this::handleB12);
         b12.setStyle("-fx-border-radius: 0 0 0 0;");
 
         GridPane.setRowIndex(b02, 2);
         b02.setLayoutX(10.0);
         b02.setLayoutY(10.0);
         b02.setMnemonicParsing(false);
-        b02.setOnAction(this::handleB02);
         b02.setStyle("-fx-border-radius: 0 0 0 30;");
 
         GridPane.setColumnIndex(b21, 2);
@@ -203,21 +198,18 @@ public abstract class FXMLGameBoardBase extends BorderPane {
         b21.setLayoutX(10.0);
         b21.setLayoutY(10.0);
         b21.setMnemonicParsing(false);
-        b21.setOnAction(this::handleB21);
         b21.setStyle("-fx-border-radius: 0 0 0 0;");
 
         GridPane.setRowIndex(b01, 1);
         b01.setLayoutX(10.0);
         b01.setLayoutY(10.0);
         b01.setMnemonicParsing(false);
-        b01.setOnAction(this::handleB01);
         b01.setStyle("-fx-border-radius: 0;");
 
         GridPane.setColumnIndex(b10, 1);
         b10.setLayoutX(10.0);
         b10.setLayoutY(10.0);
         b10.setMnemonicParsing(false);
-        b10.setOnAction(this::handleB10);
         b10.setStyle("-fx-border-radius: 0;");
 
         GridPane.setColumnIndex(b11, 1);
@@ -225,30 +217,28 @@ public abstract class FXMLGameBoardBase extends BorderPane {
         b11.setLayoutX(10.0);
         b11.setLayoutY(10.0);
         b11.setMnemonicParsing(false);
-        b11.setOnAction(this::handleB11);
         b11.setStyle("-fx-border-radius: 0;");
 
         b00.setLayoutX(177.0);
         b00.setLayoutY(10.0);
         b00.setMnemonicParsing(false);
-        b00.setOnAction(this::handleB00);
         b00.setPrefHeight(153.0);
         b00.setPrefWidth(192.0);
         b00.setStyle("-fx-border-radius: 30 0 0 0;");
         BorderPane.setMargin(anchorPane, new Insets(0.0, 20.0, 0.0, 20.0));
         setCenter(anchorPane);
+        getStylesheets().add("/tictactoe/gameboard/style.css");
+        getStylesheets().add("/styling/generalStyle.css");
 
-        hBox.getChildren().add(region);
-        hBox.getChildren().add(timer);
-        hBox.getChildren().add(region0);
-        vBox.getChildren().add(leaveButton);
-        hBox.getChildren().add(vBox);
-        hBox0.getChildren().add(playerOneChar);
+        hBox.getChildren().add(prevBtn);
+        hBox.getChildren().add(nextBtn);
+        hBox.getChildren().add(exitBtn);
+        hBox0.getChildren().add(label);
         hBox0.getChildren().add(playerOneLabel);
-        vBox0.getChildren().add(hBox0);
-        hBox1.getChildren().add(playerTwoChar);
+        vBox.getChildren().add(hBox0);
+        hBox1.getChildren().add(label0);
         hBox1.getChildren().add(playerTwoLabel);
-        vBox0.getChildren().add(hBox1);
+        vBox.getChildren().add(hBox1);
         grid.getColumnConstraints().add(columnConstraints);
         grid.getColumnConstraints().add(columnConstraints0);
         grid.getColumnConstraints().add(columnConstraints1);
@@ -268,24 +258,6 @@ public abstract class FXMLGameBoardBase extends BorderPane {
 
     }
 
-    protected abstract void handleLeaveButton(javafx.event.ActionEvent actionEvent);
-
-    protected abstract void handleB22(javafx.event.ActionEvent actionEvent);
-
-    protected abstract void handleB20(javafx.event.ActionEvent actionEvent);
-
-    protected abstract void handleB12(javafx.event.ActionEvent actionEvent);
-
-    protected abstract void handleB02(javafx.event.ActionEvent actionEvent);
-
-    protected abstract void handleB21(javafx.event.ActionEvent actionEvent);
-
-    protected abstract void handleB01(javafx.event.ActionEvent actionEvent);
-
-    protected abstract void handleB10(javafx.event.ActionEvent actionEvent);
-
-    protected abstract void handleB11(javafx.event.ActionEvent actionEvent);
-
-    protected abstract void handleB00(javafx.event.ActionEvent actionEvent);
+    protected abstract void handleExitButton(javafx.event.ActionEvent actionEvent);
 
 }
