@@ -113,12 +113,12 @@ public class FXMLServerController extends FXMLServerBase {
                     pieChartData.setAll(
                             new PieChart.Data(AppStrings.ONLINE, onlineUsersCount),
                             new PieChart.Data(AppStrings.OFFLINE, usersCount - onlineUsersCount)
-                    );
-                    usersPieChart.getData().get(0).getNode().setStyle("-fx-pie-color: DARKSLATEBLUE;");
-                    usersPieChart.getData().get(1).getNode().setStyle("-fx-pie-color: D8C4B6;");
-                    totalUsersNoLabel.setText(Integer.toString(usersCount));
-                    ActiceUsersNoLabel.setText(Integer.toString(onlineUsersCount));
+                    );                    
                 }
+                usersPieChart.getData().get(0).getNode().setStyle("-fx-pie-color: DARKSLATEBLUE;");
+                usersPieChart.getData().get(1).getNode().setStyle("-fx-pie-color: D8C4B6;");
+                totalUsersNoLabel.setText(Integer.toString(usersCount));
+                ActiceUsersNoLabel.setText(Integer.toString(onlineUsersCount));
             }
         });
     }
