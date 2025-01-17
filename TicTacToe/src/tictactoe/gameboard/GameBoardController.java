@@ -62,10 +62,10 @@ public class GameBoardController extends FXMLGameBoardBase {
     private final String O_CHAR = "O";
     private int move = 1;
 
-    public GameBoardController(Stage stage, Player playerOne, Player playerTwo) {
+    public GameBoardController(Stage stage, String playerOne, String playerTwo) {
         this.stage = stage;
-        this.playerOne = playerOne;
-        this.playerTwo = playerTwo;
+        this.playerOne.setName(playerOne);
+        this.playerTwo.setName(playerTwo);
         assignPlayers();
         changingLabelsStyles();
 

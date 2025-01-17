@@ -29,9 +29,6 @@ public class FXMLPlayerVsPlayerLocalController extends FXMLPlayerVsPlayerLocalBa
      */
     private final Stage stage;
 
-    private Player playerOne = new Player();
-    private Player playerTwo = new Player();
-
     public FXMLPlayerVsPlayerLocalController(Stage stage) {
         this.stage = stage;
     }
@@ -45,9 +42,7 @@ public class FXMLPlayerVsPlayerLocalController extends FXMLPlayerVsPlayerLocalBa
     @Override
     protected void openGameBoard(ActionEvent actionEvent) {
         AudioController.clickSound();
-        playerOne.setName(playerOneTextField.getText());
-        playerTwo.setName(playerTwoTextField.getText());
-        AppFunctions.closeAndGo(actionEvent, stage, new GameBoardController(stage, playerOne, playerTwo));
+        AppFunctions.closeAndGo(actionEvent, stage, new GameBoardController(stage, playerOneTextField.getText(), playerTwoTextField.getText()));
     }
 
 }

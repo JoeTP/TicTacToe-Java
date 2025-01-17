@@ -21,9 +21,12 @@ import javafx.application.Platform;
 import models.DataModel;
 import models.UserModel;
 import shared.AppFunctions;
+import static tictactoe.TicTacToe.appStage;
+import tictactoe.gameboard.GameBoardController;
 import tictactoe.playervscomp.FXMLPlayerVsCompController;
 import tictactoe.playervsplayerlocal.FXMLRequestToPlayController;
 import tictactoe.playervsplayeronline.FXMLPlayerVsPlayerOnlineController;
+import static tictactoe.playervsplayeronline.FXMLPlayerVsPlayerOnlineController.requestActionEvent;
 
 /**
  *
@@ -42,12 +45,13 @@ public class ClientConnection {
     public static Thread listeningThread;
     public static UserModel user;
     public static List<String> activeUsers = new ArrayList<>();
+
     public void connectToServer() throws IOException {
         socket = new Socket("127.0.0.1", 5001);
         System.out.println("Cleint connection Established !");
         ois = new ObjectInputStream(socket.getInputStream());
         oos = new ObjectOutputStream(socket.getOutputStream());
-        
+
     }
 
     public static void stopThreads() {
@@ -63,9 +67,9 @@ public class ClientConnection {
         try {
             oos.close();
             ois.close();
-            if(listeningThread.isAlive()){
-              listeningThread.stop();  
-            }           
+            if (listeningThread.isAlive()) {
+                listeningThread.stop();
+            }
             socket.close();
             System.out.println("client killed");
         } catch (IOException ex) {
@@ -111,22 +115,29 @@ public class ClientConnection {
                         AppFunctions.openReqPopup(new FXMLRequestToPlayController(rival));
                     });
                 }
-                if(newResponse.equals("Active_Users"))
-                try {                                             
-                synchronized (ois) {
-                    int activeUsersCount = ois.readInt();
-                    System.out.println(activeUsersCount);
-                    String user;
-                    for (int i = 0; i < activeUsersCount - 1; i++) {
-                        user = ois.readUTF();
-                        activeUsers.add(user);
-                        System.out.println(user);
-                    }                    
+                if (newResponse.equals("GAME_ACCEPT")) {
+                    Platform.runLater(() -> {
+                        AppFunctions.closeAndGo(requestActionEvent, appStage, new GameBoardController(appStage, rival, user.getName()));
+                    });
                 }
 
-            } catch (IOException ex) {
-                Logger.getLogger(FXMLPlayerVsPlayerOnlineController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+                if (newResponse.equals("Active_Users")) {
+                    try {
+                        synchronized (ois) {
+                            int activeUsersCount = ois.readInt();
+                            System.out.println(activeUsersCount);
+                            String user;
+                            for (int i = 0; i < activeUsersCount - 1; i++) {
+                                user = ois.readUTF();
+                                activeUsers.add(user);
+                                System.out.println(user);
+                            }
+                        }
+
+                    } catch (IOException ex) {
+                        Logger.getLogger(FXMLPlayerVsPlayerOnlineController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
             }
         });
         listeningThread.start();

@@ -43,6 +43,7 @@ public class FXMLPlayerVsPlayerOnlineController extends FXMLPlayerVsPlayerOnline
 
     private Player playerOne = new Player();
     private Player playerTwo = new Player();
+    public static ActionEvent requestActionEvent = new ActionEvent();
 
     ClientConnection client;
 
@@ -67,6 +68,7 @@ public class FXMLPlayerVsPlayerOnlineController extends FXMLPlayerVsPlayerOnline
 
     @Override
     protected void openGameBoard(ActionEvent actionEvent) {
+        requestActionEvent = actionEvent;
         AudioController.clickSound();
         String rival = (String) activePlayersListView.getSelectionModel().getSelectedItem();
         if (!rival.isEmpty()) {
