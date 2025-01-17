@@ -62,7 +62,7 @@ public class FXMLPlayerVsCompController extends FXMLPlayerVsCompBase {
     @Override
     protected void openGameBoard(ActionEvent actionEvent) {
         AudioController.clickSound();
-        AppFunctions.closeAndGo(actionEvent, stage, new GameBoardController(stage, playerOne, playerTwo));
+        AppFunctions.closeAndGo(actionEvent, stage, new GameBoardController(stage, "Player", "Computer"));
     }
 
     @FXML

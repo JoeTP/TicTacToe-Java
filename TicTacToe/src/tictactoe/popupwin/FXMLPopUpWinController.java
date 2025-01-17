@@ -115,7 +115,7 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
     protected void handlePlayAgainButton(ActionEvent actionEvent
     ) {
         mediaPlayer.pause();
-        AppFunctions.closeAndGo(actionEvent, stage, new GameBoardController(stage, playerOne, playerTwo));
+        AppFunctions.closeAndGo(actionEvent, stage, new GameBoardController(stage, playerOne.getName(), playerTwo.getName()));
     }
 
     @Override

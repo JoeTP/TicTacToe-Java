@@ -61,10 +61,10 @@ public class GameBoardController extends FXMLGameBoardBase {
     private final String O_CHAR = "O";
     private int move = 1;
 
-    public GameBoardController(Stage stage, Player playerOne, Player playerTwo) {
+    public GameBoardController(Stage stage, String playerOne, String playerTwo) {
         this.stage = stage;
-        this.playerOne = playerOne;
-        this.playerTwo = playerTwo;
+        this.playerOne.setName(playerOne);
+        this.playerTwo.setName(playerTwo);
         assignPlayers();
         changingLabelsStyles();
 
@@ -134,9 +134,9 @@ public class GameBoardController extends FXMLGameBoardBase {
             checkPlayerWinner();
 
             if (!isEndOfGame) {
-                if (playerTwo instanceof ComputerPlayer && playerTwo.hisTurn) { 
+                if (playerTwo instanceof ComputerPlayer && playerTwo.hisTurn) {
                     disableButtons();//disable for computer
-                                    startCountdownTimer();
+                    startCountdownTimer();
                     Timeline timeline = new Timeline(new KeyFrame(
                             Duration.seconds(1.4),
                             event -> {

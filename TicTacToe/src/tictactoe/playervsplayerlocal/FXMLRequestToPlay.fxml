@@ -17,8 +17,8 @@
          <children>
             <AnchorPane>
                <children>
-                  <Button id="accept-button" fx:id="acceptBtn" layoutX="128.0" layoutY="-1.0" mnemonicParsing="false" text="Accept" />
-                  <Button id="decline-button" fx:id="declineBtn" layoutX="287.0" layoutY="-1.0" mnemonicParsing="false" text="Decline" />
+                  <Button id="accept-button" fx:id="acceptBtn" layoutX="128.0" layoutY="-1.0" mnemonicParsing="false" onAction="#handleAcceptButton" text="Accept" />
+                  <Button id="decline-button" fx:id="declineBtn" layoutX="287.0" layoutY="-1.0" mnemonicParsing="false" onAction="#handleDeclineButton" text="Decline" />
                </children>
             </AnchorPane>
          </children>
@@ -50,7 +50,7 @@
                         <Image url="@../../../resources/assets/icons/invite.png" />
                      </image>
                   </ImageView>
-                  <Text id="player-name" fx:id="playerNameTextField" layoutX="166.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="palyer_Name">
+                  <Text id="player-name" fx:id="playerNameLabel" layoutX="166.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="palyer_Name">
                      <font>
                         <Font name="System Bold" size="24.0" />
                      </font>
