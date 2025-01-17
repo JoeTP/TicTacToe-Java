@@ -7,46 +7,38 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
-public abstract class HistoryListBase extends AnchorPane {
+public abstract class RecordListPopUpBase extends AnchorPane {
 
     protected final Button closeBtn;
     protected final VBox vBox;
-    protected final ListView<String> listView;
 
-    public HistoryListBase() {
+    public RecordListPopUpBase() {
 
         closeBtn = new Button();
         vBox = new VBox();
-        listView = new ListView<>();
 
+        setId("AnchorPane");
         setPrefHeight(500.0);
         setPrefWidth(450.0);
         getStyleClass().add("mainBackground");
         getStylesheets().add("/styling/generalStyle.css");
 
-       
         AnchorPane.setLeftAnchor(closeBtn, 10.0);
         AnchorPane.setTopAnchor(closeBtn, 20.0);
+        closeBtn.setOnAction(this::handleCloseButton);
         closeBtn.setText("Back");
 
-       
         vBox.setAlignment(javafx.geometry.Pos.CENTER);
         vBox.setPrefHeight(500.0);
         vBox.setPrefWidth(450.0);
         vBox.setSpacing(10);
 
-     
-        listView.setPrefHeight(350.0);
-        listView.setPrefWidth(300.0);
-        listView.setOnMouseClicked(this::handleCellClick);
-        VBox.setMargin(listView, new Insets(10, 10, 10, 10));
-   
-        vBox.getChildren().addAll(new Label("History List"), listView);
-     
-      
-        getChildren().addAll(closeBtn, vBox);
+        getChildren().add(closeBtn);
+        getChildren().add(vBox);
+
     }
- protected abstract void handleCellClick(javafx.scene.input.MouseEvent event);
- 
+
+    protected abstract void handleCloseButton(javafx.event.ActionEvent actionEvent);
+
     
 }
