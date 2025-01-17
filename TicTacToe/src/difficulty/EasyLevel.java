@@ -17,9 +17,7 @@ import models.ComputerPlayer;
  * @author Ayat Gamal
  */
 public class EasyLevel extends ComputerPlayer {
-
-    ComputerPlayer comp;
-
+    
     public EasyLevel() {
     }
 

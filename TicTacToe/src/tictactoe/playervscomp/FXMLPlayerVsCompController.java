@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package tictactoe.playervscomp;
 
 import difficulty.EasyLevel;
@@ -25,38 +20,33 @@ import tictactoe.offlinegameboard.FXMLOfflineGameBoardController;
 
 public class FXMLPlayerVsCompController extends FXMLPlayerVsCompBase {
 
-    /**
-     * Initializes the controller class.
-     *
-     * @param url
-     * @param rb
-     */
     Stage stage;
-
-    
     private Player playerOne = new Player();
     private Player playerTwo = new ComputerPlayer();
     public static ComputerPlayer comp;
-    
-     public FXMLPlayerVsCompController(Stage stage) {
+    public static int level = 0;
+
+    public FXMLPlayerVsCompController(Stage stage) {
         this.stage = stage;
         setDifficultyLabels();
         handlingDifficultySlider();
+
     }
 
     private void handlingDifficultySlider() {
         ChangeListener<Number> difficultyChangeListener = (observable, oldValue, newValue) -> {
             switch ((int) newValue.intValue()) {
                 case 0:
+                    level = 0;
                     difficultyImg.setImage(new Image(getClass().getResourceAsStream("/assets/icons/easy.png")));
                     System.out.println("in easy slider ");
-                    comp = new EasyLevel();
-                    
                     break;
                 case 1:
+                    level = 1;
                     difficultyImg.setImage(new Image(getClass().getResourceAsStream("/assets/icons/norml.png")));
                     break;
                 case 2:
+                    level = 2;
                     difficultyImg.setImage(new Image(getClass().getResourceAsStream("/assets/icons/extreme.png")));
                     break;
             }
@@ -68,7 +58,8 @@ public class FXMLPlayerVsCompController extends FXMLPlayerVsCompBase {
     @Override
     protected void openGameBoard(ActionEvent actionEvent) {
         AudioController.clickSound();
-        AppFunctions.closeAndGo(actionEvent, stage, new GameBoardController(stage, playerOne, playerTwo));
+        System.out.println("Level is " + level);
+        AppFunctions.closeAndGo(actionEvent, stage, new GameBoardController(stage, playerOne.getName(), playerTwo.getName() ,"computer"));
     }
 
     @FXML

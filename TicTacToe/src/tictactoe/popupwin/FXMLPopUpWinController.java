@@ -25,12 +25,12 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
     Player playerOne;
     Player playerTwo;
     MediaPlayer mediaPlayer;
-
-    public FXMLPopUpWinController(Stage stage, String roundState, Player playerOne, Player playerTwo) {
+    String mode;
+    public FXMLPopUpWinController(Stage stage, String roundState, Player playerOne, Player playerTwo , String mode) {
         this.stage = stage;
         this.playerOne = playerOne;
         this.playerTwo = playerTwo;
-
+        this.mode = mode;
         System.out.println("Round State string : " + roundState);
         showPopup(roundState);
 
@@ -115,7 +115,7 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
     protected void handlePlayAgainButton(ActionEvent actionEvent
     ) {
         mediaPlayer.pause();
-        AppFunctions.closeAndGo(actionEvent, stage, new GameBoardController(stage, playerOne, playerTwo));
+        AppFunctions.closeAndGo(actionEvent, stage, new GameBoardController(stage, playerOne.getName(), playerTwo.getName(), mode ));
     }
 
     @Override

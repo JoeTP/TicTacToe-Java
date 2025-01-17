@@ -47,7 +47,7 @@ public class FXMLPlayerVsPlayerLocalController extends FXMLPlayerVsPlayerLocalBa
         AudioController.clickSound();
         playerOne.setName(playerOneTextField.getText());
         playerTwo.setName(playerTwoTextField.getText());
-        AppFunctions.closeAndGo(actionEvent, stage, new GameBoardController(stage, playerOne, playerTwo));
+        AppFunctions.closeAndGo(actionEvent, stage, new GameBoardController(stage, playerOne.getName(), playerTwo.getName(), "local"));
     }
 
 }
