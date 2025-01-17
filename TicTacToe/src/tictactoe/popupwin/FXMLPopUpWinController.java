@@ -26,13 +26,11 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
     Player playerTwo;
     MediaPlayer mediaPlayer;
 
-    public FXMLPopUpWinController(Stage stage, String roundState, Player playerOne , Player playerTwo) {
+    public FXMLPopUpWinController(Stage stage, String roundState, Player playerOne, Player playerTwo) {
         this.stage = stage;
-         this.playerOne = playerOne;
+        this.playerOne = playerOne;
         this.playerTwo = playerTwo;
-        if(playerTwo instanceof ComputerPlayer){
-            this.playerTwo = playerTwo;
-        }
+
         System.out.println("Round State string : " + roundState);
         showPopup(roundState);
 
@@ -44,8 +42,8 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
         switch (roundState) {
             case "X": { // normal player
                 System.out.println("Round State string in popup: X player " + roundState);
-
-                winAndLoseLabel.setText(playerOne.getName()+"Wins !" );
+                winAndLoseLabel.setStyle("-fx-text-fill: #21bd5c;");
+                winAndLoseLabel.setText(playerOne.getName() + " Win!");
                 congratsLable.setText(AppString.CONGRATS);
                 rightCupIcon.setImage(new Image(getClass().getResource("/assets/icons/winner.png").toExternalForm()));
                 leftCupIcon.setImage(new Image(getClass().getResource("/assets/icons/winner.png").toExternalForm()));
@@ -60,11 +58,11 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
             break;
             case "O": { // normal player
                 System.out.println("Round State string  in popup: : O Player" + roundState);
-
-                winAndLoseLabel.setText(AppString.LOSE_LABLE);
-                congratsLable.setText(AppString.BAD_LUCK);
-                rightCupIcon.setImage(new Image(getClass().getResource("/assets/icons/gameOver.png").toExternalForm()));
-                leftCupIcon.setImage(new Image(getClass().getResource("/assets/icons/gameOver.png").toExternalForm()));
+                winAndLoseLabel.setStyle("-fx-text-fill: #21bd5c;");
+                winAndLoseLabel.setText(playerTwo.getName() + " Win !");
+                congratsLable.setText(AppString.CONGRATS);
+                rightCupIcon.setImage(new Image(getClass().getResource("/assets/icons/winner.png").toExternalForm()));
+                leftCupIcon.setImage(new Image(getClass().getResource("/assets/icons/winner.png").toExternalForm()));
 
                 mediaPlayer = new MediaPlayer(new Media(this.getClass().getResource(AppString.WIN_VIDEO_URL).toExternalForm()));
                 winOrLoseVideo.setMediaPlayer(mediaPlayer);
@@ -75,7 +73,7 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
             break;
             case "computer": { // computer wins over player
                 System.out.println("Round State string : in popup: comp " + roundState);
-
+                winAndLoseLabel.setStyle("-fx-text-fill: #99003d;");
                 winAndLoseLabel.setText("Lose against Computer!");
                 congratsLable.setText("OH,NOooo!");
                 rightCupIcon.setImage(new Image(getClass().getResource("/assets/icons/gameOver.png").toExternalForm()));

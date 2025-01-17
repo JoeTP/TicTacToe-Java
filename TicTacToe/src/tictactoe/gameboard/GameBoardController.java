@@ -24,6 +24,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
+import javafx.scene.Node;
 import javafx.util.Duration;
 import models.ComputerPlayer;
 import models.Player;
@@ -113,9 +114,11 @@ public class GameBoardController extends FXMLGameBoardBase {
             System.out.println("current Move: " + move);
 
             if (playerOne.hisTurn) {
+                startCountdownTimer();
+                enableButtons();//enable for palyer
                 b.setText(playerOne.getChar());
-
             } else {
+                startCountdownTimer();
                 b.setText(playerTwo.getChar());
             }
 
@@ -131,18 +134,25 @@ public class GameBoardController extends FXMLGameBoardBase {
             checkPlayerWinner();
 
             if (!isEndOfGame) {
-                if (playerTwo instanceof ComputerPlayer && playerTwo.hisTurn) {
+                if (playerTwo instanceof ComputerPlayer && playerTwo.hisTurn) { 
+                    disableButtons();//disable for computer
+                                    startCountdownTimer();
                     Timeline timeline = new Timeline(new KeyFrame(
-                            Duration.seconds(1),
-                            event -> makeComputerMove()
+                            Duration.seconds(1.4),
+                            event -> {
+                                makeComputerMove();
+                                Platform.runLater(() -> {
+                                    enableButtons();
+                                });
+                            }
                     ));
                     timeline.setCycleCount(1);
                     timeline.play();
+                } else {
+                    startCountdownTimer();
                 }
             }
             printGame();
-            startCountdownTimer();
-
         }
     }
 
@@ -155,7 +165,7 @@ public class GameBoardController extends FXMLGameBoardBase {
 
         if (!isEndOfGame) {
             timeLine = new Timeline(
-                    new KeyFrame(Duration.seconds(1), (ActionEvent event) -> {
+                    new KeyFrame(Duration.seconds(0.8), (ActionEvent event) -> {
                         timer.setStyle("-fx-text-fill: #3E5879;");
                         timer.setText(" " + countdownTime + "");
 
@@ -267,15 +277,13 @@ public class GameBoardController extends FXMLGameBoardBase {
             } else {
                 System.out.println("insiidee makeAutomaticMove and the button not existt");
             }
-
-            return;
-
         } else {
             System.out.println("No empty cells found.");
         }
     }
 
     private void makeComputerMove() {
+
         Random random = new Random();
         String currentChar = playerOne.hisTurn ? playerOne.getChar() : playerTwo.getChar();
         System.out.println("Automatic char: " + currentChar);
@@ -294,6 +302,7 @@ public class GameBoardController extends FXMLGameBoardBase {
             int randMapValue = random.nextInt(cells.size());
             Button compButton = (Button) cells.keySet().toArray()[randMapValue];
             setTurn(compButton);
+
         } else {
             System.out.println("No empty cells available for automatic move.");
         }
@@ -354,9 +363,8 @@ public class GameBoardController extends FXMLGameBoardBase {
             waitAndShowPopup(winner);
         }
     }
- 
+
     private void waitAndShowPopup(String roundState) {
-      
 
         switch (roundState) {
             case "X": { // player one WINS or player two WINS (in Player Vs palyer mode)
@@ -447,10 +455,10 @@ public class GameBoardController extends FXMLGameBoardBase {
 
     private String getWinnerCharacter(int value) {
         //return the value of the 1st itration
-        return (value % 2 == 0) ?   O_CHAR:X_CHAR;
+        return (value % 2 == 0) ? O_CHAR : X_CHAR;
     }
 
-    void changingLabelsStyles() {
+    private void changingLabelsStyles() {
         Platform.runLater(() -> {
             if (playerOne.hisTurn) {
                 playerOneLabel.setTextFill(Paint.valueOf("#21bd5c")); //green
@@ -465,6 +473,22 @@ public class GameBoardController extends FXMLGameBoardBase {
                 playerOneChar.setTextFill(Paint.valueOf("#3e5879")); //green
             }
         });
+    }
+
+    private void disableButtons() {
+        for (Node n : grid.getChildren()) {
+            if (n instanceof Button) {
+                n.setDisable(true);
+            }
+        }
+    }
+
+    private void enableButtons() {
+        for (Node n : grid.getChildren()) {
+            if (n instanceof Button) {
+                n.setDisable(false);
+            }
+        }
     }
 
     @Override
