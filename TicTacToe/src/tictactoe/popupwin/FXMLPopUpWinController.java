@@ -79,7 +79,7 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
                 rightCupIcon.setImage(new Image(getClass().getResource("/assets/icons/gameOver.png").toExternalForm()));
                 leftCupIcon.setImage(new Image(getClass().getResource("/assets/icons/gameOver.png").toExternalForm()));
 
-                mediaPlayer = new MediaPlayer(new Media(this.getClass().getResource(AppString.WIN_VIDEO_URL).toExternalForm()));
+                mediaPlayer = new MediaPlayer(new Media(this.getClass().getResource(AppString.DRAW_VIDEO_URL).toExternalForm()));
                 winOrLoseVideo.setMediaPlayer(mediaPlayer);
 
                 mediaPlayer.setVolume(0.5);
@@ -94,7 +94,7 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
                 rightCupIcon.setImage(new Image(getClass().getResource("/assets/icons/draw.png").toExternalForm()));
                 leftCupIcon.setImage(new Image(getClass().getResource("/assets/icons/draw.png").toExternalForm()));
 
-                mediaPlayer = new MediaPlayer(new Media(this.getClass().getResource(AppString.WIN_VIDEO_URL).toExternalForm()));
+                mediaPlayer = new MediaPlayer(new Media(this.getClass().getResource(AppString.DRAW_VIDEO_URL).toExternalForm()));
                 winOrLoseVideo.setMediaPlayer(mediaPlayer);
 
                 mediaPlayer.setVolume(0.5);
