@@ -39,7 +39,7 @@ public class FXMLServerController extends FXMLServerBase {
 
     public FXMLServerController() {
         System.out.println("FXMLServerController initialized");
-        
+        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
         usernames.addListener((ListChangeListener<String>) change -> {
             updatePieChart();
             synchronized (usernames) {
@@ -61,7 +61,7 @@ public class FXMLServerController extends FXMLServerBase {
             }
             ClientHandler.broadCastActiveUsers();
         });
-        updatePieChart();        
+        updatePieChart();
         serverIndicator.setFill(Color.CRIMSON);
     }
 
@@ -120,19 +120,22 @@ public class FXMLServerController extends FXMLServerBase {
         onlineUsersCount = clients.size();
         System.out.println("Total users count: " + usersCount);
         System.out.println("Total online users count: " + onlineUsersCount);
-        // Prepare the pie chart data
-        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
-                new PieChart.Data(AppStrings.ONLINE, onlineUsersCount),
-                new PieChart.Data(AppStrings.OFFLINE, usersCount - onlineUsersCount)
-        );
-        // Safely update the UI on the JavaFX Application thread
         Platform.runLater(() -> {
             if (usersPieChart != null) {
-                usersPieChart.setData(pieChartData);
-                usersPieChart.getData().get(0).getNode().setStyle("-fx-pie-color: DARKSLATEBLUE;");
-                usersPieChart.getData().get(1).getNode().setStyle("-fx-pie-color: D8C4B6;");
-                totalUsersNoLabel.setText(Integer.toString(usersCount));
-                ActiceUsersNoLabel.setText(Integer.toString(onlineUsersCount));
+                ObservableList<PieChart.Data> pieChartData = usersPieChart.getData();
+                if (pieChartData.size() == 2) {
+                    pieChartData.get(0).setPieValue(onlineUsersCount); // Online
+                    pieChartData.get(1).setPieValue(usersCount - onlineUsersCount); // Offline
+                } else {
+                    pieChartData.setAll(
+                            new PieChart.Data(AppStrings.ONLINE, onlineUsersCount),
+                            new PieChart.Data(AppStrings.OFFLINE, usersCount - onlineUsersCount)
+                    );
+                    usersPieChart.getData().get(0).getNode().setStyle("-fx-pie-color: DARKSLATEBLUE;");
+                    usersPieChart.getData().get(1).getNode().setStyle("-fx-pie-color: D8C4B6;");
+                    totalUsersNoLabel.setText(Integer.toString(usersCount));
+                    ActiceUsersNoLabel.setText(Integer.toString(onlineUsersCount));
+                }
             }
         });
     }
