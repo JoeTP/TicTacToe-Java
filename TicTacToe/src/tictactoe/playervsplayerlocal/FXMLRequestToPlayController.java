@@ -5,31 +5,51 @@
  */
 package tictactoe.playervsplayerlocal;
 
+import static clientconnection.ClientConnection.oos;
+import static clientconnection.ClientConnection.user;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
-import javafx.stage.Stage;
+import models.DataModel;
+import models.Player;
 import shared.AppFunctions;
-
-import java.net.URL;
-import java.util.ResourceBundle;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.text.Text;
+import static tictactoe.TicTacToe.appStage;
+import tictactoe.gameboard.GameBoardController;
 import tictactoe.playervsplayerlocal.FXMLRequestToPlayBase;
 
 public class FXMLRequestToPlayController extends FXMLRequestToPlayBase {
 
-//    @FXML
-//    private Button acceptBtn;
-//    @FXML
-//    private Button declineBtn;
-//    @FXML
-//    private Text playerNameTextField;
+    String rival;
 
     public FXMLRequestToPlayController(String rival) {
-        playerNameTextField.setText(rival);
+        this.rival = rival;
+        playerNameLabel.setText(rival);
     }
 
+    @Override
+    protected void handleAcceptButton(ActionEvent actionEvent) {
+        AppFunctions.closePopup(actionEvent);
 
-    
+        new Thread(() -> {
+            DataModel data = new DataModel(5, rival, rival);
+            synchronized (oos) {
+                try {
+                    oos.writeObject(data);
+                    oos.flush();
+                } catch (IOException ex) {
+                    Logger.getLogger(FXMLRequestToPlayController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+        }).start();
+
+        AppFunctions.goTo(actionEvent, new GameBoardController(appStage, user.getName(), rival, "online"));
+    }
+
+    @Override
+    protected void handleDeclineButton(ActionEvent actionEvent) {
+        AppFunctions.closePopup(actionEvent);
+    }
+
 }

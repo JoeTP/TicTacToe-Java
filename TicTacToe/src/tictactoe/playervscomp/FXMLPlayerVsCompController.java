@@ -58,8 +58,10 @@ public class FXMLPlayerVsCompController extends FXMLPlayerVsCompBase {
     @Override
     protected void openGameBoard(ActionEvent actionEvent) {
         AudioController.clickSound();
+
         System.out.println("Level is " + level);
         AppFunctions.closeAndGo(actionEvent, stage, new GameBoardController(stage, playerOne.getName(), playerTwo.getName() ,"computer"));
+
     }
 
     @FXML

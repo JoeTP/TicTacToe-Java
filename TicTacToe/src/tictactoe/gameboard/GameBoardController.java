@@ -68,6 +68,7 @@ public class GameBoardController extends FXMLGameBoardBase {
     private final String X_CHAR = "X";
     private final String O_CHAR = "O";
     private int move = 1;
+
     private String mode ;
     public GameBoardController(Stage stage, String playerOne, String playerTwo, String mode) {
         this.stage = stage;
@@ -79,6 +80,7 @@ public class GameBoardController extends FXMLGameBoardBase {
         }
 
         assignPlayers(mode);
+
         changingLabelsStyles();
 
     }
