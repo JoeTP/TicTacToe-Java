@@ -5,6 +5,7 @@
  */
 package tictactoe.playervscomp;
 
+import difficulty.EasyLevel;
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -32,10 +33,12 @@ public class FXMLPlayerVsCompController extends FXMLPlayerVsCompBase {
      */
     Stage stage;
 
+    
     private Player playerOne = new Player();
     private Player playerTwo = new ComputerPlayer();
-
-    public FXMLPlayerVsCompController(Stage stage) {
+    public static ComputerPlayer comp;
+    
+     public FXMLPlayerVsCompController(Stage stage) {
         this.stage = stage;
         setDifficultyLabels();
         handlingDifficultySlider();
@@ -46,6 +49,9 @@ public class FXMLPlayerVsCompController extends FXMLPlayerVsCompBase {
             switch ((int) newValue.intValue()) {
                 case 0:
                     difficultyImg.setImage(new Image(getClass().getResourceAsStream("/assets/icons/easy.png")));
+                    System.out.println("in easy slider ");
+                    comp = new EasyLevel();
+                    
                     break;
                 case 1:
                     difficultyImg.setImage(new Image(getClass().getResourceAsStream("/assets/icons/norml.png")));

@@ -105,8 +105,8 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
     }
 
     @Override
-    protected void handleSaveGameButton(ActionEvent actionEvent
-    ) {
+    protected void handleSaveGameButton(ActionEvent actionEvent) {
+      
         mediaPlayer.pause();
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
