@@ -108,6 +108,14 @@
                               <Insets />
                            </opaqueInsets>
                         </VBox>
+                        <ImageView fx:id="historyOfflineBtn" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../resources/assets/icons/history.png" />
+                           </image>
+                           <StackPane.margin>
+                              <Insets left="100.0" top="30.0" />
+                           </StackPane.margin>
+                        </ImageView>
                      </children>
                   </StackPane>
                   <Region prefHeight="47.0" prefWidth="248.0" HBox.hgrow="ALWAYS" />
