@@ -52,6 +52,7 @@ public class ClientConnection {
 
     public static void stopThreads() {
         try {
+            terminateClient();
             socket.close();
             Platform.exit();
         } catch (IOException ex) {
@@ -61,11 +62,11 @@ public class ClientConnection {
 
     public static void terminateClient() {
         try {
-            oos.close();
-            ois.close();
             if(listeningThread.isAlive()){
               listeningThread.stop();  
-            }           
+            }  
+            oos.close();
+            ois.close();         
             socket.close();
             System.out.println("client killed");
         } catch (IOException ex) {
