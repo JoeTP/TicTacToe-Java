@@ -106,18 +106,20 @@ public abstract class FXMLSigninBase extends BorderPane {
 
         text.setFill(javafx.scene.paint.Color.valueOf("#3e5879"));
         text.setLayoutX(62.0);
-        text.setLayoutY(336.0);
+        text.setLayoutY(340.0);
         text.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
         text.setStrokeWidth(0.0);
-        text.setText("Don�t you have an account?");
-        text.setFont(new Font("Stencil", 12.0));
+        text.setText("Don't you have an account?");
+        text.setFont(new Font("Chicle Regular", 20.0));
 
-        signupBtn.setLayoutX(265.0);
-        signupBtn.setLayoutY(313.0);
+        signupBtn.setLayoutX(241.0);
+        signupBtn.setLayoutY(304.0);
         signupBtn.setMnemonicParsing(false);
         signupBtn.setOnAction(this::goToSignup);
+        signupBtn.setStyle("-fx-text-fill: #3e5879; -fx-background-color: transparent; -fx-font-size: 20;");
         signupBtn.getStyleClass().add("bigBtn");
         signupBtn.setText("Sign-up");
+        signupBtn.setUnderline(true);
 
         usernameTextField.setLayoutX(62.0);
         usernameTextField.setLayoutY(78.0);
@@ -136,7 +138,6 @@ public abstract class FXMLSigninBase extends BorderPane {
         hBox0.setLayoutY(396.0);
         hBox0.setSpacing(10.0);
 
-        helperImageView.setAccessibleHelp("write IP address of the device running server (leave it empty if you are running the server)");
         helperImageView.setFitHeight(30.0);
         helperImageView.setFitWidth(30.0);
         helperImageView.setOpacity(0.4);

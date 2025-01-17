@@ -46,16 +46,16 @@
                <children>
                   <Label fx:id="wrongLabel" layoutX="77.0" layoutY="204.0" text="Please Enter correct info" visible="false" />
                   <Button fx:id="signinBtn" layoutX="143.0" layoutY="252.0" mnemonicParsing="false" onAction="#goToActiveUsers" prefHeight="43.0" prefWidth="112.0" styleClass="bigBtn" text="Sign-in" />
-                  <Text fill="#3e5879" layoutX="62.0" layoutY="336.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Don’t you have an account?">
+                  <Text fill="#3e5879" layoutX="62.0" layoutY="340.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Don’t you have an account?">
                      <font>
-                        <Font name="Stencil" size="12.0" />
+                        <Font name="Chicle Regular" size="20.0" />
                      </font></Text>
-                  <Button fx:id="signupBtn" layoutX="265.0" layoutY="313.0" mnemonicParsing="false" onAction="#goToSignup" styleClass="bigBtn" text="Sign-up" />
+                  <Button fx:id="signupBtn" layoutX="241.0" layoutY="304.0" mnemonicParsing="false" onAction="#goToSignup" style="-fx-text-fill: #3e5879; -fx-background-color: transparent; -fx-font-size: 20;" styleClass="bigBtn" text="Sign-up" underline="true" />
                   <TextField fx:id="usernameTextField" layoutX="62.0" layoutY="78.0" prefHeight="48.0" prefWidth="276.0" promptText="User Name" />
                   <PasswordField fx:id="passwordField" layoutX="62.0" layoutY="147.0" prefHeight="48.0" prefWidth="276.0" promptText="Passoword" />
                   <HBox alignment="CENTER" layoutX="60.0" layoutY="396.0" spacing="10.0">
                      <children>
-                        <ImageView fx:id="helperImageView" accessibleText="write IP address of the device running server (leave it empty if you are running the server)" fitHeight="30.0" fitWidth="30.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="helperImageView" fitHeight="30.0" fitWidth="30.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../../resources/assets/icons/help.png" />
                            </image></ImageView>
