@@ -21,7 +21,7 @@
                <children>
 
                   <Button fx:id="backBtn" layoutX="23.0" layoutY="44.0" mnemonicParsing="false" onAction="#handleBackButton" style="-fx-border-radius: 50; -fx-background-radius: 50;" styleClass="bigBtn" text="B" AnchorPane.leftAnchor="23.0" />
-                  <Text fx:id="signinTitle" fill="#3e5879" layoutX="143.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="bigLabel" text="Sign-in">
+                  <Text fx:id="signinTitle" fill="#3e5879" layoutX="154.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="bigLabel" text="Sign-in">
 
 
           
@@ -42,16 +42,21 @@
          <children>
             <AnchorPane VBox.vgrow="ALWAYS">
                <children>
-                  <Label fx:id="wrongLabel" layoutX="75.0" layoutY="240.0" text="Please Enter correct info" visible="false" />
-                  <ImageView fx:id="userImg" fitHeight="84.0" fitWidth="84.0" layoutX="155.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
-                  <Button fx:id="signinBtn" layoutX="141.0" layoutY="288.0" mnemonicParsing="false" onAction="#goToActiveUsers" prefHeight="43.0" prefWidth="112.0" styleClass="bigBtn" text="Sign-in" />
-                  <Text fill="#3e5879" layoutX="60.0" layoutY="372.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Don’t you have an account?">
+                  <Label fx:id="wrongLabel" layoutX="77.0" layoutY="204.0" text="Please Enter correct info" visible="false" />
+                  <Button fx:id="signinBtn" layoutX="143.0" layoutY="252.0" mnemonicParsing="false" onAction="#goToActiveUsers" prefHeight="43.0" prefWidth="112.0" styleClass="bigBtn" text="Sign-in" />
+                  <Text fill="#3e5879" layoutX="62.0" layoutY="336.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Don’t you have an account?">
                      <font>
                         <Font name="Stencil" size="12.0" />
                      </font></Text>
-                  <Button fx:id="signupBtn" layoutX="263.0" layoutY="349.0" mnemonicParsing="false" onAction="#goToSignup" styleClass="bigBtn" text="Sign-up" />
-                  <TextField fx:id="usernameTextField" layoutX="60.0" layoutY="114.0" prefHeight="48.0" prefWidth="276.0" promptText="User Name" />
-                  <PasswordField fx:id="passwordField" layoutX="60.0" layoutY="183.0" prefHeight="48.0" prefWidth="276.0" promptText="Passoword" />
+                  <Button fx:id="signupBtn" layoutX="265.0" layoutY="313.0" mnemonicParsing="false" onAction="#goToSignup" styleClass="bigBtn" text="Sign-up" />
+                  <TextField fx:id="usernameTextField" layoutX="62.0" layoutY="78.0" prefHeight="48.0" prefWidth="276.0" promptText="User Name" />
+                  <PasswordField fx:id="passwordField" layoutX="62.0" layoutY="147.0" prefHeight="48.0" prefWidth="276.0" promptText="Passoword" />
+                  <HBox alignment="CENTER" layoutX="60.0" layoutY="396.0" spacing="10.0">
+                     <children>
+                        <TextField promptText="Server IP" />
+                        <ImageView accessibleHelp="write IP address of the device running server" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </HBox>
                </children>
             </AnchorPane>
          </children>
