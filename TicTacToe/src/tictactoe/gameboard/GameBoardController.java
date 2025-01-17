@@ -32,6 +32,7 @@ import shared.AppFunctions;
 import sounds.AudioController;
 import static shared.AppFunctions.openPopup;
 import tictactoe.homescreen.FXMLHomeScreenController;
+import tictactoe.playervscomp.FXMLPlayerVsCompController;
 import tictactoe.popupwin.FXMLPopUpWinController;
 
 /*TODO:
@@ -97,19 +98,18 @@ public class GameBoardController extends FXMLGameBoardBase {
     }
 
     private void setTurn(Button b) {
-        Media media = null;
-        String clickSound = getClass().getResource("/audios/gameClick.wav").toExternalForm();
+
         String timeOutSound = getClass().getResource("/audios/turnTimeOut.wav").toExternalForm();
 
         if (b.getText().isEmpty() && isEndOfGame == false) {
             if (isTimeOut == false) {
-                media = new Media(clickSound);
+                AudioController.clickSound();
             } else {
-                media = new Media(timeOutSound);
+                Media media = new Media(timeOutSound);
+                MediaPlayer mediaPlayer = new MediaPlayer(media);
+                mediaPlayer.play();
             }
 
-            MediaPlayer mediaPlayer = new MediaPlayer(media);
-            mediaPlayer.play();
             System.out.println("current char: " + (playerOne.hisTurn ? playerOne.getChar() : playerTwo.getChar()));
             System.out.println("current Move: " + move);
 
@@ -134,13 +134,30 @@ public class GameBoardController extends FXMLGameBoardBase {
             checkPlayerWinner();
 
             if (!isEndOfGame) {
-                if (playerTwo instanceof ComputerPlayer && playerTwo.hisTurn) { 
+                if (playerTwo instanceof ComputerPlayer && playerTwo.hisTurn) {
                     disableButtons();//disable for computer
-                                    startCountdownTimer();
+                    startCountdownTimer();
                     Timeline timeline = new Timeline(new KeyFrame(
                             Duration.seconds(1.4),
                             event -> {
-                                makeComputerMove();
+                                switch (FXMLPlayerVsCompController.level) {
+                                    case 0:
+                                        System.out.println("level 0");
+                                        makeLevel0Move();
+                                        break;
+                                        
+                                    case 1:
+                                        System.out.println("level 1");
+
+                                        makeLevel1Move();
+                                          break;
+                                    case 2:
+                                        System.out.println("level 2");
+
+                                    //makeMaxMinMove();
+                                          break;
+                                }
+
                                 Platform.runLater(() -> {
                                     enableButtons();
                                 });
@@ -157,14 +174,14 @@ public class GameBoardController extends FXMLGameBoardBase {
     }
 
     private void startCountdownTimer() {
-        countdownTime = 7;
+        countdownTime = 8;
         if (timeLine != null) {
             timeLine.stop();   //3l4an law startCountdownTimer 3mnlnlha call multiple time
         }
 
         if (!isEndOfGame) {
             timeLine = new Timeline(
-                    new KeyFrame(Duration.seconds(0.8), (ActionEvent event) -> {
+                    new KeyFrame(Duration.seconds(0.9), (ActionEvent event) -> {
                         timer.setStyle("-fx-text-fill: #3E5879;");
                         timer.setText(" " + countdownTime + "");
 
@@ -175,7 +192,7 @@ public class GameBoardController extends FXMLGameBoardBase {
                         if (countdownTime < 0) {
                             timeLine.stop();
                             isTimeOut = true;
-                            makeAutomaticMove();
+                            makeLevel0Move();
                             timer.setText("Oops! Time is up!");
                         }
                         isTimeOut = false;
@@ -186,89 +203,69 @@ public class GameBoardController extends FXMLGameBoardBase {
         }
     }
 
-//    private Button getButtonsByRowAndColumn(int c, int r) {
-//    String buttonId = "b" + c + r; 
-//    return (Button) grid.lookup("#" + buttonId); 
-//}
-//    
-private Button getButtonsByRowAndColumn(int c, int r) {
-    String key = c + "," + r;
+    private Button getButtonsByRowAndColumn(int c, int r) {
+        String key = c + "," + r;
 
-    if ("0,0".equals(key)) return b00;
-    if ("0,1".equals(key)) return b01;
-    if ("0,2".equals(key)) return b02;
-    if ("1,0".equals(key)) return b10;
-    if ("1,1".equals(key)) return b11;
-    if ("1,2".equals(key)) return b12;
-    if ("2,0".equals(key)) return b20;
-    if ("2,1".equals(key)) return b21;
-    if ("2,2".equals(key)) return b22;
+        if ("0,0".equals(key)) {
+            return b00;
+        }
+        if ("0,1".equals(key)) {
+            return b01;
+        }
+        if ("0,2".equals(key)) {
+            return b02;
+        }
+        if ("1,0".equals(key)) {
+            return b10;
+        }
+        if ("1,1".equals(key)) {
+            return b11;
+        }
+        if ("1,2".equals(key)) {
+            return b12;
+        }
+        if ("2,0".equals(key)) {
+            return b20;
+        }
+        if ("2,1".equals(key)) {
+            return b21;
+        }
+        if ("2,2".equals(key)) {
+            return b22;
+        }
 
-    return null;
-}
+        return null;
+    }
 
-//    private void makeAutomaticMove() {
-//
-//        String currentChar = playerOne.hisTurn ? playerOne.getChar() : playerTwo.getChar();
-//        System.out.println("automatic char: " + currentChar);
-//        System.out.println("automatic Move: " + move);
-//
-//        for (int r = 0; r < board.length; r++) {
-//            for (int c = 0; c < board[r].length; c++) {
-//                if (board[r][c] == null) {
-//                    // board[r][c] = move; 
-//                    Button button = getButtonsByRowAndColumn(c, r);
-//                    if (button != null) {
-//
-//                        System.out.println("insiidee makeAutomaticMove and the button existt");
-//                        setTurn(button);
-//
-//                    } else {
-//                        System.out.println("insiidee makeAutomaticMove and the button not existt");
-//                    }
-//
-//                    return;
-//                }
-//            }
-//        }
-//        System.out.println("No empty cells available for automatic move.");
-//        return;
-//    }
-    private void makeAutomaticMove() {
+    private void makeLevel0Move() {
+
         String currentChar = playerOne.hisTurn ? playerOne.getChar() : playerTwo.getChar();
         System.out.println("automatic char: " + currentChar);
         System.out.println("automatic Move: " + move);
-        System.out.println("Automatic move caused");
-        List<int[]> emptyCells = new ArrayList<>();
 
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                if (board[i][j] == null) {
-                    emptyCells.add(new int[]{i, j});
-                    System.out.println("nnnull cell at: (" + i + ", " + j + ")");
+        for (int r = 0; r < board.length; r++) {
+            for (int c = 0; c < board[r].length; c++) {
+                if (board[r][c] == null) {
+                    // board[r][c] = move; 
+                    Button button = getButtonsByRowAndColumn(c, r);
+                    if (button != null) {
+
+                        System.out.println("insiidee makeAutomaticMove and the button existt");
+                        setTurn(button);
+
+                    } else {
+                        System.out.println("insiidee makeAutomaticMove and the button not existt");
+                    }
+
+                    return;
                 }
             }
         }
-
-        if (!emptyCells.isEmpty()) {
-            Random random = new Random();
-            int[] selectedCell = emptyCells.get(random.nextInt(emptyCells.size()));
-            System.out.println("Selected cell for move: (" + selectedCell[0] + ", " + selectedCell[1] + ")");
-            Button button = getButtonsByRowAndColumn(selectedCell[1], selectedCell[0]);
-            if (button != null) {
-                emptyCells.remove(selectedCell);
-                System.out.println("insiidee makeAutomaticMove and the button existt");
-                setTurn(button);
-
-            } else {
-                System.out.println("insiidee makeAutomaticMove and the button not existt");
-            }
-        } else {
-            System.out.println("No empty cells found.");
-        }
+        System.out.println("No empty cells available for automatic move.");
+        return;
     }
 
-    private void makeComputerMove() {
+    private void makeLevel1Move() {
 
         Random random = new Random();
         String currentChar = playerOne.hisTurn ? playerOne.getChar() : playerTwo.getChar();
@@ -278,10 +275,8 @@ private Button getButtonsByRowAndColumn(int c, int r) {
         for (int r = 0; r < 3; r++) {
             for (int c = 0; c < 3; c++) {
                 if (board[r][c] == null) {
-              
                     Button b = getButtonsByRowAndColumn(c, r);
                     cells.put(b, random.nextInt());
-                    
                 }
             }
         }
