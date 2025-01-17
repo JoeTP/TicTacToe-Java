@@ -113,8 +113,8 @@ public class GameBoardController extends FXMLGameBoardBase {
             System.out.println("current Move: " + move);
 
             if (playerOne.hisTurn) {
+                grid.setDisable(false);//enable for palyer
                 b.setText(playerOne.getChar());
-
             } else {
                 b.setText(playerTwo.getChar());
             }
@@ -131,10 +131,15 @@ public class GameBoardController extends FXMLGameBoardBase {
             checkPlayerWinner();
 
             if (!isEndOfGame) {
-                if (playerTwo instanceof ComputerPlayer && playerTwo.hisTurn) {
+                if (playerTwo instanceof ComputerPlayer && playerTwo.hisTurn) { //disable for computer
+                    grid.setDisable(true);
+
                     Timeline timeline = new Timeline(new KeyFrame(
                             Duration.seconds(1),
-                            event -> makeComputerMove()
+                            event -> {
+                                makeComputerMove();
+                                grid.setDisable(false);
+                            }
                     ));
                     timeline.setCycleCount(1);
                     timeline.play();
@@ -142,7 +147,6 @@ public class GameBoardController extends FXMLGameBoardBase {
             }
             printGame();
             startCountdownTimer();
-
         }
     }
 
@@ -152,7 +156,7 @@ public class GameBoardController extends FXMLGameBoardBase {
         if (timeLine != null) {
             timeLine.stop();   //3l4an law startCountdownTimer 3mnlnlha call multiple time
         }
-
+        
         if (!isEndOfGame) {
             timeLine = new Timeline(
                     new KeyFrame(Duration.seconds(1), (ActionEvent event) -> {
@@ -276,6 +280,7 @@ public class GameBoardController extends FXMLGameBoardBase {
     }
 
     private void makeComputerMove() {
+
         Random random = new Random();
         String currentChar = playerOne.hisTurn ? playerOne.getChar() : playerTwo.getChar();
         System.out.println("Automatic char: " + currentChar);
@@ -294,6 +299,7 @@ public class GameBoardController extends FXMLGameBoardBase {
             int randMapValue = random.nextInt(cells.size());
             Button compButton = (Button) cells.keySet().toArray()[randMapValue];
             setTurn(compButton);
+
         } else {
             System.out.println("No empty cells available for automatic move.");
         }
@@ -354,9 +360,8 @@ public class GameBoardController extends FXMLGameBoardBase {
             waitAndShowPopup(winner);
         }
     }
- 
+
     private void waitAndShowPopup(String roundState) {
-      
 
         switch (roundState) {
             case "X": { // player one WINS or player two WINS (in Player Vs palyer mode)
@@ -447,7 +452,7 @@ public class GameBoardController extends FXMLGameBoardBase {
 
     private String getWinnerCharacter(int value) {
         //return the value of the 1st itration
-        return (value % 2 == 0) ?   O_CHAR:X_CHAR;
+        return (value % 2 == 0) ? O_CHAR : X_CHAR;
     }
 
     void changingLabelsStyles() {
