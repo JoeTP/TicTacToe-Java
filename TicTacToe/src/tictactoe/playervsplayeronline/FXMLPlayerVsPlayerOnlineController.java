@@ -52,9 +52,9 @@ public class FXMLPlayerVsPlayerOnlineController extends FXMLPlayerVsPlayerOnline
         this.client = client;
         //getActiveUsers();
         Platform.runLater(() -> {
-                        activePlayersListView.getItems().clear();
-                        activePlayersListView.getItems().addAll(activeUsers);
-                    });
+            activePlayersListView.getItems().clear();
+            activePlayersListView.getItems().addAll(activeUsers);
+        });
 
     }
 
@@ -69,23 +69,23 @@ public class FXMLPlayerVsPlayerOnlineController extends FXMLPlayerVsPlayerOnline
     protected void openGameBoard(ActionEvent actionEvent) {
         AudioController.clickSound();
         String rival = (String) activePlayersListView.getSelectionModel().getSelectedItem();
+        if (!rival.isEmpty()) {
+            System.out.println(rival);
+            new Thread(() -> {
+                DataModel data = new DataModel(4, user.getName(), rival);
+                try {
+                    synchronized (oos) {
+                        oos.writeObject(data);
+                        oos.flush();
+                    }
 
-        System.out.println(rival);
-        
-        new Thread(() -> {
-            DataModel data = new DataModel(4, user.getName(), rival);
-            try {
-                synchronized (oos) {
-                    oos.writeObject(data);
-                    oos.flush();
+                    //ois.
+                } catch (IOException ex) {
+                    Logger.getLogger(FXMLPlayerVsPlayerOnlineController.class.getName()).log(Level.SEVERE, null, ex);
                 }
+            }).start();
+        }
 
-                //ois.
-            } catch (IOException ex) {
-                Logger.getLogger(FXMLPlayerVsPlayerOnlineController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }).start();
-        
         //AppFunctions.closePopup(actionEvent);
         //AppFunctions.goTo(actionEvent, new GameBoardController(stage, playerOne, playerTwo));
     }
@@ -126,9 +126,9 @@ public class FXMLPlayerVsPlayerOnlineController extends FXMLPlayerVsPlayerOnline
 //        }).start();
         //ClientConnection.startListeningThread();
         Platform.runLater(() -> {
-                        activePlayersListView.getItems().clear();
-                        activePlayersListView.getItems().addAll(activeUsers);
-                    });
+            activePlayersListView.getItems().clear();
+            activePlayersListView.getItems().addAll(activeUsers);
+        });
     }
 
     protected void sendGameRequest() {

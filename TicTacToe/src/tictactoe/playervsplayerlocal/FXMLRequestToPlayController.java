@@ -26,7 +26,12 @@ public class FXMLRequestToPlayController extends FXMLRequestToPlayBase {
     @FXML
     private Text playerNameTextField;
 
+    public FXMLRequestToPlayController(String rival) {
+        playerNameTextField.setText(rival);
+    }
+
     /**
      * Initializes the controller class.
      */
+    
 }

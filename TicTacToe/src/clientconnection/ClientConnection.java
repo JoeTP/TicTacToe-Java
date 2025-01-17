@@ -106,7 +106,7 @@ public class ClientConnection {
 
                 if (newResponse.equals("Game_Request")) {
                     Platform.runLater(() -> {
-                        AppFunctions.openReqPopup(new FXMLRequestToPlayController());
+                        AppFunctions.openReqPopup(new FXMLRequestToPlayController(newData.getRival()));
                     });
                 }
                 if(newResponse.equals("Active_Users"))
