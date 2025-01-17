@@ -12,6 +12,8 @@ import javafx.fxml.Initializable;
 import javafx.stage.Stage;
 import shared.AppFunctions;
 import sounds.AudioController;
+import tictactoe.gameboard.GameBoardController;
+import tictactoe.historypopup.RecordListPopUpController;
 import tictactoe.homescreen.FXMLHomeScreenController;
 
 /**
@@ -29,7 +31,8 @@ public class GameRecordController extends GameRecordBase {
     @Override
     protected void handleExitButton(ActionEvent actionEvent) {
         AudioController.clickSound();
-       AppFunctions.goTo(actionEvent, new FXMLHomeScreenController(stage));
+        
+       AppFunctions.closePopup(actionEvent);
     }
 
     

@@ -10,11 +10,13 @@
     -fx-background-radius: 10;
     -fx-cursor: hand; 
     -fx-font-weight: bold;
-    -fx-font-family: "Chicle", serif; 
+   -fx-font-family: "Chicle", serif; 
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 8, 0, 2, 2); 
     -fx-transition: all 0.3s ease; 
     -fx-min-width: 50px;
 }
+
+
 .circular-button {
    -fx-background-color: linear-gradient(to bottom, #4e79a7, #3E5879); 
     -fx-text-fill: #F5EFE7;
@@ -24,12 +26,13 @@
     -fx-background-radius: 50%;  
     -fx-cursor: hand; 
     -fx-font-weight: bold;
-    -fx-font-family: "Chicle", serif; 
+   -fx-font-family: "Chicle", serif; 
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 8, 0, 2, 2); 
     -fx-transition: all 0.3s ease; 
     -fx-min-width: 50px;
               
 }
+
 
 .button:hover {
     -fx-background-color: linear-gradient(to bottom, #ff4d4d, #ff1a1a);
@@ -56,7 +59,7 @@
 }
 
 .text-field {
-    -fx-background-color: linear-gradient(to bottom, #ffffff, #e6e6e6); /* Gradient background */
+    -fx-background-color: linear-gradient(to bottom, #ffffff, #e6e6e6); 
     -fx-border-color: #3E5879; 
     -fx-border-width: 2; 
     -fx-border-radius: 8;
@@ -82,6 +85,7 @@
     -fx-background-color: linear-gradient(to bottom, #ffffff, #f0f0f0); 
     -fx-effect: dropshadow(gaussian, rgba(76, 175, 80, 0.3), 10, 0, 3, 3); 
 }
+
 .mainBackground{
    -fx-background-color: #F5EFE7;
 }
