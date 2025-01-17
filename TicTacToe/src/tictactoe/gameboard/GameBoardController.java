@@ -186,39 +186,26 @@ public class GameBoardController extends FXMLGameBoardBase {
         }
     }
 
-    private Button getButtonsByRowAndColumn(int c, int r) {
+//    private Button getButtonsByRowAndColumn(int c, int r) {
+//    String buttonId = "b" + c + r; 
+//    return (Button) grid.lookup("#" + buttonId); 
+//}
+//    
+private Button getButtonsByRowAndColumn(int c, int r) {
+    String key = c + "," + r;
 
-        if (c == 0 && r == 0) {
-            return b00;
-        }
-        if (c == 0 && r == 1) {
-            return b01;
-        }
-        if (c == 0 && r == 2) {
-            return b02;
-        }
-        if (c == 1 && r == 0) {
-            return b10;
-        }
-        if (c == 1 && r == 1) {
-            return b11;
-        }
-        if (c == 1 && r == 2) {
-            return b12;
-        }
-        if (c == 2 && r == 0) {
-            return b20;
-        }
-        if (c == 2 && r == 1) {
-            return b21;
-        }
-        if (c == 2 && r == 2) {
-            return b22;
-        }
+    if ("0,0".equals(key)) return b00;
+    if ("0,1".equals(key)) return b01;
+    if ("0,2".equals(key)) return b02;
+    if ("1,0".equals(key)) return b10;
+    if ("1,1".equals(key)) return b11;
+    if ("1,2".equals(key)) return b12;
+    if ("2,0".equals(key)) return b20;
+    if ("2,1".equals(key)) return b21;
+    if ("2,2".equals(key)) return b22;
 
-        return null;
-
-    }
+    return null;
+}
 
 //    private void makeAutomaticMove() {
 //
@@ -291,8 +278,10 @@ public class GameBoardController extends FXMLGameBoardBase {
         for (int r = 0; r < 3; r++) {
             for (int c = 0; c < 3; c++) {
                 if (board[r][c] == null) {
+              
                     Button b = getButtonsByRowAndColumn(c, r);
                     cells.put(b, random.nextInt());
+                    
                 }
             }
         }
