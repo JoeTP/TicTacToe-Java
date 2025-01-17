@@ -5,6 +5,7 @@
  */
 package tictactoe.historypopup;
 
+import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import shared.AppFunctions;
@@ -32,12 +33,12 @@ public class RecordListPopUpController extends HistoryListBase {
                 "Game 3 Date 17-1-2024 12:19",
                 "Game 2 Date 17-1-2024 18:19",
                 "Game 6 Date 17-1-2024 10:19");
-        
+
     }
 
     @Override
     protected void handleCellClick(MouseEvent mouseEvent) {
-        
+
         String selectedItem = listView.getSelectionModel().getSelectedItem();
 
         if (selectedItem != null) {
@@ -46,8 +47,8 @@ public class RecordListPopUpController extends HistoryListBase {
 
             System.out.println("count : " + count);
         }
-          AudioController.clickSound();
-          AppFunctions.goTo(mouseEvent, new GameRecordController(stage));
+        AudioController.clickSound();
+        AppFunctions.goTo(mouseEvent, new GameRecordController(stage));
     }
 
 }

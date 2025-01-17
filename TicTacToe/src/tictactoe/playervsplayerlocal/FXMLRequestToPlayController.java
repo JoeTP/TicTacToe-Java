@@ -19,13 +19,17 @@ import tictactoe.playervsplayerlocal.FXMLRequestToPlayBase;
 
 public class FXMLRequestToPlayController extends FXMLRequestToPlayBase {
 
-    @FXML
-    private Button acceptBtn;
-    @FXML
-    private Button declineBtn;
-    @FXML
-    private Text playerNameTextField;
+//    @FXML
+//    private Button acceptBtn;
+//    @FXML
+//    private Button declineBtn;
+//    @FXML
+//    private Text playerNameTextField;
 
-   
+    public FXMLRequestToPlayController(String rival) {
+        playerNameTextField.setText(rival);
+    }
+
+
     
 }
