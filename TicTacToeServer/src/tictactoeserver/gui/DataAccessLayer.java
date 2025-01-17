@@ -100,8 +100,8 @@ public class DataAccessLayer {
         }
 
     }
-    public static UserModel getUserData(String userName, String pass) {
 
+    public static UserModel getUserData(String userName, String pass) {
 
         UserModel user = new UserModel();
         try {
@@ -148,4 +148,23 @@ public class DataAccessLayer {
         return null;
     }
 
+    public static void updateUserData(UserModel u) {
+        try {
+            PreparedStatement pst = conection.prepareStatement("UPDATE USERS SET USER_SCORE = ?, NO_OF_WINS = ?, NO_OF_LOSSES = ?, NO_OF_GAMES = ? WHERE USER_NAME = ?;");
+            pst.setInt(1, u.getScore());
+            pst.setInt(2, u.getWins());
+            pst.setInt(3, u.getLosses());
+            pst.setInt(4, u.getNumOfGames());
+            
+            int isUpdate = pst.executeUpdate();
+            if (isUpdate > 0) {
+                System.out.println("Updated succ.");              
+            } else {
+                System.out.println("Updated failed");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DataAccessLayer.class.getName()).log(Level.SEVERE, null, ex);            
+        }
+
+    }
 }

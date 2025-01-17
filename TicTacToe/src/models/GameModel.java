@@ -15,20 +15,15 @@ import java.util.Date;
 public class GameModel implements Serializable {
 
     int id;
-    int userOneId;
-    int userTowId;
-    int gameBoard;
+    String player ;
+    String rival;
     String winner;
     Date playDate;
 
-    public GameModel() {
-    }
-
-    public GameModel(int id, int userOneId, int userTowId, int gameBoard, String winner, Date playDate) {
+    public GameModel(int id, String player, String rival, String winner, Date playDate) {
         this.id = id;
-        this.userOneId = userOneId;
-        this.userTowId = userTowId;
-        this.gameBoard = gameBoard;
+        this.player = player;
+        this.rival = rival;
         this.winner = winner;
         this.playDate = playDate;
     }
@@ -41,28 +36,20 @@ public class GameModel implements Serializable {
         this.id = id;
     }
 
-    public int getUserOneId() {
-        return userOneId;
+    public String getPlayer() {
+        return player;
     }
 
-    public void setUserOneId(int userOneId) {
-        this.userOneId = userOneId;
+    public void setPlayer(String player) {
+        this.player = player;
     }
 
-    public int getUserTowId() {
-        return userTowId;
+    public String getRival() {
+        return rival;
     }
 
-    public void setUserTowId(int userTowId) {
-        this.userTowId = userTowId;
-    }
-
-    public int getGameBoard() {
-        return gameBoard;
-    }
-
-    public void setGameBoard(int gameBoard) {
-        this.gameBoard = gameBoard;
+    public void setRival(String rival) {
+        this.rival = rival;
     }
 
     public String getWinner() {
@@ -80,5 +67,4 @@ public class GameModel implements Serializable {
     public void setPlayDate(Date playDate) {
         this.playDate = playDate;
     }
-
 }
