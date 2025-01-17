@@ -36,33 +36,16 @@ public class FXMLServerController extends FXMLServerBase {
     ServerSocket server;
     Socket client;
     Thread th;
+    ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
 
     public FXMLServerController() {
         System.out.println("FXMLServerController initialized");
-        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
         usernames.addListener((ListChangeListener<String>) change -> {
             updatePieChart();
-            synchronized (usernames) {
-                while (change.next()) {
-                    if (change.wasAdded()) {
-                        String lastUserName = change.getAddedSubList().get(change.getAddedSubList().size() - 1);
-                        Platform.runLater(() -> usersList.getItems().add(lastUserName));
-                        System.out.println("Last added user: " + lastUserName);
-                    }
-                    if (change.wasRemoved()) {
-                        for (String removedUser : change.getRemoved()) {
-                            Platform.runLater(() -> {
-                                usersList.getItems().remove(removedUser);
-                                System.out.println("Removed user: " + removedUser);
-                            });
-                        }
-                    }
-                }
-            }
-            ClientHandler.broadCastActiveUsers();
+            updateActiveUsersList(change);
         });
         updatePieChart();
-        serverIndicator.setFill(Color.CRIMSON);
+        serverIndicator.setFill(Color.CRIMSON);        
     }
 
     @Override
@@ -138,5 +121,26 @@ public class FXMLServerController extends FXMLServerBase {
                 }
             }
         });
+    }
+
+    protected void updateActiveUsersList(ListChangeListener.Change<? extends String> change) {
+        synchronized (usernames) {
+            while (change.next()) {
+                if (change.wasAdded()) {
+                    String lastUserName = change.getAddedSubList().get(change.getAddedSubList().size() - 1);
+                    Platform.runLater(() -> usersList.getItems().add(lastUserName));
+                    System.out.println("Last added user: " + lastUserName);
+                }
+                if (change.wasRemoved()) {
+                    for (String removedUser : change.getRemoved()) {
+                        Platform.runLater(() -> {
+                            usersList.getItems().remove(removedUser);
+                            System.out.println("Removed user: " + removedUser);
+                        });
+                    }
+                }
+            }
+        }
+        ClientHandler.broadCastActiveUsers();
     }
 }
