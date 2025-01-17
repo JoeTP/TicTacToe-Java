@@ -8,6 +8,7 @@ package tictactoe.signup;
 import clientconnection.ClientConnection;
 import static clientconnection.ClientConnection.listeningThread;
 import static clientconnection.ClientConnection.ois;
+import static clientconnection.ClientConnection.socket;
 import static clientconnection.ClientConnection.startListeningThread;
 
 import static clientconnection.ClientConnection.user;
@@ -23,6 +24,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import models.DataModel;
@@ -31,6 +33,7 @@ import static shared.AppConstants.CONNECTION_FLAG;
 import shared.AppFunctions;
 import shared.AppString;
 import static shared.AppString.ICON_PATHS;
+import static shared.AppString.TOOLTIP;
 import sounds.AudioController;
 import tictactoe.playervsplayerlocal.FXMLRequestToPlayController;
 import tictactoe.playervsplayeronline.FXMLPlayerVsPlayerOnlineController;
@@ -46,9 +49,12 @@ public class FXMLSignupController extends FXMLSignupBase {
     Parent singingParent;
     Stage stage;
     public ClientConnection client;
+    int currentImageIndex;
 
     public FXMLSignupController(Stage stage) {
         this.stage = stage;
+        characterImageView.setImage(new Image(ICON_PATHS[currentImageIndex]));
+        Tooltip.install(helperImageView, new Tooltip(TOOLTIP));
     }
 
     @Override
@@ -126,12 +132,12 @@ public class FXMLSignupController extends FXMLSignupBase {
                         ClientConnection.terminateClient();
                     }
                 });
-                if (finalResponse.equals(AppString.SIGNUP_DONE)){
-                 ClientConnection.startListeningThread();
-            }
+                if (finalResponse.equals(AppString.SIGNUP_DONE)) {
+                    ClientConnection.startListeningThread();
+                }
             });
         }
-        
+
     }
 
     @Override
@@ -179,5 +185,21 @@ public class FXMLSignupController extends FXMLSignupBase {
             return null;
         }
 
+    }
+
+    @Override
+    protected void handleConnectToServerButton(ActionEvent actionEvent) {
+        try {
+            if (ipTextField != null) {
+                ClientConnection.SERVER_IP = ipTextField.getText();
+                ClientConnection.connectToServer();
+                System.out.println(socket);
+            }
+            if (socket != null) {
+                helperImageView.setImage(new Image("/assets/icons/Accept.png"));
+            }
+        } catch (IOException ex) {
+            helperImageView.setImage(new Image("/assets/icons/cancel.png"));
+        }
     }
 }
