@@ -8,19 +8,18 @@ import javafx.stage.Stage;
 import shared.AppString;
 import tictactoe.homescreen.FXMLHomeScreenBase;
 import tictactoe.homescreen.FXMLHomeScreenController;
- 
-
-
-import tictactoe.splashscreengui.FXMLSplashScreenController;
 
 public class TicTacToe extends Application {
 
+    public static Stage appStage = new Stage();
+
     @Override
     public void start(Stage stage) throws Exception {
- 
+
+        appStage = stage;
 
 //        Parent root = new FXMLSplashScreenController(stage);
-        Parent root = new FXMLHomeScreenController(stage);
+        Parent root = new FXMLHomeScreenController(appStage);
         Scene scene = new Scene(root);
         //stage.initStyle(StageStyle.DECORATED.UNDECORATED);
         stage.setTitle(AppString.APP_TITLE);
@@ -28,9 +27,9 @@ public class TicTacToe extends Application {
         stage.show();
         stage.setResizable(false);
     }
-    
+
     @Override
-    public void stop(){
+    public void stop() {
         ClientConnection.stopThreads();
     }
 

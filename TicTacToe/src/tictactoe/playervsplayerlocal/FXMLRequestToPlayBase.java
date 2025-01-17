@@ -24,7 +24,7 @@ public abstract class FXMLRequestToPlayBase extends BorderPane {
     protected final HBox hBox1;
     protected final AnchorPane anchorPane1;
     protected final ImageView imageView;
-    protected final Text playerNameTextField;
+    protected final Text playerNameLabel;
     protected final Label label0;
 
     public FXMLRequestToPlayBase() {
@@ -40,7 +40,7 @@ public abstract class FXMLRequestToPlayBase extends BorderPane {
         hBox1 = new HBox();
         anchorPane1 = new AnchorPane();
         imageView = new ImageView();
-        playerNameTextField = new Text();
+        playerNameLabel = new Text();
         label0 = new Label();
 
         setMaxHeight(USE_PREF_SIZE);
@@ -59,12 +59,14 @@ public abstract class FXMLRequestToPlayBase extends BorderPane {
         acceptBtn.setLayoutX(128.0);
         acceptBtn.setLayoutY(-1.0);
         acceptBtn.setMnemonicParsing(false);
+        acceptBtn.setOnAction(this::handleAcceptButton);
         acceptBtn.setText("Accept");
 
         declineBtn.setId("decline-button");
         declineBtn.setLayoutX(287.0);
         declineBtn.setLayoutY(-1.0);
         declineBtn.setMnemonicParsing(false);
+        declineBtn.setOnAction(this::handleDeclineButton);
         declineBtn.setText("Decline");
         setBottom(hBox);
 
@@ -100,13 +102,13 @@ public abstract class FXMLRequestToPlayBase extends BorderPane {
         imageView.setPreserveRatio(true);
         imageView.setImage(new Image(getClass().getResource("/assets/icons/invite.png").toExternalForm()));
 
-        playerNameTextField.setId("player-name");
-        playerNameTextField.setLayoutX(166.0);
-        playerNameTextField.setLayoutY(58.0);
-        playerNameTextField.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
-        playerNameTextField.setStrokeWidth(0.0);
-        playerNameTextField.setText("palyer_Name");
-        playerNameTextField.setFont(new Font("System Bold", 24.0));
+        playerNameLabel.setId("player-name");
+        playerNameLabel.setLayoutX(166.0);
+        playerNameLabel.setLayoutY(58.0);
+        playerNameLabel.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
+        playerNameLabel.setStrokeWidth(0.0);
+        playerNameLabel.setText("palyer_Name");
+        playerNameLabel.setFont(new Font("System Bold", 24.0));
 
         label0.setLayoutX(96.0);
         label0.setLayoutY(107.0);
@@ -123,9 +125,14 @@ public abstract class FXMLRequestToPlayBase extends BorderPane {
         anchorPane0.getChildren().add(line);
         hBox0.getChildren().add(anchorPane0);
         anchorPane1.getChildren().add(imageView);
-        anchorPane1.getChildren().add(playerNameTextField);
+        anchorPane1.getChildren().add(playerNameLabel);
         anchorPane1.getChildren().add(label0);
         hBox1.getChildren().add(anchorPane1);
 
     }
+
+    protected abstract void handleAcceptButton(javafx.event.ActionEvent actionEvent);
+
+    protected abstract void handleDeclineButton(javafx.event.ActionEvent actionEvent);
+
 }

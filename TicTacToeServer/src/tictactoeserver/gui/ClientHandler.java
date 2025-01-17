@@ -105,6 +105,12 @@ public class ClientHandler extends Thread {
                         }
                         op.sendRequest(data.getPlayer());
                         break;
+                    case 5:
+                        ClientHandler ch = findClientHandler(data.getRival());
+                        ch.sendRequestResponse(data.getRival());
+                        
+                        break;
+                        
 //                    default:
 //                        System.out.println("Unknown state: " + state);
 //                        ps.writeUTF("Unknown request");
@@ -120,6 +126,7 @@ public class ClientHandler extends Thread {
         }
     }
 
+    
     void broadCastMsg(String msg) {
         for (ClientHandler client : clients) {
             try {
@@ -234,6 +241,12 @@ public class ClientHandler extends Thread {
         oos.writeObject(data);
         oos.flush();
     }
+    void sendRequestResponse(String rival) throws IOException{
+        DataModel data = new DataModel(rival, "GAME_ACCEPT");
+        oos.writeObject(data);
+        oos.flush();
+    }
+    
     public static void broadCastActiveUsers(){
         clients.forEach((c) -> {
             c.sendActiveUsersList();

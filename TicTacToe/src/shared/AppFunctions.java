@@ -28,7 +28,8 @@ public abstract class AppFunctions {
         stage.setScene(scene);
         stage.show();
     }
-        public static void goTo(MouseEvent event, Parent root) {
+
+    public static void goTo(MouseEvent event, Parent root) {
         Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
@@ -45,8 +46,8 @@ public abstract class AppFunctions {
         newStage.show();
 
     }
-    
-    public static void openReqPopup( Parent root) {
+
+    public static void openReqPopup(Parent root) {
         Stage newStage = new Stage();
         // newStage.initStyle(StageStyle.UNDECORATED);
         newStage.setResizable(false);
@@ -55,6 +56,7 @@ public abstract class AppFunctions {
         newStage.show();
 
     }
+
     public static void closePopup(ActionEvent actionEvent) {
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.close();
@@ -64,9 +66,10 @@ public abstract class AppFunctions {
      * Used with Popups closing it first then go to new scene
      */
     public static void closeAndGo(ActionEvent actionEvent, Stage stage, Parent root) {
-        closePopup(actionEvent);
+        if (actionEvent != null) {
+            closePopup(actionEvent);
+        }
         stage.setScene(new Scene(root));
     }
 
-    
 }

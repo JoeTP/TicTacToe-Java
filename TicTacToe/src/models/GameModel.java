@@ -12,10 +12,10 @@ import java.util.Date;
  *
  * @author Youssif
  */
-public class GameModel implements Serializable{
+public class GameModel implements Serializable {
 
     int id;
-    String player;
+    String player ;
     String rival;
     String winner;
     Date playDate;
@@ -67,7 +67,4 @@ public class GameModel implements Serializable{
     public void setPlayDate(Date playDate) {
         this.playDate = playDate;
     }
-
-    
-    
 }
