@@ -31,7 +31,7 @@ public class ClientHandler extends Thread {
     ObjectOutputStream oos;
     UserModel user;
     String response;
-    Socket client;  // Add a reference to the client socket
+    Socket client; 
     int state;
     static ObservableList<ClientHandler> clients = FXCollections.synchronizedObservableList(FXCollections.observableArrayList());
     static ObservableList<String> usernames = FXCollections.synchronizedObservableList(FXCollections.observableArrayList());
@@ -98,6 +98,11 @@ public class ClientHandler extends Thread {
                         break;
                     case 4:
                         ClientHandler op = findClientHandler(data.getRival());
+                        if(data.getPlayer().isEmpty()){
+                            System.out.println("player is null");
+                        }else{
+                            System.out.println(data.getPlayer());
+                        }
                         op.sendRequest(data.getPlayer());
                         break;
 //                    default:
