@@ -46,18 +46,30 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
         //winOrLosePopUp.setVisible(true);
         switch (roundState) {
             case "X":
-                if(playerOne.getName().equals("You")){
+                //computer
+                if (playerOne.getName().equals("You")) {
                     displayWin(playerOne.getName());
                     break;
                 }
-                
-                if (playerOne.getName().equals(user.getName()) ) {
+                //local
+                if (playerOne.getName().equals(playerOne.getName())) {
+                    displayWin(playerOne.getName());
+                    break;
+                }
+                //online
+                if (playerOne.getName().equals(user.getName())) {
                     displayWin(playerOne.getName());
                 } else {
                     displayLose();
                 }
                 break;
             case "O":
+                //local
+                if (playerTwo.getName().equals(playerTwo.getName())) {
+                    displayWin(playerTwo.getName());
+                    break;
+                }
+                //online
                 if (playerTwo.getName().equals(user.getName())) {
                     displayWin(playerTwo.getName());
 
@@ -66,13 +78,12 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
                 }
                 break;
             case "computer":
-                    displayLose();
-            break;
+                displayLose();
+                break;
             case "draw":
                 displayDraw();
                 break;
         }
-
     }
 
     private void displayWin(String playerName) {
