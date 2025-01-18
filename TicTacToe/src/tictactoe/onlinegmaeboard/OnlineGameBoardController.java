@@ -58,7 +58,7 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
     Stage stage;
     private Player playerOne = new Player();
     private Player playerTwo = new Player();
-
+    private Thread th = new Thread();
     private boolean isEndOfGame = false;
 
     private Timeline timeLine;
@@ -131,15 +131,16 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
 
             System.out.println("current char: " + (playerOne.hisTurn ? playerOne.getChar() : playerTwo.getChar()));
             System.out.println("current Move: " + move);
-
-            if (playerOne.hisTurn) {
-                //startCountdownTimer();
-                //enableButtons();//enable for palyer
-                b.setText(playerOne.getChar());
-            } else {
-                // startCountdownTimer();              
-                b.setText(playerTwo.getChar());
-            }
+            Platform.runLater(() -> {
+                if (playerOne.hisTurn) {
+                    //startCountdownTimer();
+                    //enableButtons();//enable for palyer
+                    b.setText(playerOne.getChar());
+                } else {
+                    // startCountdownTimer();              
+                    b.setText(playerTwo.getChar());
+                }
+            });
 
             playerOne.hisTurn = !playerOne.hisTurn;
             playerTwo.hisTurn = !playerTwo.hisTurn;
@@ -149,9 +150,9 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
             Integer c = GridPane.getColumnIndex(b);
             Integer r = GridPane.getRowIndex(b);
             fillBoard(r, c);
-
-            checkPlayerWinner();
-
+            Platform.runLater(() -> {
+                checkPlayerWinner();
+            });
             if (!isEndOfGame) {
                 startCountdownTimer();
             }
@@ -179,7 +180,9 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
                         if (countdownTime < 0) {
                             timeLine.stop();
                             isTimeOut = true;
-                            makeLevel0Move();
+                            if ((playerOne.getName().equals(user.getName()) && playerOne.hisTurn) || (playerTwo.getName().equals(user.getName()) && playerTwo.hisTurn)) {
+                                makeLevel0Move();
+                            }
 
                             timer.setText("Oops! Time is up!");
                         }
@@ -227,16 +230,9 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
 
     private void makeLevel0Move() {
         Integer cP = EasyLevel.moveComputerMove(board);
+        sendMove((cP % 10), (cP / 10));
         Button b = getButtonsByRowAndColumn((cP % 10), (cP / 10));
         setTurn(b);
-    }
-
-    private void makeLevel1Move() {
-        System.out.println("ehehhehehe");
-        Integer cP = MediumLevel.moveComputerMove(board);
-        Button b = getButtonsByRowAndColumn((cP % 10), (cP / 10));
-        setTurn(b);
-
     }
 
     private void printGame() {
@@ -273,7 +269,7 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
     private void checkPlayerWinner() {
         String winner = checkWinnerChar(board);
 
-        if (playerOne.getChar() == winner) {
+        if (playerOne.getChar() == null ? winner == null : playerOne.getChar().equals(winner)) {
             WinningLine.drawWinningLine(WinningLine.getStartLine(), WinningLine.getEndLine(), grid);
 
             System.out.println("PLAYER ONE WINNER");
@@ -281,9 +277,6 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
 
             waitAndShowPopup(winner);
         } else if (playerTwo.getChar() == null ? winner == null : playerTwo.getChar().equals(winner)) {
-            if (playerTwo instanceof ComputerPlayer) {
-                winner = "computer";
-            }
             WinningLine.drawWinningLine(WinningLine.getStartLine(), WinningLine.getEndLine(), grid);
             System.out.println("PLAYER TWO WINNER");
             endGame();
@@ -352,23 +345,27 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
                     //get the winner in the current itration
                     WinningLine.setStartLine(i + "0"); // extract index off BUTTONS
                     WinningLine.setEndLine(i + "2");
+                    isEndOfGame = true;
                     return getWinnerCharacter(board[i][0]);
                 }
                 //columns
                 if (checkLine(board[0][i], board[1][i], board[2][i])) {
                     WinningLine.setStartLine("0" + i);
                     WinningLine.setEndLine("2" + i);
+                    isEndOfGame = true;
                     return getWinnerCharacter(board[0][i]);
                 }
             }
             if (checkLine(board[0][0], board[1][1], board[2][2])) {
                 WinningLine.setStartLine("00");
                 WinningLine.setEndLine("22");
+                isEndOfGame = true;
                 return getWinnerCharacter(board[0][0]);
             }
             if (checkLine(board[0][2], board[1][1], board[2][0])) {
                 WinningLine.setStartLine("02");
                 WinningLine.setEndLine("20");
+                isEndOfGame = true;
                 return getWinnerCharacter(board[0][2]);
             }
         }
@@ -480,7 +477,7 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
     @Override
     protected void handleB00(ActionEvent actionEvent) {
         setTurn(b00);
-        sendMove(0,0);
+        sendMove(0, 0);
     }
 
     protected void sendMove(int c, int r) {
@@ -506,8 +503,8 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
     }
 
     protected void receiveMove() {
-        new Thread(() -> {
-            while (true) {
+        th = new Thread(() -> {
+            while (!isEndOfGame) {
                 String row_col = "";
                 synchronized (ois) {
                     try {
@@ -517,9 +514,10 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
                         int row = Integer.valueOf(row_col) / 10;
                         int col = Integer.valueOf(row_col) % 10;
                         Button b = getButtonsByRowAndColumn(col, row);
-                        Platform.runLater(() -> {
-                            setTurn(b);
-                        });
+
+                        setTurn(b);
+
+                        checkWinnerChar(board);
                     } catch (IOException ex) {
                         Logger.getLogger(OnlineGameBoardController.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -530,6 +528,7 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
                 });
             }
 
-        }).start();
+        });
+        th.start();
     }
 }

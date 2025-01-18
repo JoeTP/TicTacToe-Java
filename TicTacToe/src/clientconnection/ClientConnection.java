@@ -68,7 +68,7 @@ public class ClientConnection {
 
     public static void terminateClient() {
         try {
-            if(listeningThread.isAlive()){
+            if(listeningThread != null && listeningThread.isAlive()){
               listeningThread.stop();  
             }  
             oos.close();
