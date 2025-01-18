@@ -103,10 +103,9 @@ public class GameRecordController extends GameRecordBase {
 
    @Override
 protected void handleNextBtn(ActionEvent actionEvent) {
-    if (currentStep < 9) { // Ensure the step is within bounds
+    if (currentStep < 9) { 
         boolean hasNextStep = false;
 
-        // Check if there is any value greater than the current step
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 3; col++) {
                 Integer value = board[row][col];
