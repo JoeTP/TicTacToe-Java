@@ -17,7 +17,9 @@ public class ComputerPlayer extends Player {
 
     public ComputerPlayer() {
         hisTurn = false;
+
         name = "computer";
+
     }
 
 }

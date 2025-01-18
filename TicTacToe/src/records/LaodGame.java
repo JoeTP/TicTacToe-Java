@@ -28,6 +28,7 @@ public class LaodGame {
         }
         try {
             FileReader reader = new FileReader(file);
+           
             GameModel game = gson.fromJson(reader, GameModel.class);
             return game;
         } catch (FileNotFoundException ex) {

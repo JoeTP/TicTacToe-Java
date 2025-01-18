@@ -4,13 +4,10 @@ import difficulty.EasyLevel;
 import difficulty.ExtremeLevel;
 import difficulty.MediumLevel;
 import gameboard.WinningLine;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -20,7 +17,6 @@ import javafx.application.Platform;
 import javafx.animation.PauseTransition;
 
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
@@ -31,13 +27,11 @@ import javafx.stage.Stage;
 import javafx.scene.Node;
 import javafx.util.Duration;
 import models.ComputerPlayer;
+import models.GameModel;
 import models.Player;
 import shared.AppFunctions;
 import sounds.AudioController;
-import static shared.AppFunctions.openPopup;
 import tictactoe.homescreen.FXMLHomeScreenController;
-
-import static tictactoe.playervscomp.FXMLPlayerVsCompController.comp;
 
 import tictactoe.playervscomp.FXMLPlayerVsCompController;
 import tictactoe.popupwin.FXMLPopUpWinController;
@@ -49,13 +43,13 @@ import tictactoe.popupwin.FXMLPopUpWinController;
 public class GameBoardController extends FXMLGameBoardBase {
 
     Stage stage;
-    private Player playerOne = new Player();
-    private Player playerTwo = new Player();
-
+    private Player playerOne;
+    private Player playerTwo;
+    public static GameModel gameModel;
     private boolean isEndOfGame = false;
 
     private Timeline timeLine;
-    private int countdownTime;
+    private int countdownTime ;
     boolean isTimeOut = false;
 
     /*
@@ -68,15 +62,27 @@ public class GameBoardController extends FXMLGameBoardBase {
     private final String X_CHAR = "X";
     private final String O_CHAR = "O";
     private int move = 1;
+    
 
     private String mode;
 
+
+ 
+
+
     public GameBoardController(Stage stage, String playerOne, String playerTwo, String mode) {
+        this.playerOne = new Player();
+        this.playerTwo = new Player();
         this.stage = stage;
         this.playerOne.setName(playerOne);
+        System.out.println("in constr player1 = " + playerOne);
         this.playerTwo.setName(playerTwo);
+        System.out.println("in constr player2 = " + playerTwo);
+
         this.mode = mode;
-        if (mode.equals("computer")) {
+
+        if ("computer".equals(mode)) {
+
             this.playerTwo = new ComputerPlayer();
         }
         assignPlayers(mode);
@@ -92,7 +98,7 @@ public class GameBoardController extends FXMLGameBoardBase {
         switch (mode) {
             case "computer": {
 
-                playerOneLabel.setText("Player");
+                playerOneLabel.setText("You");
                 playerOneChar.setText(playerOne.getChar());
 
                 playerTwoLabel.setText("Computer");
@@ -117,7 +123,7 @@ public class GameBoardController extends FXMLGameBoardBase {
         playerOne.hisTurn = true;
         playerTwo.hisTurn = false;
 
-        //startCountdownTimer();
+        startCountdownTimer();
     }
 
     private void setTurn(Button b) {
@@ -141,7 +147,9 @@ public class GameBoardController extends FXMLGameBoardBase {
                 enableButtons();//enable for palyer
                 b.setText(playerOne.getChar());
             } else {
+                System.out.println("elseeeeeeeeee");
                 startCountdownTimer();
+
                 b.setText(playerTwo.getChar());
             }
 
@@ -172,12 +180,14 @@ public class GameBoardController extends FXMLGameBoardBase {
 
                                     case 1:
                                         System.out.println("level 1");
-
+                                      
                                         makeLevel1Move();
                                         break;
                                     case 2:
                                         System.out.println("level 2");
+
                                         makeMaxMinMove();
+
                                         break;
                                 }
 
@@ -198,14 +208,14 @@ public class GameBoardController extends FXMLGameBoardBase {
     }
     //  makeComputerMove();
     private void startCountdownTimer() {
-        countdownTime = 8;
+        countdownTime=8;
         if (timeLine != null) {
             timeLine.stop();   //3l4an law startCountdownTimer 3mnlnlha call multiple time
         }
 
         if (!isEndOfGame) {
             timeLine = new Timeline(
-                    new KeyFrame(Duration.seconds(0.9), (ActionEvent event) -> {
+                    new KeyFrame(Duration.seconds(0.65), (ActionEvent event) -> {
                         timer.setStyle("-fx-text-fill: #3E5879;");
                         timer.setText(" " + countdownTime + "");
 
@@ -213,11 +223,11 @@ public class GameBoardController extends FXMLGameBoardBase {
                             timer.setStyle("-fx-text-fill: red;");
                         }
                         countdownTime--;
+                        
                         if (countdownTime < 0) {
                             timeLine.stop();
                             isTimeOut = true;
                             makeLevel0Move();
-
                             timer.setText("Oops! Time is up!");
                         }
                         isTimeOut = false;
@@ -320,27 +330,56 @@ public class GameBoardController extends FXMLGameBoardBase {
     private void checkPlayerWinner() {
         String winner = checkWinnerChar(board);
 
-        if (playerOne.getChar() == winner) {
+        if (playerOne.getChar().equals(winner)) {
             WinningLine.drawWinningLine(WinningLine.getStartLine(), WinningLine.getEndLine(), grid);
-
+            saveDataToGameModel(playerOne.getName());
             System.out.println("PLAYER ONE WINNER");
             endGame();
 
             waitAndShowPopup(winner);
-        } else if (playerTwo.getChar() == winner) {
+        } else if (playerTwo.getChar().equals(winner)) {
             if (playerTwo instanceof ComputerPlayer) {
+
                 winner = "computer";
+                saveDataToGameModel(winner);
+                //  saveDataToGameModel(winner);
+            }else{
+                saveDataToGameModel(playerTwo.getName());
             }
             WinningLine.drawWinningLine(WinningLine.getStartLine(), WinningLine.getEndLine(), grid);
+            
             System.out.println("PLAYER TWO WINNER");
             endGame();
             waitAndShowPopup(winner);
         } else if (move > 9) {
             winner = "draw";
+            saveDataToGameModel(winner);
             endGame();
             waitAndShowPopup(winner);
         }
     }
+
+
+    private void saveDataToGameModel(String winner) {
+        if (playerOne == null || playerTwo == null) {
+            System.err.println("Error: Players are not initialized!");
+            return;
+        }
+        System.out.println("Player Two comp : "+playerTwo.getName()+"player One Comp " +playerOne.getName());
+        gameModel = new GameModel(1, playerOne.getName(), playerTwo.getName(), winner, DateNow(), board);
+
+        System.out.println("The Game Model created, the cur player: "
+                + gameModel.getPlayer()
+                + ", the other player: " + gameModel.getRival()
+                + ", the winner: " + gameModel.getWinner());
+    }
+
+    private Date DateNow() {
+
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        return Date.from(currentDateTime.atZone(ZoneId.systemDefault()).toInstant());
+    }
+
 
     private void waitAndShowPopup(String roundState) {
 
@@ -350,6 +389,7 @@ public class GameBoardController extends FXMLGameBoardBase {
             AppFunctions.openPopup(stage, new FXMLPopUpWinController(stage, roundState, playerOne, playerTwo, mode));
         });
         pause.play();
+
     }
 
     private String checkWinnerChar(Integer[][] board) {

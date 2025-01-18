@@ -87,6 +87,7 @@ public abstract class GameRecordBase extends BorderPane {
         BorderPane.setMargin(hBox, new Insets(0.0, 20.0, 0.0, 20.0));
 
         prevBtn.setMnemonicParsing(false);
+        prevBtn.setOnAction(this::handlePreviousBtn);
         prevBtn.setPrefHeight(47.0);
         prevBtn.setPrefWidth(90.0);
         prevBtn.setText("Previous");
@@ -96,6 +97,7 @@ public abstract class GameRecordBase extends BorderPane {
         nextBtn.setLayoutX(260.0);
         nextBtn.setLayoutY(10.0);
         nextBtn.setMnemonicParsing(false);
+        nextBtn.setOnAction(this::handleNextBtn);
         nextBtn.setPrefHeight(47.0);
         nextBtn.setPrefWidth(90.0);
         nextBtn.setText("Next");
@@ -117,7 +119,7 @@ public abstract class GameRecordBase extends BorderPane {
 
         label.setLayoutX(10.0);
         label.setLayoutY(10.0);
-        label.setText("O");
+        label.setText("X");
 
         playerOneLabel.setText("Player1Name");
 
@@ -125,7 +127,7 @@ public abstract class GameRecordBase extends BorderPane {
 
         label0.setLayoutX(10.0);
         label0.setLayoutY(10.0);
-        label0.setText("X");
+        label0.setText("O");
 
         playerTwoLabel.setText("Player2Name");
         vBox.setPadding(new Insets(0.0, 0.0, 0.0, 20.0));
@@ -257,6 +259,10 @@ public abstract class GameRecordBase extends BorderPane {
         anchorPane.getChildren().add(grid);
 
     }
+
+    protected abstract void handlePreviousBtn(javafx.event.ActionEvent actionEvent);
+
+    protected abstract void handleNextBtn(javafx.event.ActionEvent actionEvent);
 
     protected abstract void handleExitButton(javafx.event.ActionEvent actionEvent);
 

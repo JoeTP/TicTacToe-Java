@@ -20,12 +20,12 @@
             <Insets left="20.0" right="20.0" />
          </BorderPane.margin>
          <children>
-            <Button fx:id="prevBtn" mnemonicParsing="false" prefHeight="47.0" prefWidth="90.0" text="Previous" textAlignment="CENTER">
+            <Button fx:id="prevBtn" mnemonicParsing="false" onAction="#handlePreviousBtn" prefHeight="47.0" prefWidth="90.0" text="Previous" textAlignment="CENTER">
                <HBox.margin>
                   <Insets left="110.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="nextBtn" layoutX="260.0" layoutY="10.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="90.0" text="Next" textAlignment="CENTER">
+            <Button fx:id="nextBtn" layoutX="260.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleNextBtn" prefHeight="47.0" prefWidth="90.0" text="Next" textAlignment="CENTER">
                <HBox.margin>
                   <Insets left="90.0" />
                </HBox.margin>
