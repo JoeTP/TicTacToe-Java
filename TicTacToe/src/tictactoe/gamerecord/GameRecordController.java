@@ -10,28 +10,28 @@ import records.LaodGame;
 import shared.AppFunctions;
 import sounds.AudioController;
 
-
-
 public class GameRecordController extends GameRecordBase {
 
     Stage stage;
     GameModel game = null;
     String fileName;
-        Integer[][] board;  
-     int currentStep = 1;
+    Integer[][] board;
+    int currentStep = 1;
 
-    
-
-       public GameRecordController(Stage stage, String fileName) {
-         this.stage = stage;
+    public GameRecordController(Stage stage, String fileName) {
+        this.stage = stage;
         this.fileName = fileName;
+       
         loadGameData();
     }
 
     private void loadGameData() {
         game = LaodGame.loadGameFromFile(fileName);
         board = game.getBoard();
+         playerOneLabel.setText(game.getPlayer());
+          playerTwoLabel.setText(game.getRival());
         showBoard(currentStep);
+       
     }
 
     private void showBoard(int step) {
@@ -53,7 +53,7 @@ public class GameRecordController extends GameRecordBase {
         }
     }
 
-   private Button getButtonsByRowAndColumn(int c, int r) {
+    private Button getButtonsByRowAndColumn(int c, int r) {
         String key = c + "," + r;
 
         if ("0,0".equals(key)) {
@@ -87,7 +87,6 @@ public class GameRecordController extends GameRecordBase {
         return null;
     }
 
-
     @Override
     protected void handlePreviousBtn(ActionEvent actionEvent) {
         if (currentStep > 1) {
@@ -109,10 +108,4 @@ public class GameRecordController extends GameRecordBase {
         AudioController.clickSound();
         AppFunctions.closePopup(actionEvent);
     }
-    }
-    
-
-    
-   
-
-
+}

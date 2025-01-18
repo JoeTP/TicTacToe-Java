@@ -17,6 +17,7 @@ public class ComputerPlayer extends Player {
 
     public ComputerPlayer() {
         hisTurn = false;
+        name="computer";
     }
 //b01
 //    public static Button getButtonsByRowAndColumn(int c, int r, GridPane grid) {

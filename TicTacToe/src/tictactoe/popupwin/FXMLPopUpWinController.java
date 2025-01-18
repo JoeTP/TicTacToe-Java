@@ -28,7 +28,8 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
     Player playerTwo;
     MediaPlayer mediaPlayer;
     String mode;
-    public FXMLPopUpWinController(Stage stage, String roundState, Player playerOne, Player playerTwo , String mode) {
+
+    public FXMLPopUpWinController(Stage stage, String roundState, Player playerOne, Player playerTwo, String mode) {
         this.stage = stage;
         this.playerOne = playerOne;
         this.playerTwo = playerTwo;
@@ -42,37 +43,6 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
 
         //winOrLosePopUp.setVisible(true);
         switch (roundState) {
-            case "X": { // normal player
-                System.out.println("Round State string in popup: X player " + roundState);
-                winAndLoseLabel.setStyle("-fx-text-fill: #21bd5c;");
-                winAndLoseLabel.setText(playerOne.getName() + " Win!");
-                congratsLable.setText(AppString.CONGRATS);
-                rightCupIcon.setImage(new Image(getClass().getResource("/assets/icons/winner.png").toExternalForm()));
-                leftCupIcon.setImage(new Image(getClass().getResource("/assets/icons/winner.png").toExternalForm()));
-
-                Media loadVideo = new Media(this.getClass().getResource(AppString.WIN_VIDEO_URL).toExternalForm());
-                mediaPlayer = new MediaPlayer(loadVideo);
-
-                mediaPlayer.setVolume(0.5);
-                mediaPlayer.play();
-                winOrLoseVideo.setMediaPlayer(mediaPlayer);
-            }
-            break;
-            case "O": { // normal player
-                System.out.println("Round State string  in popup: : O Player" + roundState);
-                winAndLoseLabel.setStyle("-fx-text-fill: #21bd5c;");
-                winAndLoseLabel.setText(playerTwo.getName() + " Win !");
-                congratsLable.setText(AppString.CONGRATS);
-                rightCupIcon.setImage(new Image(getClass().getResource("/assets/icons/winner.png").toExternalForm()));
-                leftCupIcon.setImage(new Image(getClass().getResource("/assets/icons/winner.png").toExternalForm()));
-
-                mediaPlayer = new MediaPlayer(new Media(this.getClass().getResource(AppString.WIN_VIDEO_URL).toExternalForm()));
-                winOrLoseVideo.setMediaPlayer(mediaPlayer);
-
-                mediaPlayer.setVolume(0.5);
-                mediaPlayer.play();
-            }
-            break;
             case "computer": { // computer wins over player
                 System.out.println("Round State string : in popup: comp " + roundState);
                 winAndLoseLabel.setStyle("-fx-text-fill: #99003d;");
@@ -88,6 +58,36 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
                 mediaPlayer.play();
             }
             break;
+            case "X": { // normal player
+                System.out.println("Round State string in popup: X player " + roundState);
+                winAndLoseLabel.setStyle("-fx-text-fill: #21bd5c;");
+                winAndLoseLabel.setText(playerOne.getName() + " Win!");
+                congratsLable.setText(AppString.CONGRATS);
+                rightCupIcon.setImage(new Image(getClass().getResource("/assets/icons/winner.png").toExternalForm()));
+                leftCupIcon.setImage(new Image(getClass().getResource("/assets/icons/winner.png").toExternalForm()));
+
+                Media loadVideo = new Media(this.getClass().getResource(AppString.WIN_VIDEO_URL).toExternalForm());
+                mediaPlayer = new MediaPlayer(loadVideo);
+                mediaPlayer.setVolume(0.5);
+                mediaPlayer.play();
+                winOrLoseVideo.setMediaPlayer(mediaPlayer);
+            }
+            break;
+            case "O": { // normal player
+                System.out.println("Round State string  in popup: : O Player" + roundState);
+                winAndLoseLabel.setStyle("-fx-text-fill: #21bd5c;");
+                winAndLoseLabel.setText(playerTwo.getName() + " Win !");
+                congratsLable.setText(AppString.CONGRATS);
+                rightCupIcon.setImage(new Image(getClass().getResource("/assets/icons/winner.png").toExternalForm()));
+                leftCupIcon.setImage(new Image(getClass().getResource("/assets/icons/winner.png").toExternalForm()));
+                mediaPlayer = new MediaPlayer(new Media(this.getClass().getResource(AppString.WIN_VIDEO_URL).toExternalForm()));
+                winOrLoseVideo.setMediaPlayer(mediaPlayer);
+
+                mediaPlayer.setVolume(0.5);
+                mediaPlayer.play();
+            }
+            break;
+
             case "draw": { // draw in all cases
                 System.out.println("Round State string draw  : " + roundState);
 
@@ -110,8 +110,9 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
     protected void handleSaveGameButton(ActionEvent actionEvent) {
         saveGameInFileGson(GameBoardController.gameModel);
         mediaPlayer.pause();
-        
+
     }
+
     protected void saveGameInFileGson(GameModel game) {
         SaveGame.saveGameToFile(game);
     }
@@ -120,7 +121,7 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
     protected void handlePlayAgainButton(ActionEvent actionEvent
     ) {
         mediaPlayer.pause();
-        AppFunctions.closeAndGo(actionEvent, stage, new GameBoardController(stage, playerOne.getName(), playerTwo.getName(), mode ));
+        AppFunctions.closeAndGo(actionEvent, stage, new GameBoardController(stage, playerOne.getName(), playerTwo.getName(), mode));
 
     }
 

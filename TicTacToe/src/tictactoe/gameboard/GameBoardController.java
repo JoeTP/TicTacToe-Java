@@ -49,7 +49,7 @@ public class GameBoardController extends FXMLGameBoardBase {
     private boolean isEndOfGame = false;
 
     private Timeline timeLine;
-    private int countdownTime;
+    private int countdownTime ;
     boolean isTimeOut = false;
 
     /*
@@ -62,6 +62,7 @@ public class GameBoardController extends FXMLGameBoardBase {
     private final String X_CHAR = "X";
     private final String O_CHAR = "O";
     private int move = 1;
+    
 
     private String mode;
 
@@ -93,7 +94,7 @@ public class GameBoardController extends FXMLGameBoardBase {
         switch (mode) {
             case "computer": {
 
-                playerOneLabel.setText("Player");
+                playerOneLabel.setText("You");
                 playerOneChar.setText(playerOne.getChar());
 
                 playerTwoLabel.setText("Computer");
@@ -128,7 +129,7 @@ public class GameBoardController extends FXMLGameBoardBase {
         playerOne.hisTurn = true;
         playerTwo.hisTurn = false;
 
-        //startCountdownTimer();
+        startCountdownTimer();
     }
 
     private void setTurn(Button b) {
@@ -148,11 +149,11 @@ public class GameBoardController extends FXMLGameBoardBase {
             System.out.println("current Move: " + move);
 
             if (playerOne.hisTurn) {
-                //startCountdownTimer();
+                startCountdownTimer();
                 enableButtons();//enable for palyer
                 b.setText(playerOne.getChar());
             } else {
-                // startCountdownTimer();
+                 startCountdownTimer();
                 b.setText(playerTwo.getChar());
             }
 
@@ -183,12 +184,12 @@ public class GameBoardController extends FXMLGameBoardBase {
 
                                     case 1:
                                         System.out.println("level 1");
-
+                                      
                                         makeLevel1Move();
                                         break;
                                     case 2:
                                         System.out.println("level 2");
-
+                               
                                         //makeMaxMinMove();
                                         break;
                                 }
@@ -211,14 +212,14 @@ public class GameBoardController extends FXMLGameBoardBase {
 
     //  makeComputerMove();
     private void startCountdownTimer() {
-        countdownTime = 8;
+       
         if (timeLine != null) {
             timeLine.stop();   //3l4an law startCountdownTimer 3mnlnlha call multiple time
         }
 
         if (!isEndOfGame) {
             timeLine = new Timeline(
-                    new KeyFrame(Duration.seconds(0.9), (ActionEvent event) -> {
+                    new KeyFrame(Duration.seconds(0.85), (ActionEvent event) -> {
                         timer.setStyle("-fx-text-fill: #3E5879;");
                         timer.setText(" " + countdownTime + "");
 
@@ -226,11 +227,11 @@ public class GameBoardController extends FXMLGameBoardBase {
                             timer.setStyle("-fx-text-fill: red;");
                         }
                         countdownTime--;
+                        
                         if (countdownTime < 0) {
                             timeLine.stop();
                             isTimeOut = true;
                             makeLevel0Move();
-
                             timer.setText("Oops! Time is up!");
                         }
                         isTimeOut = false;
@@ -335,10 +336,13 @@ public class GameBoardController extends FXMLGameBoardBase {
             if (playerTwo instanceof ComputerPlayer) {
 
                 winner = "computer";
+                saveDataToGameModel(winner);
                 //  saveDataToGameModel(winner);
+            }else{
+                saveDataToGameModel(playerTwo.getName());
             }
             WinningLine.drawWinningLine(WinningLine.getStartLine(), WinningLine.getEndLine(), grid);
-            saveDataToGameModel(playerTwo.getName());
+            
             System.out.println("PLAYER TWO WINNER");
             endGame();
             waitAndShowPopup(winner);
@@ -355,7 +359,7 @@ public class GameBoardController extends FXMLGameBoardBase {
             System.err.println("Error: Players are not initialized!");
             return;
         }
-
+        System.out.println("Player Two comp : "+playerTwo.getName()+"player One Comp " +playerOne.getName());
         gameModel = new GameModel(1, playerOne.getName(), playerTwo.getName(), winner, DateNow(), board);
 
         System.out.println("The Game Model created, the cur player: "
@@ -397,7 +401,7 @@ public class GameBoardController extends FXMLGameBoardBase {
             break;
             case "computer": { // comuter WINS over player in Playr vs player mode
                 System.out.println("RS in waitand show : Computer case");
-
+                System.out.println("The player : "+playerOne.getName()+"computer : "+playerTwo.getName());
                 PauseTransition pause = new PauseTransition(Duration.seconds(2));
                 pause.setOnFinished(event -> {
                     AppFunctions.openPopup(stage, new FXMLPopUpWinController(stage, roundState, playerOne, playerTwo, mode));
@@ -499,6 +503,7 @@ public class GameBoardController extends FXMLGameBoardBase {
 
     @Override
     protected void handleLeaveButton(ActionEvent actionEvent) {
+        timeLine.stop();
         endGame();
         AudioController.clickSound();
         AppFunctions.goTo(actionEvent, new FXMLHomeScreenController(stage));
