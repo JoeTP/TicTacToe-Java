@@ -28,7 +28,12 @@ public abstract class AppFunctions {
         stage.setScene(scene);
         stage.show();
     }
-
+    public static void goToGameBoard(Stage ownerStage, Parent root) {
+        Scene scene = new Scene(root);
+        Stage stage = ownerStage;
+        stage.setScene(scene);
+        stage.show();
+    }
     public static void goTo(MouseEvent event, Parent root) {
         Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -64,6 +69,9 @@ public abstract class AppFunctions {
 
     /**
      * Used with Popups closing it first then go to new scene
+     * @param actionEvent
+     * @param stage
+     * @param root
      */
     public static void closeAndGo(ActionEvent actionEvent, Stage stage, Parent root) {
         if (actionEvent != null) {

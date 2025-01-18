@@ -98,6 +98,7 @@ public class ClientHandler extends Thread {
                         break;
                     case 4:
                         ClientHandler op = findClientHandler(data.getRival());
+                        
                         if(data.getPlayer().isEmpty()){
                             System.out.println("player is null");
                         }else{
@@ -107,10 +108,14 @@ public class ClientHandler extends Thread {
                         break;
                     case 5:
                         ClientHandler ch = findClientHandler(data.getRival());
-                        ch.sendRequestResponse(data.getRival());
-                        
+                        ch.sendRequestResponse(data.getPlayer());                        
                         break;
-                        
+                    case 6:
+                        System.out.println(data.getRival());
+                        ClientHandler gamePlayer = findClientHandler(data.getRival());
+                        gamePlayer.sendGameMove(data.getGameMove());
+                        System.out.println("Sent game move");
+                        break;
 //                    default:
 //                        System.out.println("Unknown state: " + state);
 //                        ps.writeUTF("Unknown request");
@@ -241,7 +246,7 @@ public class ClientHandler extends Thread {
         oos.writeObject(data);
         oos.flush();
     }
-    void sendRequestResponse(String rival) throws IOException{
+    private void sendRequestResponse(String rival) throws IOException{
         DataModel data = new DataModel(rival, "GAME_ACCEPT");
         oos.writeObject(data);
         oos.flush();
@@ -251,5 +256,15 @@ public class ClientHandler extends Thread {
         clients.forEach((c) -> {
             c.sendActiveUsersList();
         });
+    }
+    private void sendGameMove(int gameMove){
+        try {
+            String move = String.valueOf(gameMove);
+            oos.writeUTF(move);
+            oos.flush();
+        } catch (IOException ex) {
+            Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 }

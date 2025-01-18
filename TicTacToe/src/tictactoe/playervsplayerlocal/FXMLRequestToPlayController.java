@@ -6,6 +6,7 @@
 package tictactoe.playervsplayerlocal;
 
 import static clientconnection.ClientConnection.oos;
+import static clientconnection.ClientConnection.stopListeningThread;
 import static clientconnection.ClientConnection.user;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -16,6 +17,7 @@ import models.Player;
 import shared.AppFunctions;
 import static tictactoe.TicTacToe.appStage;
 import tictactoe.gameboard.GameBoardController;
+import tictactoe.onlinegmaeboard.OnlineGameBoardController;
 import tictactoe.playervsplayerlocal.FXMLRequestToPlayBase;
 
 public class FXMLRequestToPlayController extends FXMLRequestToPlayBase {
@@ -32,7 +34,7 @@ public class FXMLRequestToPlayController extends FXMLRequestToPlayBase {
         AppFunctions.closePopup(actionEvent);
 
         new Thread(() -> {
-            DataModel data = new DataModel(5, rival, rival);
+            DataModel data = new DataModel(5, user.getName(),rival);
             synchronized (oos) {
                 try {
                     oos.writeObject(data);
@@ -43,8 +45,9 @@ public class FXMLRequestToPlayController extends FXMLRequestToPlayBase {
             }
 
         }).start();
-
-        AppFunctions.goTo(actionEvent, new GameBoardController(appStage, user.getName(), rival, "online"));
+        stopListeningThread();
+        AppFunctions.goTo(actionEvent, new OnlineGameBoardController(appStage, user.getName(), rival, "online"));
+        
     }
 
     @Override

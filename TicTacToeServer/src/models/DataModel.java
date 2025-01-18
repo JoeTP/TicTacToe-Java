@@ -14,7 +14,7 @@ import java.io.Serializable;
 public class DataModel implements Serializable {
 private static final long serialVersionUID = 1L;
     UserModel user;
-    GameModel game;
+    int gameMove;
     int state;
     String player;
     String rival;
@@ -42,8 +42,8 @@ private static final long serialVersionUID = 1L;
         this.response = response;
     }
 
-    public DataModel(GameModel game, int state) {
-        this.game = game;
+    public DataModel(int game, int state) {
+        this.gameMove = game;
         this.state = state;
     }
 
@@ -77,12 +77,12 @@ private static final long serialVersionUID = 1L;
         this.user = user;
     }
 
-    public GameModel getGame() {
-        return game;
+    public int getGameMove() {
+        return gameMove;
     }
 
-    public void setGame(GameModel game) {
-        this.game = game;
+    public void setGameMove(int game) {
+        this.gameMove = game;
     }
 
     public int getState() {

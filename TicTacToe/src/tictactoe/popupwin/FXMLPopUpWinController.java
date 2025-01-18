@@ -1,5 +1,6 @@
 package tictactoe.popupwin;
 
+import static clientconnection.ClientConnection.startListeningThread;
 import java.net.URISyntaxException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -124,6 +125,7 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
     ) {
         mediaPlayer.pause();
         AppFunctions.closeAndGo(actionEvent, stage, new FXMLHomeScreenController(stage));
+        startListeningThread();
     }
 
 }

@@ -23,6 +23,7 @@ import models.UserModel;
 import shared.AppFunctions;
 import static tictactoe.TicTacToe.appStage;
 import tictactoe.gameboard.GameBoardController;
+import tictactoe.onlinegmaeboard.OnlineGameBoardController;
 import tictactoe.playervscomp.FXMLPlayerVsCompController;
 import tictactoe.playervsplayerlocal.FXMLRequestToPlayController;
 import tictactoe.playervsplayeronline.FXMLPlayerVsPlayerOnlineController;
@@ -115,11 +116,14 @@ public class ClientConnection {
                     Platform.runLater(() -> {
                         AppFunctions.openReqPopup(new FXMLRequestToPlayController(rival));
                     });
+                    stopListeningThread();
                 }
                 if (newResponse.equals("GAME_ACCEPT")) {
                     Platform.runLater(() -> {
-                        AppFunctions.closeAndGo(requestActionEvent, appStage, new GameBoardController(appStage, rival, user.getName(), "online") );
+                        AppFunctions.goToGameBoard(appStage, new OnlineGameBoardController(appStage, rival, user.getName(), "online"));
+                        //AppFunctions.closeAndGo(requestActionEvent, appStage, new OnlineGameBoardController(appStage, rival, user.getName(), "online") );
                     });
+                    stopListeningThread();
                 }
 
                 if (newResponse.equals("Active_Users")) {
@@ -147,11 +151,8 @@ public class ClientConnection {
     public static void stopListeningThread() {
         if (listeningThread != null && listeningThread.isAlive()) {
             listeningThread.interrupt();
-            try {
-                listeningThread.join();
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
+            listeningThread.stop();
+            System.out.println("stopListeningThread");
         }
     }
 }

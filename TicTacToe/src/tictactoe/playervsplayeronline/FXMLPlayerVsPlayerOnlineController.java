@@ -31,10 +31,7 @@ import models.DataModel;
 import models.Player;
 import models.UserModel;
 import shared.AppFunctions;
-
 import sounds.AudioController;
-import tictactoe.onlinegmaeboard.FXMLGameBoardOnlineController;
-
 import tictactoe.gameboard.GameBoardController;
 
 public class FXMLPlayerVsPlayerOnlineController extends FXMLPlayerVsPlayerOnlineBase {
@@ -135,6 +132,5 @@ public class FXMLPlayerVsPlayerOnlineController extends FXMLPlayerVsPlayerOnline
 
     protected void sendGameRequest() {
         String rival = (String) activePlayersListView.getSelectionModel().getSelectedItem();
-
     }
 }
