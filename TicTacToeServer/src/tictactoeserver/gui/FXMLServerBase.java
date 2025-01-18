@@ -1,7 +1,6 @@
 package tictactoeserver.gui;
 
 import javafx.scene.chart.PieChart;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ToggleButton;
@@ -15,7 +14,6 @@ import javafx.scene.text.Text;
 public abstract class FXMLServerBase extends BorderPane {
 
     protected final AnchorPane anchorPane;
-    protected final Button serverEscBtn;
     protected final AnchorPane anchorPane0;
     protected final PieChart usersPieChart;
     protected final Circle serverIndicator;
@@ -33,7 +31,6 @@ public abstract class FXMLServerBase extends BorderPane {
     public FXMLServerBase() {
 
         anchorPane = new AnchorPane();
-        serverEscBtn = new Button();
         anchorPane0 = new AnchorPane();
         usersPieChart = new PieChart();
         serverIndicator = new Circle();
@@ -59,11 +56,6 @@ public abstract class FXMLServerBase extends BorderPane {
         BorderPane.setAlignment(anchorPane, javafx.geometry.Pos.CENTER);
         anchorPane.setPrefHeight(13.0);
         anchorPane.setPrefWidth(600.0);
-
-        serverEscBtn.setLayoutX(14.0);
-        serverEscBtn.setLayoutY(11.0);
-        serverEscBtn.setMnemonicParsing(false);
-        serverEscBtn.setText("ESC");
         setTop(anchorPane);
 
         BorderPane.setAlignment(anchorPane0, javafx.geometry.Pos.CENTER);
@@ -105,7 +97,7 @@ public abstract class FXMLServerBase extends BorderPane {
         label.setFont(new Font(18.0));
 
         serverStateToggle.setLayoutX(99.0);
-        serverStateToggle.setLayoutY(289.0);
+        serverStateToggle.setLayoutY(293.0);
         serverStateToggle.setMnemonicParsing(false);
         serverStateToggle.setOnAction(this::handleServerState);
         serverStateToggle.setText("Start");
@@ -132,7 +124,6 @@ public abstract class FXMLServerBase extends BorderPane {
         ActiceUsersNoLabel.setText("0");
         setBottom(anchorPane0);
 
-        anchorPane.getChildren().add(serverEscBtn);
         anchorPane0.getChildren().add(usersPieChart);
         anchorPane0.getChildren().add(serverIndicator);
         anchorPane0.getChildren().add(text);
