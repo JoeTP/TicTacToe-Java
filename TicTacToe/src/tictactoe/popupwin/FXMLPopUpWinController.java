@@ -12,7 +12,9 @@ import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import models.ComputerPlayer;
+import models.GameModel;
 import models.Player;
+import records.SaveGame;
 import shared.AppFunctions;
 import shared.AppString;
 import tictactoe.gameboard.GameBoardController;
@@ -106,9 +108,12 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
 
     @Override
     protected void handleSaveGameButton(ActionEvent actionEvent) {
-      
+        saveGameInFileGson(GameBoardController.gameModel);
         mediaPlayer.pause();
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+    }
+    protected void saveGameInFileGson(GameModel game) {
+        SaveGame.saveGameToFile(game);
     }
 
     @Override

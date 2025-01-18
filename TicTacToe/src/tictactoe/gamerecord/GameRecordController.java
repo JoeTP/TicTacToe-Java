@@ -10,6 +10,8 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.stage.Stage;
+import models.GameModel;
+import records.LaodGame;
 import shared.AppFunctions;
 import sounds.AudioController;
 import tictactoe.gameboard.GameBoardController;
@@ -22,18 +24,34 @@ import tictactoe.homescreen.FXMLHomeScreenController;
  * @author Toshiba
  */
 public class GameRecordController extends GameRecordBase {
-   Stage stage;
 
-     public GameRecordController(Stage stage) {
-        this.stage = stage;  
-    }  
+    Stage stage;
+    GameModel game = null;
+    String fileName;
+
+    public GameRecordController(Stage stage,String fileName) {
+        this.stage = stage;
+        this.fileName=fileName;
+    }
 
     @Override
     protected void handleExitButton(ActionEvent actionEvent) {
         AudioController.clickSound();
-        
-       AppFunctions.closePopup(actionEvent);
+
+        AppFunctions.closePopup(actionEvent);
     }
 
-    
+    protected void getDataFromFile() {
+       game = LaodGame.loadGameFromFile(fileName);
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                System.out.print(game.getBoard()[i][j] + " ");
+            }
+            System.out.println(" ");
+        }
+        
+        
+        
+    }
+
 }

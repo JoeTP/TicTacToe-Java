@@ -3,13 +3,10 @@ package tictactoe.gameboard;
 import difficulty.EasyLevel;
 import difficulty.MediumLevel;
 import gameboard.WinningLine;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -19,7 +16,6 @@ import javafx.application.Platform;
 import javafx.animation.PauseTransition;
 
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
@@ -30,13 +26,11 @@ import javafx.stage.Stage;
 import javafx.scene.Node;
 import javafx.util.Duration;
 import models.ComputerPlayer;
+import models.GameModel;
 import models.Player;
 import shared.AppFunctions;
 import sounds.AudioController;
-import static shared.AppFunctions.openPopup;
 import tictactoe.homescreen.FXMLHomeScreenController;
-
-import static tictactoe.playervscomp.FXMLPlayerVsCompController.comp;
 
 import tictactoe.playervscomp.FXMLPlayerVsCompController;
 import tictactoe.popupwin.FXMLPopUpWinController;
@@ -49,9 +43,9 @@ import tictactoe.popupwin.FXMLPopUpWinController;
 public class GameBoardController extends FXMLGameBoardBase {
 
     Stage stage;
-    private Player playerOne = new Player();
-    private Player playerTwo = new Player();
-
+    private Player playerOne;
+    private Player playerTwo;
+    public static GameModel gameModel;
     private boolean isEndOfGame = false;
 
     private Timeline timeLine;
@@ -69,13 +63,19 @@ public class GameBoardController extends FXMLGameBoardBase {
     private final String O_CHAR = "O";
     private int move = 1;
 
-    private String mode ;
+    private String mode;
+
     public GameBoardController(Stage stage, String playerOne, String playerTwo, String mode) {
+        this.playerOne = new Player();
+        this.playerTwo = new Player();
         this.stage = stage;
         this.playerOne.setName(playerOne);
+        System.out.println("in constr player1 = " + playerOne);
         this.playerTwo.setName(playerTwo);
+        System.out.println("in constr player2 = " + playerTwo);
+
         this.mode = mode;
-        if (mode == "computer") {
+        if ("computer".equals(mode)) {
             this.playerTwo = new ComputerPlayer();
         }
 
@@ -324,29 +324,53 @@ public class GameBoardController extends FXMLGameBoardBase {
     private void checkPlayerWinner() {
         String winner = checkWinnerChar(board);
 
-        if (playerOne.getChar() == winner) {
+        if (playerOne.getChar().equals(winner)) {
             WinningLine.drawWinningLine(WinningLine.getStartLine(), WinningLine.getEndLine(), grid);
-
+            saveDataToGameModel(playerOne.getName());
             System.out.println("PLAYER ONE WINNER");
             endGame();
 
             waitAndShowPopup(winner);
-        } else if (playerTwo.getChar() == winner) {
+        } else if (playerTwo.getChar().equals(winner)) {
             if (playerTwo instanceof ComputerPlayer) {
+
                 winner = "computer";
+                //  saveDataToGameModel(winner);
             }
             WinningLine.drawWinningLine(WinningLine.getStartLine(), WinningLine.getEndLine(), grid);
+            saveDataToGameModel(playerTwo.getName());
             System.out.println("PLAYER TWO WINNER");
             endGame();
             waitAndShowPopup(winner);
         } else if (move > 9) {
             winner = "draw";
+            saveDataToGameModel(winner);
             endGame();
             waitAndShowPopup(winner);
         }
     }
 
-    private void waitAndShowPopup(String roundState ) {
+    private void saveDataToGameModel(String winner) {
+        if (playerOne == null || playerTwo == null) {
+            System.err.println("Error: Players are not initialized!");
+            return;
+        }
+
+        gameModel = new GameModel(1, playerOne.getName(), playerTwo.getName(), winner, DateNow(), board);
+
+        System.out.println("The Game Model created, the cur player: "
+                + gameModel.getPlayer()
+                + ", the other player: " + gameModel.getRival()
+                + ", the winner: " + gameModel.getWinner());
+    }
+
+    private Date DateNow() {
+
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        return Date.from(currentDateTime.atZone(ZoneId.systemDefault()).toInstant());
+    }
+
+    private void waitAndShowPopup(String roundState) {
 
         switch (roundState) {
             case "X": { // player one WINS or player two WINS (in Player Vs palyer mode)
@@ -376,7 +400,7 @@ public class GameBoardController extends FXMLGameBoardBase {
 
                 PauseTransition pause = new PauseTransition(Duration.seconds(2));
                 pause.setOnFinished(event -> {
-                    AppFunctions.openPopup(stage, new FXMLPopUpWinController(stage, roundState, playerOne, playerTwo,mode));
+                    AppFunctions.openPopup(stage, new FXMLPopUpWinController(stage, roundState, playerOne, playerTwo, mode));
                 });
                 pause.play();
             }
@@ -386,7 +410,7 @@ public class GameBoardController extends FXMLGameBoardBase {
 
                 PauseTransition pause = new PauseTransition(Duration.seconds(2));
                 pause.setOnFinished(event -> {
-                    AppFunctions.openPopup(stage, new FXMLPopUpWinController(stage, roundState, playerOne, playerTwo,mode));
+                    AppFunctions.openPopup(stage, new FXMLPopUpWinController(stage, roundState, playerOne, playerTwo, mode));
                 });
                 pause.play();
             }

@@ -19,13 +19,23 @@ public class GameModel implements Serializable {
     String rival;
     String winner;
     Date playDate;
+    Integer board[][];
 
-    public GameModel(int id, String player, String rival, String winner, Date playDate) {
+    public GameModel(int id, String player, String rival, String winner, Date playDate,Integer [][] board) {
         this.id = id;
         this.player = player;
         this.rival = rival;
         this.winner = winner;
         this.playDate = playDate;
+        this.board=board;
+    }
+
+    public void setBoard(Integer[][] board) {
+        this.board = board;
+    }
+
+    public Integer[][] getBoard() {
+        return board;
     }
 
     public int getId() {

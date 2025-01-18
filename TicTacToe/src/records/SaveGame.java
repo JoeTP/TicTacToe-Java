@@ -13,34 +13,46 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.GameModel;
 
-/**
- *
- * @author Kimo Store
- */
+
 public class SaveGame {
+
     protected static String folderPath;
-    static{
-        folderPath = "/resources/records";
+
+    static {
+        folderPath = "records";
     }
-    public static void saveGameToFile(GameModel game){
+
+    public static void saveGameToFile(GameModel game) {
+    if (game == null) {
+        System.err.println("Error: GameModel is null.");
+        return;
+    }
+
+    
+    String fileName = game.getPlayer().concat("-").concat(game.getRival());
+   
+
+    
+    File folder = new File(folderPath);
+    if (!folder.exists() && !folder.mkdirs()) {
+        System.err.println("Failed to create folder: " + folderPath);
+        return;
+    }
+
+   
+    File file = new File(folder, fileName);
+    System.out.println("Folder pathhhhhh: " + folder.getAbsolutePath());
+    System.out.println("File pathhhhhhhh: " + file.getAbsolutePath());
+   
+    try (FileWriter writer = new FileWriter(file)) {
         Gson gson = new Gson();
-        File folder = new File (folderPath);
-        if(!folder.exists()){
-            if(folder.mkdir()){
-                System.out.println("Folder created");
-            }else{
-                System.out.println("error");
-            }
-        }
-        String fileName = game.getPlayer().concat("-".concat(game.getRival()));
-        File file = new File(folder,fileName);
-        try {
-            FileWriter writer = new FileWriter(file);
-            gson.toJson(game,writer);
-            System.out.println("game saved");
-        } catch (IOException ex) {
-            Logger.getLogger(SaveGame.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("game saved error");
-        }
+        
+        gson.toJson(game, writer); 
+        System.out.println("Game saved successfully");
+    } catch (IOException ex) {
+        Logger.getLogger(SaveGame.class.getName()).log(Level.SEVERE, null, ex);
+        System.out.println("Game save error");
     }
+}
+
 }

@@ -5,13 +5,14 @@
  */
 package tictactoe.historypopup;
 
-import javafx.scene.Node;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import shared.AppFunctions;
 import sounds.AudioController;
 import tictactoe.gamerecord.GameRecordController;
-import tictactoe.setting.FXMLSettingController;
 
 /**
  * FXML Controller class
@@ -21,34 +22,45 @@ import tictactoe.setting.FXMLSettingController;
 public class RecordListPopUpController extends HistoryListBase {
 
     Stage stage;
-    int count = 0;
+    private int count = 0;
+    private List<String> fileNames = new ArrayList<>();
 
     public RecordListPopUpController(Stage stage) {
         this.stage = stage;
         showList();
     }
 
-    protected void showList() {
-        listView.getItems().addAll(
-                "Game 3 Date 17-1-2024 12:19",
-                "Game 2 Date 17-1-2024 18:19",
-                "Game 6 Date 17-1-2024 10:19");
+protected void showList() {
+        
+        listView.getItems().clear();
 
+        
+        File folder = new File("records");
+        if (folder.exists() && folder.isDirectory()) {
+           File[] files = folder.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    fileNames.add(file.getName());
+                }
+            }
+        }
+
+        
+        listView.getItems().addAll(fileNames);
     }
 
     @Override
     protected void handleCellClick(MouseEvent mouseEvent) {
-
         String selectedItem = listView.getSelectionModel().getSelectedItem();
 
         if (selectedItem != null) {
-
             count++;
-
             System.out.println("count : " + count);
         }
+
+        
         AudioController.clickSound();
-        AppFunctions.goTo(mouseEvent, new GameRecordController(stage));
+        AppFunctions.goTo(mouseEvent, new GameRecordController(stage, selectedItem));  
     }
 
 }

@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import tictactoe.gameboard.GameBoardController;
-import tictactoe.offlinegameboard.FXMLOfflineGameBoardController;
+
 import tictactoe.popupwin.FXMLPopUpWinController;
 
 /**
@@ -62,9 +62,7 @@ public abstract class AppFunctions {
         stage.close();
     }
 
-    /**
-     * Used with Popups closing it first then go to new scene
-     */
+  
     public static void closeAndGo(ActionEvent actionEvent, Stage stage, Parent root) {
         if (actionEvent != null) {
             closePopup(actionEvent);
