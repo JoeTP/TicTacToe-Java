@@ -122,7 +122,7 @@ public class ClientConnection {
                 if (newResponse.equals("Game_Request")) {
                     System.out.println(rival);
                     Platform.runLater(() -> {
-                        AppFunctions.openReqPopup(new FXMLRequestToPlayController(rival));
+                        AppFunctions.openPopup(appStage, new FXMLRequestToPlayController(rival, appStage));
                     });
                     stopListeningThread();
                 }

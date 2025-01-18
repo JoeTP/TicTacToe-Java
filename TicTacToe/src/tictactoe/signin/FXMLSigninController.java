@@ -124,7 +124,7 @@ public class FXMLSigninController extends FXMLSigninBase {
                                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "Signin was successful.");
                                 alert.showAndWait();
                                 if (!signInFromHomeScreen) {
-                                    AppFunctions.closePopup(actionEvent);
+//                                    AppFunctions.closeAndGo(actionEvent, stage, new FXMLPlayerVsPlayerOnlineController(stage, client));
                                     AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage, client));
                                 } else {
                                     AppFunctions.closePopup(actionEvent);

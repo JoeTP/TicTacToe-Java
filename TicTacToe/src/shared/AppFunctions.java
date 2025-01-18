@@ -1,30 +1,18 @@
 package shared;
 
-import javafx.animation.PauseTransition;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import javafx.util.Duration;
-import tictactoe.gameboard.GameBoardController;
+import javafx.stage.WindowEvent;
 
- 
-
-import tictactoe.popupwin.FXMLPopUpWinController;
- 
- import tictactoe.popupwin.FXMLPopUpWinController;
- 
-/**
- * Here we handle commonly used functions like navigating to another scene.
- */
 public abstract class AppFunctions {
+
+    public static List<Stage> stages = new ArrayList<>();
 
     public static void goTo(ActionEvent actionEvent, Parent root) {
         Scene scene = new Scene(root);
@@ -32,43 +20,36 @@ public abstract class AppFunctions {
         stage.setScene(scene);
         stage.show();
     }
+
+    public static void goTo(MouseEvent actionEvent, Parent root) {
+        Scene scene = new Scene(root);
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
+    }
+
     public static void goToGameBoard(Stage ownerStage, Parent root) {
         Scene scene = new Scene(root);
         Stage stage = ownerStage;
         stage.setScene(scene);
         stage.show();
     }
-    public static void goTo(MouseEvent event, Parent root) {
-        Scene scene = new Scene(root);
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
-    }
 
     public static void openPopup(Stage ownerStage, Parent root) {
         Stage newStage = new Stage();
-        // newStage.initStyle(StageStyle.UNDECORATED);
         newStage.setResizable(false);
         newStage.setScene(new Scene(root));
         newStage.initOwner(ownerStage);
-        newStage.initModality(Modality.WINDOW_MODAL);
         newStage.show();
-
-    }
-
-    public static void openReqPopup(Parent root) {
-        Stage newStage = new Stage();
-        // newStage.initStyle(StageStyle.UNDECORATED);
-        newStage.setResizable(false);
-        newStage.setScene(new Scene(root));
-        newStage.initModality(Modality.WINDOW_MODAL);
-        newStage.show();
-
+        stages.add(newStage);
+        System.out.println("#OF STAGES = " + stages.size());
     }
 
     public static void closePopup(ActionEvent actionEvent) {
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.close();
+        stages.remove(stage);
+        System.out.println("#OF STAGES = " + stages.size());
     }
 
     public static void closeAndGo(ActionEvent actionEvent, Stage stage, Parent root) {
@@ -78,4 +59,15 @@ public abstract class AppFunctions {
         stage.setScene(new Scene(root));
     }
 
+    public static void closeAllStages() {
+        stages.forEach(stage -> stage.fireEvent(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST)));
+    }
+
+    public static void closeAllStagesExcept(Stage primaryStage) {
+        List<Stage> stagesToClose = new ArrayList<>(stages);
+        stagesToClose.remove(primaryStage);
+        stagesToClose.forEach(stage -> stage.fireEvent(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST)));
+        stages.clear();
+        stages.add(primaryStage);
+    }
 }
