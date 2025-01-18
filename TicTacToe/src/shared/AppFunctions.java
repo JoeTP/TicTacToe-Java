@@ -41,6 +41,10 @@ public abstract class AppFunctions {
         newStage.setScene(new Scene(root));
         newStage.initOwner(ownerStage);
         newStage.show();
+        double centerXPosition = ownerStage.getX() + ownerStage.getWidth() / 2d - newStage.getWidth() / 2d;
+        double centerYPosition = ownerStage.getY() + ownerStage.getHeight() / 2d - newStage.getHeight() / 2d;
+        newStage.setX(centerXPosition);
+        newStage.setY(centerYPosition);
         stages.add(newStage);
         System.out.println("#OF STAGES = " + stages.size());
     }
