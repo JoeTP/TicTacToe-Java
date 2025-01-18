@@ -37,17 +37,8 @@ public class MediumLevel extends ComputerPlayer{
         // If no winning move, return null or implement another strategy
         return new EasyLevel().moveComputerMove(board);
   
-       
-//        for (int r = 0; r < board.length; r++) {
-//            for (int c = 0; c < board[r].length; c++) {
-//                if (board[r][c] == null) {
-//                    return r*10+c;
-//                }
-//            }
-//        }
-//        System.out.println("No empty cells available for automatic move.");
-//        return null;
     }
+   
      public static String getWinnerCharacter(int value) {
         //return the value of the 1st itration
         return (value % 2 == 0) ? "O" : "X";

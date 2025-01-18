@@ -1,6 +1,7 @@
 package tictactoe.gameboard;
 
 import difficulty.EasyLevel;
+import difficulty.ExtremeLevel;
 import difficulty.MediumLevel;
 import gameboard.WinningLine;
 import java.util.ArrayList;
@@ -43,7 +44,6 @@ import tictactoe.popupwin.FXMLPopUpWinController;
 
 /*TODO:
     - end game when A player wins / draw (9 moves) => show popup 
-
  */
 //https://docs.oracle.com/javase/8/javafx/api/javafx/animation/Timeline.html
 public class GameBoardController extends FXMLGameBoardBase {
@@ -69,7 +69,8 @@ public class GameBoardController extends FXMLGameBoardBase {
     private final String O_CHAR = "O";
     private int move = 1;
 
-    private String mode ;
+    private String mode;
+
     public GameBoardController(Stage stage, String playerOne, String playerTwo, String mode) {
         this.stage = stage;
         this.playerOne.setName(playerOne);
@@ -148,11 +149,11 @@ public class GameBoardController extends FXMLGameBoardBase {
             System.out.println("current Move: " + move);
 
             if (playerOne.hisTurn) {
-                //startCountdownTimer();
+                startCountdownTimer();
                 enableButtons();//enable for palyer
                 b.setText(playerOne.getChar());
             } else {
-                // startCountdownTimer();
+                startCountdownTimer();
                 b.setText(playerTwo.getChar());
             }
 
@@ -188,8 +189,7 @@ public class GameBoardController extends FXMLGameBoardBase {
                                         break;
                                     case 2:
                                         System.out.println("level 2");
-
-                                        //makeMaxMinMove();
+                                        makeMaxMinMove();
                                         break;
                                 }
 
@@ -282,8 +282,17 @@ public class GameBoardController extends FXMLGameBoardBase {
     }
 
     private void makeLevel1Move() {
-        System.out.println("ehehhehehe");
+        System.out.println("miduinm heeh");
         Integer cP = MediumLevel.moveComputerMove(board);
+        Button b = getButtonsByRowAndColumn((cP % 10), (cP / 10));
+        setTurn(b);
+
+    }
+
+    private void makeMaxMinMove() {
+        System.out.println("in xtrrrrrrrem");
+        Integer cP = ExtremeLevel.moveComputerMove(board);
+
         Button b = getButtonsByRowAndColumn((cP % 10), (cP / 10));
         setTurn(b);
 
@@ -346,52 +355,14 @@ public class GameBoardController extends FXMLGameBoardBase {
         }
     }
 
-    private void waitAndShowPopup(String roundState ) {
+    private void waitAndShowPopup(String roundState) {
+        System.out.println("RS in waitand show : " + roundState + "case");
+        PauseTransition pause = new PauseTransition(Duration.seconds(2));
+        pause.setOnFinished(event -> {
+            AppFunctions.openPopup(stage, new FXMLPopUpWinController(stage, roundState, playerOne, playerTwo, mode));
+        });
+        pause.play();
 
-        switch (roundState) {
-            case "X": { // player one WINS or player two WINS (in Player Vs palyer mode)
-
-                System.out.println("RS in waitand show : X case");
-                PauseTransition pause = new PauseTransition(Duration.seconds(2));
-                pause.setOnFinished(event -> {
-                    AppFunctions.openPopup(stage, new FXMLPopUpWinController(stage, roundState, playerOne, playerTwo, mode));
-                });
-                pause.play();
-
-            }
-            break;
-            case "O": { //player one WINS or player two WINS (in Player Vs palyer mode)
-                System.out.println("RS in waitand show : O case");
-
-                PauseTransition pause = new PauseTransition(Duration.seconds(2));
-                pause.setOnFinished(event -> {
-                    AppFunctions.openPopup(stage, new FXMLPopUpWinController(stage, roundState, playerOne, playerTwo, mode));
-                });
-                pause.play();
-
-            }
-            break;
-            case "computer": { // comuter WINS over player in Playr vs player mode
-                System.out.println("RS in waitand show : Computer case");
-
-                PauseTransition pause = new PauseTransition(Duration.seconds(2));
-                pause.setOnFinished(event -> {
-                    AppFunctions.openPopup(stage, new FXMLPopUpWinController(stage, roundState, playerOne, playerTwo,mode));
-                });
-                pause.play();
-            }
-            break;
-            case "draw": { // draw in all modes
-                System.out.println("RS in waitand show :Draw case");
-
-                PauseTransition pause = new PauseTransition(Duration.seconds(2));
-                pause.setOnFinished(event -> {
-                    AppFunctions.openPopup(stage, new FXMLPopUpWinController(stage, roundState, playerOne, playerTwo,mode));
-                });
-                pause.play();
-            }
-            break;
-        }
     }
 
     private String checkWinnerChar(Integer[][] board) {
@@ -475,6 +446,7 @@ public class GameBoardController extends FXMLGameBoardBase {
 
     @Override
     protected void handleLeaveButton(ActionEvent actionEvent) {
+        timeLine.stop();
         endGame();
         AudioController.clickSound();
         AppFunctions.goTo(actionEvent, new FXMLHomeScreenController(stage));
