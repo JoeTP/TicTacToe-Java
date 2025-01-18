@@ -72,12 +72,13 @@ public class FXMLSignupController extends FXMLSignupBase {
     @Override
 
     protected void goToActiveUsers(ActionEvent actionEvent) {
-
+  System.out.println("here goToActiveUsers");
         ClientConnection.user = getNewUserData();
 
         AudioController.clickSound();
 
         if (user != null) {
+              System.out.println("user not null");
             DataModel data = new DataModel(user, 1);
             client = new ClientConnection();
             try {
@@ -90,6 +91,7 @@ public class FXMLSignupController extends FXMLSignupBase {
                 ex.printStackTrace();
                 return;
             }
+            
             Thread th = new Thread(() -> {
 
                 String response = "";
@@ -136,6 +138,7 @@ public class FXMLSignupController extends FXMLSignupBase {
                     ClientConnection.startListeningThread();
                 }
             });
+            th.start();
         }
 
     }
@@ -189,7 +192,9 @@ public class FXMLSignupController extends FXMLSignupBase {
 
     @Override
     protected void handleConnectToServerButton(ActionEvent actionEvent) {
+                    System.out.println("here1");
         try {
+            System.out.println("here2");
             if (ipTextField != null) {
                 ClientConnection.SERVER_IP = ipTextField.getText();
                 ClientConnection.connectToServer();

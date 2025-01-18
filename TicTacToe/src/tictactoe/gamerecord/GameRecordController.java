@@ -42,10 +42,10 @@ public class GameRecordController extends GameRecordBase {
                 AudioController.showCharSound();
                 if (value != null && value <= step) {
                     button.setStyle("-fx-border-color: #3E5879; -fx-background-color: transparent;");
-                    if (value % 2 == 1) {
-                        button.setText("X");
-                    } else {
+                    if (value % 2 == 0) {
                         button.setText("O");
+                    } else {
+                        button.setText("X");
                     }
                     if (value == step) {
                         button.setStyle("-fx-border-color: #3E5879; -fx-background-color: #3E5879; -fx-text-fill: white;"); // Green background, white text
