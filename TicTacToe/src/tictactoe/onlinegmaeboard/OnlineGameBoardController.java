@@ -9,7 +9,10 @@ import difficulty.EasyLevel;
 import difficulty.MediumLevel;
 import gameboard.WinningLine;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,6 +40,7 @@ import javafx.scene.Node;
 import javafx.util.Duration;
 import models.ComputerPlayer;
 import models.DataModel;
+import models.GameModel;
 import models.Player;
 import shared.AppFunctions;
 import sounds.AudioController;
@@ -60,6 +64,7 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
     private Player playerTwo = new Player();
     private Thread th = new Thread();
     private boolean isEndOfGame = false;
+   //  public static GameModel gameModel;
 
     private Timeline timeLine;
     private int countdownTime;
@@ -271,21 +276,41 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
 
         if (playerOne.getChar() == null ? winner == null : playerOne.getChar().equals(winner)) {
             WinningLine.drawWinningLine(WinningLine.getStartLine(), WinningLine.getEndLine(), grid);
-
+            saveDataToGameModel(playerOne.getName());
             System.out.println("PLAYER ONE WINNER");
             endGame();
 
             waitAndShowPopup(winner);
         } else if (playerTwo.getChar() == null ? winner == null : playerTwo.getChar().equals(winner)) {
             WinningLine.drawWinningLine(WinningLine.getStartLine(), WinningLine.getEndLine(), grid);
+            saveDataToGameModel(playerTwo.getName());
             System.out.println("PLAYER TWO WINNER");
             endGame();
             waitAndShowPopup(winner);
         } else if (move > 9) {
             winner = "draw";
+             saveDataToGameModel(winner);
             endGame();
             waitAndShowPopup(winner);
         }
+    }
+  private void saveDataToGameModel(String winner) {
+        if (playerOne == null || playerTwo == null) {
+            System.err.println("Error: Players are not initialized!");
+            return;
+        }
+        System.out.println("Player Two comp : "+playerTwo.getName()+"player One Comp " +playerOne.getName());
+        GameBoardController.gameModel = new GameModel(1, playerOne.getName(), playerTwo.getName(), winner, DateNow(), board);
+
+        System.out.println("The Game Model created, the cur player: "
+                + GameBoardController.gameModel.getPlayer()
+                + ", the other player: " + GameBoardController.gameModel.getRival()
+                + ", the winner: " + GameBoardController.gameModel.getWinner());
+    }
+    private Date DateNow() {
+
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        return Date.from(currentDateTime.atZone(ZoneId.systemDefault()).toInstant());
     }
 
     private void checkGameStatus() {

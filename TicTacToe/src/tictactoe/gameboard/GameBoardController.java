@@ -47,7 +47,7 @@ public class GameBoardController extends FXMLGameBoardBase {
     private Player playerTwo;
     public static GameModel gameModel;
     private boolean isEndOfGame = false;
-
+   // public static boolean isOnline=false;
     private Timeline timeLine;
     private int countdownTime ;
     boolean isTimeOut = false;
