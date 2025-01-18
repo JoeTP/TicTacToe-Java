@@ -29,7 +29,7 @@ public class ExtremeLevel extends ComputerPlayer {
             board[bestRow][bestCol] = getNextStep(board);  
         }
 
-        return bestRow * 10 + bestCol;
+        return (bestRow * 10) + bestCol;
     }
 
     private static int minimax(Integer[][] board, boolean isMaximizing) {
@@ -72,19 +72,7 @@ public class ExtremeLevel extends ComputerPlayer {
             return bestScore;
         }
     }
-
-    private static int evaluateBoard(Integer[][] board) {
-        String winner = checkWinner(board);
-        if (winner != null) {
-            if (winner.equals("O")) {
-                return 10;
-            } else if (winner.equals("X")) {
-                return -10;
-            }
-        }
-        return 0;
-    }
-
+ 
     public static Integer getNextStep(Integer[][] board) {
         int maxStep = 1;
         for (int i = 0; i < 3; i++) {
