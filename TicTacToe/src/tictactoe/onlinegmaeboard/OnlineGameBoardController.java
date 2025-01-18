@@ -288,6 +288,16 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
         }
     }
 
+    private void checkGameStatus() {
+        String winner = checkWinnerChar(board);
+
+        if (playerOne.getChar() == null ? winner == null : playerOne.getChar().equals(winner)
+                || (playerTwo.getChar() == null ? winner == null : playerTwo.getChar().equals(winner))
+                || move > 9) {
+            isEndOfGame = true;
+        }
+    }
+
     private void waitAndShowPopup(String roundState) {
 
         switch (roundState) {
@@ -345,27 +355,23 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
                     //get the winner in the current itration
                     WinningLine.setStartLine(i + "0"); // extract index off BUTTONS
                     WinningLine.setEndLine(i + "2");
-                    isEndOfGame = true;
                     return getWinnerCharacter(board[i][0]);
                 }
                 //columns
                 if (checkLine(board[0][i], board[1][i], board[2][i])) {
                     WinningLine.setStartLine("0" + i);
                     WinningLine.setEndLine("2" + i);
-                    isEndOfGame = true;
                     return getWinnerCharacter(board[0][i]);
                 }
             }
             if (checkLine(board[0][0], board[1][1], board[2][2])) {
                 WinningLine.setStartLine("00");
                 WinningLine.setEndLine("22");
-                isEndOfGame = true;
                 return getWinnerCharacter(board[0][0]);
             }
             if (checkLine(board[0][2], board[1][1], board[2][0])) {
                 WinningLine.setStartLine("02");
                 WinningLine.setEndLine("20");
-                isEndOfGame = true;
                 return getWinnerCharacter(board[0][2]);
             }
         }
@@ -505,20 +511,38 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
     protected void receiveMove() {
         th = new Thread(() -> {
             while (!isEndOfGame) {
-                String row_col = "";
+                DataModel gameMove = null;
+                int row_col = -1;
                 synchronized (ois) {
                     try {
                         System.out.println("waiting for move");
-                        row_col = ois.readUTF();
+                        gameMove = (DataModel) ois.readObject();
+                        System.out.println(gameMove.getGameMove());
+                        if (gameMove.getGameMove() == -1) {
+                            break;
+                        }
+                        row_col = gameMove.getGameMove();
                         System.out.println("Received move: " + row_col);
-                        int row = Integer.valueOf(row_col) / 10;
-                        int col = Integer.valueOf(row_col) % 10;
+                        int row = row_col / 10;
+                        int col = row_col % 10;
                         Button b = getButtonsByRowAndColumn(col, row);
 
                         setTurn(b);
 
-                        checkWinnerChar(board);
+                        checkGameStatus();
+                        if (isEndOfGame) {
+                            DataModel data = new DataModel(8);
+                            System.out.println("Killing move");
+
+                            data.setRival(rival);
+                            oos.writeObject(data);
+                            oos.flush();
+                        }
+
                     } catch (IOException ex) {
+                        break;
+//                        Logger.getLogger(OnlineGameBoardController.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (ClassNotFoundException ex) {
                         Logger.getLogger(OnlineGameBoardController.class.getName()).log(Level.SEVERE, null, ex);
                     }
 
@@ -527,7 +551,12 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
                     enableButtons();
                 });
             }
-
+//            try {
+//                oos.writeUTF("stop");
+//                oos.flush();
+//            } catch (IOException ex) {
+//                Logger.getLogger(OnlineGameBoardController.class.getName()).log(Level.SEVERE, null, ex);
+//            }
         });
         th.start();
     }
