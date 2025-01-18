@@ -16,7 +16,7 @@ import shared.AppFunctions;
 import sounds.AudioController;
 import tictactoe.gameboard.GameBoardController;
 import tictactoe.homescreen.FXMLHomeScreenController;
-
+ 
 public class FXMLPlayerVsCompController extends FXMLPlayerVsCompBase {
 
     Stage stage;

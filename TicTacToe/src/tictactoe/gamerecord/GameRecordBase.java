@@ -119,7 +119,7 @@ public abstract class GameRecordBase extends BorderPane {
 
         label.setLayoutX(10.0);
         label.setLayoutY(10.0);
-        label.setText("O");
+        label.setText("X");
 
         playerOneLabel.setText("Player1Name");
 
@@ -127,7 +127,7 @@ public abstract class GameRecordBase extends BorderPane {
 
         label0.setLayoutX(10.0);
         label0.setLayoutY(10.0);
-        label0.setText("X");
+        label0.setText("O");
 
         playerTwoLabel.setText("Player2Name");
         vBox.setPadding(new Insets(0.0, 0.0, 0.0, 20.0));

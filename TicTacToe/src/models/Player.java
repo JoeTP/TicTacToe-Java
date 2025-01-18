@@ -25,7 +25,9 @@ public class Player   {
     
     public Player() {
         hisTurn = false;
-        name = "you";
+
+        name = "You";
+
     }
 
 //    public boolean isHisTurn() {
