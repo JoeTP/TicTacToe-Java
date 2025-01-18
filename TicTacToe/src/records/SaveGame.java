@@ -11,6 +11,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.control.Alert;
 import models.GameModel;
 
 
@@ -49,6 +50,7 @@ public class SaveGame {
         
         gson.toJson(game, writer); 
         System.out.println("Game saved successfully");
+         //Alert a = new Alert(AlertType.INFORMATION);
     } catch (IOException ex) {
         Logger.getLogger(SaveGame.class.getName()).log(Level.SEVERE, null, ex);
         System.out.println("Game save error");

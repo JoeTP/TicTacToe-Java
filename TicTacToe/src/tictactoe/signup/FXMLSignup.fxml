@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
@@ -14,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane prefHeight="552.0" prefWidth="400.0" styleClass="mainBackground" stylesheets="@../../../resources/styling/generalStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.signup.FXMLSignupController">
+<BorderPane prefHeight="580.0" prefWidth="400.0" styleClass="mainBackground" stylesheets="@../../../resources/styling/generalStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.signup.FXMLSignupController">
    <top>
       <HBox spacing="120.0" BorderPane.alignment="CENTER">
          <children>
@@ -39,7 +40,7 @@
    <center>
       <VBox prefHeight="200.0" prefWidth="100.0" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
-            <AnchorPane VBox.vgrow="ALWAYS">
+            <AnchorPane prefWidth="400.0" VBox.vgrow="ALWAYS">
                <children>
                   <Button fx:id="signupBtn" layoutX="142.0" layoutY="320.0" mnemonicParsing="false" onAction="#goToActiveUsers" prefHeight="43.0" prefWidth="112.0" styleClass="bigBtn" text="Sign-Up" />
                   <TextField fx:id="usernameTextField" layoutX="60.0" layoutY="140.0" prefHeight="48.0" prefWidth="276.0" promptText="User Name" />
@@ -78,6 +79,17 @@
                               </ImageView>
                            </graphic>
                         </Button>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" layoutX="52.0" layoutY="430.0" spacing="10.0">
+                     <children>
+                        <ImageView fx:id="helperImageView" accessibleHelp="write IP address of the device running server (leave it empty if you are running the server)" fitHeight="30.0" fitWidth="30.0" opacity="0.4" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../resources/assets/icons/help.png" />
+                           </image>
+                        </ImageView>
+                        <TextField fx:id="ipTextField" promptText="Server IP" />
+                        <Hyperlink fx:id="connectToServerButton" onAction="#handleConnectToServerButton" text="Connect" />
                      </children>
                   </HBox>
                </children>

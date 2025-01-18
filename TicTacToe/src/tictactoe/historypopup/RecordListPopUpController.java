@@ -5,9 +5,14 @@
  */
 package tictactoe.historypopup;
 
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import javafx.event.ActionEvent;
+import javafx.scene.Node;
+
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import shared.AppFunctions;
@@ -61,6 +66,11 @@ protected void showList() {
         
         AudioController.clickSound();
         AppFunctions.goTo(mouseEvent, new GameRecordController(stage, selectedItem));  
+    }
+
+    @Override
+    protected void handleCloseButton(ActionEvent actionEvent) {
+        AppFunctions.closePopup(actionEvent);
     }
 
 }

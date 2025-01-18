@@ -15,6 +15,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -29,6 +30,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Tooltip;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import json.JSONConverters;
 import models.DataModel;
@@ -37,6 +40,7 @@ import shared.AppFunctions;
 
 import shared.*;
 import static shared.AppConstants.CONNECTION_FLAG;
+import static shared.AppString.TOOLTIP;
 import sounds.AudioController;
 
 import tictactoe.gameboard.GameBoardController;
@@ -57,6 +61,7 @@ public class FXMLSigninController extends FXMLSigninBase {
 
         this.stage = stage;
         this.signInFromHomeScreen = state;
+        Tooltip.install(helperImageView, new Tooltip(TOOLTIP));
 
     }
 
@@ -182,5 +187,21 @@ public class FXMLSigninController extends FXMLSigninBase {
 
         }
 
+    }
+
+    @Override
+    protected void handleConnectToServerButton(ActionEvent actionEvent) {
+        try {
+            if (ipTextField != null) {
+                ClientConnection.SERVER_IP = ipTextField.getText();
+                ClientConnection.connectToServer();
+                System.out.println(socket);
+            }
+            if (socket != null) {
+                helperImageView.setImage(new Image("/assets/icons/Accept.png"));
+            }
+        } catch (IOException ex) {
+            helperImageView.setImage(new Image("/assets/icons/cancel.png"));
+        }
     }
 }
