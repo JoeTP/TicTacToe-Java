@@ -22,7 +22,7 @@ public abstract class FXMLGameBoardBase extends BorderPane {
     protected final Region region0;
     protected final VBox vBox;
     protected final Button leaveButton;
-    protected final VBox vBox0;
+    protected final VBox header;
     protected final HBox hBox0;
     protected final Label playerOneChar;
     protected final Label playerOneLabel;
@@ -55,7 +55,7 @@ public abstract class FXMLGameBoardBase extends BorderPane {
         region0 = new Region();
         vBox = new VBox();
         leaveButton = new Button();
-        vBox0 = new VBox();
+        header = new VBox();
         hBox0 = new HBox();
         playerOneChar = new Label();
         playerOneLabel = new Label();
@@ -112,6 +112,9 @@ public abstract class FXMLGameBoardBase extends BorderPane {
         leaveButton.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         setBottom(hBox);
 
+        header.setOnMouseDragged(this::dragWindow);
+        header.setOnMousePressed(this::getOffset);
+
         hBox0.setSpacing(15.0);
 
         playerOneChar.setLayoutX(10.0);
@@ -127,8 +130,8 @@ public abstract class FXMLGameBoardBase extends BorderPane {
         playerTwoChar.setText("X");
 
         playerTwoLabel.setText("Player2Name");
-        vBox0.setPadding(new Insets(0.0, 0.0, 0.0, 20.0));
-        setTop(vBox0);
+        header.setPadding(new Insets(0.0, 0.0, 0.0, 20.0));
+        setTop(header);
         getStylesheets().add("/styling/generalStyle.css");
         getStylesheets().add("/tictactoe/gameboard/style.css");
 
@@ -245,10 +248,10 @@ public abstract class FXMLGameBoardBase extends BorderPane {
         hBox.getChildren().add(vBox);
         hBox0.getChildren().add(playerOneChar);
         hBox0.getChildren().add(playerOneLabel);
-        vBox0.getChildren().add(hBox0);
+        header.getChildren().add(hBox0);
         hBox1.getChildren().add(playerTwoChar);
         hBox1.getChildren().add(playerTwoLabel);
-        vBox0.getChildren().add(hBox1);
+        header.getChildren().add(hBox1);
         grid.getColumnConstraints().add(columnConstraints);
         grid.getColumnConstraints().add(columnConstraints0);
         grid.getColumnConstraints().add(columnConstraints1);
@@ -269,6 +272,10 @@ public abstract class FXMLGameBoardBase extends BorderPane {
     }
 
     protected abstract void handleLeaveButton(javafx.event.ActionEvent actionEvent);
+
+    protected abstract void dragWindow(javafx.scene.input.MouseEvent mouseEvent);
+
+    protected abstract void getOffset(javafx.scene.input.MouseEvent mouseEvent);
 
     protected abstract void handleB22(javafx.event.ActionEvent actionEvent);
 

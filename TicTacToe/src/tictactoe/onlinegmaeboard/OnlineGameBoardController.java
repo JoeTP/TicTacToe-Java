@@ -36,6 +36,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.scene.Node;
+import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 import models.ComputerPlayer;
 import models.DataModel;
@@ -63,12 +64,15 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
     private Player playerTwo = new Player();
     private Thread th = new Thread();
     private boolean isEndOfGame = false;
-   //  public static GameModel gameModel;
+    //  public static GameModel gameModel;
 
     private Timeline timeLine;
     private int countdownTime;
     boolean isTimeOut = false;
     String rival;
+
+    private double xOffset;
+    private double yOffset;
     /*
         [b00 b01 b02]
         [b10 b11 b12]
@@ -108,7 +112,6 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
         playerOne.setChar(X_CHAR);
         playerTwo.setChar(O_CHAR);
 
-      
         playerOneLabel.setText(playerOne.getName());
         playerOneChar.setText(playerOne.getChar());
         playerTwoLabel.setText(playerTwo.getName());
@@ -288,17 +291,18 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
             waitAndShowPopup(winner);
         } else if (move > 9) {
             winner = "draw";
-             saveDataToGameModel(winner);
+            saveDataToGameModel(winner);
             endGame();
             waitAndShowPopup(winner);
         }
     }
-  private void saveDataToGameModel(String winner) {
+
+    private void saveDataToGameModel(String winner) {
         if (playerOne == null || playerTwo == null) {
             System.err.println("Error: Players are not initialized!");
             return;
         }
-        System.out.println("Player Two comp : "+playerTwo.getName()+"player One Comp " +playerOne.getName());
+        System.out.println("Player Two comp : " + playerTwo.getName() + "player One Comp " + playerOne.getName());
         GameBoardController.gameModel = new GameModel(1, playerOne.getName(), playerTwo.getName(), winner, DateNow(), board);
 
         System.out.println("The Game Model created, the cur player: "
@@ -306,6 +310,7 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
                 + ", the other player: " + GameBoardController.gameModel.getRival()
                 + ", the winner: " + GameBoardController.gameModel.getWinner());
     }
+
     private Date DateNow() {
 
         LocalDateTime currentDateTime = LocalDateTime.now();
@@ -324,13 +329,13 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
 
     private void waitAndShowPopup(String roundState) {
 
-              System.out.println("RS in waitand showopoup ONLINEEE ");
+        System.out.println("RS in waitand showopoup ONLINEEE ");
 
-                PauseTransition pause = new PauseTransition(Duration.seconds(2));
-                pause.setOnFinished(event -> {
-                    AppFunctions.openPopup(stage, new FXMLPopUpWinController(stage, roundState, playerOne, playerTwo, mode));
-                });
-                pause.play();
+        PauseTransition pause = new PauseTransition(Duration.seconds(2));
+        pause.setOnFinished(event -> {
+            AppFunctions.openPopup(stage, new FXMLPopUpWinController(stage, roundState, playerOne, playerTwo, mode));
+        });
+        pause.play();
     }
 
     private String checkWinnerChar(Integer[][] board) {
@@ -546,5 +551,17 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
 //            }
         });
         th.start();
+    }
+
+    @Override
+    protected void dragWindow(MouseEvent mouseEvent) {
+        stage.setX(mouseEvent.getScreenX() - xOffset);
+        stage.setY(mouseEvent.getScreenY() - yOffset);
+    }
+
+    @Override
+    protected void getOffset(MouseEvent mouseEvent) {
+        xOffset = mouseEvent.getSceneX();
+        yOffset = mouseEvent.getSceneY();
     }
 }
