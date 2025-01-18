@@ -113,9 +113,17 @@ public class ClientHandler extends Thread {
                     case 6:
                         System.out.println(data.getRival());
                         ClientHandler gamePlayer = findClientHandler(data.getRival());
-                        gamePlayer.sendGameMove(data.getGameMove());
+                        gamePlayer.sendGameMove(data);
                         System.out.println("Sent game move");
                         break;
+                    case 7:
+                        ClientHandler ch2 = findClientHandler(data.getRival());
+                        ch2.sendRequestResponseDecline(data.getPlayer());
+                        break;
+                    case 8:
+                        ClientHandler ch3 = findClientHandler(data.getRival());
+                        data.setGameMove(-1);
+                        ch3.sendGameMove(data);
 //                    default:
 //                        System.out.println("Unknown state: " + state);
 //                        ps.writeUTF("Unknown request");
@@ -257,10 +265,21 @@ public class ClientHandler extends Thread {
             c.sendActiveUsersList();
         });
     }
-    private void sendGameMove(int gameMove){
+    private void sendGameMove(DataModel gameMove){
         try {
-            String move = String.valueOf(gameMove);
-            oos.writeUTF(move);
+        
+            oos.writeObject(gameMove);
+            oos.flush();
+        } catch (IOException ex) {
+            Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+
+    private void sendRequestResponseDecline(String rival) {
+        DataModel data = new DataModel(rival, "GAME_DECLINE");
+        try {
+            oos.writeObject(data);
             oos.flush();
         } catch (IOException ex) {
             Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
