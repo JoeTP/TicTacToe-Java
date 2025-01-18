@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 {"id":1,"player":"You","rival":"computer","winner":"You","playDate":"Jan 18, 2025 4:24:36 PM","board":[[1,2,4],[6,7,null],[5,null,3]]}
+=======
+{"id":1,"player":"You","rival":"computer","winner":"You","playDate":"Jan 18, 2025 5:07:01 PM","board":[[2,4,5],[8,7,3],[9,1,6]]}
+>>>>>>> 88debd5ca89f4b639c4bf1be64c9d6a96d8415f2
