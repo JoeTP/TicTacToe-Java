@@ -149,7 +149,7 @@ public class GameBoardController extends FXMLGameBoardBase {
             System.out.println("current Move: " + move);
 
             if (playerOne.hisTurn) {
-               startCountdownTimer();
+                startCountdownTimer();
                 enableButtons();//enable for palyer
                 b.setText(playerOne.getChar());
             } else {
@@ -290,12 +290,12 @@ public class GameBoardController extends FXMLGameBoardBase {
     }
 
     private void makeMaxMinMove() {
-       System.out.println("in xtrrrrrrrem");
-      Integer cP = ExtremeLevel.moveComputerMove(board);
-    
-        Button b  = getButtonsByRowAndColumn((cP % 10), (cP / 10));
+        System.out.println("in xtrrrrrrrem");
+        Integer cP = ExtremeLevel.moveComputerMove(board);
+
+        Button b = getButtonsByRowAndColumn((cP % 10), (cP / 10));
         setTurn(b);
-   
+
     }
 
     private void printGame() {
@@ -356,7 +356,7 @@ public class GameBoardController extends FXMLGameBoardBase {
     }
 
     private void waitAndShowPopup(String roundState) {
-        System.out.println("RS in waitand show : "+roundState +"case");
+        System.out.println("RS in waitand show : " + roundState + "case");
         PauseTransition pause = new PauseTransition(Duration.seconds(2));
         pause.setOnFinished(event -> {
             AppFunctions.openPopup(stage, new FXMLPopUpWinController(stage, roundState, playerOne, playerTwo, mode));
@@ -446,6 +446,7 @@ public class GameBoardController extends FXMLGameBoardBase {
 
     @Override
     protected void handleLeaveButton(ActionEvent actionEvent) {
+        timeLine.stop();
         endGame();
         AudioController.clickSound();
         AppFunctions.goTo(actionEvent, new FXMLHomeScreenController(stage));
