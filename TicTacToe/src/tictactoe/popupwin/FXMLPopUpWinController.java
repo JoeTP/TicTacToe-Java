@@ -73,7 +73,7 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
             case "online": {
                 if (roundState.equals("X")) {
                     if (playerOne.getName().equals(user.getName())) {
-                        // Local or online
+
                         displayWin(playerOne.getName());
                     } else {
                         displayLose();
