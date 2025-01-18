@@ -104,7 +104,7 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
         playerOne.setChar(X_CHAR);
         playerTwo.setChar(O_CHAR);
 
-        playerTwo.setChar(O_CHAR);
+      
         playerOneLabel.setText(playerOne.getName());
         playerOneChar.setText(playerOne.getChar());
         playerTwoLabel.setText(playerTwo.getName());
@@ -290,50 +290,13 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
 
     private void waitAndShowPopup(String roundState) {
 
-        switch (roundState) {
-            case "X": { // player one WINS or player two WINS (in Player Vs palyer mode)
-
-                System.out.println("RS in waitand show : X case");
-                PauseTransition pause = new PauseTransition(Duration.seconds(2));
-                pause.setOnFinished(event -> {
-                    AppFunctions.openPopup(stage, new FXMLPopUpWinController(stage, roundState, playerOne, playerTwo, mode));
-                });
-                pause.play();
-
-            }
-            break;
-            case "O": { //player one WINS or player two WINS (in Player Vs palyer mode)
-                System.out.println("RS in waitand show : O case");
+              System.out.println("RS in waitand showopoup ONLINEEE ");
 
                 PauseTransition pause = new PauseTransition(Duration.seconds(2));
                 pause.setOnFinished(event -> {
                     AppFunctions.openPopup(stage, new FXMLPopUpWinController(stage, roundState, playerOne, playerTwo, mode));
                 });
                 pause.play();
-
-            }
-            break;
-            case "computer": { // comuter WINS over player in Playr vs player mode
-                System.out.println("RS in waitand show : Computer case");
-
-                PauseTransition pause = new PauseTransition(Duration.seconds(2));
-                pause.setOnFinished(event -> {
-                    AppFunctions.openPopup(stage, new FXMLPopUpWinController(stage, roundState, playerOne, playerTwo, mode));
-                });
-                pause.play();
-            }
-            break;
-            case "draw": { // draw in all modes
-                System.out.println("RS in waitand show :Draw case");
-
-                PauseTransition pause = new PauseTransition(Duration.seconds(2));
-                pause.setOnFinished(event -> {
-                    AppFunctions.openPopup(stage, new FXMLPopUpWinController(stage, roundState, playerOne, playerTwo, mode));
-                });
-                pause.play();
-            }
-            break;
-        }
     }
 
     private String checkWinnerChar(Integer[][] board) {
