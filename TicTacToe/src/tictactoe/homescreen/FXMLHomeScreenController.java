@@ -70,19 +70,19 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
                 int numOfGames = ClientConnection.user.getNumOfGames();
                 int wins = ClientConnection.user.getWins();
 
-                if (numOfGames > 0) { 
+                if (numOfGames > 0) {
                     double winRate = (wins / numOfGames) * 100;
 
                     if (winRate > 70) {
                         rankStarLabel.setStyle("-fx-text-fill: #FFD700;");
                     } else if (winRate > 50) {
-                        rankStarLabel.setStyle("-fx-text-fill: #C0C0C0;"); 
+                        rankStarLabel.setStyle("-fx-text-fill: #C0C0C0;");
                     } else {
                         rankStarLabel.setStyle("-fx-text-fill: #8B4513;");
                     }
                 } else {
-                   
-                    rankStarLabel.setStyle("-fx-text-fill: #8B4513;"); 
+
+                    rankStarLabel.setStyle("-fx-text-fill: #8B4513;");
                 }
 
                 nameLabel.setText(ClientConnection.user.getName());
@@ -161,10 +161,9 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
 
     @Override
     protected void handleHistoryButton(ActionEvent actionEvent) {
-         AudioController.clickSound();
-         AppFunctions.openPopup(stage, new RecordListPopUpController(stage));
-         
-         
+        AudioController.clickSound();
+        AppFunctions.openPopup(stage, new RecordListPopUpController(stage));
+
     }
 
     @Override
