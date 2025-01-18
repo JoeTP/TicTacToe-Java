@@ -14,7 +14,6 @@ import models.Player;
 import shared.AppFunctions;
 import sounds.AudioController;
 import tictactoe.gameboard.GameBoardController;
-import tictactoe.offlinegameboard.FXMLOfflineGameBoardController;
 import tictactoe.playervsplayerpopup.FXMLPlayerVsPlayerPopupController;
 
 /**
