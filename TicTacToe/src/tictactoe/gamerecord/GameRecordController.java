@@ -1,5 +1,6 @@
 package tictactoe.gamerecord;
 
+import gameboard.WinningLine;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.event.ActionEvent;
@@ -121,6 +122,7 @@ protected void handleNextBtn(ActionEvent actionEvent) {
             currentStep++;
             showBoard(currentStep);
         } else {
+            WinningLine.drawWinningLine(WinningLine.getStartLine(), WinningLine.getEndLine(), grid);
             System.out.println("No more steps to display.");
         }
     }
