@@ -1,39 +1,111 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package tictactoe.gamerecord;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.event.ActionEvent;
-import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import models.GameModel;
+import records.LaodGame;
 import shared.AppFunctions;
 import sounds.AudioController;
-import tictactoe.gameboard.GameBoardController;
-import tictactoe.historypopup.RecordListPopUpController;
-import tictactoe.homescreen.FXMLHomeScreenController;
 
-/**
- * FXML Controller class
- *
- * @author Toshiba
- */
 public class GameRecordController extends GameRecordBase {
-   Stage stage;
 
-     public GameRecordController(Stage stage) {
-        this.stage = stage;  
-    }  
+    Stage stage;
+    GameModel game = null;
+    String fileName;
+    Integer[][] board;
+    int currentStep = 1;
+
+    public GameRecordController(Stage stage, String fileName) {
+        this.stage = stage;
+        this.fileName = fileName;
+       
+        loadGameData();
+    }
+
+    private void loadGameData() {
+        game = LaodGame.loadGameFromFile(fileName);
+        board = game.getBoard();
+         playerOneLabel.setText(game.getPlayer());
+          playerTwoLabel.setText(game.getRival());
+        showBoard(currentStep);
+       
+    }
+
+    private void showBoard(int step) {
+        for (int row = 0; row < 3; row++) {
+            for (int col = 0; col < 3; col++) {
+                Integer value = board[row][col];
+                Button button = getButtonsByRowAndColumn(col, row);
+
+                if (value != null && value <= step) {
+                    if (value % 2 == 1) {
+                        button.setText("X");
+                    } else {
+                        button.setText("O");
+                    }
+                } else {
+                    button.setText("");
+                }
+            }
+        }
+    }
+
+    private Button getButtonsByRowAndColumn(int c, int r) {
+        String key = c + "," + r;
+
+        if ("0,0".equals(key)) {
+            return b00;
+        }
+        if ("0,1".equals(key)) {
+            return b01;
+        }
+        if ("0,2".equals(key)) {
+            return b02;
+        }
+        if ("1,0".equals(key)) {
+            return b10;
+        }
+        if ("1,1".equals(key)) {
+            return b11;
+        }
+        if ("1,2".equals(key)) {
+            return b12;
+        }
+        if ("2,0".equals(key)) {
+            return b20;
+        }
+        if ("2,1".equals(key)) {
+            return b21;
+        }
+        if ("2,2".equals(key)) {
+            return b22;
+        }
+
+        return null;
+    }
+
+    @Override
+    protected void handlePreviousBtn(ActionEvent actionEvent) {
+        if (currentStep > 1) {
+            currentStep--;
+            showBoard(currentStep);
+        }
+    }
+
+    @Override
+    protected void handleNextBtn(ActionEvent actionEvent) {
+        if (currentStep < 9) {
+            currentStep++;
+            showBoard(currentStep);
+        }
+    }
 
     @Override
     protected void handleExitButton(ActionEvent actionEvent) {
         AudioController.clickSound();
-        
-       AppFunctions.closePopup(actionEvent);
+        AppFunctions.closePopup(actionEvent);
     }
-
-    
 }

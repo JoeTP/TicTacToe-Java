@@ -1,121 +1,57 @@
-/* General Layout */
-.root {
-    -fx-font-family: "Arial";
-    -fx-padding: 10;
-    -fx-spacing: 10;
-    -fx-background-color: #f5f5f5;
-}
 
-/* Top Bar (First HBox) */
-.hbox {
-    -fx-alignment: center;
-    -fx-spacing: 20;
-    -fx-background-color: #F5EFE7; 
-    -fx-pref-width: 500px; 
-    -fx-pref-height: 72.79px; 
-    -fx-border-radius: 20;
-    -fx-background-radius: 20;
-}
-#textId {
-     -fx-font-size: 30px;
-    -fx-font-weight: bold;
-    
-    -fx-color: white;
-}
-
-
-/* Leave Button */
-.button {
-    -fx-background-color: #3E5879;
-    -fx-text-fill: white;
-    -fx-font-weight: bold;
-    -fx-cursor: hand;
-    -fx-padding: 5 10;
-    -fx-border-radius: 5;
-    -fx-background-radius: 5;
-}
-.button:hover {
-    -fx-background-color: #ff1a1a;
-}
-
-/* Game Board (GridPane) */
-.grid-pane {
-    -fx-background-color: #D8C4B6;/* Set background color */
-    -fx-pref-width: 500px; /* Set width */
-    -fx-pref-height: 500px; /* Set height */
-   
-    -fx-alignment: center;
-      -fx-border-radius: 30; /* Set border radius */
-    -fx-background-radius: 30; 
-    
-}
-
-/* Tic-Tac-Toe Buttons with Simulated Grid Lines */
-.grid-pane .button {
--fx-max-width: Infinity; /* Allow button to expand fully */
-    -fx-max-height: Infinity; /* Allow button to expand fully */
-    -fx-alignment: center;
-    -fx-font-size: 150px; /* Large text size */
-    -fx-font-weight: bold;
-    -fx-pref-width: 100;
-    -fx-pref-height: 100;
-    -fx-alignment: center;
-    
-    -fx-font-weight: bold;
-    -fx-text-fill: #3E5879;/* Golden text color */
-    -fx-background-color: transparent; /* Transparent background */
-    -fx-border-color: white;/* Set grid line color to white */
-    -fx-border-width: 1; /* Thickness of grid lines */
-    -fx-border-style: solid;
-    -fx-cursor: hand;
--fx-font-size: 70px; 
-}
-
-/* Chat Section */
-
-
-/* Chat Messages*/
-.vbox {
--fx-background-color:  #3E5879;
-  -fx-border-radius: 20;
-    -fx-background-radius: 20;
-    -fx-spacing: 30px; /* Space between chat messages */
-   -fx-pref-height: 500px;
- -fx-pref-width: 300;
+@import url('https://fonts.googleapis.com/css2?family=Chicle&family=Quantico:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+.mainBackground{
+   -fx-background-color: #F5EFE7;
   
 }
 
-
-/* Chat Text */
-
-
-
-.transparent-background{
--fx-background-color: rgba(0,0,0,0); 
+.button {
+    -fx-background-color: linear-gradient(to bottom, #4e79a7, #3E5879); 
+    -fx-text-fill: #F5EFE7;
+    -fx-font-size: 16px; 
+    -fx-padding: 12; 
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-cursor: hand; 
+    -fx-font-weight: bold;
+   -fx-font-family: "Chicle", serif; 
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 8, 0, 2, 2); 
+    -fx-transition: all 0.3s ease; 
+    -fx-min-width: 50px;
 }
-.incoming-bubble{
--fx-padding: 10px 15px;
- -fx-background-color:  #3E5879; 
--fx-background-radius: 70px; 
-fx-font-size: 15px;
-    -fx-text-fill: white; /* Text color */
- -fx-spacing: 10px;
-
-}
-.outcoming-bubble{
--fx-padding: 10px 15px;
- -fx-background-color: #D8C4B6;
--fx-background-radius: 70px; 
-fx-font-size: 15px;
-    -fx-text-fill:  #3E5879;/* Text color */
- -fx-spacing: 10px;
-
-
-
+.list-view {
+    -fx-border-color: #3E5879; 
+    -fx-border-width: 2; 
+    -fx-border-radius: 8; 
+    -fx-padding: 10;
 }
 
+.list-cell {
+    -fx-padding: 8; 
+    -fx-border-color: transparent transparent #ddd transparent; 
+    -fx-border-width: 0 0 1 0; 
+}
 
+.list-cell:last-child {
+    -fx-border-width: 0; 
+}
 
+.label{
+       -fx-font-family: "Chicle", serif;
+        -fx-font-weight: bold;
+          -fx-font-size: 20px;
+         -fx-font-weight: bold;
+         -fx-border-width: 1; 
+         -fx-text-fill:  #3E5879;
+}
+.bigLabel{
+        -fx-font-family: "Chicle", serif;
+        -fx-font-weight: bold;
+          -fx-font-size: 30px;
+         -fx-font-weight: bold;
+         -fx-border-width: 1; 
+         -fx-text-fill:  #3E5879;
+        
 .text-area {
     -fx-pref-height: 300px;
     -fx-background-color: #fff;
@@ -133,10 +69,3 @@ fx-font-size: 15px;
     -fx-pref-width: 200px;
  -fx-border-color: #3E5879;
 }
-.serverStartBtn:hover{
-    -fx-background-color: #13f803;
-}
-
-
-
-

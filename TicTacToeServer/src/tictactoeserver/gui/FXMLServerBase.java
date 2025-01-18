@@ -9,7 +9,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 
 public abstract class FXMLServerBase extends BorderPane {
 
@@ -17,13 +16,13 @@ public abstract class FXMLServerBase extends BorderPane {
     protected final AnchorPane anchorPane0;
     protected final PieChart usersPieChart;
     protected final Circle serverIndicator;
-    protected final Text text;
-    protected final ListView usersList;
     protected final Label label;
+    protected final ListView usersList;
+    protected final Label label0;
     protected final ToggleButton serverStateToggle;
     protected final ToggleGroup startCloseGroup;
     protected final Label totalUsersLabel;
-    protected final Label label0;
+    protected final Label label1;
     protected final Label totalUsersNoLabel;
     protected final Label ActiceUsersLabel;
     protected final Label ActiceUsersNoLabel;
@@ -34,13 +33,13 @@ public abstract class FXMLServerBase extends BorderPane {
         anchorPane0 = new AnchorPane();
         usersPieChart = new PieChart();
         serverIndicator = new Circle();
-        text = new Text();
-        usersList = new ListView();
         label = new Label();
+        usersList = new ListView();
+        label0 = new Label();
         serverStateToggle = new ToggleButton();
         startCloseGroup = new ToggleGroup();
         totalUsersLabel = new Label();
-        label0 = new Label();
+        label1 = new Label();
         totalUsersNoLabel = new Label();
         ActiceUsersLabel = new Label();
         ActiceUsersNoLabel = new Label();
@@ -51,7 +50,8 @@ public abstract class FXMLServerBase extends BorderPane {
         setMinWidth(USE_PREF_SIZE);
         setPrefHeight(400.0);
         setPrefWidth(600.0);
-        getStylesheets().add("/tictactoeserver/gui/styles/serverstylesheet.css");
+        getStyleClass().add("mainBackground");
+        getStylesheets().add("/tictactoeserver/style.css");
 
         BorderPane.setAlignment(anchorPane, javafx.geometry.Pos.CENTER);
         anchorPane.setPrefHeight(13.0);
@@ -71,67 +71,65 @@ public abstract class FXMLServerBase extends BorderPane {
         usersPieChart.setTitle("Users");
 
         serverIndicator.setFill(javafx.scene.paint.Color.valueOf("#13f803"));
-        serverIndicator.setLayoutX(64.0);
-        serverIndicator.setLayoutY(305.0);
+        serverIndicator.setLayoutX(58.0);
+        serverIndicator.setLayoutY(312.0);
         serverIndicator.setRadius(11.0);
         serverIndicator.setStroke(javafx.scene.paint.Color.BLACK);
         serverIndicator.setStrokeType(javafx.scene.shape.StrokeType.INSIDE);
         serverIndicator.getStyleClass().add("serverStartBtn");
 
-        text.setLayoutX(216.0);
-        text.setLayoutY(22.0);
-        text.setStrokeType(javafx.scene.shape.StrokeType.OUTSIDE);
-        text.setStrokeWidth(0.0);
-        text.setText("Server GUI");
-        text.setWrappingWidth(167.923828125);
-        text.setFont(new Font(36.0));
+        label.setLayoutX(247.0);
+        label.setLayoutY(-6.0);
+        label.getStyleClass().add("bigLabel");
+        label.setText("Server GUI");
 
         usersList.setLayoutX(47.0);
         usersList.setLayoutY(60.0);
         usersList.setPrefHeight(202.0);
         usersList.setPrefWidth(200.0);
 
-        label.setLayoutX(100.0);
-        label.setLayoutY(32.0);
-        label.setText("Active users");
-        label.setFont(new Font(18.0));
+        label0.setLayoutX(108.0);
+        label0.setLayoutY(18.0);
+        label0.setText("Active users");
+        label0.setFont(new Font(18.0));
 
         serverStateToggle.setLayoutX(99.0);
         serverStateToggle.setLayoutY(293.0);
         serverStateToggle.setMnemonicParsing(false);
         serverStateToggle.setOnAction(this::handleServerState);
+        serverStateToggle.getStyleClass().add("button");
         serverStateToggle.setText("Start");
 
         serverStateToggle.setToggleGroup(startCloseGroup);
 
-        totalUsersLabel.setLayoutX(356.0);
-        totalUsersLabel.setLayoutY(297.0);
+        totalUsersLabel.setLayoutX(261.0);
+        totalUsersLabel.setLayoutY(285.0);
         totalUsersLabel.setText("Total Users :");
 
-        label0.setLayoutX(426.0);
-        label0.setLayoutY(297.0);
+        label1.setLayoutX(426.0);
+        label1.setLayoutY(297.0);
 
-        totalUsersNoLabel.setLayoutX(426.0);
-        totalUsersNoLabel.setLayoutY(297.0);
+        totalUsersNoLabel.setLayoutX(286.0);
+        totalUsersNoLabel.setLayoutY(320.0);
         totalUsersNoLabel.setText("0");
 
-        ActiceUsersLabel.setLayoutX(454.0);
-        ActiceUsersLabel.setLayoutY(297.0);
+        ActiceUsersLabel.setLayoutX(437.0);
+        ActiceUsersLabel.setLayoutY(285.0);
         ActiceUsersLabel.setText("Active Users :");
 
-        ActiceUsersNoLabel.setLayoutX(531.0);
-        ActiceUsersNoLabel.setLayoutY(297.0);
+        ActiceUsersNoLabel.setLayoutX(472.0);
+        ActiceUsersNoLabel.setLayoutY(318.0);
         ActiceUsersNoLabel.setText("0");
         setBottom(anchorPane0);
 
         anchorPane0.getChildren().add(usersPieChart);
         anchorPane0.getChildren().add(serverIndicator);
-        anchorPane0.getChildren().add(text);
-        anchorPane0.getChildren().add(usersList);
         anchorPane0.getChildren().add(label);
+        anchorPane0.getChildren().add(usersList);
+        anchorPane0.getChildren().add(label0);
         anchorPane0.getChildren().add(serverStateToggle);
         anchorPane0.getChildren().add(totalUsersLabel);
-        anchorPane0.getChildren().add(label0);
+        anchorPane0.getChildren().add(label1);
         anchorPane0.getChildren().add(totalUsersNoLabel);
         anchorPane0.getChildren().add(ActiceUsersLabel);
         anchorPane0.getChildren().add(ActiceUsersNoLabel);
