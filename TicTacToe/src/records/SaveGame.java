@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import models.GameModel;
 import tictactoe.gameboard.GameBoardController;
 
@@ -29,7 +30,7 @@ public class SaveGame {
             return;
         }
 
-        System.out.println("game.get player " + game.getPlayer() + "game.getRival" + game.getRival());       
+        System.out.println("game.get player " + game.getPlayer() + "game.getRival" + game.getRival());
         String fileName = GameBoardController.gameModel.getPlayer().concat("-").concat(game.getRival());
 
         File folder = new File(folderPath);
@@ -47,9 +48,20 @@ public class SaveGame {
 
             gson.toJson(game, writer);
             System.out.println("Game saved successfully");
-            //Alert a = new Alert(AlertType.INFORMATION);
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Game Saved");
+            alert.setHeaderText(null);
+            alert.setContentText("The game has been saved successfully!");
+           // alert.getDialogPane().getStylesheets().add("/alert-style.css");
+
+            alert.showAndWait();
         } catch (IOException ex) {
             Logger.getLogger(SaveGame.class.getName()).log(Level.SEVERE, null, ex);
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Save Error");
+            alert.setHeaderText(null);
+            alert.setContentText("An error occurred while saving the game.");
+            alert.showAndWait();
             System.out.println("Game save error");
         }
     }

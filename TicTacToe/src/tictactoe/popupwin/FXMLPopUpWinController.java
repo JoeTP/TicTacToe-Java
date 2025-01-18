@@ -123,14 +123,12 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
 
     @Override
     protected void handleSaveGameButton(ActionEvent actionEvent) {
-        saveGameInFileGson(GameBoardController.gameModel);
+        SaveGame.saveGameToFile(GameBoardController.gameModel);
         mediaPlayer.pause();
 
     }
 
-    protected void saveGameInFileGson(GameModel game) {
-        SaveGame.saveGameToFile(game);
-    }
+  
 
     @Override
     protected void handlePlayAgainButton(ActionEvent actionEvent

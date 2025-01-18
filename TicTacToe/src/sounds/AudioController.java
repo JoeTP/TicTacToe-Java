@@ -19,6 +19,12 @@ public abstract class AudioController {
             MediaPlayer mediaPlayer = new MediaPlayer(media);
             mediaPlayer.play();        
     }
+            public static void showCharSound() {
+            String soundFile = AudioController.class.getResource("/audios/turnTimeOut.wav").toExternalForm();
+            Media media = new Media(soundFile);
+            MediaPlayer mediaPlayer = new MediaPlayer(media);
+            mediaPlayer.play();        
+    }
 
     
 }
