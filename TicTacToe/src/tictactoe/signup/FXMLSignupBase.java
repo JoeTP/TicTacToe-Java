@@ -2,6 +2,7 @@ package tictactoe.signup;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -13,7 +14,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import shared.AppString;
 
 public abstract class FXMLSignupBase extends BorderPane {
 
@@ -36,7 +36,10 @@ public abstract class FXMLSignupBase extends BorderPane {
     protected final ImageView characterImageView;
     protected final Button nextImageBtn;
     protected final ImageView imageView0;
-    protected int currentImageIndex = 0;
+    protected final HBox hBox1;
+    protected final ImageView helperImageView;
+    protected final TextField ipTextField;
+    protected final Hyperlink connectToServerButton;
 
     public FXMLSignupBase() {
 
@@ -59,8 +62,12 @@ public abstract class FXMLSignupBase extends BorderPane {
         characterImageView = new ImageView();
         nextImageBtn = new Button();
         imageView0 = new ImageView();
+        hBox1 = new HBox();
+        helperImageView = new ImageView();
+        ipTextField = new TextField();
+        connectToServerButton = new Hyperlink();
 
-        setPrefHeight(552.0);
+        setPrefHeight(580.0);
         setPrefWidth(400.0);
         getStyleClass().add("mainBackground");
         getStylesheets().add("/styling/generalStyle.css");
@@ -96,6 +103,7 @@ public abstract class FXMLSignupBase extends BorderPane {
         vBox.setSpacing(20.0);
 
         VBox.setVgrow(anchorPane0, javafx.scene.layout.Priority.ALWAYS);
+        anchorPane0.setPrefWidth(400.0);
 
         signupBtn.setLayoutX(142.0);
         signupBtn.setLayoutY(320.0);
@@ -149,6 +157,7 @@ public abstract class FXMLSignupBase extends BorderPane {
 
         AnchorPane.setLeftAnchor(hBox0, 98.0);
         AnchorPane.setRightAnchor(hBox0, 98.0);
+        hBox0.setAlignment(javafx.geometry.Pos.CENTER);
         hBox0.setLayoutX(98.0);
         hBox0.setLayoutY(30.0);
 
@@ -167,7 +176,6 @@ public abstract class FXMLSignupBase extends BorderPane {
         characterImageView.setFitWidth(64.0);
         characterImageView.setPickOnBounds(true);
         characterImageView.setPreserveRatio(true);
-        characterImageView.setImage(new Image(AppString.ICON_PATHS[currentImageIndex]));
 
         nextImageBtn.setMnemonicParsing(false);
         nextImageBtn.setOnAction(this::showNextIcon);
@@ -179,6 +187,24 @@ public abstract class FXMLSignupBase extends BorderPane {
         imageView0.setPreserveRatio(true);
         imageView0.setImage(new Image(getClass().getResource("/assets/icons/angle-right.png").toExternalForm()));
         nextImageBtn.setGraphic(imageView0);
+
+        hBox1.setAlignment(javafx.geometry.Pos.CENTER);
+        hBox1.setLayoutX(52.0);
+        hBox1.setLayoutY(430.0);
+        hBox1.setSpacing(10.0);
+
+        helperImageView.setAccessibleHelp("write IP address of the device running server (leave it empty if you are running the server)");
+        helperImageView.setFitHeight(30.0);
+        helperImageView.setFitWidth(30.0);
+        helperImageView.setOpacity(0.4);
+        helperImageView.setPickOnBounds(true);
+        helperImageView.setPreserveRatio(true);
+        helperImageView.setImage(new Image(getClass().getResource("/assets/icons/help.png").toExternalForm()));
+
+        ipTextField.setPromptText("Server IP");
+
+        connectToServerButton.setOnAction(this::handleConnectToServerButton);
+        connectToServerButton.setText("Connect");
         setCenter(vBox);
 
         anchorPane.getChildren().add(backBtn);
@@ -195,6 +221,10 @@ public abstract class FXMLSignupBase extends BorderPane {
         hBox0.getChildren().add(characterImageView);
         hBox0.getChildren().add(nextImageBtn);
         anchorPane0.getChildren().add(hBox0);
+        hBox1.getChildren().add(helperImageView);
+        hBox1.getChildren().add(ipTextField);
+        hBox1.getChildren().add(connectToServerButton);
+        anchorPane0.getChildren().add(hBox1);
         vBox.getChildren().add(anchorPane0);
 
     }
@@ -208,5 +238,7 @@ public abstract class FXMLSignupBase extends BorderPane {
     protected abstract void showPreviousIcon(javafx.event.ActionEvent actionEvent);
 
     protected abstract void showNextIcon(javafx.event.ActionEvent actionEvent);
+
+    protected abstract void handleConnectToServerButton(javafx.event.ActionEvent actionEvent);
 
 }

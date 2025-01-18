@@ -14,7 +14,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import tictactoe.gameboard.GameBoardController;
-import tictactoe.offlinegameboard.FXMLOfflineGameBoardController;
 import tictactoe.popupwin.FXMLPopUpWinController;
 
 /**

@@ -21,6 +21,7 @@ import javafx.application.Platform;
 import models.DataModel;
 import models.UserModel;
 import shared.AppFunctions;
+import shared.AppString;
 import static tictactoe.TicTacToe.appStage;
 import tictactoe.gameboard.GameBoardController;
 import tictactoe.onlinegmaeboard.OnlineGameBoardController;
@@ -46,9 +47,9 @@ public class ClientConnection {
     public static Thread listeningThread;
     public static UserModel user;
     public static List<String> activeUsers = new ArrayList<>();
-
-    public void connectToServer() throws IOException {
-        socket = new Socket("127.0.0.1", 5001);
+    public static String SERVER_IP = AppString.SERVER_HOST;
+    public static void connectToServer() throws IOException {
+        socket = new Socket(SERVER_IP, 5001);
         System.out.println("Cleint connection Established !");
         ois = new ObjectInputStream(socket.getInputStream());
         oos = new ObjectOutputStream(socket.getOutputStream());

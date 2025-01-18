@@ -37,7 +37,7 @@
                               <Insets left="20.0" top="20.0" />
                            </StackPane.margin>
                         </Button>
-                        <VBox fx:id="accInfoRect" alignment="CENTER_LEFT" prefHeight="130.0" prefWidth="321.0" spacing="5.0" styleClass="rect" stylesheets="@style.css" visible="false">
+                        <VBox fx:id="accInfoRect" alignment="CENTER_LEFT" prefHeight="130.0" prefWidth="321.0" spacing="5.0" styleClass="rect" stylesheets="@style.css">
                            <children>
                               <Label fx:id="nameLabel" prefHeight="28.0" prefWidth="230.0" text="Name">
                                  <VBox.margin>
@@ -80,18 +80,9 @@
                               </HBox>
                               <HBox alignment="CENTER_LEFT" spacing="20.0" VBox.vgrow="NEVER">
                                  <children>
-                                    <Button fx:id="historyButton" mnemonicParsing="false" onAction="#handleHistoryButton">
-                                       <graphic>
-                                          <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../../../resources/assets/icons/history.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                    </Button>
                                     <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#handleLogoutButton">
                                        <graphic>
-                                          <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                          <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
                                                 <Image url="@../../../resources/assets/icons/logout.png" />
                                              </image>
@@ -110,7 +101,19 @@
                         </VBox>
                      </children>
                   </StackPane>
-                  <Region prefHeight="47.0" prefWidth="248.0" HBox.hgrow="ALWAYS" />
+                  <Region prefHeight="130.0" prefWidth="181.0" HBox.hgrow="ALWAYS" />
+                  <Button fx:id="historyButton" mnemonicParsing="false" onAction="#handleHistoryButton">
+                     <graphic>
+                        <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../resources/assets/icons/history.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <HBox.margin>
+                        <Insets top="20.0" />
+                     </HBox.margin>
+                  </Button>
                   <Button fx:id="settingsBtn" mnemonicParsing="false" onAction="#openSettingsScreen" prefHeight="47.0" prefWidth="97.0" styleClass="bigBtn" text="Settings" HBox.hgrow="NEVER">
                      <HBox.margin>
                         <Insets top="20.0" />

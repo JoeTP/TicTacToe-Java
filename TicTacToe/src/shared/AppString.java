@@ -44,7 +44,10 @@ public interface AppString {
     final String SIGNUP_FAILED = "SIGNUP_FAILED";
 
     String WIN_VIDEO_URL = "/media/winVideo.mp4";
-    String LOSE_VIDEO_URL = "/media/winVideo.mp4";
+    String LOSE_VIDEO_URL = "/media/loseVideo.mp4";
+    String DRAW_VIDEO_URL = "/media/drawVideo.mp4";
+    
+    String TOOLTIP = "write IP address of the device running server (leave it empty if you are running the server)";
     /**
      * add your paths here
      */
