@@ -154,6 +154,10 @@ public class ClientConnection {
                 if(newResponse.equals("GAME_DECLINE")){
                     System.out.println("GAME_DECLINE");
                 }
+                
+                if(newResponse.equals("DISCONNECT")){
+                    terminateClient();
+                }
             }
         });
         listeningThread.start();
