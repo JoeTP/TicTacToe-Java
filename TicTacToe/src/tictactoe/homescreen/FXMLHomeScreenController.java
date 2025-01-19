@@ -65,17 +65,16 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
     private void updateConnectionLabel() {
         Platform.runLater(() -> {
             if (CONNECTION_FLAG.get()) {
-                nameLabel.setText(ClientConnection.user.getName());
 
                 int numOfGames = ClientConnection.user.getNumOfGames();
                 int wins = ClientConnection.user.getWins();
-
+                double rate =ClientConnection.user.getRate();
                 if (numOfGames > 0) {
-                    double winRate = (wins / numOfGames) * 100;
-
-                    if (winRate > 70) {
+                  
+                
+                    if (rate > 70) {
                         rankStarLabel.setStyle("-fx-text-fill: #FFD700;");
-                    } else if (winRate > 50) {
+                    } else if (rate > 50) {
                         rankStarLabel.setStyle("-fx-text-fill: #C0C0C0;");
                     } else {
                         rankStarLabel.setStyle("-fx-text-fill: #8B4513;");
@@ -84,9 +83,9 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
 
                     rankStarLabel.setStyle("-fx-text-fill: #8B4513;");
                 }
-
+              
+                scoreLabel.setText(ClientConnection.user.getScore()+"");
                 nameLabel.setText(ClientConnection.user.getName());
-
                 wonGamesLabel.setText(ClientConnection.user.getWins() + "");
                 playedGamesLabel.setText(ClientConnection.user.getNumOfGames() + "");
                 profileImageView.setImage(new Image(AppString.ICON_PATHS[Integer.parseInt(ClientConnection.user.getImage())]));

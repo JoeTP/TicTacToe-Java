@@ -281,7 +281,7 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
             WinningLine.drawWinningLine(WinningLine.getStartLine(), WinningLine.getEndLine(), grid);
             saveDataToGameModel(playerOne.getName());
             System.out.println("PLAYER ONE WINNER");
-            ClientConnection.user.updateUserData(true);
+           // ClientConnection.user.updateUserData(true);
             System.out.println("the user "+ClientConnection.user.getName() +" is win  or player one "+playerOne.getName());
             endGame();
 
@@ -289,7 +289,7 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
         } else if (playerTwo.getChar() == null ? winner == null : playerTwo.getChar().equals(winner)) {
             WinningLine.drawWinningLine(WinningLine.getStartLine(), WinningLine.getEndLine(), grid);
             saveDataToGameModel(playerTwo.getName());
-            ClientConnection.user.updateUserData(false);
+         //   ClientConnection.user.updateUserData(false);
             System.out.println("PLAYER TWO WINNER");
                 System.out.println("the user "+ClientConnection.user.getName() +" is win  or player Two "+playerTwo.getName());
             endGame();
@@ -298,7 +298,7 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
             winner = "draw";
           System.out.println("the user "+ClientConnection.user.getName() +" is win  or player Two "+playerTwo.getName() + "player One "+playerOne.getName());
             saveDataToGameModel(winner);
-                        ClientConnection.user.updateUserData(false);
+                     //  ClientConnection.user.updateUserData(false);
 
             endGame();
             waitAndShowPopup(winner);

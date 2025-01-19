@@ -20,14 +20,15 @@ public class UserModel implements Serializable {
     String password;
     String email;
     String image;
-    public  int score=0;
-    public  int numOfGames =0;
-    public  int wins =0;
-    public  int losses =0;
+    public int score = 0;
+    public int numOfGames = 0;
+    public int wins = 0;
+    public int losses = 0;
+    public double rate = 0;
     // boolean isInGame;
     // boolean isOnline;
 
-    public UserModel(int id, String name, String password, String email, String image, int score, int numOfGames, int wins, int losses, boolean isInGame, boolean isOnline) {
+    public UserModel(int id, String name, String password, String email, String image, int score, int numOfGames, int wins, int losses, boolean isInGame, boolean isOnline, double rate) {
         this.id = id;
         this.name = name;
         this.password = password;
@@ -37,7 +38,16 @@ public class UserModel implements Serializable {
         this.numOfGames = numOfGames;
         this.wins = wins;
         this.losses = losses;
+        this.rate = rate;
 
+    }
+
+    public void setRate(int rate) {
+        this.rate = rate;
+    }
+
+    public double getRate() {
+        return rate;
     }
 
     public UserModel() {
@@ -102,7 +112,7 @@ public class UserModel implements Serializable {
         return score;
     }
 
-    public void setScore(int score) {
+    public void setScore() {
         this.score = score;
     }
 
@@ -130,19 +140,19 @@ public class UserModel implements Serializable {
         this.losses = losses;
     }
 
-    public  void updateUserData(boolean isWinner) {
+    public void updateUserData(boolean isWinner) {
         numOfGames++;
         if (isWinner == true) {
             score += 5;
             wins++;
-
         } else {
-            score -= 5;
+            if(score >0)  score -= 5;
+           
             losses++;
 
         }
-    }
+        rate = (wins / numOfGames) * 100;
 
-  
+    }
 
 }
