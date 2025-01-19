@@ -35,6 +35,7 @@ public class ClientHandler extends Thread {
     int state;
     static ObservableList<ClientHandler> clients = FXCollections.synchronizedObservableList(FXCollections.observableArrayList());
     static ObservableList<String> usernames = FXCollections.synchronizedObservableList(FXCollections.observableArrayList());
+    static ObservableList<String> inGameUsers = FXCollections.synchronizedObservableList(FXCollections.observableArrayList());
 
     public ClientHandler(Socket client) {
         this.client = client;
@@ -95,32 +96,43 @@ public class ClientHandler extends Thread {
                         user = data.getUser();
                         findClientHandler(user.getName()).sendActiveUsersList();
                         break;
-                    case 4:
-                        ClientHandler op = findClientHandler(data.getRival());
-
+                    case 4: // send game request
+                        if(!inGameUsers.contains(data.getRival())){
+                            ClientHandler op = findClientHandler(data.getRival());
                         if (data.getPlayer().isEmpty()) {
                             System.out.println("player is null");
                         } else {
                             System.out.println(data.getPlayer());
                         }
                         op.sendRequest(data.getPlayer());
+                        }                       
                         break;
-                    case 5:
+                    case 5: // Game Accepted
                         ClientHandler ch = findClientHandler(data.getRival());
                         ch.sendRequestResponse(data.getPlayer());
+                        synchronized (inGameUsers) {
+                            inGameUsers.addAll(data.getPlayer(), data.getRival());
+                            System.out.println(data.getPlayer()+" Playing "+data.getRival());
+                        }
                         break;
                     case 6:
                         System.out.println(data.getRival());
-                        ClientHandler gamePlayer = findClientHandler(data.getRival());                       
+                        ClientHandler gamePlayer = findClientHandler(data.getRival());
                         gamePlayer.sendGameMove(data);
                         System.out.println("Sent game move");
+                        if (data.getResponse().equals("YES_ENDED")) {
+                            synchronized (inGameUsers) {
+                                inGameUsers.removeAll(data.getPlayer(), data.getRival());
+                                System.out.println(data.getPlayer()+" finshed "+data.getRival());
+                            }
+                        }
                         break;
                     case 7:
                         ClientHandler ch2 = findClientHandler(data.getRival());
                         ch2.sendRequestResponseDecline(data.getPlayer());
                         break;
                     case 8:
-                        ClientHandler ch3 = findClientHandler(data.getRival());                       
+                        ClientHandler ch3 = findClientHandler(data.getRival());
                         ch3.sendGameMove(data);
                         break;
 //                    case 9 :
@@ -154,11 +166,11 @@ public class ClientHandler extends Thread {
     protected void sendActiveUsersList() {
         try {
             oos.writeObject(new DataModel("Active_Users"));
-            oos.writeInt(usernames.size());
-            System.out.println(usernames.size());
+            oos.writeInt(usernames.size() - inGameUsers.size());
+            System.out.println(usernames.size() - inGameUsers.size());
             for (String username : usernames) {
                 System.out.println(username);
-                if (!username.equals(user.getName())) {
+                if (!username.equals(user.getName()) && !inGameUsers.contains(username)) {
                     oos.writeUTF(username);
                 }
             }
@@ -265,7 +277,10 @@ public class ClientHandler extends Thread {
 
     public static void broadCastActiveUsers() {
         clients.forEach((c) -> {
-            c.sendActiveUsersList();
+            if(!inGameUsers.contains(c.user.getName())){
+                System.out.println("sending to "+c.user.getName());
+                c.sendActiveUsersList();
+            }          
         });
     }
 

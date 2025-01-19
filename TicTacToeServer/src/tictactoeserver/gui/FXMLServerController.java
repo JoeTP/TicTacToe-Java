@@ -22,6 +22,7 @@ import javafx.scene.layout.Background;
 import shared.AppStrings;
 import tictactoeserver.MainServer;
 import static tictactoeserver.gui.ClientHandler.clients;
+import static tictactoeserver.gui.ClientHandler.inGameUsers;
 import static tictactoeserver.gui.ClientHandler.usernames;
 
 public class FXMLServerController extends FXMLServerBase {
@@ -41,6 +42,9 @@ public class FXMLServerController extends FXMLServerBase {
         });
         updatePieChart();
         serverIndicator.setFill(Color.CRIMSON);
+        inGameUsers.addListener((ListChangeListener<String>) change -> {           
+            ClientHandler.broadCastActiveUsers();
+        });
     }
 
     @Override
