@@ -18,6 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javafx.application.Platform;
+import javafx.scene.control.Alert;
 import models.DataModel;
 import models.UserModel;
 import shared.AppFunctions;
@@ -46,6 +47,7 @@ public class ClientConnection {
     public static ObjectOutputStream oos;
     public static Thread listeningThread;
     public static UserModel user;
+    public static String rival;
     public static List<String> activeUsers = new ArrayList<>();
     public static String SERVER_IP = AppString.SERVER_HOST;
     public static void connectToServer() throws IOException {
@@ -116,7 +118,7 @@ public class ClientConnection {
                     continue;
                 }
                 String newResponse = newData.getResponse();
-                String rival = newData.getRival();
+                ClientConnection.rival = newData.getRival();
                 System.out.println(newResponse);
 
                 if (newResponse.equals("Game_Request")) {
@@ -137,6 +139,7 @@ public class ClientConnection {
                 if (newResponse.equals("Active_Users")) {
                     try {
                         synchronized (ois) {
+                            activeUsers.clear();
                             int activeUsersCount = ois.readInt();
                             System.out.println(activeUsersCount);
                             String user;
@@ -152,7 +155,10 @@ public class ClientConnection {
                     }
                 }
                 if(newResponse.equals("GAME_DECLINE")){
-                    System.out.println("GAME_DECLINE");
+                    Platform.runLater(() -> {
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Your request was declined");
+                            alert.showAndWait();                        
+                        });
                 }
             }
         });

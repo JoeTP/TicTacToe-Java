@@ -53,6 +53,10 @@ private static final long serialVersionUID = 1L;
         this.rival = rival;
     }
 
+    public DataModel() {
+        
+    }
+
     public String getPlayer() {
         return player;
     }

@@ -5,6 +5,7 @@
  */
 package tictactoe.playervsplayerlocal;
 
+import clientconnection.ClientConnection;
 import static clientconnection.ClientConnection.oos;
 import static clientconnection.ClientConnection.startListeningThread;
 import static clientconnection.ClientConnection.stopListeningThread;
@@ -35,6 +36,7 @@ public class FXMLRequestToPlayController extends FXMLRequestToPlayBase {
         this.rival = rival;
         this.stage = stage;
         playerNameLabel.setText(rival);
+        ClientConnection.rival = rival;
     }
 
     @Override
