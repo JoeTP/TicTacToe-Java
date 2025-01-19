@@ -20,6 +20,7 @@ import javafx.scene.image.Image;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 import models.ComputerPlayer;
 import models.DataModel;
@@ -27,6 +28,7 @@ import models.GameModel;
 import models.Player;
 import records.SaveGame;
 import shared.AppFunctions;
+import static shared.AppFunctions.stages;
 import shared.AppString;
 import tictactoe.gameboard.GameBoardController;
 import tictactoe.homescreen.FXMLHomeScreenController;
@@ -72,6 +74,7 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
 
                                 Optional<ButtonType> result = alert.showAndWait();
                                 if (result.isPresent() && result.get().getText().equals("Accept")) {
+                                    stage.fireEvent(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
                                     System.out.println("User accepted.");
                                     DataModel newData = new DataModel(6, user.getName(), ClientConnection.rival);
                                     newData.setResponse("GAME_ACCEPTED");
@@ -102,6 +105,7 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
                             System.out.println("GAME_ACCEPTED");
                             Platform.runLater(() -> {
                                 AppFunctions.goToGameBoard(stage, new OnlineGameBoardController(stage, user.getName(), ClientConnection.rival, mode));
+                                    stages.get(stages.size()-1).fireEvent(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
                             });
                             break;
                         case "GAME_DECLINED":

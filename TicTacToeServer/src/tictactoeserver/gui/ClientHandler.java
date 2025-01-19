@@ -123,6 +123,10 @@ public class ClientHandler extends Thread {
                         ClientHandler ch3 = findClientHandler(data.getRival());
                         data.setGameMove(-1);
                         ch3.sendGameMove(data);
+                        break;
+                    case 9 :
+                        ClientHandler ch4 = findClientHandler(data.getRival());
+                        ch4.sendGameMove(data);
 //                    default:
 //                        System.out.println("Unknown state: " + state);
 //                        ps.writeUTF("Unknown request");
