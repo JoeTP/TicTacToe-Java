@@ -1,113 +1,169 @@
 package tictactoe.popupwin;
 
 import java.net.URL;
+import javafx.geometry.Insets;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.media.MediaView;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 
-public abstract class FXMLPopUpWinBase extends AnchorPane {
+public abstract class FXMLPopUpWinBase extends VBox {
 
+    protected final StackPane stackPane;
     protected final Rectangle rectangle;
-    protected final ImageView winnerImg;
-    protected final ImageView replayBtn;
-    protected final ImageView saveVideoBtn;
-    protected final ImageView homeBtn;
+    protected final HBox hBox;
+    protected final ImageView leftCupIcon;
+    protected final VBox vBox;
+    protected final Label congratsLable;
     protected final Label winAndLoseLabel;
-    protected final Label label;
-    protected final Label scoreLabel;
+    protected final ImageView rightCupIcon;
+    protected final MediaView winOrLoseVideo;
+    protected final HBox hBox0;
+    protected final Button saveGameButton;
+    protected final ImageView imageView;
+    protected final Button playAgainButton;
+    protected final ImageView imageView0;
+    protected final Button leaveButton;
+    protected final ImageView imageView1;
 
     public FXMLPopUpWinBase() {
 
+        stackPane = new StackPane();
         rectangle = new Rectangle();
-        winnerImg = new ImageView();
-        replayBtn = new ImageView();
-        saveVideoBtn = new ImageView();
-        homeBtn = new ImageView();
+        hBox = new HBox();
+        leftCupIcon = new ImageView();
+        vBox = new VBox();
+        congratsLable = new Label();
         winAndLoseLabel = new Label();
-        label = new Label();
-        scoreLabel = new Label();
+        rightCupIcon = new ImageView();
+        winOrLoseVideo = new MediaView();
+        hBox0 = new HBox();
+        saveGameButton = new Button();
+        imageView = new ImageView();
+        playAgainButton = new Button();
+        imageView0 = new ImageView();
+        leaveButton = new Button();
+        imageView1 = new ImageView();
 
-        setId("AnchorPane");
-        setPrefHeight(450.0);
-        setPrefWidth(450.0);
-        getStyleClass().add("mainBackground");
-        getStylesheets().add("/tictactoe/popupwin/fxmlpopupwin.css");
+        setAlignment(javafx.geometry.Pos.CENTER);
+        setSpacing(20.0);
+        setStyle("-fx-background-color: #ffffff;");
 
-        AnchorPane.setLeftAnchor(rectangle, 50.0);
+        stackPane.setStyle("-fx-background-color: transparent;");
+
         rectangle.setArcHeight(5.0);
         rectangle.setArcWidth(5.0);
-        rectangle.setFill(javafx.scene.paint.Color.valueOf("#f5efe7"));
-        rectangle.setHeight(350.0);
-        rectangle.setLayoutX(50.0);
-        rectangle.setLayoutY(51.0);
-        rectangle.setStroke(javafx.scene.paint.Color.valueOf("#88f5e6"));
+        rectangle.setFill(javafx.scene.paint.Color.valueOf("#e8dac8"));
+        rectangle.setHeight(84.0);
+        rectangle.setStroke(javafx.scene.paint.Color.valueOf("#5b80b5"));
         rectangle.setStrokeType(javafx.scene.shape.StrokeType.INSIDE);
         rectangle.getStyleClass().add("rect");
-        rectangle.setWidth(350.0);
+        rectangle.setWidth(613.0);
 
-        winnerImg.setFitHeight(50.0);
-        winnerImg.setFitWidth(50.0);
-        winnerImg.setLayoutX(194.0);
-        winnerImg.setLayoutY(91.0);
-        winnerImg.setPickOnBounds(true);
-        winnerImg.setPreserveRatio(true);
-        winnerImg.setImage(new Image(getClass().getResource("/assets/icons/winner.png").toExternalForm()));
+        hBox.setAlignment(javafx.geometry.Pos.CENTER);
+        hBox.setStyle("-fx-background-radius: 30;");
 
-        replayBtn.setFitHeight(30.0);
-        replayBtn.setFitWidth(30.0);
-        replayBtn.setLayoutX(138.0);
-        replayBtn.setLayoutY(268.0);
-        replayBtn.setPickOnBounds(true);
-        replayBtn.setPreserveRatio(true);
-        replayBtn.setImage(new Image(getClass().getResource("/assets/icons/replay.png").toExternalForm()));
+        leftCupIcon.setFitHeight(62.0);
+        leftCupIcon.setFitWidth(62.0);
+        leftCupIcon.setPickOnBounds(true);
+        leftCupIcon.setPreserveRatio(true);
+        leftCupIcon.setImage(new Image(getClass().getResource("/assets/icons/winner.png").toExternalForm()));
 
-        saveVideoBtn.setFitHeight(30.0);
-        saveVideoBtn.setFitWidth(30.0);
-        saveVideoBtn.setLayoutX(204.0);
-        saveVideoBtn.setLayoutY(268.0);
-        saveVideoBtn.setPickOnBounds(true);
-        saveVideoBtn.setPreserveRatio(true);
-        saveVideoBtn.setImage(new Image(getClass().getResource("/assets/icons/save.png").toExternalForm()));
+        vBox.setAlignment(javafx.geometry.Pos.CENTER);
 
-        homeBtn.setFitHeight(30.0);
-        homeBtn.setFitWidth(30.0);
-        homeBtn.setLayoutX(272.0);
-        homeBtn.setLayoutY(268.0);
-        homeBtn.setPickOnBounds(true);
-        homeBtn.setPreserveRatio(true);
-        homeBtn.setImage(new Image(getClass().getResource("/assets/icons/cancel.png").toExternalForm()));
+        congratsLable.setAlignment(javafx.geometry.Pos.CENTER);
+        congratsLable.setPrefHeight(30.0);
+        congratsLable.setPrefWidth(301.0);
+        congratsLable.setText("? Congratulations! ?");
+        congratsLable.setTextFill(javafx.scene.paint.Color.valueOf("#3e5879"));
+        congratsLable.setWrapText(true);
+        congratsLable.setFont(new Font("Stencil", 24.0));
 
-        AnchorPane.setLeftAnchor(winAndLoseLabel, 90.0);
         winAndLoseLabel.setAlignment(javafx.geometry.Pos.CENTER);
-        winAndLoseLabel.setLayoutX(90.0);
-        winAndLoseLabel.setLayoutY(161.0);
-        winAndLoseLabel.setText("? Congratulations! You Win!");
+        winAndLoseLabel.setText("You Win!");
         winAndLoseLabel.setTextFill(javafx.scene.paint.Color.valueOf("#3e5879"));
-        winAndLoseLabel.setFont(new Font("Stencil", 18.0));
+        winAndLoseLabel.setFont(new Font("Stencil", 24.0));
 
-        label.setLayoutX(153.0);
-        label.setLayoutY(208.0);
-        label.setText("Your score:");
-        label.setTextFill(javafx.scene.paint.Color.valueOf("#3e5879"));
-        label.setFont(new Font("Stencil", 15.0));
+        rightCupIcon.setFitHeight(62.0);
+        rightCupIcon.setFitWidth(62.0);
+        rightCupIcon.setPickOnBounds(true);
+        rightCupIcon.setPreserveRatio(true);
+        rightCupIcon.setImage(new Image(getClass().getResource("/assets/icons/winner.png").toExternalForm()));
 
-        scoreLabel.setLayoutX(253.0);
-        scoreLabel.setLayoutY(206.0);
-        scoreLabel.setText("0");
-        scoreLabel.setTextFill(javafx.scene.paint.Color.valueOf("#3e5879"));
-        scoreLabel.setFont(new Font("Stencil", 18.0));
+        winOrLoseVideo.setFitHeight(250.0);
+        winOrLoseVideo.setFitWidth(430.0);
+        winOrLoseVideo.setNodeOrientation(javafx.geometry.NodeOrientation.INHERIT);
 
-        getChildren().add(rectangle);
-        getChildren().add(winnerImg);
-        getChildren().add(replayBtn);
-        getChildren().add(saveVideoBtn);
-        getChildren().add(homeBtn);
-        getChildren().add(winAndLoseLabel);
-        getChildren().add(label);
-        getChildren().add(scoreLabel);
+        hBox0.setAlignment(javafx.geometry.Pos.CENTER);
+        hBox0.setSpacing(30.0);
+        hBox0.setStyle("-fx-background-color: transparent;");
+
+        saveGameButton.setMnemonicParsing(false);
+        saveGameButton.setOnAction(this::handleSaveGameButton);
+        saveGameButton.setStyle("-fx-background-radius: 50;");
+
+        imageView.setFitHeight(30.0);
+        imageView.setFitWidth(30.0);
+        imageView.setPickOnBounds(true);
+        imageView.setPreserveRatio(true);
+        imageView.setImage(new Image(getClass().getResource("/assets/icons/save.png").toExternalForm()));
+        saveGameButton.setGraphic(imageView);
+
+        playAgainButton.setLayoutX(10.0);
+        playAgainButton.setLayoutY(10.0);
+        playAgainButton.setMnemonicParsing(false);
+        playAgainButton.setOnAction(this::handlePlayAgainButton);
+        playAgainButton.setStyle("-fx-background-radius: 50;");
+
+        imageView0.setFitHeight(30.0);
+        imageView0.setFitWidth(30.0);
+        imageView0.setPickOnBounds(true);
+        imageView0.setPreserveRatio(true);
+        imageView0.setImage(new Image(getClass().getResource("/assets/icons/Refresh.png").toExternalForm()));
+        playAgainButton.setGraphic(imageView0);
+
+        leaveButton.setLayoutX(66.0);
+        leaveButton.setLayoutY(10.0);
+        leaveButton.setMnemonicParsing(false);
+        leaveButton.setOnAction(this::handleLeaveButton);
+        leaveButton.setStyle("-fx-background-radius: 50;");
+
+        imageView1.setFitHeight(30.0);
+        imageView1.setFitWidth(30.0);
+        imageView1.setPickOnBounds(true);
+        imageView1.setPreserveRatio(true);
+        imageView1.setImage(new Image(getClass().getResource("/assets/icons/cancel.png").toExternalForm()));
+        leaveButton.setGraphic(imageView1);
+        VBox.setMargin(hBox0, new Insets(0.0, 0.0, 10.0, 0.0));
+        getStylesheets().add("/tictactoe/popupwin/fxmlpopupwin.css");
+        getStylesheets().add("/styling/generalStyle.css");
+
+        stackPane.getChildren().add(rectangle);
+        hBox.getChildren().add(leftCupIcon);
+        vBox.getChildren().add(congratsLable);
+        vBox.getChildren().add(winAndLoseLabel);
+        hBox.getChildren().add(vBox);
+        hBox.getChildren().add(rightCupIcon);
+        stackPane.getChildren().add(hBox);
+        getChildren().add(stackPane);
+        getChildren().add(winOrLoseVideo);
+        hBox0.getChildren().add(saveGameButton);
+        hBox0.getChildren().add(playAgainButton);
+        hBox0.getChildren().add(leaveButton);
+        getChildren().add(hBox0);
 
     }
+
+    protected abstract void handleSaveGameButton(javafx.event.ActionEvent actionEvent);
+
+    protected abstract void handlePlayAgainButton(javafx.event.ActionEvent actionEvent);
+
+    protected abstract void handleLeaveButton(javafx.event.ActionEvent actionEvent);
+
 }

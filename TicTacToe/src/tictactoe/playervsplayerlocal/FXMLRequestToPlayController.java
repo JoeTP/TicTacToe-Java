@@ -5,28 +5,74 @@
  */
 package tictactoe.playervsplayerlocal;
 
+import clientconnection.ClientConnection;
+import static clientconnection.ClientConnection.oos;
+import static clientconnection.ClientConnection.startListeningThread;
+import static clientconnection.ClientConnection.stopListeningThread;
+import static clientconnection.ClientConnection.user;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+import models.DataModel;
+import models.Player;
 import shared.AppFunctions;
-
-import java.net.URL;
-import java.util.ResourceBundle;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.text.Text;
+import static shared.AppFunctions.stages;
+import static tictactoe.TicTacToe.appStage;
+import tictactoe.gameboard.GameBoardController;
+import tictactoe.homescreen.FXMLHomeScreenController;
+import tictactoe.onlinegmaeboard.OnlineGameBoardController;
 import tictactoe.playervsplayerlocal.FXMLRequestToPlayBase;
 
 public class FXMLRequestToPlayController extends FXMLRequestToPlayBase {
 
-    @FXML
-    private Button acceptBtn;
-    @FXML
-    private Button declineBtn;
-    @FXML
-    private Text playerNameTextField;
+    String rival;
+    Stage stage;
 
-    /**
-     * Initializes the controller class.
-     */
+    public FXMLRequestToPlayController(String rival, Stage stage) {
+        this.rival = rival;
+        this.stage = stage;
+        playerNameLabel.setText(rival);
+        ClientConnection.rival = rival;
+     //   scoreLabel.setText();
+
+    }
+
+    @Override
+    protected void handleAcceptButton(ActionEvent actionEvent) {
+        AppFunctions.closePopup(actionEvent);
+
+        new Thread(() -> {
+            DataModel data = new DataModel(5, user.getName(), rival);
+            synchronized (oos) {
+                try {
+                    oos.writeObject(data);
+                    oos.flush();
+                } catch (IOException ex) {
+                    Logger.getLogger(FXMLRequestToPlayController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+        }).start();
+        stopListeningThread();
+        AppFunctions.closeAllStages();
+        appStage.setScene(new Scene (new OnlineGameBoardController(stage, user.getName(), rival, "online")));
+    }
+
+    @Override
+    protected void handleDeclineButton(ActionEvent actionEvent) {
+        AppFunctions.closePopup(actionEvent);
+        DataModel data = new DataModel(7, user.getName(), rival);
+        try {
+            oos.writeObject(data);
+            oos.flush();
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLRequestToPlayController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        startListeningThread();
+    }
+
 }

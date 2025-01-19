@@ -1,21 +1,32 @@
 /TicTacToe/nbproject/private/
-<<<<<<< HEAD
+
 /TicTacToe/build/
 /TicTacToe/dist/
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 /TicTacToe/build/
 /TicTacToe/dist/
-=======
+
 /TicTacToe/dist/
 /TicTacToe/build/
->>>>>>> M-gui/pla-vs-comp-popup
-=======
+
 /TicTacToe/build/
 /TicTacToe/dist/
->>>>>>> Y-GUI-HomeScreen
->>>>>>> 7fb47987d80452a7348d14a4e425873c0c7908f6
 /TicTacToeServer/nbproject/private/
 /TicTacToeServer/build/
 /TicTacToeServer/dist/
+<<<<<<< HEAD
+/TicTacToeServer/records/
+*.sqlite
+<<<<<<< HEAD
+
+/TicTacToe/records
+/TicTacToeServer/database.sqlite
+
+/TicTacToe/records
+
+=======
+=======
+*.sqlite
+/TicTacToe/records
+>>>>>>> d933764a26d1bc948a69f4240d871edeb2fcfefb
+>>>>>>> f802fc148f0be3a1834eaca5873e0753ba72a86e

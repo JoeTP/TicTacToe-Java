@@ -1,6 +1,7 @@
 package tictactoe.homescreen;
 
 import javafx.geometry.Insets;
+import static javafx.geometry.Pos.TOP_LEFT;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -21,12 +22,36 @@ public abstract class FXMLHomeScreenBase extends StackPane {
     protected final ImageView imageView;
     protected final BorderPane borderPane;
     protected final HBox header;
+    protected final StackPane stackPane;
+    protected final Button signInButton;
+    protected final VBox accInfoRect;
+    protected final Label nameLabel;
+    protected final HBox hBox;
+    protected final ImageView profileImageView;
+    protected final HBox hBox0;
+    protected final VBox vBox;
+    protected final Label label;
+    protected final Label rankStarLabel;
+    protected final VBox vBox0;
+    protected final Label label0;
+    protected final Label wonGamesLabel;
+    protected final VBox vBox1;
+    protected final Label label1;
+    protected final Label playedGamesLabel;
+    protected final VBox vBox2;
+    protected final Label label2;
+    protected final Label scoreLabel;
+    protected final HBox hBox1;
+    protected final Button logoutButton;
+    protected final ImageView imageView0;
     protected final Region region;
+    protected final Button historyButton;
+    protected final ImageView imageView1;
     protected final Button settingsBtn;
     protected final Button exitBtn;
     protected final AnchorPane anchorPane;
-    protected final VBox vBox;
-    protected final StackPane stackPane;
+    protected final VBox vBox3;
+    protected final StackPane stackPane0;
     protected final Rectangle rectangle;
     protected final DropShadow dropShadow;
     protected final AnchorPane anchorPane0;
@@ -34,25 +59,49 @@ public abstract class FXMLHomeScreenBase extends StackPane {
     protected final Button playVsplayBtn;
     protected final Button playVscompBtn;
     protected final HBox header1;
-    protected final VBox vBox0;
+    protected final VBox vBox4;
     protected final ImageView connectionIndicatorImageView;
+    protected final VBox vBox5;
     protected final Label connectionLabel;
     protected final Region region0;
-    protected final Button signInBtn;
-    protected final Region region1;
-    protected final Button chatBtn;
+    protected final VBox vBox6;
+
 
     public FXMLHomeScreenBase() {
 
         imageView = new ImageView();
         borderPane = new BorderPane();
         header = new HBox();
+        stackPane = new StackPane();
+        signInButton = new Button();
+        accInfoRect = new VBox();
+        nameLabel = new Label();
+        hBox = new HBox();
+        profileImageView = new ImageView();
+        hBox0 = new HBox();
+        vBox = new VBox();
+        label = new Label();
+        rankStarLabel = new Label();
+        vBox0 = new VBox();
+        label0 = new Label();
+        wonGamesLabel = new Label();
+        vBox1 = new VBox();
+        label1 = new Label();
+        playedGamesLabel = new Label();
+        vBox2 = new VBox();
+        label2 = new Label();
+        scoreLabel = new Label();
+        hBox1 = new HBox();
+        logoutButton = new Button();
+        imageView0 = new ImageView();
         region = new Region();
+        historyButton = new Button();
+        imageView1 = new ImageView();
         settingsBtn = new Button();
         exitBtn = new Button();
         anchorPane = new AnchorPane();
-        vBox = new VBox();
-        stackPane = new StackPane();
+        vBox3 = new VBox();
+        stackPane0 = new StackPane();
         rectangle = new Rectangle();
         dropShadow = new DropShadow();
         anchorPane0 = new AnchorPane();
@@ -60,13 +109,13 @@ public abstract class FXMLHomeScreenBase extends StackPane {
         playVsplayBtn = new Button();
         playVscompBtn = new Button();
         header1 = new HBox();
-        vBox0 = new VBox();
+        vBox4 = new VBox();
         connectionIndicatorImageView = new ImageView();
+        vBox5 = new VBox();
         connectionLabel = new Label();
         region0 = new Region();
-        signInBtn = new Button();
-        region1 = new Region();
-        chatBtn = new Button();
+        vBox6 = new VBox();
+        
 
         getStylesheets().add("/styling/generalStyle.css");
 
@@ -87,13 +136,118 @@ public abstract class FXMLHomeScreenBase extends StackPane {
         header.setOnMousePressed(this::getOffset);
         header.setSpacing(20.0);
 
+      
+        stackPane.setAlignment(TOP_LEFT);
+        HBox.setMargin(stackPane, new Insets(0.0));
+
+        signInButton.setMnemonicParsing(false);
+        signInButton.setOnAction(this::handleSignInButton);
+        signInButton.setText("Sign in");
+        StackPane.setMargin(signInButton, new Insets(20.0, 0.0, 0.0, 20.0));
+
+        accInfoRect.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+        accInfoRect.setPrefHeight(130.0);
+        accInfoRect.setPrefWidth(370.0);
+        accInfoRect.setSpacing(5.0);
+        accInfoRect.getStyleClass().add("rect");
+        accInfoRect.getStylesheets().add("/tictactoe/homescreen/style.css");
+
+        nameLabel.setPrefHeight(28.0);
+        nameLabel.setPrefWidth(230.0);
+        nameLabel.setText("Name");
+        VBox.setMargin(nameLabel, new Insets(10.0, 0.0, 0.0, 20.0));
+
+        hBox.setPrefHeight(50.0);
+        hBox.setPrefWidth(328.0);
+        hBox.setSpacing(5.0);
+
+        profileImageView.setFitHeight(50.0);
+        profileImageView.setFitWidth(50.0);
+        profileImageView.setPickOnBounds(true);
+        profileImageView.setPreserveRatio(true);
+        HBox.setMargin(profileImageView, new Insets(0.0, 0.0, 0.0, 15.0));
+
+        HBox.setHgrow(hBox0, javafx.scene.layout.Priority.ALWAYS);
+        hBox0.setAlignment(javafx.geometry.Pos.CENTER);
+        hBox0.setPrefHeight(30.0);
+        hBox0.setPrefWidth(163.0);
+        hBox0.setSpacing(40.0);
+
+        HBox.setHgrow(vBox, javafx.scene.layout.Priority.ALWAYS);
+        vBox.setAlignment(javafx.geometry.Pos.TOP_CENTER);
+
+        label.setText("Rank");
+
+        rankStarLabel.setLayoutX(23.0);
+        rankStarLabel.setLayoutY(10.0);
+        rankStarLabel.setText("★");
+
+        HBox.setHgrow(vBox0, javafx.scene.layout.Priority.ALWAYS);
+        vBox0.setAlignment(javafx.geometry.Pos.TOP_CENTER);
+
+        label0.setText("Won");
+
+        wonGamesLabel.setLayoutX(23.0);
+        wonGamesLabel.setLayoutY(10.0);
+
+        HBox.setHgrow(vBox1, javafx.scene.layout.Priority.ALWAYS);
+        vBox1.setAlignment(javafx.geometry.Pos.TOP_CENTER);
+
+        label1.setText("Games");
+
+        playedGamesLabel.setLayoutX(23.0);
+        playedGamesLabel.setLayoutY(10.0);
+
+        vBox2.setAlignment(javafx.geometry.Pos.TOP_CENTER);
+        vBox2.setLayoutX(168.0);
+        vBox2.setLayoutY(10.0);
+
+        label2.setText("Score");
+
+        scoreLabel.setLayoutX(23.0);
+        scoreLabel.setLayoutY(10.0);
+        HBox.setMargin(vBox2, new Insets(0.0, 30.0, 0.0, 0.0));
+        HBox.setMargin(hBox0, new Insets(0.0, 10.0, 0.0, 10.0));
+
+        VBox.setVgrow(hBox1, javafx.scene.layout.Priority.NEVER);
+        hBox1.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+        hBox1.setSpacing(20.0);
+
+        logoutButton.setMnemonicParsing(false);
+        logoutButton.setOnAction(this::handleLogoutButton);
+
+        imageView0.setFitHeight(20.0);
+        imageView0.setFitWidth(20.0);
+        imageView0.setPickOnBounds(true);
+        imageView0.setPreserveRatio(true);
+        imageView0.setImage(new Image(getClass().getResource("/assets/icons/logout.png").toExternalForm()));
+        logoutButton.setGraphic(imageView0);
+        hBox1.setPadding(new Insets(0.0, 0.0, 10.0, 20.0));
+        accInfoRect.setOpaqueInsets(new Insets(0.0));
+
         HBox.setHgrow(region, javafx.scene.layout.Priority.ALWAYS);
+        region.setPrefHeight(130.0);
+        region.setPrefWidth(100.0);
+
+        historyButton.setMnemonicParsing(false);
+        historyButton.setOnAction(this::handleHistoryButton);
+
+        imageView1.setFitHeight(23.0);
+        imageView1.setFitWidth(23.0);
+        imageView1.setPickOnBounds(true);
+        imageView1.setPreserveRatio(true);
+        imageView1.setImage(new Image(getClass().getResource("/assets/icons/history.png").toExternalForm()));
+        historyButton.setGraphic(imageView1);
+        HBox.setMargin(historyButton, new Insets(20.0, 0.0, 0.0, 0.0));
 
         HBox.setHgrow(settingsBtn, javafx.scene.layout.Priority.NEVER);
         settingsBtn.setMnemonicParsing(false);
         settingsBtn.setOnAction(this::openSettingsScreen);
+        settingsBtn.setPrefHeight(47.0);
+        settingsBtn.setPrefWidth(97.0);
         settingsBtn.getStyleClass().add("bigBtn");
         settingsBtn.setText("Settings");
+        HBox.setMargin(settingsBtn, new Insets(20.0, 0.0, 0.0, 0.0));
 
         exitBtn.setLayoutX(645.0);
         exitBtn.setLayoutY(30.0);
@@ -101,19 +255,23 @@ public abstract class FXMLHomeScreenBase extends StackPane {
         exitBtn.setOnAction(this::exitApp);
         exitBtn.getStyleClass().add("bigBtn");
         exitBtn.setText("X");
-        header.setPadding(new Insets(20.0, 20.0, 0.0, 0.0));
+        HBox.setMargin(exitBtn, new Insets(20.0, 0.0, 0.0, 0.0));
+        header.setPadding(new Insets(0.0, 20.0, 0.0, 0.0));
         borderPane.setTop(header);
 
         BorderPane.setAlignment(anchorPane, javafx.geometry.Pos.CENTER);
-        anchorPane.setPrefHeight(200.0);
-        anchorPane.setPrefWidth(200.0);
+        anchorPane.setMaxHeight(523.0);
+        anchorPane.setMinHeight(485.0);
+        anchorPane.setPrefHeight(523.0);
+        anchorPane.setPrefWidth(720.0);
 
-        vBox.setAlignment(javafx.geometry.Pos.CENTER);
-        vBox.setLayoutX(215.0);
-        vBox.setLayoutY(92.0);
-        vBox.setPrefHeight(368.0);
-        vBox.setPrefWidth(274.0);
-        vBox.setSpacing(20.0);
+        vBox3.setAlignment(javafx.geometry.Pos.CENTER);
+        vBox3.setLayoutX(205.0);
+        vBox3.setLayoutY(88.0);
+        vBox3.setSpacing(20.0);
+
+        stackPane0.setLayoutX(222.0);
+        stackPane0.setLayoutY(54.0);
 
         rectangle.setArcHeight(40.0);
         rectangle.setArcWidth(40.0);
@@ -161,59 +319,69 @@ public abstract class FXMLHomeScreenBase extends StackPane {
         BorderPane.setAlignment(header1, javafx.geometry.Pos.CENTER);
         header1.setSpacing(20.0);
 
-        vBox0.setAlignment(javafx.geometry.Pos.CENTER);
+        vBox4.setAlignment(javafx.geometry.Pos.BOTTOM_CENTER);
 
         connectionIndicatorImageView.setFitHeight(40.0);
         connectionIndicatorImageView.setFitWidth(40.0);
         connectionIndicatorImageView.setPickOnBounds(true);
         connectionIndicatorImageView.setPreserveRatio(true);
         connectionIndicatorImageView.setImage(new Image(getClass().getResource("/assets/icons/Wifi-off.png").toExternalForm()));
+        vBox4.setOpaqueInsets(new Insets(0.0));
+        vBox4.setPadding(new Insets(0.0, 0.0, 20.0, 0.0));
+
+        vBox5.setAlignment(javafx.geometry.Pos.BOTTOM_CENTER);
 
         connectionLabel.setText("Offline");
+        vBox5.setPadding(new Insets(0.0, 0.0, 20.0, 0.0));
 
         HBox.setHgrow(region0, javafx.scene.layout.Priority.ALWAYS);
-        region0.setPrefHeight(47.0);
-        region0.setPrefWidth(132.0);
 
-        signInBtn.setLayoutX(645.0);
-        signInBtn.setLayoutY(30.0);
-        signInBtn.setMnemonicParsing(false);
-        signInBtn.setOnAction(this::singIn);
-        signInBtn.getStyleClass().add("bigBtn");
-        signInBtn.setText("Sign in");
+        vBox6.setAlignment(javafx.geometry.Pos.BOTTOM_CENTER);
 
-        region1.setLayoutX(175.0);
-        region1.setLayoutY(10.0);
-        region1.setPrefHeight(47.0);
-        region1.setPrefWidth(219.0);
-
-        chatBtn.setLayoutX(175.0);
-        chatBtn.setLayoutY(10.0);
-        chatBtn.setMnemonicParsing(false);
-        chatBtn.setOnAction(this::openChat);
-        chatBtn.getStyleClass().add("bigBtn");
-        chatBtn.setText("Chat");
-        header1.setPadding(new Insets(0.0, 20.0, 20.0, 20.0));
+        
+        HBox.setMargin(vBox6, new Insets(0.0, 0.0, 20.0, 0.0));
+        header1.setPadding(new Insets(0.0, 20.0, 0.0, 20.0));
         borderPane.setBottom(header1);
 
         getChildren().add(imageView);
+        stackPane.getChildren().add(signInButton);
+        accInfoRect.getChildren().add(nameLabel);
+        hBox.getChildren().add(profileImageView);
+        vBox.getChildren().add(label);
+        vBox.getChildren().add(rankStarLabel);
+        hBox0.getChildren().add(vBox);
+        vBox0.getChildren().add(label0);
+        vBox0.getChildren().add(wonGamesLabel);
+        hBox0.getChildren().add(vBox0);
+        vBox1.getChildren().add(label1);
+        vBox1.getChildren().add(playedGamesLabel);
+        hBox0.getChildren().add(vBox1);
+        vBox2.getChildren().add(label2);
+        vBox2.getChildren().add(scoreLabel);
+        hBox0.getChildren().add(vBox2);
+        hBox.getChildren().add(hBox0);
+        accInfoRect.getChildren().add(hBox);
+        hBox1.getChildren().add(logoutButton);
+        accInfoRect.getChildren().add(hBox1);
+        stackPane.getChildren().add(accInfoRect);
+        header.getChildren().add(stackPane);
         header.getChildren().add(region);
+        header.getChildren().add(historyButton);
         header.getChildren().add(settingsBtn);
         header.getChildren().add(exitBtn);
-        stackPane.getChildren().add(rectangle);
+        anchorPane.getChildren().add(vBox3);
+        stackPane0.getChildren().add(rectangle);
         anchorPane0.getChildren().add(logoImageViewer);
         anchorPane0.getChildren().add(playVsplayBtn);
         anchorPane0.getChildren().add(playVscompBtn);
-        stackPane.getChildren().add(anchorPane0);
-        vBox.getChildren().add(stackPane);
-        anchorPane.getChildren().add(vBox);
-        vBox0.getChildren().add(connectionIndicatorImageView);
-        header1.getChildren().add(vBox0);
-        header1.getChildren().add(connectionLabel);
+        stackPane0.getChildren().add(anchorPane0);
+        anchorPane.getChildren().add(stackPane0);
+        vBox4.getChildren().add(connectionIndicatorImageView);
+        header1.getChildren().add(vBox4);
+        vBox5.getChildren().add(connectionLabel);
+        header1.getChildren().add(vBox5);
         header1.getChildren().add(region0);
-        header1.getChildren().add(signInBtn);
-        header1.getChildren().add(region1);
-        header1.getChildren().add(chatBtn);
+        header1.getChildren().add(vBox6);
         getChildren().add(borderPane);
 
     }
@@ -221,6 +389,12 @@ public abstract class FXMLHomeScreenBase extends StackPane {
     protected abstract void dragWindow(javafx.scene.input.MouseEvent mouseEvent);
 
     protected abstract void getOffset(javafx.scene.input.MouseEvent mouseEvent);
+
+    protected abstract void handleSignInButton(javafx.event.ActionEvent actionEvent);
+
+    protected abstract void handleLogoutButton(javafx.event.ActionEvent actionEvent);
+
+    protected abstract void handleHistoryButton(javafx.event.ActionEvent actionEvent);
 
     protected abstract void openSettingsScreen(javafx.event.ActionEvent actionEvent);
 
@@ -230,8 +404,5 @@ public abstract class FXMLHomeScreenBase extends StackPane {
 
     protected abstract void openPlayerVsComputerPopup(javafx.event.ActionEvent actionEvent);
 
-    protected abstract void singIn(javafx.event.ActionEvent actionEvent);
-
     protected abstract void openChat(javafx.event.ActionEvent actionEvent);
-
 }

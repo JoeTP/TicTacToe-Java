@@ -6,10 +6,16 @@
 package tictactoe.signin;
 
 import clientconnection.ClientConnection;
+import static clientconnection.ClientConnection.ois;
+import static clientconnection.ClientConnection.oos;
+import static clientconnection.ClientConnection.socket;
+import static clientconnection.ClientConnection.user;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -23,15 +29,20 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Tooltip;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import json.JSONConverters;
+
 import models.DataModel;
 import models.UserModel;
 import shared.AppFunctions;
 
 import shared.*;
+import static shared.AppConstants.CONNECTION_FLAG;
+import static shared.AppString.TOOLTIP;
+import sounds.AudioController;
 
-import tictactoe.gameboard.GameBoardController;
 
 import tictactoe.playervsplayeronline.FXMLPlayerVsPlayerOnlineController;
 import tictactoe.playervsplayerpopup.FXMLPlayerVsPlayerPopupController;
@@ -40,87 +51,155 @@ import tictactoe.signup.FXMLSignupController;
 public class FXMLSigninController extends FXMLSigninBase {
 
     Stage stage;
+    public static ClientConnection client;
 
-    ClientConnection c = new ClientConnection();
+    public static boolean signInFromHomeScreen;
 
-    public FXMLSigninController(Stage stage) {
+    public FXMLSigninController(Stage stage, boolean state) {
 
         this.stage = stage;
+        this.signInFromHomeScreen = state;
+        Tooltip.install(helperImageView, new Tooltip(TOOLTIP));
 
     }
 
     @Override
     public void goToSignup(ActionEvent event) {
+        AudioController.clickSound();
         AppFunctions.goTo(event, new FXMLSignupController(stage));
     }
 
     @Override
     protected void handleBackButton(ActionEvent actionEvent) {
+        AudioController.clickSound();
         AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerPopupController(stage));
     }
 
-    @Override
     protected void goToActiveUsers(ActionEvent actionEvent) {
+        ClientConnection.user = getNewUserData();
 
-        ClientConnection client = new ClientConnection();
+        AudioController.clickSound();
 
-        try {
-            client.connectToServer();
-        } catch (IOException ex) {
-            Logger.getLogger(FXMLSigninController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        System.out.println("" + client.serverStatus);
-        if (client.serverStatus == false) {  //connect
-            System.out.println("connect connection");
-            UserModel user = new UserModel();
+        if (user != null) {
 
-            user.setName(usernameTextField.getText());
-            user.setPassword(passwordField.getText());
-            System.out.println("AL --before sendLoginRequest " + user.getName());
+            System.out.println("User is not null" + user.getName());
             DataModel data = new DataModel(user, 2);
-            System.out.println("get state : " + data.getState());
-            boolean response = false;
+            client = new ClientConnection();
+            try {
+                client.connectToServer();
+            } catch (IOException ex) {
+                Platform.runLater(() -> {
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Couldn't connect to server.");
+                    alert.showAndWait();
+                });
+                ex.printStackTrace();
+                return;
+            }
+            Thread th = new Thread(() -> {
 
-        
-   
-
-              
-                System.out.println("get user and state " + data.getUser().getName());
-                System.out.println("get user and state pass " + data.getUser().getPassword());
+                String response = "";
 
                 try {
-
                     client.sendData(data);
-
-                    response = client.receveResponse();
-
+                    DataModel newData = ClientConnection.receveData();
+                    user = newData.getUser();
+                    response = newData.getResponse();
+                    System.out.println(response);
                 } catch (IOException ex) {
-                    Logger.getLogger(FXMLSigninController.class.getName()).log(Level.SEVERE, null, ex);
+                    Platform.runLater(() -> {
+                        Alert alert = new Alert(Alert.AlertType.ERROR, "Couldn't connect to server.");
+                        alert.showAndWait();
+                    });
+                    ex.printStackTrace();
+                    return;
                 }
+                String finalResponse = response;
 
-                if (response==true) {
-                    System.out.println("response: should be true :" + response);
+                switch (finalResponse) {
+                    case AppString.SIGNIN_DONE:
+                        try {
+                            Platform.runLater(() -> {
+                                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Signin was successful.");
+                                alert.showAndWait();
+                                if (!signInFromHomeScreen) {
+//                                    AppFunctions.closeAndGo(actionEvent, stage, new FXMLPlayerVsPlayerOnlineController(stage, client));
+                                    AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage, client));
+                                } else {
+                                    AppFunctions.closePopup(actionEvent);
+                                }
+                                CONNECTION_FLAG.set(true);
+                            });
 
-                    //user = JSONConverters.jsonToUserModel(response);
-                    AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage));
-
-                } else {
-                    System.out.println("should be failure " + response);
-
-                    wrongLabel.setVisible(true);
-                    wrongLabel.setStyle("-fx-text-fill: red; -fx-font-size: 20px;");
-                    wrongLabel.setText("Please Enter Correct Info");
-
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        ClientConnection.startListeningThread();
+                        break;
+                    case AppString.SIGNIN_ALREADY_FOUND:
+                        Platform.runLater(() -> {
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION, "You are logged in from another device");
+                            alert.showAndWait();
+                            ClientConnection.terminateClient();
+                        });
+                        break;
+                    default:
+                        Platform.runLater(() -> {
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Username or password are incorrect.");
+                            alert.showAndWait();
+                            ClientConnection.terminateClient();
+                        });
+                        break;
                 }
+            });
+            th.start();
+//            try {
+//                th.join();
+//            } catch (InterruptedException ex) {
+//                Logger.getLogger(FXMLSigninController.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+        }
 
+    }
 
-                wrongLabel.setVisible(true);
-                wrongLabel.setStyle("-fx-text-fill: red; -fx-font-size: 20px;");
-                wrongLabel.setText("Please Enter Correct Info");
-
+    protected UserModel getNewUserData() {
+        UserModel user = new UserModel();
+        boolean valid = true;
+        if (usernameTextField.getText().length() >= 6) {
+            user.setName(usernameTextField.getText());
+            if (passwordField.getText().length() >= 6) {
+                user.setPassword(passwordField.getText());
+            } else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Password is smaller than 6 letters.");
+                alert.showAndWait();
+                valid = false;
             }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Username is smaller than 6 letters.");
+            alert.showAndWait();
+            valid = false;
+        }
+        if (valid) {
+            return user;
+        } else {
+            return null;
 
         }
 
     }
 
+    @Override
+    protected void handleConnectToServerButton(ActionEvent actionEvent) {
+        try {
+            if (ipTextField != null) {
+                ClientConnection.SERVER_IP = ipTextField.getText();
+                ClientConnection.connectToServer();
+                System.out.println(socket);
+            }
+            if (socket != null) {
+                helperImageView.setImage(new Image("/assets/icons/Accept.png"));
+            }
+        } catch (IOException ex) {
+            helperImageView.setImage(new Image("/assets/icons/cancel.png"));
+        }
+    }
+}

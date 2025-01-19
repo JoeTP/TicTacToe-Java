@@ -21,18 +21,17 @@ import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
 import models.DataModel;
 import models.UserModel;
+import shared.AppStrings;
 
 public class ClientHandler extends Thread {
 
     DataInputStream dis;
     DataOutputStream ps;
     ObjectInputStream ois;
-
     ObjectOutputStream oos;
     UserModel user;
-    boolean response;
-
-    Socket client;  // Add a reference to the client socket
+    String response;
+    Socket client;
     int state;
     static ObservableList<ClientHandler> clients = FXCollections.synchronizedObservableList(FXCollections.observableArrayList());
     static ObservableList<String> usernames = FXCollections.synchronizedObservableList(FXCollections.observableArrayList());
@@ -40,8 +39,9 @@ public class ClientHandler extends Thread {
     public ClientHandler(Socket client) {
         this.client = client;
         try {
-            dis = new DataInputStream(client.getInputStream());
-            ps = new DataOutputStream(client.getOutputStream());
+            oos = new ObjectOutputStream(client.getOutputStream());
+            ois = new ObjectInputStream(client.getInputStream());
+
             synchronized (clients) {
                 clients.add(this);
             }
@@ -56,44 +56,79 @@ public class ClientHandler extends Thread {
     public void run() {
         try {
             while (true) {
-
-                ois = new ObjectInputStream(client.getInputStream());
                 DataModel data = (DataModel) ois.readObject();
                 state = data.getState();
-                System.out.println("Waiting for client input...");
-
-                System.out.println("State: " + state);
-                //   sendActiveUsersList();
-                // Handle requests based on state
-
-                user = data.getUser();
-
-                System.out.println(user.getName());
-                System.out.println(user.getEmail());
+                System.out.println(state);
                 switch (state) {
                     case 1: // Sign-up
-                        response = false;
+                        user = data.getUser();
+                        System.out.println(user.getName());
                         response = DataAccessLayer.insertData(user);
-                        ps.writeBoolean(response);
-                        break;
-                    case 2:
-                        boolean responseLogin = false;
-                        responseLogin = DataAccessLayer.getUserDataLogin(user.getName(), user.getPassword());
-                        ps.writeBoolean(responseLogin);
+                        updateUserData();
+                        sendUserData(user, response);
+                        if (response.equals(AppStrings.SIGNUP_DONE)) {
+                            synchronized (usernames) {
+                                usernames.add(user.getName());
+                            }
+                        }
 
                         break;
-//                    case 3:
-//                        System.out.println("in case 3 : ");
-//                        sendActiveUsersList();
+                    case 2: // sign in
+                        user = data.getUser();
+                        System.out.println(user.getName());
+                        response = DataAccessLayer.getUserDataLogin(user.getName(), user.getPassword());
+                        boolean isNotLoggedin = isNotLoggedin(user.getName());
+                        if (isNotLoggedin == false) {
+                            response = AppStrings.SIGNIN_ALREADY_FOUND;
+                        }
+                        updateUserData();
+                        sendUserData(user, response);
+                        if (response.equals(AppStrings.SIGNIN_DONE)) {
+                            synchronized (usernames) {
+                                usernames.add(user.getName());
+                            }
+                        }
 
-                    default:
-                        System.out.println("Unknown state: " + state);
-                        ps.writeUTF("Unknown request");
-                        ps.flush();
+                        break;
+                    case 3:
+                        System.out.println("in case 3 : ");
+                        user = data.getUser();
+                        findClientHandler(user.getName()).sendActiveUsersList();
+                        break;
+                    case 4:
+                        ClientHandler op = findClientHandler(data.getRival());
+
+                        if (data.getPlayer().isEmpty()) {
+                            System.out.println("player is null");
+                        } else {
+                            System.out.println(data.getPlayer());
+                        }
+                        op.sendRequest(data.getPlayer());
+                        break;
+                    case 5:
+                        ClientHandler ch = findClientHandler(data.getRival());
+                        ch.sendRequestResponse(data.getPlayer());
+                        break;
+                    case 6:
+                        System.out.println(data.getRival());
+                        ClientHandler gamePlayer = findClientHandler(data.getRival());
+                        gamePlayer.sendGameMove(data);
+                        System.out.println("Sent game move");
+                        break;
+                    case 7:
+                        ClientHandler ch2 = findClientHandler(data.getRival());
+                        ch2.sendRequestResponseDecline(data.getPlayer());
+                        break;
+                    case 8:
+                        ClientHandler ch3 = findClientHandler(data.getRival());
+                        data.setGameMove(-1);
+                        ch3.sendGameMove(data);
+//                    default:
+//                        System.out.println("Unknown state: " + state);
+//                        ps.writeUTF("Unknown request");
+//                        ps.flush();
                 }
-                synchronized (usernames) {
-                    usernames.add(user.getName());
-                }
+
             }
 
         } catch (IOException ex) {
@@ -112,50 +147,160 @@ public class ClientHandler extends Thread {
             }
         }
     }
-//
-//    private void sendActiveUsersList() {
-//       
-//            try {
-//                System.out.println("the count in sendActiveUsersList " + usernames.size());
-//                ps.writeInt(usernames.size());
-//
-//                for (String username : usernames) {
-//                    System.out.println("username in sendActiveUsersList" + username);
-//                    ps.writeUTF(username);
-//
-//                }
-//                ps.flush();
-//            } catch (IOException ex) {
-//                Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        
-//    }
+
+    protected void sendActiveUsersList() {
+        try {
+            oos.writeObject(new DataModel("Active_Users"));
+            oos.writeInt(usernames.size());
+            System.out.println(usernames.size());
+            for (String username : usernames) {
+                System.out.println(username);
+                if (!username.equals(user.getName())) {
+                    oos.writeUTF(username);
+                }
+            }
+            oos.flush();
+        } catch (IOException ex) {
+            Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
 
     public String getUserName() {
         return user != null ? user.getName() : "Unknown User";
     }
 
-    void disconnect() {
+    public ClientHandler findClientHandler(String username) {
+        int index = usernames.indexOf(username);
+        if (index == -1) {
+            return null;
+        } else {
+            return clients.get(index);
+        }
+    }
+
+    public void disconnect() {
         try {
             synchronized (clients) {
                 clients.remove(this);
             }
-            synchronized (usernames) {
-                usernames.remove(user.getName());
+            if (response != null && !response.equals(AppStrings.SIGNIN_ALREADY_FOUND)
+                    && !response.equals(AppStrings.SIGNUP_FAILED)
+                    && !response.equals(AppStrings.SIGNIN_FAILED)) {
+
+                synchronized (usernames) {
+                    if (user != null && user.getName() != null) {
+                        usernames.remove(user.getName());
+                    }
+                }
             }
-            
-            dis.close();
-            ps.close();
-            ois.close();
-            client.close();
+            if (ois != null) {
+                ois.close();
+            }
+            if (oos != null) {
+                oos.close();
+            }
+            if (client != null) {
+                client.close();
+            }
             this.stop();
-            this.join();
             System.out.println("## Number of Clients: " + clients.size());
         } catch (IOException ex) {
-            Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InterruptedException ex) {
             Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
+    public boolean isNotLoggedin(String username) {
+        for (String u : usernames) {
+            if (username.equals(u)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void sendUserData(UserModel user, String response) throws IOException {
+        if (client != null && client.isConnected() && !client.isClosed()) {
+            if (oos != null) {  // Check if ObjectOutputStream is initialized
+                try {
+                    DataModel data = new DataModel(user, response);
+                    oos.writeObject(data);  // Send data
+                    oos.flush();  // Ensure it's sent
+                    System.out.println("User data sent successfully");
+                } catch (IOException ex) {
+                    Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, "Failed to send user data", ex);
+                    disconnect();  // Disconnect in case of failure
+                }
+            } else {
+                Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, "ObjectOutputStream is not initialized or is closed");
+                disconnect();  // Handle uninitialized or closed ObjectOutputStream
+            }
+        } else {
+            Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, "Client disconnected or socket is closed, cannot send data");
+            disconnect();  // Disconnect if client socket is not connected or closed
+        }
+
+    }
+
+    private void updateUserData() {
+
+        user = DataAccessLayer.getUserData(user.getName(), user.getPassword());
+
+    }
+
+    private void sendRequest(String rival) throws IOException {
+        DataModel data = new DataModel(rival, "Game_Request");
+        oos.writeObject(data);
+        oos.flush();
+    }
+
+    private void sendRequestResponse(String rival) throws IOException {
+        DataModel data = new DataModel(rival, "GAME_ACCEPT");
+        oos.writeObject(data);
+        oos.flush();
+    }
+
+    public static void broadCastActiveUsers() {
+        clients.forEach((c) -> {
+            c.sendActiveUsersList();
+        });
+    }
+
+    public void broadCastToUsers() throws IOException {
+        DataModel data = new DataModel("DISCONNECT");
+        oos.writeObject(data);
+        oos.flush();
+    }
+
+    public static void broadCastDisconnect() {
+        clients.forEach((c) -> {
+            try {
+                c.broadCastToUsers();
+            } catch (IOException ex) {
+                Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+    }
+
+    private void sendGameMove(DataModel gameMove) {
+        try {
+
+            oos.writeObject(gameMove);
+            oos.flush();
+        } catch (IOException ex) {
+            Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    private void sendRequestResponseDecline(String rival) {
+        DataModel data = new DataModel(rival, "GAME_DECLINE");
+        try {
+            oos.writeObject(data);
+            oos.flush();
+        } catch (IOException ex) {
+            Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
 }

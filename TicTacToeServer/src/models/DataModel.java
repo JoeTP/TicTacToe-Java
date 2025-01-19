@@ -6,47 +6,36 @@
 package models;
 
 import java.io.Serializable;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 /**
  *
  * @author Kimo Store
  */
-public class DataModel implements Serializable{
-     private static final long serialVersionUID = -5159020983329262064L;
-     private transient ObservableList<String> usernames = FXCollections.observableArrayList();
+public class DataModel implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     UserModel user;
-    GameModel game;
-    String activePlayers;
-
-    public void setUsernames(ObservableList<String> usernames) {
-        this.usernames = usernames;
-    }
-
-    public void setActivePlayers(String activePlayers) {
-        this.activePlayers = activePlayers;
-    }
-
-    public DataModel(String activePlayers, int state) {
-        this.activePlayers = activePlayers;
-        this.state = state;
-    }
-
-    public ObservableList<String> getUsernames() {
-        return usernames;
-    }
-
-    public String getActivePlayers() {
-        return activePlayers;
-    }
-    
-    
+    int gameMove;
     int state;
-      public DataModel(ObservableList<String> usernames, int state) {
-        this.usernames = FXCollections.observableArrayList(usernames); // Create a new ObservableList
+    String player;
+    String rival;
+    String response;
+
+    public DataModel(int state) {
         this.state = state;
+    }
+
+    public DataModel(String response) {
+        this.response = response;
+    }
+
+    public DataModel() {
+
+    }
+
+    public DataModel(String rival, String response) {
+        this.rival = rival;
+        this.response = response;
     }
 
     public DataModel(UserModel user, int state) {
@@ -54,9 +43,36 @@ public class DataModel implements Serializable{
         this.state = state;
     }
 
-    public DataModel(GameModel game, int state) {
-        this.game = game;
+    public DataModel(UserModel user, String response) {
+        this.user = user;
+        this.response = response;
+    }
+
+    public DataModel(int game, int state) {
+        this.gameMove = game;
         this.state = state;
+    }
+
+    public DataModel(int state, String player, String rival) {
+        this.state = state;
+        this.player = player;
+        this.rival = rival;
+    }
+
+    public String getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(String player) {
+        this.player = player;
+    }
+
+    public String getRival() {
+        return rival;
+    }
+
+    public void setRival(String rival) {
+        this.rival = rival;
     }
 
     public UserModel getUser() {
@@ -67,12 +83,12 @@ public class DataModel implements Serializable{
         this.user = user;
     }
 
-    public GameModel getGame() {
-        return game;
+    public int getGameMove() {
+        return gameMove;
     }
 
-    public void setGame(GameModel game) {
-        this.game = game;
+    public void setGameMove(int game) {
+        this.gameMove = game;
     }
 
     public int getState() {
@@ -82,5 +98,13 @@ public class DataModel implements Serializable{
     public void setState(int state) {
         this.state = state;
     }
-    
+
+    public String getResponse() {
+        return response;
+    }
+
+    public void setResponse(String response) {
+        this.response = response;
+    }
+
 }

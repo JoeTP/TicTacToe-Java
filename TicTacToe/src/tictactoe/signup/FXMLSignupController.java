@@ -6,6 +6,12 @@
 package tictactoe.signup;
 
 import clientconnection.ClientConnection;
+import static clientconnection.ClientConnection.listeningThread;
+import static clientconnection.ClientConnection.ois;
+import static clientconnection.ClientConnection.socket;
+import static clientconnection.ClientConnection.startListeningThread;
+
+import static clientconnection.ClientConnection.user;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,12 +24,18 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import models.DataModel;
 import models.UserModel;
+import static shared.AppConstants.CONNECTION_FLAG;
 import shared.AppFunctions;
+import shared.AppString;
 import static shared.AppString.ICON_PATHS;
+import static shared.AppString.TOOLTIP;
+import sounds.AudioController;
+import tictactoe.playervsplayerlocal.FXMLRequestToPlayController;
 import tictactoe.playervsplayeronline.FXMLPlayerVsPlayerOnlineController;
 import tictactoe.signin.FXMLSigninController;
 
@@ -36,36 +48,60 @@ public class FXMLSignupController extends FXMLSignupBase {
 
     Parent singingParent;
     Stage stage;
+    public ClientConnection client;
+    int currentImageIndex;
 
     public FXMLSignupController(Stage stage) {
         this.stage = stage;
+        characterImageView.setImage(new Image(ICON_PATHS[currentImageIndex]));
+        Tooltip.install(helperImageView, new Tooltip(TOOLTIP));
     }
 
     @Override
     protected void handleBackButton(ActionEvent actionEvent) {
+        AudioController.clickSound();
         AppFunctions.closePopup(actionEvent);
     }
 
     @Override
     protected void goToSignin(ActionEvent actionEvent) {
-        AppFunctions.goTo(actionEvent, new FXMLSigninController(stage));
+        AudioController.clickSound();
+        AppFunctions.goTo(actionEvent, new FXMLSigninController(stage, true));
     }
 
     @Override
 
     protected void goToActiveUsers(ActionEvent actionEvent) {
-        UserModel user = getNewUserData();
-        if (user != null) {
-            DataModel data = new DataModel(user, 1);
+  System.out.println("here goToActiveUsers");
+        ClientConnection.user = getNewUserData();
 
-            new Thread(() -> {
-                ClientConnection client = new ClientConnection();
-                boolean response = false;
+        AudioController.clickSound();
+
+        if (user != null) {
+              System.out.println("user not null");
+            DataModel data = new DataModel(user, 1);
+            client = new ClientConnection();
+            try {
+                client.connectToServer();
+            } catch (IOException ex) {
+                Platform.runLater(() -> {
+                    Alert alert = new Alert(Alert.AlertType.ERROR, "Couldn't connect to server.");
+                    alert.showAndWait();
+                });
+                ex.printStackTrace();
+                return;
+            }
+            
+            Thread th = new Thread(() -> {
+
+                String response = "";
 
                 try {
-                    client.connectToServer();
+
                     client.sendData(data);
-                    response = client.receveResponse();
+                    DataModel newData = ClientConnection.receveData();
+                    user = newData.getUser();
+                    response = newData.getResponse();
                 } catch (IOException ex) {
                     Platform.runLater(() -> {
                         Alert alert = new Alert(Alert.AlertType.ERROR, "Couldn't connect to server.");
@@ -75,26 +111,36 @@ public class FXMLSignupController extends FXMLSignupBase {
                     return; // Exit the thread early on failure
                 }
 
-                boolean finalResponse = response;
+                String finalResponse = response;
                 Platform.runLater(() -> {
-                    if (finalResponse) {
+                    if (finalResponse.equals(AppString.SIGNUP_DONE)) {
                         try {
                             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Signup was successful.");
                             alert.showAndWait();
-                            AppFunctions.closePopup(actionEvent);
-                            AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage));
+                            if (!FXMLSigninController.signInFromHomeScreen) {
+                                AppFunctions.closePopup(actionEvent);
+                                AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage, client));
+                            } else {
+                                AppFunctions.closePopup(actionEvent);
+
+                            }
+                            CONNECTION_FLAG.set(true);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     } else {
                         Alert alert = new Alert(Alert.AlertType.INFORMATION, "Username or email are already used.");
                         alert.showAndWait();
-                        AppFunctions.closePopup(actionEvent);
-                        AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage));
+                        ClientConnection.terminateClient();
                     }
                 });
-            }).start();
+                if (finalResponse.equals(AppString.SIGNUP_DONE)) {
+                    ClientConnection.startListeningThread();
+                }
+            });
+            th.start();
         }
+
     }
 
     @Override
@@ -142,5 +188,23 @@ public class FXMLSignupController extends FXMLSignupBase {
             return null;
         }
 
+    }
+
+    @Override
+    protected void handleConnectToServerButton(ActionEvent actionEvent) {
+                    System.out.println("here1");
+        try {
+            System.out.println("here2");
+            if (ipTextField != null) {
+                ClientConnection.SERVER_IP = ipTextField.getText();
+                ClientConnection.connectToServer();
+                System.out.println(socket);
+            }
+            if (socket != null) {
+                helperImageView.setImage(new Image("/assets/icons/Accept.png"));
+            }
+        } catch (IOException ex) {
+            helperImageView.setImage(new Image("/assets/icons/cancel.png"));
+        }
     }
 }

@@ -9,6 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.UserModel;
 import shared.AppStrings;
+import shared.AppStrings;
 
 public class DataAccessLayer {
 
@@ -27,9 +28,7 @@ public class DataAccessLayer {
         }
     }
 
-    public static Boolean getUserDataLogin(String userName, String pass) {
-
-        Boolean isExist = false;
+    public static String getUserDataLogin(String userName, String pass) {
         try {
 
             PreparedStatement pst = conection.prepareStatement("SELECT * FROM USERS WHERE USER_NAME = ? AND USER_PASSWORD = ?");
@@ -39,17 +38,18 @@ public class DataAccessLayer {
             rs = pst.executeQuery();
             if (rs.next()) {
                 System.out.println("User found: " + rs.getString("USER_NAME"));
-                return true;
+                return AppStrings.SIGNIN_DONE;
             } else {
                 System.out.println("No user found with the given credentials.");
+                return AppStrings.SIGNIN_FAILED;
             }
 
         } catch (SQLException ex) {
-                  System.out.println("not on try on DataAccessLayer");
             Logger.getLogger(DataAccessLayer.class.getName()).log(Level.SEVERE, null, ex);
+            return AppStrings.SIGNIN_FAILED;
         } catch (NullPointerException ex) {
-
             Logger.getLogger(DataAccessLayer.class.getName()).log(Level.SEVERE, null, ex);
+            return AppStrings.SIGNIN_FAILED;
         } finally {
             try {
                 if (rs != null) {
@@ -60,8 +60,6 @@ public class DataAccessLayer {
                 Logger.getLogger(DataAccessLayer.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-
-        return isExist;
     }
 
     public static int getUsersCount() {
@@ -72,15 +70,15 @@ public class DataAccessLayer {
             while (rs.next()) {
 
                 usersCount++;
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(DataAccessLayer.class.getName()).log(Level.SEVERE, null, ex);
             }
+        } catch (SQLException ex) {
+            Logger.getLogger(DataAccessLayer.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return usersCount;
 
     }
 
-    public static boolean insertData(UserModel u) {
+    public static String insertData(UserModel u) {
         try {
             PreparedStatement pst = conection.prepareStatement("INSERT INTO USERS (USER_NAME,USER_EMAIL,USER_PASSWORD,USER_IMG) VALUES (?,?,?,?)");
 
@@ -91,16 +89,82 @@ public class DataAccessLayer {
             int isUpdate = pst.executeUpdate();
             if (isUpdate > 0) {
                 System.out.println("Inserted succ.");
-                return true;
+                return AppStrings.SIGNUP_DONE;
             } else {
                 System.out.println("Inserted failed");
-                return false;
+                return AppStrings.SIGNUP_FAILED;
             }
         } catch (SQLException ex) {
             Logger.getLogger(DataAccessLayer.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
+            return AppStrings.SIGNUP_FAILED;
         }
 
     }
 
+    public static UserModel getUserData(String userName, String pass) {
+
+        UserModel user = new UserModel();
+        try {
+
+            PreparedStatement pst = conection.prepareStatement("SELECT * FROM USERS WHERE USER_NAME = ? AND USER_PASSWORD = ?");
+            pst.setString(1, userName);
+            pst.setString(2, pass);
+
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                user.setId(rs.getInt(AppStrings.USER_ID));
+                user.setName(rs.getString(AppStrings.USER_NAME));
+                user.setEmail(rs.getString(AppStrings.USER_EMAIL));
+                user.setImage(rs.getString(AppStrings.USER_IMG));
+                user.setIsInGame(rs.getBoolean(AppStrings.IS_INGAME));
+                user.setIsOnline(rs.getBoolean(AppStrings.IS_ONLINE));
+                user.setLosses(rs.getInt(AppStrings.NO_OF_LOSSES));
+                user.setWins(rs.getInt(AppStrings.NO_OF_WINS));
+                user.setScore(rs.getInt(AppStrings.USER_SCORE));
+                user.setNumOfGames(rs.getInt(AppStrings.NO_OF_GAMES));
+                System.out.println("User found: " + rs.getString("USER_NAME"));
+                return user;
+            } else {
+                System.out.println("No user found with the given credentials.");
+                return null;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DataAccessLayer.class.getName()).log(Level.SEVERE, null, ex);
+
+        } catch (NullPointerException ex) {
+            Logger.getLogger(DataAccessLayer.class.getName()).log(Level.SEVERE, null, ex);
+
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException ex) {
+                System.out.println("rs != null");
+                Logger.getLogger(DataAccessLayer.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return null;
+    }
+
+    public static void updateUserData(UserModel u) {
+        try {
+            PreparedStatement pst = conection.prepareStatement("UPDATE USERS SET USER_SCORE = ?, NO_OF_WINS = ?, NO_OF_LOSSES = ?, NO_OF_GAMES = ? WHERE USER_NAME = ?;");
+            pst.setInt(1, u.getScore());
+            pst.setInt(2, u.getWins());
+            pst.setInt(3, u.getLosses());
+            pst.setInt(4, u.getNumOfGames());
+            
+            int isUpdate = pst.executeUpdate();
+            if (isUpdate > 0) {
+                System.out.println("Updated succ.");              
+            } else {
+                System.out.println("Updated failed");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DataAccessLayer.class.getName()).log(Level.SEVERE, null, ex);            
+        }
+
+    }
 }

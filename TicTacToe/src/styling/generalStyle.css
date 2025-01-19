@@ -10,11 +10,29 @@
     -fx-background-radius: 10;
     -fx-cursor: hand; 
     -fx-font-weight: bold;
-    -fx-font-family: "Chicle", serif; 
+   -fx-font-family: "Chicle", serif; 
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 8, 0, 2, 2); 
     -fx-transition: all 0.3s ease; 
     -fx-min-width: 50px;
 }
+
+
+.circular-button {
+   -fx-background-color: linear-gradient(to bottom, #4e79a7, #3E5879); 
+    -fx-text-fill: #F5EFE7;
+    -fx-font-size: 16px; 
+    -fx-padding: 12; 
+  
+    -fx-background-radius: 50%;  
+    -fx-cursor: hand; 
+    -fx-font-weight: bold;
+   -fx-font-family: "Chicle", serif; 
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 8, 0, 2, 2); 
+    -fx-transition: all 0.3s ease; 
+    -fx-min-width: 50px;
+              
+}
+
 
 .button:hover {
     -fx-background-color: linear-gradient(to bottom, #ff4d4d, #ff1a1a);
@@ -41,32 +59,33 @@
 }
 
 .text-field {
-    -fx-background-color: linear-gradient(to bottom, #ffffff, #e6e6e6); /* Gradient background */
-    -fx-border-color: #3E5879; /* Border color */
-    -fx-border-width: 2; /* Border thickness */
-    -fx-border-radius: 8; /* Rounded border */
-    -fx-background-radius: 8; /* Rounded background */
-    -fx-padding: 8 12; /* Inner padding */
-    -fx-font-size: 14px; /* Font size */
-    -fx-font-family: "Arial", sans-serif; /* Font style */
-    -fx-text-fill: #3E5879; /* Text color */
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0, 2, 2); /* Subtle shadow */
-    -fx-prompt-text-fill: #d8c4b6; /* Placeholder text color */
-    -fx-cursor: text; /* Text cursor */
-    -fx-transition: all 0.3s ease; /* Smooth transitions */
+    -fx-background-color: linear-gradient(to bottom, #ffffff, #e6e6e6); 
+    -fx-border-color: #3E5879; 
+    -fx-border-width: 2; 
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 8 12; 
+    -fx-font-size: 14px;
+    -fx-font-family: "Arial", sans-serif; 
+    -fx-text-fill: #3E5879;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0, 2, 2); 
+    -fx-prompt-text-fill: #d8c4b6; 
+    -fx-cursor: text; 
+    -fx-transition: all 0.3s ease; 
 }
 
 .text-field:hover {
-    -fx-background-color: linear-gradient(to bottom, #ffffff, #d9d9d9); /* Lighter gradient on hover */
-    -fx-border-color: #ff1a1a; /* Highlight border on hover */
-    -fx-effect: dropshadow(gaussian, rgba(255, 0, 0, 0.2), 8, 0, 3, 3); /* Enhanced shadow */
+    -fx-background-color: linear-gradient(to bottom, #ffffff, #d9d9d9); 
+    -fx-border-color: #ff1a1a; 
+    -fx-effect: dropshadow(gaussian, rgba(255, 0, 0, 0.2), 8, 0, 3, 3);
 }
 
 .text-field:focused {
-    -fx-border-color: #d8c4b6; /* Green border when focused */
-    -fx-background-color: linear-gradient(to bottom, #ffffff, #f0f0f0); /* Subtle change on focus */
-    -fx-effect: dropshadow(gaussian, rgba(76, 175, 80, 0.3), 10, 0, 3, 3); /* Stronger shadow */
+    -fx-border-color: #d8c4b6; 
+    -fx-background-color: linear-gradient(to bottom, #ffffff, #f0f0f0); 
+    -fx-effect: dropshadow(gaussian, rgba(76, 175, 80, 0.3), 10, 0, 3, 3); 
 }
+
 .mainBackground{
    -fx-background-color: #F5EFE7;
 }
