@@ -214,7 +214,7 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
         Media loadVideo = new Media(this.getClass().getResource(AppString.WIN_VIDEO_URL).toExternalForm());
         mediaPlayer = new MediaPlayer(loadVideo);
 
-        mediaPlayer.setVolume(0.5);
+        mediaPlayer.setVolume(0.1);
         mediaPlayer.play();
         winOrLoseVideo.setMediaPlayer(mediaPlayer);
     }
@@ -230,7 +230,7 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
         mediaPlayer = new MediaPlayer(new Media(this.getClass().getResource(AppString.DRAW_VIDEO_URL).toExternalForm()));
         winOrLoseVideo.setMediaPlayer(mediaPlayer);
 
-        mediaPlayer.setVolume(0.5);
+        mediaPlayer.setVolume(0.1);
         mediaPlayer.play();
 
     }
@@ -244,7 +244,7 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
         mediaPlayer = new MediaPlayer(new Media(this.getClass().getResource(AppString.DRAW_VIDEO_URL).toExternalForm()));
         winOrLoseVideo.setMediaPlayer(mediaPlayer);
 
-        mediaPlayer.setVolume(0.5);
+        mediaPlayer.setVolume(0.1);
         mediaPlayer.play();
 
     }
