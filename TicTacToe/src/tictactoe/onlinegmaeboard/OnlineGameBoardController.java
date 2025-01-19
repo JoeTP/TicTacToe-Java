@@ -111,7 +111,7 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
         playerTwoChar.setText(playerTwo.getChar());
 
         playerOne.hisTurn = true;
-        playerTwo.hisTurn = false;
+        playerTwo.hisTurn = false ;
 
         //startCountdownTimer();
     }

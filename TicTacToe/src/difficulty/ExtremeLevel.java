@@ -14,8 +14,8 @@ public class ExtremeLevel extends ComputerPlayer {
         for (int r = 0; r < 3; r++) {
             for (int c = 0; c < 3; c++) {
                 if (board[r][c] == null) {
-                    board[r][c] = getNextStep(board); 
-                    int score = minimax(board, true); 
+                    board[r][c] = 1; 
+                    int score = minimax(board, false); 
                     board[r][c] = null;  
                     if (score > bestScore) {
                         bestScore = score;
@@ -26,7 +26,7 @@ public class ExtremeLevel extends ComputerPlayer {
             }
         }
         if (bestRow != -1 && bestCol != -1) {
-            board[bestRow][bestCol] = getNextStep(board);  
+            board[bestRow][bestCol] = 1;  
         }
 
         return (bestRow * 10) + bestCol;
@@ -36,10 +36,10 @@ public class ExtremeLevel extends ComputerPlayer {
         String result = checkWinner(board);
         if (result != null) {
             if (result.equals("O")) {
-                return 10; 
+                return -10; 
             }
             if (result.equals("X")) {
-                return -10; 
+                return 10; 
             }
             return 0; 
         }
@@ -49,8 +49,8 @@ public class ExtremeLevel extends ComputerPlayer {
             for (int r = 0; r < 3; r++) {
                 for (int c = 0; c < 3; c++) {
                     if (board[r][c] == null) {
-                        board[r][c] = getNextStep(board); 
-                        int score = minimax(board, false);
+                        board[r][c] = 2; 
+                        int score = minimax(board,true);
                         board[r][c] = null; 
                         bestScore = Math.max(score, bestScore);
                     }
@@ -62,7 +62,7 @@ public class ExtremeLevel extends ComputerPlayer {
             for (int r = 0; r < 3; r++) {
                 for (int c = 0; c < 3; c++) {
                     if (board[r][c] == null) {
-                        board[r][c] = getNextStep(board); 
+                        board[r][c] = 1; 
                         int score = minimax(board, true);
                         board[r][c] = null;
                         bestScore = Math.min(score, bestScore);
@@ -73,17 +73,6 @@ public class ExtremeLevel extends ComputerPlayer {
         }
     }
  
-    public static Integer getNextStep(Integer[][] board) {
-        int maxStep = 1;
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                if (board[i][j] != null) {
-                    maxStep = Math.max(maxStep, board[i][j]);
-                }
-            }
-        }
-        return maxStep + 1;
-    }
 
     public static String getWinnerCharacter(Integer value) {
         if (value == null) {
