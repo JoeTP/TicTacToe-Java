@@ -109,12 +109,11 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
 
     private void assignPlayers() {
 
-        playerOne.setChar(X_CHAR);
-        playerTwo.setChar(O_CHAR);
-
-        playerOneLabel.setText(playerOne.getName());
+        playerOne.setChar(O_CHAR);
+        playerTwo.setChar(X_CHAR);
+        playerOneLabel.setText(playerTwo.getName());
         playerOneChar.setText(playerOne.getChar());
-        playerTwoLabel.setText(playerTwo.getName());
+        playerTwoLabel.setText(playerOne.getName());
         playerTwoChar.setText(playerTwo.getChar());
 
         playerOne.hisTurn = true;

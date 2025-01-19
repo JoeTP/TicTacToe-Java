@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
@@ -9,19 +10,17 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="468.0" stylesheets="@../../../resources/styling/invitationPageStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.playervsplayer.FXMLRequestToPlayController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="468.0" stylesheets="@../../../resources/styling/generalStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.playervsplayer.FXMLRequestToPlayController">
    <bottom>
-      <HBox prefHeight="63.0" prefWidth="500.0" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER" spacing="100.0" BorderPane.alignment="CENTER">
          <children>
-            <AnchorPane>
-               <children>
-                  <Button id="accept-button" fx:id="acceptBtn" layoutX="128.0" layoutY="-1.0" mnemonicParsing="false" onAction="#handleAcceptButton" text="Accept" />
-                  <Button id="decline-button" fx:id="declineBtn" layoutX="287.0" layoutY="-1.0" mnemonicParsing="false" onAction="#handleDeclineButton" text="Decline" />
-               </children>
-            </AnchorPane>
+            <Button id="accept-button" fx:id="acceptBtn" mnemonicParsing="false" onAction="#handleAcceptButton" style="-fx-background-color: green;" text="Accept" />
+            <Button id="decline-button" fx:id="declineBtn" mnemonicParsing="false" onAction="#handleDeclineButton" style="-fx-background-color: red;" text="Decline" />
          </children>
+         <BorderPane.margin>
+            <Insets bottom="20.0" />
+         </BorderPane.margin>
       </HBox>
    </bottom>
    <top>
@@ -33,6 +32,9 @@
                      <font>
                         <Font size="36.0" />
                      </font>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
                   </Label>
                   <Line endX="459.5" layoutX="14.0" layoutY="57.0" startX="-100.0" />
                </children>
@@ -50,16 +52,14 @@
                         <Image url="@../../../resources/assets/icons/invite.png" />
                      </image>
                   </ImageView>
-                  <Text id="player-name" fx:id="playerNameLabel" layoutX="166.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="palyer_Name">
-                     <font>
-                        <Font name="System Bold" size="24.0" />
-                     </font>
-                  </Text>
-                  <Label layoutX="96.0" layoutY="107.0" prefHeight="35.0" prefWidth="340.0" text="Invite You To Play With Him">
+                  <Label fx:id="playerNameLabel" layoutX="150.0" layoutY="14.0" text="palyer_Name" />
+                  <Label layoutX="96.0" layoutY="107.0" prefHeight="35.0" prefWidth="340.0" stylesheets="@../../../resources/styling/generalStyle.css" text="Invite You To Play With Him">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
+                  <Label layoutX="178.0" layoutY="55.0" text="Score: " textFill="#3e5879" />
+                  <Label fx:id="scoreLabel" layoutX="252.0" layoutY="55.0" text="0" textFill="#43a39c" />
                </children>
             </AnchorPane>
          </children>
