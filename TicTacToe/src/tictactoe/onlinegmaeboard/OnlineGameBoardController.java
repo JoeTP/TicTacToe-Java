@@ -456,50 +456,66 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
 
     @Override
     protected void handleB20(ActionEvent actionEvent) {
-        setTurn(b20);
-        sendMove(2, 0);
+        if (b20.getText().isEmpty()) {
+            setTurn(b20);
+            sendMove(2, 0);
+        }
     }
 
     @Override
     protected void handleB12(ActionEvent actionEvent) {
-        setTurn(b12);
-        sendMove(1, 2);
+        if (b12.getText().isEmpty()) {
+            setTurn(b12);
+            sendMove(1, 2);
+        }
     }
 
     @Override
     protected void handleB02(ActionEvent actionEvent) {
-        setTurn(b02);
-        sendMove(0, 2);
+        if (b02.getText().isEmpty()) {
+            setTurn(b02);
+            sendMove(0, 2);
+        }
     }
 
     @Override
     protected void handleB21(ActionEvent actionEvent) {
-        setTurn(b21);
-        sendMove(2, 1);
+        if (b21.getText().isEmpty()) {
+            setTurn(b21);
+            sendMove(2, 1);
+        }
     }
 
     @Override
     protected void handleB01(ActionEvent actionEvent) {
-        setTurn(b01);
-        sendMove(0, 1);
+        if (b01.getText().isEmpty()) {
+            setTurn(b01);
+            sendMove(0, 1);
+        }
     }
 
     @Override
     protected void handleB10(ActionEvent actionEvent) {
-        setTurn(b10);
-        sendMove(1, 0);
+        if (b10.getText().isEmpty()) {
+            setTurn(b10);
+            sendMove(1, 0);
+        }
     }
 
     @Override
     protected void handleB11(ActionEvent actionEvent) {
-        setTurn(b11);
-        sendMove(1, 1);
+        if (b11.getText().isEmpty()) {
+            setTurn(b11);
+            sendMove(1, 1);
+        }
     }
 
     @Override
     protected void handleB00(ActionEvent actionEvent) {
-        setTurn(b00);
-        sendMove(0, 0);
+        if (b00.getText().isEmpty()) {
+            setTurn(b00);
+            sendMove(0, 0);
+        }
     }
 
     protected void sendMove(int c, int r) {
