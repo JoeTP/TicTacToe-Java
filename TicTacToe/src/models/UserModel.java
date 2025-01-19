@@ -112,7 +112,7 @@ public class UserModel implements Serializable {
         return score;
     }
 
-    public void setScore() {
+    public void setScore(int score) {
         this.score = score;
     }
 
@@ -141,10 +141,12 @@ public class UserModel implements Serializable {
     }
 
     public void updateUserData(boolean isWinner) {
+       
         numOfGames++;
         if (isWinner == true) {
             score += 5;
             wins++;
+          
         } else {
             if(score >0)  score -= 5;
            

@@ -13,26 +13,21 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.gamerecord.GameRecordController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.gamerecord.GameRecordController">
    <bottom>
       <HBox prefHeight="70.0" BorderPane.alignment="CENTER">
          <BorderPane.margin>
-            <Insets left="20.0" right="20.0" />
+            <Insets left="20.0" right="20.0" top="20.0" />
          </BorderPane.margin>
          <children>
             <Button fx:id="prevBtn" mnemonicParsing="false" onAction="#handlePreviousBtn" prefHeight="47.0" prefWidth="90.0" text="Previous" textAlignment="CENTER">
                <HBox.margin>
-                  <Insets left="110.0" />
+                  <Insets left="30.0" />
                </HBox.margin>
             </Button>
             <Button fx:id="nextBtn" layoutX="260.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleNextBtn" prefHeight="47.0" prefWidth="90.0" text="Next" textAlignment="CENTER">
                <HBox.margin>
-                  <Insets left="90.0" />
-               </HBox.margin>
-            </Button>
-            <Button fx:id="exitBtn" layoutX="120.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleExitButton" prefHeight="47.0" prefWidth="90.0" text="Exit" textAlignment="CENTER">
-               <HBox.margin>
-                  <Insets left="100.0" />
+                  <Insets left="150.0" />
                </HBox.margin>
             </Button>
          </children>
@@ -45,6 +40,11 @@
                <children>
                   <Label layoutX="10.0" layoutY="10.0" text="O" />
                   <Label fx:id="playerOneLabel" text="Player1Name" />
+                  <Button fx:id="exitBtn" mnemonicParsing="false" onAction="#handleExitButton" prefHeight="47.0" prefWidth="20.0" style="-fx-background-radius: 100;" text="B" textAlignment="CENTER">
+                     <HBox.margin>
+                        <Insets left="150.0" />
+                     </HBox.margin>
+                  </Button>
                </children>
             </HBox>
             <HBox spacing="15.0">
@@ -64,9 +64,9 @@
       <String fx:value="bigLabel" />
    </styleClass>
    <center>
-      <AnchorPane prefHeight="400.0" prefWidth="400.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="100.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <GridPane fx:id="grid" layoutX="23.0" layoutY="108.0" prefHeight="449.0" prefWidth="560.0" styleClass="grid-pane" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
+            <GridPane fx:id="grid" layoutX="23.0" layoutY="108.0" prefHeight="449.0" prefWidth="560.0" styleClass="grid-pane-record" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -78,20 +78,20 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="b22" mnemonicParsing="false" style="-fx-border-radius: 0 0 30 0;" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                  <Button fx:id="b20" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" style="-fx-border-radius: 0 30 0 0;" GridPane.columnIndex="2" />
+                  <Button fx:id="b22" mnemonicParsing="false" style="-fx-border-radius: 0;" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                  <Button fx:id="b20" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" style="-fx-border-radius: 0;" GridPane.columnIndex="2" />
                   <Button fx:id="b12" layoutX="177.0" layoutY="10.0" mnemonicParsing="false" style="-fx-border-radius: 0 0 0 0;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <Button fx:id="b02" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" style="-fx-border-radius: 0 0 0 30;" GridPane.rowIndex="2" />
+                  <Button fx:id="b02" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" style="-fx-border-radius: 0;" GridPane.rowIndex="2" />
                   <Button fx:id="b21" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" style="-fx-border-radius: 0 0 0 0;" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                   <Button fx:id="b01" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" style="-fx-border-radius: 0;" GridPane.rowIndex="1" />
                   <Button fx:id="b10" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" style="-fx-border-radius: 0;" GridPane.columnIndex="1" />
                   <Button fx:id="b11" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" style="-fx-border-radius: 0;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Button fx:id="b00" layoutX="177.0" layoutY="10.0" mnemonicParsing="false" prefHeight="153.0" prefWidth="192.0" style="-fx-border-radius: 30 0 0 0;" />
+                  <Button fx:id="b00" layoutX="177.0" layoutY="10.0" mnemonicParsing="false" prefHeight="153.0" prefWidth="192.0" style="-fx-border-radius: 0;" />
                </children>
             </GridPane>
          </children>
          <BorderPane.margin>
-            <Insets left="20.0" right="20.0" />
+            <Insets left="30.0" right="30.0" top="10.0" />
          </BorderPane.margin>
       </AnchorPane>
    </center>
