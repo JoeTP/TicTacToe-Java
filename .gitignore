@@ -19,4 +19,5 @@
 /TicTacToeServer/nbproject/private/
 /TicTacToeServer/build/
 /TicTacToeServer/dist/
+/TicTacToeServer/records/
 *.sqlite

@@ -63,6 +63,12 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
     private Player playerTwo = new Player();
     private Thread th = new Thread();
     private boolean isEndOfGame = false;
+    private int rank =0;
+    private int score =0;
+    private int NOfLoss =0;
+    private int NOfWins =0;
+    
+    
    //  public static GameModel gameModel;
 
     private Timeline timeLine;
@@ -299,7 +305,7 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
             return;
         }
         System.out.println("Player Two comp : "+playerTwo.getName()+"player One Comp " +playerOne.getName());
-        GameBoardController.gameModel = new GameModel(1, playerOne.getName(), playerTwo.getName(), winner, DateNow(), board);
+        GameBoardController.gameModel = new GameModel(1, playerOne.getName(), playerTwo.getName(), winner, DateNow(), board,score,rank,NOfWins,NOfLoss);
 
         System.out.println("The Game Model created, the cur player: "
                 + GameBoardController.gameModel.getPlayer()

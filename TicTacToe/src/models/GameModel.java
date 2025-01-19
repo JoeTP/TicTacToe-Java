@@ -20,6 +20,11 @@ public class GameModel implements Serializable {
     String winner;
     Date playDate;
     Integer board[][];
+    int score ;
+    int rank;
+    int NOfWins;
+    int NOfLoss;
+    
 
     public GameModel(int id, String player, String rival, String winner, Date playDate,Integer [][] board) {
         this.id = id;
@@ -28,6 +33,18 @@ public class GameModel implements Serializable {
         this.winner = winner;
         this.playDate = playDate;
         this.board=board;
+    }
+       public GameModel(int id, String player, String rival, String winner, Date playDate,Integer [][] board,int score,int rank,int NOfWins,int NOfLoss) {
+        this.id = id;
+        this.player = player;
+        this.rival = rival;
+        this.winner = winner;
+        this.playDate = playDate;
+        this.board=board;
+        this.NOfWins=NOfWins;
+        this.rank=rank;
+        this.score=score;
+        this.NOfLoss=NOfLoss;
     }
 
     public void setBoard(Integer[][] board) {

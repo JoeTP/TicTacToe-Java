@@ -51,7 +51,7 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
         if (CONNECTION_FLAG == null) {
             CONNECTION_FLAG = new SimpleBooleanProperty(false);
         }
-        chatBtn.disableProperty().bind(CONNECTION_FLAG.not());
+//        chatBtn.disableProperty().bind(CONNECTION_FLAG.not());
         accInfoRect.visibleProperty().bind(CONNECTION_FLAG);
         CONNECTION_FLAG.addListener((observable, oldValue, newValue) -> {
             //to keep updating
