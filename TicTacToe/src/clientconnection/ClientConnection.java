@@ -55,7 +55,6 @@ public class ClientConnection {
         System.out.println("Cleint connection Established !");
         ois = new ObjectInputStream(socket.getInputStream());
         oos = new ObjectOutputStream(socket.getOutputStream());
-
     }
 
     public static void stopThreads() {

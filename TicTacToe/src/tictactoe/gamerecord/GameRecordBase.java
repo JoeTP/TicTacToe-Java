@@ -18,11 +18,11 @@ public abstract class GameRecordBase extends BorderPane {
     protected final HBox hBox;
     protected final Button prevBtn;
     protected final Button nextBtn;
-    protected final Button exitBtn;
     protected final VBox vBox;
     protected final HBox hBox0;
     protected final Label label;
     protected final Label playerOneLabel;
+    protected final Button exitBtn;
     protected final HBox hBox1;
     protected final Label label0;
     protected final Label playerTwoLabel;
@@ -49,11 +49,11 @@ public abstract class GameRecordBase extends BorderPane {
         hBox = new HBox();
         prevBtn = new Button();
         nextBtn = new Button();
-        exitBtn = new Button();
         vBox = new VBox();
         hBox0 = new HBox();
         label = new Label();
         playerOneLabel = new Label();
+        exitBtn = new Button();
         hBox1 = new HBox();
         label0 = new Label();
         playerTwoLabel = new Label();
@@ -79,12 +79,12 @@ public abstract class GameRecordBase extends BorderPane {
         setMaxWidth(USE_PREF_SIZE);
         setMinHeight(USE_PREF_SIZE);
         setMinWidth(USE_PREF_SIZE);
-        setPrefHeight(720.0);
-        setPrefWidth(720.0);
+        setPrefHeight(500.0);
+        setPrefWidth(450.0);
 
         BorderPane.setAlignment(hBox, javafx.geometry.Pos.CENTER);
         hBox.setPrefHeight(70.0);
-        BorderPane.setMargin(hBox, new Insets(0.0, 20.0, 0.0, 20.0));
+        BorderPane.setMargin(hBox, new Insets(20.0, 20.0, 0.0, 20.0));
 
         prevBtn.setMnemonicParsing(false);
         prevBtn.setOnAction(this::handlePreviousBtn);
@@ -92,7 +92,7 @@ public abstract class GameRecordBase extends BorderPane {
         prevBtn.setPrefWidth(90.0);
         prevBtn.setText("Previous");
         prevBtn.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
-        HBox.setMargin(prevBtn, new Insets(0.0, 0.0, 0.0, 110.0));
+        HBox.setMargin(prevBtn, new Insets(0.0, 0.0, 0.0, 30.0));
 
         nextBtn.setLayoutX(260.0);
         nextBtn.setLayoutY(10.0);
@@ -102,17 +102,7 @@ public abstract class GameRecordBase extends BorderPane {
         nextBtn.setPrefWidth(90.0);
         nextBtn.setText("Next");
         nextBtn.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
-        HBox.setMargin(nextBtn, new Insets(0.0, 0.0, 0.0, 90.0));
-
-        exitBtn.setLayoutX(120.0);
-        exitBtn.setLayoutY(10.0);
-        exitBtn.setMnemonicParsing(false);
-        exitBtn.setOnAction(this::handleExitButton);
-        exitBtn.setPrefHeight(47.0);
-        exitBtn.setPrefWidth(90.0);
-        exitBtn.setText("Exit");
-        exitBtn.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
-        HBox.setMargin(exitBtn, new Insets(0.0, 0.0, 0.0, 100.0));
+        HBox.setMargin(nextBtn, new Insets(0.0, 0.0, 0.0, 150.0));
         setBottom(hBox);
 
         hBox0.setSpacing(15.0);
@@ -122,6 +112,15 @@ public abstract class GameRecordBase extends BorderPane {
         label.setText("O");
 
         playerOneLabel.setText("Player1Name");
+
+        exitBtn.setMnemonicParsing(false);
+        exitBtn.setOnAction(this::handleExitButton);
+        exitBtn.setPrefHeight(47.0);
+        exitBtn.setPrefWidth(20.0);
+        exitBtn.setStyle("-fx-background-radius: 100;");
+        exitBtn.setText("B");
+        exitBtn.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
+        HBox.setMargin(exitBtn, new Insets(0.0, 0.0, 0.0, 150.0));
 
         hBox1.setSpacing(15.0);
 
@@ -134,18 +133,18 @@ public abstract class GameRecordBase extends BorderPane {
         setTop(vBox);
 
         BorderPane.setAlignment(anchorPane, javafx.geometry.Pos.CENTER);
-        anchorPane.setPrefHeight(400.0);
-        anchorPane.setPrefWidth(400.0);
+        anchorPane.setPrefHeight(100.0);
+        anchorPane.setPrefWidth(100.0);
 
-        AnchorPane.setBottomAnchor(grid, 50.0);
-        AnchorPane.setLeftAnchor(grid, 50.0);
-        AnchorPane.setRightAnchor(grid, 50.0);
-        AnchorPane.setTopAnchor(grid, 50.0);
+        AnchorPane.setBottomAnchor(grid, 0.0);
+        AnchorPane.setLeftAnchor(grid, 0.0);
+        AnchorPane.setRightAnchor(grid, 0.0);
+        AnchorPane.setTopAnchor(grid, 0.0);
         grid.setLayoutX(23.0);
         grid.setLayoutY(108.0);
         grid.setPrefHeight(449.0);
         grid.setPrefWidth(560.0);
-        grid.getStyleClass().add("grid-pane");
+        grid.getStyleClass().add("grid-pane-record");
 
         columnConstraints.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
         columnConstraints.setMinWidth(10.0);
@@ -174,13 +173,13 @@ public abstract class GameRecordBase extends BorderPane {
         GridPane.setColumnIndex(b22, 2);
         GridPane.setRowIndex(b22, 2);
         b22.setMnemonicParsing(false);
-        b22.setStyle("-fx-border-radius: 0 0 30 0;");
+        b22.setStyle("-fx-border-radius: 0;");
 
         GridPane.setColumnIndex(b20, 2);
         b20.setLayoutX(10.0);
         b20.setLayoutY(10.0);
         b20.setMnemonicParsing(false);
-        b20.setStyle("-fx-border-radius: 0 30 0 0;");
+        b20.setStyle("-fx-border-radius: 0;");
 
         GridPane.setColumnIndex(b12, 1);
         GridPane.setRowIndex(b12, 2);
@@ -193,7 +192,7 @@ public abstract class GameRecordBase extends BorderPane {
         b02.setLayoutX(10.0);
         b02.setLayoutY(10.0);
         b02.setMnemonicParsing(false);
-        b02.setStyle("-fx-border-radius: 0 0 0 30;");
+        b02.setStyle("-fx-border-radius: 0;");
 
         GridPane.setColumnIndex(b21, 2);
         GridPane.setRowIndex(b21, 1);
@@ -226,17 +225,17 @@ public abstract class GameRecordBase extends BorderPane {
         b00.setMnemonicParsing(false);
         b00.setPrefHeight(153.0);
         b00.setPrefWidth(192.0);
-        b00.setStyle("-fx-border-radius: 30 0 0 0;");
-        BorderPane.setMargin(anchorPane, new Insets(0.0, 20.0, 0.0, 20.0));
+        b00.setStyle("-fx-border-radius: 0;");
+        BorderPane.setMargin(anchorPane, new Insets(10.0, 30.0, 0.0, 30.0));
         setCenter(anchorPane);
         getStylesheets().add("/tictactoe/gameboard/style.css");
         getStylesheets().add("/styling/generalStyle.css");
 
         hBox.getChildren().add(prevBtn);
         hBox.getChildren().add(nextBtn);
-        hBox.getChildren().add(exitBtn);
         hBox0.getChildren().add(label);
         hBox0.getChildren().add(playerOneLabel);
+        hBox0.getChildren().add(exitBtn);
         vBox.getChildren().add(hBox0);
         hBox1.getChildren().add(label0);
         hBox1.getChildren().add(playerTwoLabel);
