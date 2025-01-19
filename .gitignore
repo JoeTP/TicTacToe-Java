@@ -16,3 +16,4 @@
 /TicTacToeServer/dist/
 *.sqlite
 /TicTacToe/records
+/TicTacToeServer/database.sqlite
