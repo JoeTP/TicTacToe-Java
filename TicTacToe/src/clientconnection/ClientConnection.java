@@ -93,11 +93,15 @@ public class ClientConnection {
     public synchronized static DataModel receveData() {
         DataModel data = null;
         try {
-            data = (DataModel) ois.readObject();
-        } catch (IOException ex) {
+            
+            data = (DataModel) ois.readObject();  
+        }
+            
+         catch (IOException ex) {
             Logger.getLogger(ClientConnection.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ClientConnection.class.getName()).log(Level.SEVERE, null, ex);
+            
         }
         return data;
     }
@@ -108,6 +112,9 @@ public class ClientConnection {
             while (!Thread.currentThread().isInterrupted()) {
                 System.out.println("startListeningThread");
                 DataModel newData = ClientConnection.receveData();
+                if(newData == null){
+                    continue;
+                }
                 String newResponse = newData.getResponse();
                 String rival = newData.getRival();
                 System.out.println(newResponse);
@@ -115,14 +122,14 @@ public class ClientConnection {
                 if (newResponse.equals("Game_Request")) {
                     System.out.println(rival);
                     Platform.runLater(() -> {
-                        AppFunctions.openReqPopup(new FXMLRequestToPlayController(rival));
+                        AppFunctions.openPopup(appStage, new FXMLRequestToPlayController(rival, appStage));
                     });
                     stopListeningThread();
                 }
                 if (newResponse.equals("GAME_ACCEPT")) {
                     Platform.runLater(() -> {
-                        AppFunctions.goToGameBoard(appStage, new OnlineGameBoardController(appStage, rival, user.getName(), "online"));
-                        //AppFunctions.closeAndGo(requestActionEvent, appStage, new OnlineGameBoardController(appStage, rival, user.getName(), "online") );
+                        //AppFunctions.goToGameBoard(appStage, new OnlineGameBoardController(appStage, rival, user.getName(), "online"));
+                        AppFunctions.closeAndGo(requestActionEvent, appStage, new OnlineGameBoardController(appStage, rival, user.getName(), "online") );
                     });
                     stopListeningThread();
                 }
@@ -143,6 +150,13 @@ public class ClientConnection {
                     } catch (IOException ex) {
                         Logger.getLogger(FXMLPlayerVsPlayerOnlineController.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                }
+                if(newResponse.equals("GAME_DECLINE")){
+                    System.out.println("GAME_DECLINE");
+                }
+                
+                if(newResponse.equals("DISCONNECT")){
+                    terminateClient();
                 }
             }
         });

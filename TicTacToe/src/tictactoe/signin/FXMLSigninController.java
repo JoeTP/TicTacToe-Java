@@ -33,7 +33,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import json.JSONConverters;
+
 import models.DataModel;
 import models.UserModel;
 import shared.AppFunctions;
@@ -43,8 +43,6 @@ import static shared.AppConstants.CONNECTION_FLAG;
 import static shared.AppString.TOOLTIP;
 import sounds.AudioController;
 
-import tictactoe.gameboard.GameBoardController;
-import tictactoe.playervsplayerlocal.FXMLRequestToPlayController;
 
 import tictactoe.playervsplayeronline.FXMLPlayerVsPlayerOnlineController;
 import tictactoe.playervsplayerpopup.FXMLPlayerVsPlayerPopupController;
@@ -124,7 +122,7 @@ public class FXMLSigninController extends FXMLSigninBase {
                                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "Signin was successful.");
                                 alert.showAndWait();
                                 if (!signInFromHomeScreen) {
-                                    AppFunctions.closePopup(actionEvent);
+//                                    AppFunctions.closeAndGo(actionEvent, stage, new FXMLPlayerVsPlayerOnlineController(stage, client));
                                     AppFunctions.goTo(actionEvent, new FXMLPlayerVsPlayerOnlineController(stage, client));
                                 } else {
                                     AppFunctions.closePopup(actionEvent);

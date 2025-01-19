@@ -11,26 +11,24 @@ import java.io.Serializable;
  *
  * @author Youssif
  */
-public class UserModel implements Serializable{
+public class UserModel implements Serializable {
 
-  
-
-private static final long serialVersionUID = -5159020983329262064L;
-
+    private static final long serialVersionUID = -5159020983329262064L;
 
     int id;
     String name;
     String password;
     String email;
     String image;
-    int score;
-    int numOfGames;
-    int wins;
-    int losses;
-    boolean isInGame;
-    boolean isOnline;
+    public int score = 0;
+    public int numOfGames = 0;
+    public int wins = 0;
+    public int losses = 0;
+    public double rate = 0;
+    // boolean isInGame;
+    // boolean isOnline;
 
-    public UserModel(int id, String name, String password, String email, String image, int score, int numOfGames, int wins, int losses, boolean isInGame, boolean isOnline) {
+    public UserModel(int id, String name, String password, String email, String image, int score, int numOfGames, int wins, int losses, boolean isInGame, boolean isOnline, double rate) {
         this.id = id;
         this.name = name;
         this.password = password;
@@ -40,28 +38,34 @@ private static final long serialVersionUID = -5159020983329262064L;
         this.numOfGames = numOfGames;
         this.wins = wins;
         this.losses = losses;
-        this.isInGame = isInGame;
-        this.isOnline = isOnline;
+        this.rate = rate;
+
+    }
+
+    public void setRate(int rate) {
+        this.rate = rate;
+    }
+
+    public double getRate() {
+        return rate;
     }
 
     public UserModel() {
-        id=0;
-        name="No name";
+        id = 0;
+        name = "No name";
         password = "No password";
-        email ="No email";
+        email = "No email";
         image = "No img";
-        score=0;
-        numOfGames=0;
-        wins=0;
-        losses=0;
-        isInGame =false;
-        isOnline=false;
+//        score = 0;
+//        numOfGames = 0;
+//        wins = 0;
+//        losses = 0;
 
     }
 
     public UserModel(int id, String name) { // for Login Request
-       this.id=id;
-       this.name=name;
+        this.id = id;
+        this.name = name;
     }
 
     public int getId() {
@@ -108,7 +112,7 @@ private static final long serialVersionUID = -5159020983329262064L;
         return score;
     }
 
-    public void setScore(int score) {
+    public void setScore() {
         this.score = score;
     }
 
@@ -136,22 +140,19 @@ private static final long serialVersionUID = -5159020983329262064L;
         this.losses = losses;
     }
 
-    public boolean isIsInGame() {
-        return isInGame;
-    }
+    public void updateUserData(boolean isWinner) {
+        numOfGames++;
+        if (isWinner == true) {
+            score += 5;
+            wins++;
+        } else {
+            if(score >0)  score -= 5;
+           
+            losses++;
 
-    public void setIsInGame(boolean isInGame) {
-        this.isInGame = isInGame;
-    }
+        }
+        rate = (wins / numOfGames) * 100;
 
-    public boolean isIsOnline() {
-        return isOnline;
     }
-
-    public void setIsOnline(boolean isOnline) {
-        this.isOnline = isOnline;
-    }
-
- 
 
 }

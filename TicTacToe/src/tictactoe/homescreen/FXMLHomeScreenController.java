@@ -51,7 +51,7 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
         if (CONNECTION_FLAG == null) {
             CONNECTION_FLAG = new SimpleBooleanProperty(false);
         }
-        chatBtn.disableProperty().bind(CONNECTION_FLAG.not());
+//        chatBtn.disableProperty().bind(CONNECTION_FLAG.not());
         accInfoRect.visibleProperty().bind(CONNECTION_FLAG);
         CONNECTION_FLAG.addListener((observable, oldValue, newValue) -> {
             //to keep updating
@@ -65,28 +65,27 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
     private void updateConnectionLabel() {
         Platform.runLater(() -> {
             if (CONNECTION_FLAG.get()) {
-                nameLabel.setText(ClientConnection.user.getName());
 
                 int numOfGames = ClientConnection.user.getNumOfGames();
                 int wins = ClientConnection.user.getWins();
-
-                if (numOfGames > 0) { 
-                    double winRate = (wins / numOfGames) * 100;
-
-                    if (winRate > 70) {
+                double rate =ClientConnection.user.getRate();
+                if (numOfGames > 0) {
+                  
+                
+                    if (rate > 70) {
                         rankStarLabel.setStyle("-fx-text-fill: #FFD700;");
-                    } else if (winRate > 50) {
-                        rankStarLabel.setStyle("-fx-text-fill: #C0C0C0;"); 
+                    } else if (rate > 50) {
+                        rankStarLabel.setStyle("-fx-text-fill: #C0C0C0;");
                     } else {
                         rankStarLabel.setStyle("-fx-text-fill: #8B4513;");
                     }
                 } else {
-                   
-                    rankStarLabel.setStyle("-fx-text-fill: #8B4513;"); 
+
+                    rankStarLabel.setStyle("-fx-text-fill: #8B4513;");
                 }
-
+              
+                scoreLabel.setText(ClientConnection.user.getScore()+"");
                 nameLabel.setText(ClientConnection.user.getName());
-
                 wonGamesLabel.setText(ClientConnection.user.getWins() + "");
                 playedGamesLabel.setText(ClientConnection.user.getNumOfGames() + "");
                 profileImageView.setImage(new Image(AppString.ICON_PATHS[Integer.parseInt(ClientConnection.user.getImage())]));
@@ -161,10 +160,9 @@ public class FXMLHomeScreenController extends FXMLHomeScreenBase {
 
     @Override
     protected void handleHistoryButton(ActionEvent actionEvent) {
-         AudioController.clickSound();
-         AppFunctions.openPopup(stage, new RecordListPopUpController(stage));
-         
-         
+        AudioController.clickSound();
+        AppFunctions.openPopup(stage, new RecordListPopUpController(stage));
+
     }
 
     @Override

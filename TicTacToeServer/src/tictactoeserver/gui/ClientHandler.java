@@ -31,7 +31,7 @@ public class ClientHandler extends Thread {
     ObjectOutputStream oos;
     UserModel user;
     String response;
-    Socket client; 
+    Socket client;
     int state;
     static ObservableList<ClientHandler> clients = FXCollections.synchronizedObservableList(FXCollections.observableArrayList());
     static ObservableList<String> usernames = FXCollections.synchronizedObservableList(FXCollections.observableArrayList());
@@ -63,7 +63,7 @@ public class ClientHandler extends Thread {
                     case 1: // Sign-up
                         user = data.getUser();
                         System.out.println(user.getName());
-                        response = DataAccessLayer.insertData(user);                       
+                        response = DataAccessLayer.insertData(user);
                         updateUserData();
                         sendUserData(user, response);
                         if (response.equals(AppStrings.SIGNUP_DONE)) {
@@ -81,14 +81,13 @@ public class ClientHandler extends Thread {
                         if (isNotLoggedin == false) {
                             response = AppStrings.SIGNIN_ALREADY_FOUND;
                         }
-                         updateUserData();
+                        updateUserData();
                         sendUserData(user, response);
                         if (response.equals(AppStrings.SIGNIN_DONE)) {
                             synchronized (usernames) {
                                 usernames.add(user.getName());
                             }
                         }
-                       
 
                         break;
                     case 3:
@@ -98,24 +97,32 @@ public class ClientHandler extends Thread {
                         break;
                     case 4:
                         ClientHandler op = findClientHandler(data.getRival());
-                        
-                        if(data.getPlayer().isEmpty()){
+
+                        if (data.getPlayer().isEmpty()) {
                             System.out.println("player is null");
-                        }else{
+                        } else {
                             System.out.println(data.getPlayer());
                         }
                         op.sendRequest(data.getPlayer());
                         break;
                     case 5:
                         ClientHandler ch = findClientHandler(data.getRival());
-                        ch.sendRequestResponse(data.getPlayer());                        
+                        ch.sendRequestResponse(data.getPlayer());
                         break;
                     case 6:
                         System.out.println(data.getRival());
                         ClientHandler gamePlayer = findClientHandler(data.getRival());
-                        gamePlayer.sendGameMove(data.getGameMove());
+                        gamePlayer.sendGameMove(data);
                         System.out.println("Sent game move");
                         break;
+                    case 7:
+                        ClientHandler ch2 = findClientHandler(data.getRival());
+                        ch2.sendRequestResponseDecline(data.getPlayer());
+                        break;
+                    case 8:
+                        ClientHandler ch3 = findClientHandler(data.getRival());
+                        data.setGameMove(-1);
+                        ch3.sendGameMove(data);
 //                    default:
 //                        System.out.println("Unknown state: " + state);
 //                        ps.writeUTF("Unknown request");
@@ -131,7 +138,6 @@ public class ClientHandler extends Thread {
         }
     }
 
-    
     void broadCastMsg(String msg) {
         for (ClientHandler client : clients) {
             try {
@@ -178,7 +184,7 @@ public class ClientHandler extends Thread {
             synchronized (clients) {
                 clients.remove(this);
             }
-            if (response != null && !response.equals(AppStrings.SIGNIN_ALREADY_FOUND) 
+            if (response != null && !response.equals(AppStrings.SIGNIN_ALREADY_FOUND)
                     && !response.equals(AppStrings.SIGNUP_FAILED)
                     && !response.equals(AppStrings.SIGNIN_FAILED)) {
 
@@ -241,30 +247,60 @@ public class ClientHandler extends Thread {
         user = DataAccessLayer.getUserData(user.getName(), user.getPassword());
 
     }
-    private void sendRequest(String rival) throws IOException{
-        DataModel data = new DataModel(rival,"Game_Request");
+
+    private void sendRequest(String rival) throws IOException {
+        DataModel data = new DataModel(rival, "Game_Request");
         oos.writeObject(data);
         oos.flush();
     }
-    private void sendRequestResponse(String rival) throws IOException{
+
+    private void sendRequestResponse(String rival) throws IOException {
         DataModel data = new DataModel(rival, "GAME_ACCEPT");
         oos.writeObject(data);
         oos.flush();
     }
-    
-    public static void broadCastActiveUsers(){
+
+    public static void broadCastActiveUsers() {
         clients.forEach((c) -> {
             c.sendActiveUsersList();
         });
     }
-    private void sendGameMove(int gameMove){
+
+    public void broadCastToUsers() throws IOException {
+        DataModel data = new DataModel("DISCONNECT");
+        oos.writeObject(data);
+        oos.flush();
+    }
+
+    public static void broadCastDisconnect() {
+        clients.forEach((c) -> {
+            try {
+                c.broadCastToUsers();
+            } catch (IOException ex) {
+                Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+    }
+
+    private void sendGameMove(DataModel gameMove) {
         try {
-            String move = String.valueOf(gameMove);
-            oos.writeUTF(move);
+
+            oos.writeObject(gameMove);
             oos.flush();
         } catch (IOException ex) {
             Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
+    }
+
+    private void sendRequestResponseDecline(String rival) {
+        DataModel data = new DataModel(rival, "GAME_DECLINE");
+        try {
+            oos.writeObject(data);
+            oos.flush();
+        } catch (IOException ex) {
+            Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 }

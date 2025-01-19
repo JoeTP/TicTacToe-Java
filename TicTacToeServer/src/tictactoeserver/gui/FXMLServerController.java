@@ -9,22 +9,18 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
-import java.net.URL;
-import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
-import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.fxml.Initializable;
 import javafx.scene.paint.Color;
 import javafx.scene.chart.PieChart;
+import javafx.scene.layout.Background;
 import shared.AppStrings;
 import tictactoeserver.MainServer;
-import static tictactoeserver.gui.ClientHandler.broadCastActiveUsers;
 import static tictactoeserver.gui.ClientHandler.clients;
 import static tictactoeserver.gui.ClientHandler.usernames;
 
@@ -39,63 +35,23 @@ public class FXMLServerController extends FXMLServerBase {
     ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
 
     public FXMLServerController() {
-        System.out.println("FXMLServerController initialized");
         usernames.addListener((ListChangeListener<String>) change -> {
             updatePieChart();
             updateActiveUsersList(change);
         });
         updatePieChart();
-        serverIndicator.setFill(Color.CRIMSON);        
+        serverIndicator.setFill(Color.CRIMSON);
     }
 
     @Override
     protected void handleServerState(ActionEvent actionEvent) {
 
         if (!serverRunning) {
-            serverRunning = true;
+            startServer();
+        } else {
+            stopServer();
+        }
 
-            th = new Thread(() -> {
-                try {
-                    server = new ServerSocket(5001);
-                    while (serverRunning) {
-                        try {
-                            client = server.accept();
-                            System.out.println("BLOCKING CODE");
-                            new ClientHandler(client);
-                        } catch (SocketException ex) {
-                            if (!serverRunning) {
-                                break;
-                            }
-                        } catch (IOException ex) {
-                            Logger.getLogger(MainServer.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    }
-                } catch (IOException ex) {
-                    Logger.getLogger(MainServer.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            });
-            th.start();
-            System.out.println("SERVER STARTED");
-            serverIndicator.setFill(Color.GREEN);
-        } else {
-            serverRunning = false;
-            try {
-                server.close();
-                th.stop();
-                th.join();
-                System.out.println("SERVER STOPPED");
-                serverIndicator.setFill(Color.CRIMSON);
-            } catch (IOException ex) {
-                Logger.getLogger(FXMLServerController.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(FXMLServerController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        if (!serverRunning) {
-            serverStateToggle.setText(AppStrings.START);
-        } else {
-            serverStateToggle.setText(AppStrings.STOP);
-        }
     }
 
     protected void updatePieChart() {
@@ -113,7 +69,7 @@ public class FXMLServerController extends FXMLServerBase {
                     pieChartData.setAll(
                             new PieChart.Data(AppStrings.ONLINE, onlineUsersCount),
                             new PieChart.Data(AppStrings.OFFLINE, usersCount - onlineUsersCount)
-                    );                    
+                    );
                 }
                 usersPieChart.getData().get(0).getNode().setStyle("-fx-pie-color: DARKSLATEBLUE;");
                 usersPieChart.getData().get(1).getNode().setStyle("-fx-pie-color: D8C4B6;");
@@ -142,5 +98,66 @@ public class FXMLServerController extends FXMLServerBase {
             }
         }
         ClientHandler.broadCastActiveUsers();
+    }
+
+   private void stopServer() {
+    serverRunning = false;
+
+    try {
+        Platform.runLater(() -> {
+            clients.forEach(ClientHandler::stop);
+            clients.clear();
+            usernames.clear();
+        });
+
+        if (server != null && !server.isClosed()) {
+            server.close();
+        }
+
+        if (th != null && th.isAlive()) {
+            th.interrupt();
+            th.join();
+        }
+
+        System.out.println("SERVER STOPPED");
+        Platform.runLater(() -> {
+            serverIndicator.setFill(Color.CRIMSON);
+            serverStateToggle.setText(AppStrings.START);
+        });
+
+    } catch (IOException | InterruptedException ex) {
+        Logger.getLogger(FXMLServerController.class.getName()).log(Level.SEVERE, null, ex);
+    }
+}
+
+
+    private void startServer() {
+
+        serverRunning = true;
+
+        th = new Thread(() -> {
+            try {
+                server = new ServerSocket(5001);
+                while (serverRunning) {
+                    try {
+                        client = server.accept();
+                        System.out.println("BLOCKING CODE");
+                        new ClientHandler(client);
+                    } catch (SocketException ex) {
+                        if (!serverRunning) {
+                            break;
+                        }
+                    } catch (IOException ex) {
+                        Logger.getLogger(MainServer.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(MainServer.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        th.start();
+        System.out.println("SERVER STARTED");
+        serverIndicator.setFill(Color.GREEN);
+        serverStateToggle.setText(AppStrings.STOP);
     }
 }

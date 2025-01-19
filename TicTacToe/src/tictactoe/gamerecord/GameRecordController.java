@@ -21,17 +21,17 @@ public class GameRecordController extends GameRecordBase {
     public GameRecordController(Stage stage, String fileName) {
         this.stage = stage;
         this.fileName = fileName;
-       
+
         loadGameData();
     }
 
     private void loadGameData() {
         game = LaodGame.loadGameFromFile(fileName);
         board = game.getBoard();
-         playerOneLabel.setText(game.getPlayer());
-          playerTwoLabel.setText(game.getRival());
+        playerOneLabel.setText(game.getPlayer());
+        playerTwoLabel.setText(game.getRival());
         showBoard(currentStep);
-       
+
     }
 
     private void showBoard(int step) {
@@ -39,15 +39,20 @@ public class GameRecordController extends GameRecordBase {
             for (int col = 0; col < 3; col++) {
                 Integer value = board[row][col];
                 Button button = getButtonsByRowAndColumn(col, row);
-
+                AudioController.clickSound();
                 if (value != null && value <= step) {
-                    if (value % 2 == 1) {
-                        button.setText("X");
-                    } else {
+                     button.setStyle(" -fx-text-fill: #3E5879;"); 
+                    if (value % 2 == 0) {
                         button.setText("O");
+                    } else {
+                        button.setText("X");
+                    }
+                    if (value == step) {
+                       button.setStyle(" -fx-text-fill: #894848;"); 
                     }
                 } else {
                     button.setText("");
+              
                 }
             }
         }
@@ -95,13 +100,31 @@ public class GameRecordController extends GameRecordBase {
         }
     }
 
-    @Override
-    protected void handleNextBtn(ActionEvent actionEvent) {
-        if (currentStep < 9) {
+   @Override
+protected void handleNextBtn(ActionEvent actionEvent) {
+    if (currentStep < 9) { 
+        boolean hasNextStep = false;
+
+        for (int row = 0; row < 3; row++) {
+            for (int col = 0; col < 3; col++) {
+                Integer value = board[row][col];
+                if (value != null && value > currentStep) {
+                    hasNextStep = true;
+                    break;
+                }
+            }
+            if (hasNextStep) break;
+        }
+
+        if (hasNextStep) {
             currentStep++;
             showBoard(currentStep);
+        } else {
+            System.out.println("No more steps to display.");
         }
     }
+}
+
 
     @Override
     protected void handleExitButton(ActionEvent actionEvent) {
