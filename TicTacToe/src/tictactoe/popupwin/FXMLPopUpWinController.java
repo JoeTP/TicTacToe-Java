@@ -114,7 +114,7 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
 
         winAndLoseLabel.setStyle("-fx-text-fill: #99003d;");
         winAndLoseLabel.setText("You Lost!");
-        congratsLable.setText("OH,NOooo!");
+        congratsLable.setText("OH NOOO!!");
         rightCupIcon.setImage(new Image(getClass().getResource("/assets/icons/gameOver.png").toExternalForm()));
         leftCupIcon.setImage(new Image(getClass().getResource("/assets/icons/gameOver.png").toExternalForm()));
 
@@ -128,7 +128,7 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
 
     private void displayDraw() {
         winAndLoseLabel.setText("It's DRAW ");
-        congratsLable.setText("OH, No Winner!");
+        congratsLable.setText("OH No Winner!");
         rightCupIcon.setImage(new Image(getClass().getResource("/assets/icons/draw.png").toExternalForm()));
         leftCupIcon.setImage(new Image(getClass().getResource("/assets/icons/draw.png").toExternalForm()));
 
@@ -159,7 +159,9 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
     protected void handleLeaveButton(ActionEvent actionEvent) {
         mediaPlayer.pause();
         AppFunctions.closeAndGo(actionEvent, stage, new FXMLHomeScreenController(stage));
-        startListeningThread();
+        if (mode.equals("online")) {
+            startListeningThread();
+        }
     }
 
 }

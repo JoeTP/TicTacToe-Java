@@ -8,6 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
@@ -45,21 +46,29 @@
    <center>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+            <AnchorPane prefHeight="168.0" prefWidth="466.0">
                <children>
                   <ImageView fitHeight="64.0" fitWidth="64.0" layoutX="24.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../resources/assets/icons/invite.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="playerNameLabel" layoutX="150.0" layoutY="14.0" text="palyer_Name" />
-                  <Label layoutX="96.0" layoutY="107.0" prefHeight="35.0" prefWidth="340.0" stylesheets="@../../../resources/styling/generalStyle.css" text="Invite You To Play With Him">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="178.0" layoutY="55.0" text="Score: " textFill="#3e5879" />
-                  <Label fx:id="scoreLabel" layoutX="252.0" layoutY="55.0" text="0" textFill="#43a39c" />
+                  <VBox alignment="CENTER" layoutX="118.0" layoutY="14.0">
+                     <children>
+                        <Label fx:id="playerNameLabel" text="palyer_Name" />
+                        <HBox alignment="CENTER">
+                           <children>
+                              <Label text="Score: " textFill="#3e5879" />
+                              <Label fx:id="scoreLabel" text="0" textFill="#43a39c" />
+                           </children>
+                        </HBox>
+                        <Label prefHeight="41.0" prefWidth="267.0" stylesheets="@../../../resources/styling/generalStyle.css" text="Invite You To Play With Him">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
                </children>
             </AnchorPane>
          </children>

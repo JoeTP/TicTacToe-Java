@@ -7,7 +7,9 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 
 public abstract class AppFunctions {
@@ -38,6 +40,8 @@ public abstract class AppFunctions {
     public static void openPopup(Stage ownerStage, Parent root) {
         Stage newStage = new Stage();
         newStage.setResizable(false);
+        newStage.initStyle(StageStyle.DECORATED.UNDECORATED);
+        newStage.initModality(Modality.WINDOW_MODAL);
         newStage.setScene(new Scene(root));
         newStage.initOwner(ownerStage);
         newStage.show();
