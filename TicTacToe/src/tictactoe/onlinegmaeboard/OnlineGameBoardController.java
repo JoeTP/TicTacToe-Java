@@ -37,6 +37,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.scene.Node;
+import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 import models.ComputerPlayer;
 import models.DataModel;
@@ -65,15 +66,21 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
     private Player playerTwo = new Player();
     private Thread th = new Thread();
     private boolean isEndOfGame = false;
+
     private int rank = 0;
     private int score = 0;
     private int NOfLoss = 0;
     private int NOfWins = 0;
 
+
+
     private Timeline timeLine;
     private int countdownTime;
     boolean isTimeOut = false;
     String rival;
+
+    private double xOffset;
+    private double yOffset;
     /*
         [b00 b01 b02]
         [b10 b11 b12]
@@ -112,6 +119,7 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
 
         playerOne.setChar(O_CHAR);
         playerTwo.setChar(X_CHAR);
+
 
         playerOneLabel.setText(playerTwo.getName());
         playerOneChar.setText(playerOne.getChar());
@@ -296,9 +304,8 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
             waitAndShowPopup(winner);
         } else if (move > 9) {
             winner = "draw";
-          System.out.println("the user "+ClientConnection.user.getName() +" is win  or player Two "+playerTwo.getName() + "player One "+playerOne.getName());
+
             saveDataToGameModel(winner);
-                     //  ClientConnection.user.updateUserData(false);
 
             endGame();
             waitAndShowPopup(winner);
@@ -559,5 +566,17 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
 //            }
         });
         th.start();
+    }
+
+    @Override
+    protected void dragWindow(MouseEvent mouseEvent) {
+        stage.setX(mouseEvent.getScreenX() - xOffset);
+        stage.setY(mouseEvent.getScreenY() - yOffset);
+    }
+
+    @Override
+    protected void getOffset(MouseEvent mouseEvent) {
+        xOffset = mouseEvent.getSceneX();
+        yOffset = mouseEvent.getSceneY();
     }
 }
