@@ -1,5 +1,6 @@
 package tictactoe.onlinegmaeboard;
 
+import clientconnection.ClientConnection;
 import static clientconnection.ClientConnection.ois;
 import static clientconnection.ClientConnection.oos;
 import static clientconnection.ClientConnection.startListeningThread;
@@ -41,6 +42,7 @@ import models.ComputerPlayer;
 import models.DataModel;
 import models.GameModel;
 import models.Player;
+import models.UserModel;
 import shared.AppFunctions;
 import sounds.AudioController;
 import static shared.AppFunctions.openPopup;
@@ -63,13 +65,10 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
     private Player playerTwo = new Player();
     private Thread th = new Thread();
     private boolean isEndOfGame = false;
-    private int rank =0;
-    private int score =0;
-    private int NOfLoss =0;
-    private int NOfWins =0;
-    
-    
-   //  public static GameModel gameModel;
+    private int rank = 0;
+    private int score = 0;
+    private int NOfLoss = 0;
+    private int NOfWins = 0;
 
     private Timeline timeLine;
     private int countdownTime;
@@ -114,7 +113,6 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
         playerOne.setChar(O_CHAR);
         playerTwo.setChar(X_CHAR);
 
-      
         playerOneLabel.setText(playerTwo.getName());
         playerOneChar.setText(playerOne.getChar());
         playerTwoLabel.setText(playerOne.getName());
@@ -283,35 +281,44 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
             WinningLine.drawWinningLine(WinningLine.getStartLine(), WinningLine.getEndLine(), grid);
             saveDataToGameModel(playerOne.getName());
             System.out.println("PLAYER ONE WINNER");
+            ClientConnection.user.updateUserData(true);
+            System.out.println("the user "+ClientConnection.user.getName() +" is win  or player one "+playerOne.getName());
             endGame();
 
             waitAndShowPopup(winner);
         } else if (playerTwo.getChar() == null ? winner == null : playerTwo.getChar().equals(winner)) {
             WinningLine.drawWinningLine(WinningLine.getStartLine(), WinningLine.getEndLine(), grid);
             saveDataToGameModel(playerTwo.getName());
+            ClientConnection.user.updateUserData(false);
             System.out.println("PLAYER TWO WINNER");
+                System.out.println("the user "+ClientConnection.user.getName() +" is win  or player Two "+playerTwo.getName());
             endGame();
             waitAndShowPopup(winner);
         } else if (move > 9) {
             winner = "draw";
-             saveDataToGameModel(winner);
+          System.out.println("the user "+ClientConnection.user.getName() +" is win  or player Two "+playerTwo.getName() + "player One "+playerOne.getName());
+            saveDataToGameModel(winner);
+                        ClientConnection.user.updateUserData(false);
+
             endGame();
             waitAndShowPopup(winner);
         }
     }
-  private void saveDataToGameModel(String winner) {
+
+    private void saveDataToGameModel(String winner) {
         if (playerOne == null || playerTwo == null) {
             System.err.println("Error: Players are not initialized!");
             return;
         }
-        System.out.println("Player Two comp : "+playerTwo.getName()+"player One Comp " +playerOne.getName());
-        GameBoardController.gameModel = new GameModel(1, playerOne.getName(), playerTwo.getName(), winner, DateNow(), board,score,rank,NOfWins,NOfLoss);
+        System.out.println("Player Two comp : " + playerTwo.getName() + "player One Comp " + playerOne.getName());
+        GameBoardController.gameModel = new GameModel(1, playerOne.getName(), playerTwo.getName(), winner, DateNow(), board);
 
         System.out.println("The Game Model created, the cur player: "
                 + GameBoardController.gameModel.getPlayer()
                 + ", the other player: " + GameBoardController.gameModel.getRival()
                 + ", the winner: " + GameBoardController.gameModel.getWinner());
     }
+
     private Date DateNow() {
 
         LocalDateTime currentDateTime = LocalDateTime.now();
@@ -330,13 +337,13 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
 
     private void waitAndShowPopup(String roundState) {
 
-              System.out.println("RS in waitand showopoup ONLINEEE ");
+        System.out.println("RS in waitand showopoup ONLINEEE ");
 
-                PauseTransition pause = new PauseTransition(Duration.seconds(2));
-                pause.setOnFinished(event -> {
-                    AppFunctions.openPopup(stage, new FXMLPopUpWinController(stage, roundState, playerOne, playerTwo, mode));
-                });
-                pause.play();
+        PauseTransition pause = new PauseTransition(Duration.seconds(2));
+        pause.setOnFinished(event -> {
+            AppFunctions.openPopup(stage, new FXMLPopUpWinController(stage, roundState, playerOne, playerTwo, mode));
+        });
+        pause.play();
     }
 
     private String checkWinnerChar(Integer[][] board) {
