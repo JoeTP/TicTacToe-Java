@@ -2,18 +2,22 @@
 
 /TicTacToe/build/
 /TicTacToe/dist/
-=======
+
 /TicTacToe/build/
 /TicTacToe/dist/
-=======
+
 /TicTacToe/dist/
 /TicTacToe/build/
-=======
+
 /TicTacToe/build/
 /TicTacToe/dist/
 /TicTacToeServer/nbproject/private/
 /TicTacToeServer/build/
 /TicTacToeServer/dist/
 *.sqlite
+
 /TicTacToe/records
 /TicTacToeServer/database.sqlite
+
+/TicTacToe/records
+
