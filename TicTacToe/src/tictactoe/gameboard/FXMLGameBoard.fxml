@@ -33,7 +33,7 @@
       </HBox>
    </bottom>
    <top>
-      <VBox>
+      <VBox fx:id="header" onMouseDragged="#dragWindow" onMousePressed="#getOffset">
          <children>
             <HBox spacing="15.0">
                <children>

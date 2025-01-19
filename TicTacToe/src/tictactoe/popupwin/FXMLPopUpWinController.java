@@ -37,42 +37,61 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
         this.playerTwo = playerTwo;
         this.mode = mode;
         System.out.println("Round State string : " + roundState);
-        showPopup(roundState);
+        showPopup(roundState, mode);
 
     }
 
-    private void showPopup(String roundState) {
+    private void showPopup(String roundState, String mode) {
 
-        //winOrLosePopUp.setVisible(true);
-        switch (roundState) {
-            case "X":
-                if(playerOne.getName().equals("You")){
+        if (roundState.equals("draw")) {
+            displayDraw();
+            return;
+        }
+        switch (mode) {
+
+            case "local": {
+
+                if (roundState.equals("X")) {
+                    displayWin(playerOne.getName());
+                    break;
+                } else {
+                    displayWin(playerTwo.getName());
+                    break;
+                }
+
+            }
+            case "computer": {
+
+                if (roundState.equals("computer")) {
+                    displayLose();
+                    break;
+                } else {
                     displayWin(playerOne.getName());
                     break;
                 }
-                
-                if (playerOne.getName().equals(user.getName()) ) {
-                    displayWin(playerOne.getName());
-                } else {
-                    displayLose();
-                }
-                break;
-            case "O":
-                if (playerTwo.getName().equals(user.getName())) {
-                    displayWin(playerTwo.getName());
+            }
+            case "online": {
+                if (roundState.equals("X")) {
+                    if (playerOne.getName().equals(user.getName())) {
 
+                        displayWin(playerOne.getName());
+                    } else {
+                        displayLose();
+                    }
+                    break;
                 } else {
-                    displayLose();
+
+                    if (playerTwo.getName().equals(user.getName())) {
+                        displayWin(playerTwo.getName());
+                    } else {
+                        displayLose();
+                    }
+                    break;
                 }
-                break;
-            case "computer":
-                    displayLose();
-            break;
-            case "draw":
-                displayDraw();
-                break;
+
+            }
+
         }
-
     }
 
     private void displayWin(String playerName) {
@@ -123,13 +142,9 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
 
     @Override
     protected void handleSaveGameButton(ActionEvent actionEvent) {
-        saveGameInFileGson(GameBoardController.gameModel);
+        SaveGame.saveGameToFile(GameBoardController.gameModel);
         mediaPlayer.pause();
 
-    }
-
-    protected void saveGameInFileGson(GameModel game) {
-        SaveGame.saveGameToFile(game);
     }
 
     @Override

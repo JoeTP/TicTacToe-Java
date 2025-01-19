@@ -25,6 +25,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.scene.Node;
+import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 import models.ComputerPlayer;
 import models.GameModel;
@@ -47,10 +48,13 @@ public class GameBoardController extends FXMLGameBoardBase {
     private Player playerTwo;
     public static GameModel gameModel;
     private boolean isEndOfGame = false;
-
+    // public static boolean isOnline=false;
     private Timeline timeLine;
-    private int countdownTime ;
+    private int countdownTime;
     boolean isTimeOut = false;
+
+    private double xOffset;
+    private double yOffset;
 
     /*
         [b00 b01 b02]
@@ -62,13 +66,8 @@ public class GameBoardController extends FXMLGameBoardBase {
     private final String X_CHAR = "X";
     private final String O_CHAR = "O";
     private int move = 1;
-    
 
     private String mode;
-
-
- 
-
 
     public GameBoardController(Stage stage, String playerOne, String playerTwo, String mode) {
         this.playerOne = new Player();
@@ -117,7 +116,7 @@ public class GameBoardController extends FXMLGameBoardBase {
                 playerTwoChar.setText(playerTwo.getChar());
 
             }
-            break;           
+            break;
         }
 
         playerOne.hisTurn = true;
@@ -180,7 +179,7 @@ public class GameBoardController extends FXMLGameBoardBase {
 
                                     case 1:
                                         System.out.println("level 1");
-                                      
+
                                         makeLevel1Move();
                                         break;
                                     case 2:
@@ -206,9 +205,10 @@ public class GameBoardController extends FXMLGameBoardBase {
             printGame();
         }
     }
+
     //  makeComputerMove();
     private void startCountdownTimer() {
-        countdownTime=8;
+        countdownTime = 8;
         if (timeLine != null) {
             timeLine.stop();   //3l4an law startCountdownTimer 3mnlnlha call multiple time
         }
@@ -223,7 +223,7 @@ public class GameBoardController extends FXMLGameBoardBase {
                             timer.setStyle("-fx-text-fill: red;");
                         }
                         countdownTime--;
-                        
+
                         if (countdownTime < 0) {
                             timeLine.stop();
                             isTimeOut = true;
@@ -343,11 +343,11 @@ public class GameBoardController extends FXMLGameBoardBase {
                 winner = "computer";
                 saveDataToGameModel(winner);
                 //  saveDataToGameModel(winner);
-            }else{
+            } else {
                 saveDataToGameModel(playerTwo.getName());
             }
             WinningLine.drawWinningLine(WinningLine.getStartLine(), WinningLine.getEndLine(), grid);
-            
+
             System.out.println("PLAYER TWO WINNER");
             endGame();
             waitAndShowPopup(winner);
@@ -359,13 +359,12 @@ public class GameBoardController extends FXMLGameBoardBase {
         }
     }
 
-
     private void saveDataToGameModel(String winner) {
         if (playerOne == null || playerTwo == null) {
             System.err.println("Error: Players are not initialized!");
             return;
         }
-        System.out.println("Player Two comp : "+playerTwo.getName()+"player One Comp " +playerOne.getName());
+        System.out.println("Player Two comp : " + playerTwo.getName() + "player One Comp " + playerOne.getName());
         gameModel = new GameModel(1, playerOne.getName(), playerTwo.getName(), winner, DateNow(), board);
 
         System.out.println("The Game Model created, the cur player: "
@@ -379,7 +378,6 @@ public class GameBoardController extends FXMLGameBoardBase {
         LocalDateTime currentDateTime = LocalDateTime.now();
         return Date.from(currentDateTime.atZone(ZoneId.systemDefault()).toInstant());
     }
-
 
     private void waitAndShowPopup(String roundState) {
 
@@ -522,5 +520,17 @@ public class GameBoardController extends FXMLGameBoardBase {
     @Override
     protected void handleB00(ActionEvent actionEvent) {
         setTurn(b00);
+    }
+
+    @Override
+    protected void dragWindow(MouseEvent mouseEvent) {
+        stage.setX(mouseEvent.getScreenX() - xOffset);
+        stage.setY(mouseEvent.getScreenY() - yOffset);
+    }
+
+    @Override
+    protected void getOffset(MouseEvent mouseEvent) {
+        xOffset = mouseEvent.getSceneX();
+        yOffset = mouseEvent.getSceneY();
     }
 }

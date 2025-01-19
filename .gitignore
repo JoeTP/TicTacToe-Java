@@ -20,3 +20,4 @@
 /TicTacToeServer/build/
 /TicTacToeServer/dist/
 *.sqlite
+/TicTacToe/records
