@@ -72,8 +72,6 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
     private int NOfLoss = 0;
     private int NOfWins = 0;
 
-
-
     private Timeline timeLine;
     private int countdownTime;
     boolean isTimeOut = false;
@@ -120,14 +118,13 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
         playerOne.setChar(O_CHAR);
         playerTwo.setChar(X_CHAR);
 
-
         playerOneLabel.setText(playerTwo.getName());
         playerOneChar.setText(playerOne.getChar());
         playerTwoLabel.setText(playerOne.getName());
         playerTwoChar.setText(playerTwo.getChar());
 
         playerOne.hisTurn = true;
-        playerTwo.hisTurn = false ;
+        playerTwo.hisTurn = false;
 
         //startCountdownTimer();
     }
@@ -289,17 +286,17 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
             WinningLine.drawWinningLine(WinningLine.getStartLine(), WinningLine.getEndLine(), grid);
             saveDataToGameModel(playerOne.getName());
             System.out.println("PLAYER ONE WINNER");
-           // ClientConnection.user.updateUserData(true);
-            System.out.println("the user "+ClientConnection.user.getName() +" is win  or player one "+playerOne.getName());
+            // ClientConnection.user.updateUserData(true);
+            System.out.println("the user " + ClientConnection.user.getName() + " is win  or player one " + playerOne.getName());
             endGame();
 
             waitAndShowPopup(winner);
         } else if (playerTwo.getChar() == null ? winner == null : playerTwo.getChar().equals(winner)) {
             WinningLine.drawWinningLine(WinningLine.getStartLine(), WinningLine.getEndLine(), grid);
             saveDataToGameModel(playerTwo.getName());
-         //   ClientConnection.user.updateUserData(false);
+            //   ClientConnection.user.updateUserData(false);
             System.out.println("PLAYER TWO WINNER");
-                System.out.println("the user "+ClientConnection.user.getName() +" is win  or player Two "+playerTwo.getName());
+            System.out.println("the user " + ClientConnection.user.getName() + " is win  or player Two " + playerTwo.getName());
             endGame();
             waitAndShowPopup(winner);
         } else if (move > 9) {
@@ -436,7 +433,18 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
     protected void handleLeaveButton(ActionEvent actionEvent) {
         endGame();
         AudioController.clickSound();
-        AppFunctions.goTo(actionEvent, new FXMLHomeScreenController(stage));
+        DataModel data = new DataModel(9,user.getName(),rival);
+        System.out.println("Killing move2");
+        data.setGameMove(-2);
+        try {
+            oos.writeObject(data);
+            oos.flush();
+        } catch (IOException ex) {
+            Logger.getLogger(OnlineGameBoardController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String winner = user.getName().equals(playerOne.getName()) ? playerTwo.getName() : playerOne.getName();
+        waitAndShowPopup(winner);
+        //AppFunctions.goTo(actionEvent, new FXMLHomeScreenController(stage));
     }
 
     @Override
@@ -526,6 +534,21 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
                         gameMove = (DataModel) ois.readObject();
                         System.out.println(gameMove.getGameMove());
                         if (gameMove.getGameMove() == -1) {
+                            isEndOfGame = true;
+                            break;
+                        }
+                        if (gameMove.getGameMove() == -2) {
+                            isEndOfGame = true;
+                            DataModel data = new DataModel(9);
+                            System.out.println("Killing move2");
+                            data.setRival(rival);
+                            data.setGameMove(-1);
+                            oos.writeObject(data);
+                            oos.flush();
+                            Platform.runLater(()->{
+                                String winner = user.getName().equals(playerOne.getName()) ? playerOne.getName() : playerTwo.getName();
+                                waitAndShowPopup(winner);
+                            });
                             break;
                         }
                         row_col = gameMove.getGameMove();
@@ -540,7 +563,6 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
                         if (isEndOfGame) {
                             DataModel data = new DataModel(8);
                             System.out.println("Killing move");
-
                             data.setRival(rival);
                             oos.writeObject(data);
                             oos.flush();
