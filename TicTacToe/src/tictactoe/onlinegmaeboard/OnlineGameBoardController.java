@@ -433,9 +433,10 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
     protected void handleLeaveButton(ActionEvent actionEvent) {
         endGame();
         AudioController.clickSound();
-        DataModel data = new DataModel(9,user.getName(),rival);
+        DataModel data = new DataModel(8, user.getName(), rival);
         System.out.println("Killing move2");
         data.setGameMove(-2);
+        data.setResponse("GAME_MOVE");
         try {
             oos.writeObject(data);
             oos.flush();
@@ -510,6 +511,7 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
                 data.setRival(rival);
                 data.setGameMove(row * 10 + col);
                 System.out.println("Sending move: " + (row * 10 + col));
+                data.setResponse("GAME_MOVE");
                 oos.writeObject(data);
                 System.out.println("Data sent");
                 oos.flush();
@@ -524,68 +526,68 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
     }
 
     protected void receiveMove() {
-        th = new Thread(() -> {
-            while (!isEndOfGame) {
-                DataModel gameMove = null;
-                int row_col = -1;
-                synchronized (ois) {
-                    try {
-                        System.out.println("waiting for move");
-                        gameMove = (DataModel) ois.readObject();
-                        System.out.println(gameMove.getGameMove());
-                        if (gameMove.getGameMove() == -1) {
-                            isEndOfGame = true;
-                            break;
-                        }
-                        if (gameMove.getGameMove() == -2) {
-                            isEndOfGame = true;
-                            DataModel data = new DataModel(9);
-                            System.out.println("Killing move2");
-                            data.setRival(rival);
-                            data.setGameMove(-1);
-                            oos.writeObject(data);
-                            oos.flush();
-                            Platform.runLater(()->{
-                                String winner = user.getName().equals(playerOne.getName()) ? playerOne.getName() : playerTwo.getName();
-                                waitAndShowPopup(winner);
-                            });
-                            break;
-                        }
-                        row_col = gameMove.getGameMove();
-                        System.out.println("Received move: " + row_col);
-                        int row = row_col / 10;
-                        int col = row_col % 10;
-                        Button b = getButtonsByRowAndColumn(col, row);
+        th = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (!isEndOfGame) {
+                    DataModel gameMove = null;
+                    int row_col = -1;
+                    synchronized (ois) {
+                        try {
+                            System.out.println("waiting for move");
+                            gameMove = (DataModel) ois.readObject();
+                            System.out.println(gameMove.getGameMove());
+                            if (gameMove.getResponse().equals("GAME_MOVE")) {
+                                if (gameMove.getGameMove() == -1) {
+                                    isEndOfGame = true;
+                                    break;
+                                }
+                                if (gameMove.getGameMove() == -2) {
+                                    isEndOfGame = true;
+                                    DataModel data = new DataModel(8);
+                                    System.out.println("Killing move2");
+                                    data.setRival(rival);
+                                    data.setGameMove(-1);
+                                    data.setResponse("GAME_MOVE");
+                                    oos.writeObject(data);
+                                    oos.flush();
+                                    Platform.runLater(() -> {
+                                        String winner = user.getName().equals(playerOne.getName()) ? playerOne.getName() : playerTwo.getName();
+                                        waitAndShowPopup(winner);
+                                    });
+                                    break;
+                                }
+                                row_col = gameMove.getGameMove();
+                                System.out.println("Received move: " + row_col);
+                                int row = row_col / 10;
+                                int col = row_col % 10;
+                                Button b = getButtonsByRowAndColumn(col, row);
 
-                        setTurn(b);
+                                setTurn(b);
 
-                        checkGameStatus();
-                        if (isEndOfGame) {
-                            DataModel data = new DataModel(8);
-                            System.out.println("Killing move");
-                            data.setRival(rival);
-                            oos.writeObject(data);
-                            oos.flush();
+                                checkGameStatus();
+                                if (isEndOfGame) {
+                                    DataModel data = new DataModel(8);
+                                    System.out.println("Killing move");
+                                    data.setRival(rival);
+                                    data.setGameMove(-1);
+                                    data.setResponse("GAME_MOVE");
+                                    oos.writeObject(data);
+                                    oos.flush();
+                                }
+                                Platform.runLater(() -> {
+                                    enableButtons();
+                                });
+                            }
+
+                        } catch (IOException ex) {
+                            Logger.getLogger(OnlineGameBoardController.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (ClassNotFoundException ex) {
+                            Logger.getLogger(OnlineGameBoardController.class.getName()).log(Level.SEVERE, null, ex);
                         }
-
-                    } catch (IOException ex) {
-                        break;
-//                        Logger.getLogger(OnlineGameBoardController.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (ClassNotFoundException ex) {
-                        Logger.getLogger(OnlineGameBoardController.class.getName()).log(Level.SEVERE, null, ex);
                     }
-
                 }
-                Platform.runLater(() -> {
-                    enableButtons();
-                });
             }
-//            try {
-//                oos.writeUTF("stop");
-//                oos.flush();
-//            } catch (IOException ex) {
-//                Logger.getLogger(OnlineGameBoardController.class.getName()).log(Level.SEVERE, null, ex);
-//            }
         });
         th.start();
     }
