@@ -39,21 +39,20 @@ public class GameRecordController extends GameRecordBase {
             for (int col = 0; col < 3; col++) {
                 Integer value = board[row][col];
                 Button button = getButtonsByRowAndColumn(col, row);
-                AudioController.showCharSound();
+                AudioController.clickSound();
                 if (value != null && value <= step) {
-                    button.setStyle("-fx-border-color: #3E5879; -fx-background-color: transparent;");
+                     button.setStyle(" -fx-text-fill: #3E5879;"); 
                     if (value % 2 == 0) {
                         button.setText("O");
                     } else {
                         button.setText("X");
                     }
                     if (value == step) {
-                        button.setStyle("-fx-border-color: #3E5879; -fx-background-color: #3E5879; -fx-text-fill: white;"); // Green background, white text
+                       button.setStyle(" -fx-text-fill: #894848;"); 
                     }
                 } else {
                     button.setText("");
-                    button.setStyle("-fx-border-color: #3E5879; -fx-background-color: transparent;");
-
+              
                 }
             }
         }

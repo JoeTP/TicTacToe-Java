@@ -37,6 +37,8 @@ public class FXMLRequestToPlayController extends FXMLRequestToPlayBase {
         this.stage = stage;
         playerNameLabel.setText(rival);
         ClientConnection.rival = rival;
+     //   scoreLabel.setText();
+
     }
 
     @Override

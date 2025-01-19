@@ -20,6 +20,8 @@ public class GameModel implements Serializable {
     String winner;
     Date playDate;
     Integer board[][];
+  
+    
 
     public GameModel(int id, String player, String rival, String winner, Date playDate,Integer [][] board) {
         this.id = id;
@@ -29,6 +31,7 @@ public class GameModel implements Serializable {
         this.playDate = playDate;
         this.board=board;
     }
+    
 
     public void setBoard(Integer[][] board) {
         this.board = board;

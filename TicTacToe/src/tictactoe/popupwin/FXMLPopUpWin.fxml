@@ -13,13 +13,12 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-
-<VBox alignment="CENTER" spacing="20.0" style="-fx-background-color: #f5efe7;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.popupwin.FXMLPopUpWinController">
+<VBox alignment="CENTER" spacing="20.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tictactoe.popupwin.FXMLPopUpWinController">
    <children>
       <StackPane style="-fx-background-color: transparent;">
          <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f5efe7" height="84.0" stroke="#88f5e6" strokeType="INSIDE" styleClass="rect" width="613.0" />
-            <HBox alignment="CENTER">
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e8dac8" height="84.0" stroke="#5b80b5" strokeType="INSIDE" styleClass="rect" width="613.0" />
+            <HBox alignment="CENTER" style="-fx-background-radius: 30;">
                <children>
                   <ImageView fx:id="leftCupIcon" fitHeight="62.0" fitWidth="62.0" pickOnBounds="true" preserveRatio="true">
                      <image>

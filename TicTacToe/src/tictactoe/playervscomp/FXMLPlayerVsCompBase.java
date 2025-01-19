@@ -9,20 +9,17 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-
-import javafx.scene.text.Text;
-import javafx.util.StringConverter;
-import static shared.AppString.GENERAL_STYLE_FILE_PATH;
-
 
 public abstract class FXMLPlayerVsCompBase extends BorderPane {
 
     protected final AnchorPane anchorPane;
+    protected final VBox vBox;
     protected final Label label;
-    protected final Slider difficultySlider;
     protected final ImageView difficultyImg;
     protected final Label label0;
+    protected final Slider difficultySlider;
     protected final Button startBtn;
     protected final AnchorPane anchorPane0;
     protected final Button backBtn;
@@ -30,10 +27,11 @@ public abstract class FXMLPlayerVsCompBase extends BorderPane {
     public FXMLPlayerVsCompBase() {
 
         anchorPane = new AnchorPane();
+        vBox = new VBox();
         label = new Label();
-        difficultySlider = new Slider();
         difficultyImg = new ImageView();
         label0 = new Label();
+        difficultySlider = new Slider();
         startBtn = new Button();
         anchorPane0 = new AnchorPane();
         backBtn = new Button();
@@ -45,21 +43,35 @@ public abstract class FXMLPlayerVsCompBase extends BorderPane {
         setPrefHeight(500.0);
         setPrefWidth(450.0);
         getStyleClass().add("mainBackground");
-        getStylesheets().add(GENERAL_STYLE_FILE_PATH);
+        getStylesheets().add("/styling/generalStyle.css");
 
         BorderPane.setAlignment(anchorPane, javafx.geometry.Pos.CENTER);
         anchorPane.setPrefHeight(472.0);
         anchorPane.setPrefWidth(720.0);
 
-        label.setLayoutX(180.0);
-        label.setLayoutY(12.0);
+        vBox.setAlignment(javafx.geometry.Pos.CENTER);
+        vBox.setLayoutX(96.0);
+        vBox.setLayoutY(12.0);
+        vBox.setSpacing(15.0);
+
         label.getStyleClass().add("bigLabel");
-       
+        label.getStylesheets().add("/styling/generalStyle.css");
         label.setText("Difficulty");
 
+        difficultyImg.setFitHeight(166.0);
+        difficultyImg.setFitWidth(167.0);
+        difficultyImg.setPickOnBounds(true);
+        difficultyImg.setPreserveRatio(true);
+        difficultyImg.setImage(new Image(getClass().getResource("/assets/icons/easy.png").toExternalForm()));
+
+        label0.getStyleClass().add("bigLabel");
+        label0.getStylesheets().add("/styling/generalStyle.css");
+        label0.setText("Select Difficulty");
+        label0.setTextFill(javafx.scene.paint.Color.valueOf("#213555"));
+        label0.setFont(new Font("System Bold", 18.0));
+        label0.setOpaqueInsets(new Insets(0.0));
+
         difficultySlider.setBlockIncrement(1.0);
-        difficultySlider.setLayoutX(100.0);
-        difficultySlider.setLayoutY(267.0);
         difficultySlider.setMajorTickUnit(1.0);
         difficultySlider.setMax(2.0);
         difficultySlider.setMinorTickCount(0);
@@ -69,35 +81,13 @@ public abstract class FXMLPlayerVsCompBase extends BorderPane {
         difficultySlider.setShowTickMarks(true);
         difficultySlider.setSnapToTicks(true);
         difficultySlider.setCursor(Cursor.HAND);
-        
-        
-        difficultyImg.setFitHeight(144.0);
-        difficultyImg.setFitWidth(262.0);
-        difficultyImg.setLayoutX(96.0);
-        difficultyImg.setLayoutY(87.0);
-        difficultyImg.setPickOnBounds(true);
-        difficultyImg.setPreserveRatio(true);
-        difficultyImg.setImage(new Image(getClass().getResource("/assets/icons/easy.png").toExternalForm()));
 
-        label0.setLayoutX(155.0);
-        label0.setLayoutY(226.0);
-        label0.getStyleClass().add("bigLabel");
-     
-        label0.setText("Select Difficulty");
-        label0.setTextFill(javafx.scene.paint.Color.valueOf("#213555"));
-        label0.setFont(new Font("System Bold", 18.0));
-        label0.setOpaqueInsets(new Insets(0.0));
-
-        AnchorPane.setLeftAnchor(startBtn, 148.0);
-        AnchorPane.setRightAnchor(startBtn, 147.0);
-        startBtn.setLayoutX(148.0);
-        startBtn.setLayoutY(332.0);
         startBtn.setMnemonicParsing(false);
         startBtn.setOnAction(this::openGameBoard);
         startBtn.setPrefHeight(44.0);
         startBtn.setPrefWidth(155.0);
         startBtn.getStyleClass().add("bigBtn");
-       
+        startBtn.getStylesheets().add("/styling/generalStyle.css");
         startBtn.setText("Start");
         startBtn.setFont(new Font(20.0));
         setCenter(anchorPane);
@@ -116,15 +106,16 @@ public abstract class FXMLPlayerVsCompBase extends BorderPane {
         backBtn.setPrefWidth(30.0);
         backBtn.setStyle("-fx-border-radius: 30px; -fx-background-radius: 30px;");
         backBtn.getStyleClass().add("bigBtn");
-       
+        backBtn.getStylesheets().add("/styling/generalStyle.css");
         backBtn.setText("B");
         setTop(anchorPane0);
 
-        anchorPane.getChildren().add(label);
-        anchorPane.getChildren().add(difficultySlider);
-        anchorPane.getChildren().add(difficultyImg);
-        anchorPane.getChildren().add(label0);
-        anchorPane.getChildren().add(startBtn);
+        vBox.getChildren().add(label);
+        vBox.getChildren().add(difficultyImg);
+        vBox.getChildren().add(label0);
+        vBox.getChildren().add(difficultySlider);
+        vBox.getChildren().add(startBtn);
+        anchorPane.getChildren().add(vBox);
         anchorPane0.getChildren().add(backBtn);
 
     }

@@ -160,6 +160,10 @@ public class ClientConnection {
                             alert.showAndWait();                        
                         });
                 }
+                
+                if(newResponse.equals("DISCONNECT")){
+                    terminateClient();
+                }
             }
         });
         listeningThread.start();

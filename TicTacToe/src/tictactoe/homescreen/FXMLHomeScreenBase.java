@@ -65,7 +65,7 @@ public abstract class FXMLHomeScreenBase extends StackPane {
     protected final Label connectionLabel;
     protected final Region region0;
     protected final VBox vBox6;
-    protected final Button chatBtn;
+
 
     public FXMLHomeScreenBase() {
 
@@ -115,7 +115,7 @@ public abstract class FXMLHomeScreenBase extends StackPane {
         connectionLabel = new Label();
         region0 = new Region();
         vBox6 = new VBox();
-        chatBtn = new Button();
+        
 
         getStylesheets().add("/styling/generalStyle.css");
 
@@ -180,7 +180,7 @@ public abstract class FXMLHomeScreenBase extends StackPane {
 
         rankStarLabel.setLayoutX(23.0);
         rankStarLabel.setLayoutY(10.0);
-        rankStarLabel.setText("?");
+        rankStarLabel.setText("★");
 
         HBox.setHgrow(vBox0, javafx.scene.layout.Priority.ALWAYS);
         vBox0.setAlignment(javafx.geometry.Pos.TOP_CENTER);
@@ -338,10 +338,7 @@ public abstract class FXMLHomeScreenBase extends StackPane {
 
         vBox6.setAlignment(javafx.geometry.Pos.BOTTOM_CENTER);
 
-        chatBtn.setMnemonicParsing(false);
-        chatBtn.setOnAction(this::openChat);
-        chatBtn.getStyleClass().add("bigBtn");
-        chatBtn.setText("Chat");
+        
         HBox.setMargin(vBox6, new Insets(0.0, 0.0, 20.0, 0.0));
         header1.setPadding(new Insets(0.0, 20.0, 0.0, 20.0));
         borderPane.setBottom(header1);
@@ -384,7 +381,6 @@ public abstract class FXMLHomeScreenBase extends StackPane {
         vBox5.getChildren().add(connectionLabel);
         header1.getChildren().add(vBox5);
         header1.getChildren().add(region0);
-        vBox6.getChildren().add(chatBtn);
         header1.getChildren().add(vBox6);
         getChildren().add(borderPane);
 
@@ -409,5 +405,4 @@ public abstract class FXMLHomeScreenBase extends StackPane {
     protected abstract void openPlayerVsComputerPopup(javafx.event.ActionEvent actionEvent);
 
     protected abstract void openChat(javafx.event.ActionEvent actionEvent);
-
 }

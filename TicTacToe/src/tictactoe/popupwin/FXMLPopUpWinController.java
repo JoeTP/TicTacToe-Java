@@ -15,7 +15,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-
+import static clientconnection.ClientConnection.user;
 import javafx.scene.image.Image;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -53,7 +53,7 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
         if (mode.equals("online")) {
             new Thread(() -> {
                 DataModel data = new DataModel();
-                 {
+                {
                     try {
                         data = (DataModel) ois.readObject();
                         System.out.println(data.getResponse());
@@ -109,7 +109,7 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
                             Platform.runLater(() -> {
                                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Your request was declined");
                                 alert.showAndWait();
-                                isRivalExist = false;                               
+                                isRivalExist = false;
 //                            AppFunctions.closeAndGo(actionEvent, stage, new FXMLHomeScreenController(stage));                           
                             });
                             startListeningThread();
@@ -134,7 +134,6 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
                             break;
                     }
                 }
-
             }).start();
         }
 
@@ -170,20 +169,27 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
                 }
             }
             case "online": {
+
                 if (roundState.equals("X")) {
                     if (playerOne.getName().equals(user.getName())) {
-
+                        user.updateUserData(true);
                         displayWin(playerOne.getName());
+
                     } else {
                         displayLose();
+                        user.updateUserData(false);
+
                     }
                     break;
                 } else {
 
                     if (playerTwo.getName().equals(user.getName())) {
+                        user.updateUserData(true);
                         displayWin(playerTwo.getName());
                     } else {
                         displayLose();
+                        user.updateUserData(false);
+
                     }
                     break;
                 }
@@ -213,7 +219,7 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
 
         winAndLoseLabel.setStyle("-fx-text-fill: #99003d;");
         winAndLoseLabel.setText("You Lost!");
-        congratsLable.setText("OH,NOooo!");
+        congratsLable.setText("OH NOOO!!");
         rightCupIcon.setImage(new Image(getClass().getResource("/assets/icons/gameOver.png").toExternalForm()));
         leftCupIcon.setImage(new Image(getClass().getResource("/assets/icons/gameOver.png").toExternalForm()));
 
@@ -227,7 +233,7 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
 
     private void displayDraw() {
         winAndLoseLabel.setText("It's DRAW ");
-        congratsLable.setText("OH, No Winner!");
+        congratsLable.setText("OH No Winner!");
         rightCupIcon.setImage(new Image(getClass().getResource("/assets/icons/draw.png").toExternalForm()));
         leftCupIcon.setImage(new Image(getClass().getResource("/assets/icons/draw.png").toExternalForm()));
 
@@ -277,7 +283,7 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
 
     @Override
     protected void handleLeaveButton(ActionEvent actionEvent) {
-        mediaPlayer.pause();
+        mediaPlayer.pause();       
         if (mode.equals("online") && isRivalExist) {
             DataModel data = new DataModel(6, user.getName(), ClientConnection.rival);
             data.setResponse("GAME_ENDED");
@@ -291,8 +297,7 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
             AppFunctions.closeAndGo(actionEvent, stage, new FXMLHomeScreenController(stage));
         } else {
             AppFunctions.closeAndGo(actionEvent, stage, new FXMLHomeScreenController(stage));
-        }
-
+        }       
     }
 
 }

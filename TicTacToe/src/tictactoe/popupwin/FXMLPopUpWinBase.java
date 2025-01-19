@@ -53,20 +53,21 @@ public abstract class FXMLPopUpWinBase extends VBox {
 
         setAlignment(javafx.geometry.Pos.CENTER);
         setSpacing(20.0);
-        setStyle("-fx-background-color: #f5efe7;");
+        setStyle("-fx-background-color: #ffffff;");
 
         stackPane.setStyle("-fx-background-color: transparent;");
 
         rectangle.setArcHeight(5.0);
         rectangle.setArcWidth(5.0);
-        rectangle.setFill(javafx.scene.paint.Color.valueOf("#f5efe7"));
+        rectangle.setFill(javafx.scene.paint.Color.valueOf("#e8dac8"));
         rectangle.setHeight(84.0);
-        rectangle.setStroke(javafx.scene.paint.Color.valueOf("#88f5e6"));
+        rectangle.setStroke(javafx.scene.paint.Color.valueOf("#5b80b5"));
         rectangle.setStrokeType(javafx.scene.shape.StrokeType.INSIDE);
         rectangle.getStyleClass().add("rect");
         rectangle.setWidth(613.0);
 
         hBox.setAlignment(javafx.geometry.Pos.CENTER);
+        hBox.setStyle("-fx-background-radius: 30;");
 
         leftCupIcon.setFitHeight(62.0);
         leftCupIcon.setFitWidth(62.0);
@@ -141,7 +142,6 @@ public abstract class FXMLPopUpWinBase extends VBox {
         leaveButton.setGraphic(imageView1);
         VBox.setMargin(hBox0, new Insets(0.0, 0.0, 10.0, 0.0));
         getStylesheets().add("/tictactoe/popupwin/fxmlpopupwin.css");
-
         getStylesheets().add("/styling/generalStyle.css");
 
         stackPane.getChildren().add(rectangle);
