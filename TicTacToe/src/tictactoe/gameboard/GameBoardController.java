@@ -289,7 +289,6 @@ public class GameBoardController extends FXMLGameBoardBase {
     private void makeMaxMinMove() {
         System.out.println("in xtrrrrrrrem");
         int[] cP = ExtremeLevel.getBestMove(board);
-
         Button b = getButtonsByRowAndColumn(cP[1], cP[0]);
         setTurn(b);
 

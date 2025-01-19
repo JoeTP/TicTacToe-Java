@@ -43,7 +43,7 @@ public interface AppString {
     final String SIGNUP_DONE = "SIGNUP_DONE";
     final String SIGNUP_FAILED = "SIGNUP_FAILED";
 
-    String WIN_VIDEO_URL = "/media/winVideo.mp4";
+    String WIN_VIDEO_URL = "/media/win2.mp4";
     String LOSE_VIDEO_URL = "/media/loseVideo.mp4";
     String DRAW_VIDEO_URL = "/media/drawVideo.mp4";
     
