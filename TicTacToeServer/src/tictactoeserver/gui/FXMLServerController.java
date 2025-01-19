@@ -79,6 +79,7 @@ public class FXMLServerController extends FXMLServerBase {
             serverIndicator.setFill(Color.GREEN);
         } else {
             serverRunning = false;
+            ClientHandler.broadCastDisconnect();
             try {
                 server.close();
                 th.stop();
