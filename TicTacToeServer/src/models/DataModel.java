@@ -12,19 +12,25 @@ import java.io.Serializable;
  * @author Kimo Store
  */
 public class DataModel implements Serializable {
-private static final long serialVersionUID = 1L;
+
+    private static final long serialVersionUID = 1L;
     UserModel user;
     int gameMove;
     int state;
     String player;
     String rival;
     String response;
+
     public DataModel(int state) {
         this.state = state;
     }
 
     public DataModel(String response) {
         this.response = response;
+    }
+
+    public DataModel() {
+
     }
 
     public DataModel(String rival, String response) {

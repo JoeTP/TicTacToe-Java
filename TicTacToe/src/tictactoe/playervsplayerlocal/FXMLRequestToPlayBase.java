@@ -8,6 +8,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 
@@ -23,10 +24,12 @@ public abstract class FXMLRequestToPlayBase extends BorderPane {
     protected final HBox hBox1;
     protected final AnchorPane anchorPane0;
     protected final ImageView imageView;
+    protected final VBox vBox;
     protected final Label playerNameLabel;
+    protected final HBox hBox2;
     protected final Label label0;
-    protected final Label label1;
     protected final Label scoreLabel;
+    protected final Label label1;
 
     public FXMLRequestToPlayBase() {
 
@@ -40,10 +43,12 @@ public abstract class FXMLRequestToPlayBase extends BorderPane {
         hBox1 = new HBox();
         anchorPane0 = new AnchorPane();
         imageView = new ImageView();
+        vBox = new VBox();
         playerNameLabel = new Label();
+        hBox2 = new HBox();
         label0 = new Label();
-        label1 = new Label();
         scoreLabel = new Label();
+        label1 = new Label();
 
         setMaxHeight(USE_PREF_SIZE);
         setMaxWidth(USE_PREF_SIZE);
@@ -93,8 +98,8 @@ public abstract class FXMLRequestToPlayBase extends BorderPane {
         hBox1.setPrefHeight(100.0);
         hBox1.setPrefWidth(200.0);
 
-        anchorPane0.setPrefHeight(200.0);
-        anchorPane0.setPrefWidth(200.0);
+        anchorPane0.setPrefHeight(168.0);
+        anchorPane0.setPrefWidth(466.0);
 
         imageView.setFitHeight(64.0);
         imageView.setFitWidth(64.0);
@@ -104,27 +109,25 @@ public abstract class FXMLRequestToPlayBase extends BorderPane {
         imageView.setPreserveRatio(true);
         imageView.setImage(new Image(getClass().getResource("/assets/icons/invite.png").toExternalForm()));
 
-        playerNameLabel.setLayoutX(150.0);
-        playerNameLabel.setLayoutY(14.0);
+        vBox.setAlignment(javafx.geometry.Pos.CENTER);
+        vBox.setLayoutX(118.0);
+        vBox.setLayoutY(14.0);
+
         playerNameLabel.setText("palyer_Name");
 
-        label0.setLayoutX(96.0);
-        label0.setLayoutY(107.0);
-        label0.setPrefHeight(35.0);
-        label0.setPrefWidth(340.0);
-        label0.getStylesheets().add("/styling/generalStyle.css");
-        label0.setText("Invite You To Play With Him");
-        label0.setFont(new Font(24.0));
+        hBox2.setAlignment(javafx.geometry.Pos.CENTER);
 
-        label1.setLayoutX(178.0);
-        label1.setLayoutY(55.0);
-        label1.setText("Score: ");
-        label1.setTextFill(javafx.scene.paint.Color.valueOf("#3e5879"));
+        label0.setText("Score: ");
+        label0.setTextFill(javafx.scene.paint.Color.valueOf("#3e5879"));
 
-        scoreLabel.setLayoutX(252.0);
-        scoreLabel.setLayoutY(55.0);
         scoreLabel.setText("0");
         scoreLabel.setTextFill(javafx.scene.paint.Color.valueOf("#43a39c"));
+
+        label1.setPrefHeight(41.0);
+        label1.setPrefWidth(267.0);
+        label1.getStylesheets().add("/styling/generalStyle.css");
+        label1.setText("Invite You To Play With Him");
+        label1.setFont(new Font(24.0));
         setCenter(hBox1);
 
         hBox.getChildren().add(acceptBtn);
@@ -133,10 +136,12 @@ public abstract class FXMLRequestToPlayBase extends BorderPane {
         anchorPane.getChildren().add(line);
         hBox0.getChildren().add(anchorPane);
         anchorPane0.getChildren().add(imageView);
-        anchorPane0.getChildren().add(playerNameLabel);
-        anchorPane0.getChildren().add(label0);
-        anchorPane0.getChildren().add(label1);
-        anchorPane0.getChildren().add(scoreLabel);
+        vBox.getChildren().add(playerNameLabel);
+        hBox2.getChildren().add(label0);
+        hBox2.getChildren().add(scoreLabel);
+        vBox.getChildren().add(hBox2);
+        vBox.getChildren().add(label1);
+        anchorPane0.getChildren().add(vBox);
         hBox1.getChildren().add(anchorPane0);
 
     }
