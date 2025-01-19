@@ -43,9 +43,6 @@ import static shared.AppConstants.CONNECTION_FLAG;
 import static shared.AppString.TOOLTIP;
 import sounds.AudioController;
 
-import tictactoe.gameboard.GameBoardController;
-import tictactoe.homescreen.FXMLHomeScreenController;
-import tictactoe.playervsplayerlocal.FXMLRequestToPlayController;
 
 import tictactoe.playervsplayeronline.FXMLPlayerVsPlayerOnlineController;
 import tictactoe.playervsplayerpopup.FXMLPlayerVsPlayerPopupController;

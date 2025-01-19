@@ -7,7 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
-
+import static clientconnection.ClientConnection.user;
 import javafx.scene.image.Image;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -71,20 +71,27 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
                 }
             }
             case "online": {
+
                 if (roundState.equals("X")) {
                     if (playerOne.getName().equals(user.getName())) {
-
+                        user.updateUserData(true);
                         displayWin(playerOne.getName());
+
                     } else {
                         displayLose();
+                        user.updateUserData(false);
+
                     }
                     break;
                 } else {
 
                     if (playerTwo.getName().equals(user.getName())) {
+                        user.updateUserData(true);
                         displayWin(playerTwo.getName());
                     } else {
                         displayLose();
+                        user.updateUserData(false);
+
                     }
                     break;
                 }

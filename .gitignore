@@ -19,5 +19,10 @@
 /TicTacToeServer/nbproject/private/
 /TicTacToeServer/build/
 /TicTacToeServer/dist/
+<<<<<<< HEAD
+/TicTacToeServer/records/
+*.sqlite
+=======
 *.sqlite
 /TicTacToe/records
+>>>>>>> d933764a26d1bc948a69f4240d871edeb2fcfefb
