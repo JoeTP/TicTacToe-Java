@@ -4,13 +4,10 @@ import clientconnection.ClientConnection;
 import static clientconnection.ClientConnection.ois;
 import static clientconnection.ClientConnection.oos;
 import static clientconnection.ClientConnection.startListeningThread;
-import static clientconnection.ClientConnection.user;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
@@ -21,10 +18,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import javafx.util.Duration;
-import models.ComputerPlayer;
 import models.DataModel;
-import models.GameModel;
 import models.Player;
 import records.SaveGame;
 import shared.AppFunctions;
@@ -34,7 +28,6 @@ import static tictactoe.TicTacToe.appStage;
 import tictactoe.gameboard.GameBoardController;
 import tictactoe.homescreen.FXMLHomeScreenController;
 import tictactoe.onlinegmaeboard.OnlineGameBoardController;
-import tictactoe.popupwin.FXMLPopUpWinBase;
 
 public class FXMLPopUpWinController extends FXMLPopUpWinBase {
 
@@ -103,7 +96,6 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
                                         Logger.getLogger(FXMLPopUpWinController.class.getName()).log(Level.SEVERE, null, ex);
                                     }
                                     isRivalExist = false;
-                                    //AppFunctions.closeAndGo(actionEvent, stage, new FXMLHomeScreenController(stage));
                                     startListeningThread();
                                 };
                             });
@@ -128,7 +120,6 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
                                 });
                                 alert.showAndWait();
                                 isRivalExist = false;
-//                            AppFunctions.closeAndGo(actionEvent, stage, new FXMLHomeScreenController(stage));                           
                             });
                             startListeningThread();
                             break;
@@ -198,6 +189,13 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
                         user.updateUserData(false);
 
                     }
+                    DataModel data = new DataModel(3);
+                    data.setUser(user);
+                    try {
+                        oos.writeObject(data);
+                    } catch (IOException ex) {
+                        Logger.getLogger(FXMLPopUpWinController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     break;
                 } else {
 
@@ -207,7 +205,13 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
                     } else {
                         displayLose();
                         user.updateUserData(false);
-
+                    }
+                    DataModel data = new DataModel(3);
+                    data.setUser(user);
+                    try {
+                        oos.writeObject(data);
+                    } catch (IOException ex) {
+                        Logger.getLogger(FXMLPopUpWinController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     break;
                 }

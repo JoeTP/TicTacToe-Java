@@ -32,10 +32,11 @@ public class FXMLRequestToPlayController extends FXMLRequestToPlayBase {
     String rival;
     Stage stage;
 
-    public FXMLRequestToPlayController(String rival, Stage stage) {
+    public FXMLRequestToPlayController(String rival, Stage stage, int rivalScore) {
         this.rival = rival;
         this.stage = stage;
         playerNameLabel.setText(rival);
+        scoreLabel.setText(String.valueOf(rivalScore));
         ClientConnection.rival = rival;
      //   scoreLabel.setText();
 
