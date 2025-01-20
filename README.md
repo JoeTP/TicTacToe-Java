@@ -1,7 +1,9 @@
 # Tic Tac Toe - Java FX Client-Server Project
 
 
-## 💡 Overview
+
+## Overview
+
 
 This project is a **Tic Tac Toe** game implemented using :
         -**Java FX** for the graphical user interface (FXML).
@@ -12,6 +14,7 @@ The game supports the following modes:
 - **Player vs Computer** offline with adjustable difficulty levels.
 - **Player vs Player** both online and offline.
 
+
  <img src="TicTacToe/screenShots/LocalMode.gif" alt="Description of GIF" width="500"/> 
  
  <img src="TicTacToe/screenShots/offlineMode.gif" alt="Description of GIF" width="500"/>
@@ -21,6 +24,7 @@ The game supports the following modes:
 
 ### 🎮 1.  Game Modes
 
+
 - **Player vs Computer:**
   - Choose between easy, medium, and extreme difficulties.
   - A behavior adapts based on selected difficulty.
@@ -29,18 +33,23 @@ The game supports the following modes:
   - Online mode: Connect to other active players over the network.
   - Send and accept requests to/from other players.
 
+
 ### 💾 2. Record and Replay
+
 
 - Players can save a game record to review later in **history list**.
 
 
+
 ### 🔃 3. Rematch Functionality
+
 
 - After finishing a game, players can choose to rematch the game again.
 
 ---
 
 ## 🏗️ Built with
+
 
 ### 1. Programming Language
 
@@ -92,6 +101,3 @@ For questions or suggestions, please reach out to us via Linked-in at: 
 2. [https://www.linkedin.com/in/ayat-gamal/](URL)
 3. [https://www.linkedin.com/in/mario-abdelmaseeh-b84894100/](URL)
 4. [https://www.linkedin.com/in/youssif-nasser/](URL)  
-
-
-
