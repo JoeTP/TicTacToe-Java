@@ -35,6 +35,7 @@ import shared.AppString;
 import static shared.AppString.ICON_PATHS;
 import static shared.AppString.TOOLTIP;
 import sounds.AudioController;
+import static tictactoe.TicTacToe.appStage;
 import tictactoe.playervsplayerlocal.FXMLRequestToPlayController;
 import tictactoe.playervsplayeronline.FXMLPlayerVsPlayerOnlineController;
 import tictactoe.signin.FXMLSigninController;
@@ -72,13 +73,13 @@ public class FXMLSignupController extends FXMLSignupBase {
     @Override
 
     protected void goToActiveUsers(ActionEvent actionEvent) {
-  System.out.println("here goToActiveUsers");
+        System.out.println("here goToActiveUsers");
         ClientConnection.user = getNewUserData();
 
         AudioController.clickSound();
 
         if (user != null) {
-              System.out.println("user not null");
+            System.out.println("user not null");
             DataModel data = new DataModel(user, 1);
             client = new ClientConnection();
             try {
@@ -86,12 +87,19 @@ public class FXMLSignupController extends FXMLSignupBase {
             } catch (IOException ex) {
                 Platform.runLater(() -> {
                     Alert alert = new Alert(Alert.AlertType.ERROR, "Couldn't connect to server.");
+                    double centerXPosition = appStage.getX() + appStage.getWidth() / 2d - alert.getDialogPane().getWidth() / 2d;
+                    double centerYPosition = appStage.getY() + appStage.getHeight() / 2d - alert.getDialogPane().getHeight() / 2d;
+                    alert.initOwner(appStage);
+                    alert.setOnShown(e -> {
+                        alert.setX(centerXPosition);
+                        alert.setY(centerYPosition);
+                    });
                     alert.showAndWait();
                 });
                 ex.printStackTrace();
                 return;
             }
-            
+
             Thread th = new Thread(() -> {
 
                 String response = "";
@@ -105,6 +113,13 @@ public class FXMLSignupController extends FXMLSignupBase {
                 } catch (IOException ex) {
                     Platform.runLater(() -> {
                         Alert alert = new Alert(Alert.AlertType.ERROR, "Couldn't connect to server.");
+                        double centerXPosition = appStage.getX() + appStage.getWidth() / 2d - alert.getDialogPane().getWidth() / 2d;
+                        double centerYPosition = appStage.getY() + appStage.getHeight() / 2d - alert.getDialogPane().getHeight() / 2d;
+                        alert.initOwner(appStage);
+                        alert.setOnShown(e -> {
+                            alert.setX(centerXPosition);
+                            alert.setY(centerYPosition);
+                        });
                         alert.showAndWait();
                     });
                     ex.printStackTrace();
@@ -116,6 +131,13 @@ public class FXMLSignupController extends FXMLSignupBase {
                     if (finalResponse.equals(AppString.SIGNUP_DONE)) {
                         try {
                             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Signup was successful.");
+                            double centerXPosition = appStage.getX() + appStage.getWidth() / 2d - alert.getDialogPane().getWidth() / 2d;
+                            double centerYPosition = appStage.getY() + appStage.getHeight() / 2d - alert.getDialogPane().getHeight() / 2d;
+                            alert.initOwner(appStage);
+                            alert.setOnShown(e -> {
+                                alert.setX(centerXPosition);
+                                alert.setY(centerYPosition);
+                            });
                             alert.showAndWait();
                             if (!FXMLSigninController.signInFromHomeScreen) {
                                 AppFunctions.closePopup(actionEvent);
@@ -130,6 +152,13 @@ public class FXMLSignupController extends FXMLSignupBase {
                         }
                     } else {
                         Alert alert = new Alert(Alert.AlertType.INFORMATION, "Username or email are already used.");
+                        double centerXPosition = appStage.getX() + appStage.getWidth() / 2d - alert.getDialogPane().getWidth() / 2d;
+                        double centerYPosition = appStage.getY() + appStage.getHeight() / 2d - alert.getDialogPane().getHeight() / 2d;
+                        alert.initOwner(appStage);
+                        alert.setOnShown(e -> {
+                            alert.setX(centerXPosition);
+                            alert.setY(centerYPosition);
+                        });
                         alert.showAndWait();
                         ClientConnection.terminateClient();
                     }
@@ -164,6 +193,13 @@ public class FXMLSignupController extends FXMLSignupBase {
             user.setName(usernameTextField.getText());
         } else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Username is smaller than 6 letters.");
+            double centerXPosition = appStage.getX() + appStage.getWidth() / 2d - alert.getDialogPane().getWidth() / 2d;
+            double centerYPosition = appStage.getY() + appStage.getHeight() / 2d - alert.getDialogPane().getHeight() / 2d;
+            alert.initOwner(appStage);
+            alert.setOnShown(e -> {
+                alert.setX(centerXPosition);
+                alert.setY(centerYPosition);
+            });
             alert.showAndWait();
             valid = false;
         }
@@ -171,6 +207,13 @@ public class FXMLSignupController extends FXMLSignupBase {
             user.setEmail(emailTextField.getText());
         } else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Invalid email address");
+            double centerXPosition = appStage.getX() + appStage.getWidth() / 2d - alert.getDialogPane().getWidth() / 2d;
+            double centerYPosition = appStage.getY() + appStage.getHeight() / 2d - alert.getDialogPane().getHeight() / 2d;
+            alert.initOwner(appStage);
+            alert.setOnShown(e -> {
+                alert.setX(centerXPosition);
+                alert.setY(centerYPosition);
+            });
             alert.showAndWait();
             valid = false;
         }
@@ -178,6 +221,13 @@ public class FXMLSignupController extends FXMLSignupBase {
             user.setPassword(passwordField.getText());
         } else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Password is smaller than 6 letters.");
+            double centerXPosition = appStage.getX() + appStage.getWidth() / 2d - alert.getDialogPane().getWidth() / 2d;
+            double centerYPosition = appStage.getY() + appStage.getHeight() / 2d - alert.getDialogPane().getHeight() / 2d;
+            alert.initOwner(appStage);
+            alert.setOnShown(e -> {
+                alert.setX(centerXPosition);
+                alert.setY(centerYPosition);
+            });
             alert.showAndWait();
             valid = false;
         }
@@ -192,7 +242,7 @@ public class FXMLSignupController extends FXMLSignupBase {
 
     @Override
     protected void handleConnectToServerButton(ActionEvent actionEvent) {
-                    System.out.println("here1");
+        System.out.println("here1");
         try {
             System.out.println("here2");
             if (ipTextField != null) {

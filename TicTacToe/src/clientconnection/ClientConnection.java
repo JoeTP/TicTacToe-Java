@@ -50,6 +50,7 @@ public class ClientConnection {
     public static String rival;
     public static List<String> activeUsers = new ArrayList<>();
     public static String SERVER_IP = AppString.SERVER_HOST;
+
     public static void connectToServer() throws IOException {
         socket = new Socket(SERVER_IP, 5001);
         System.out.println("Cleint connection Established !");
@@ -71,7 +72,7 @@ public class ClientConnection {
         try {
             stopListeningThread();
             oos.close();
-            ois.close();         
+            ois.close();
             socket.close();
             System.out.println("client killed");
         } catch (IOException ex) {
@@ -92,15 +93,13 @@ public class ClientConnection {
     public synchronized static DataModel receveData() {
         DataModel data = null;
         try {
-            
-            data = (DataModel) ois.readObject();  
-        }
-            
-         catch (IOException ex) {
+
+            data = (DataModel) ois.readObject();
+        } catch (IOException ex) {
             Logger.getLogger(ClientConnection.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ClientConnection.class.getName()).log(Level.SEVERE, null, ex);
-            
+
         }
         return data;
     }
@@ -111,7 +110,7 @@ public class ClientConnection {
             while (!Thread.currentThread().isInterrupted()) {
                 System.out.println("startListeningThread");
                 DataModel newData = ClientConnection.receveData();
-                if(newData == null){
+                if (newData == null) {
                     continue;
                 }
                 String newResponse = newData.getResponse();
@@ -128,7 +127,7 @@ public class ClientConnection {
                 if (newResponse.equals("GAME_ACCEPT")) {
                     Platform.runLater(() -> {
                         //AppFunctions.goToGameBoard(appStage, new OnlineGameBoardController(appStage, rival, user.getName(), "online"));
-                        AppFunctions.closeAndGo(requestActionEvent, appStage, new OnlineGameBoardController(appStage, rival, user.getName(), "online") );
+                        AppFunctions.closeAndGo(requestActionEvent, appStage, new OnlineGameBoardController(appStage, rival, user.getName(), "online"));
                     });
                     stopListeningThread();
                 }
@@ -151,14 +150,21 @@ public class ClientConnection {
                         Logger.getLogger(FXMLPlayerVsPlayerOnlineController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-                if(newResponse.equals("GAME_DECLINE")){
+                if (newResponse.equals("GAME_DECLINE")) {
                     Platform.runLater(() -> {
-                            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Your request was declined");
-                            alert.showAndWait();                        
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Your request was declined");
+                        double centerXPosition = appStage.getX() + appStage.getWidth() / 2d - alert.getDialogPane().getWidth() / 2d;
+                        double centerYPosition = appStage.getY() + appStage.getHeight() / 2d - alert.getDialogPane().getHeight() / 2d;
+                        alert.initOwner(appStage);
+                        alert.setOnShown(e -> {
+                            alert.setX(centerXPosition);
+                            alert.setY(centerYPosition);
                         });
+                        alert.showAndWait();
+                    });
                 }
-                
-                if(newResponse.equals("DISCONNECT")){
+
+                if (newResponse.equals("DISCONNECT")) {
                     terminateClient();
                 }
             }

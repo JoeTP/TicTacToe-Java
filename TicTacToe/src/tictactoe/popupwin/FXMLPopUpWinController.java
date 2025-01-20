@@ -30,6 +30,7 @@ import records.SaveGame;
 import shared.AppFunctions;
 import static shared.AppFunctions.stages;
 import shared.AppString;
+import static tictactoe.TicTacToe.appStage;
 import tictactoe.gameboard.GameBoardController;
 import tictactoe.homescreen.FXMLHomeScreenController;
 import tictactoe.onlinegmaeboard.OnlineGameBoardController;
@@ -71,7 +72,13 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
                                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                                 alert.setContentText("Do you want to play again?");
                                 alert.getButtonTypes().setAll(new ButtonType("Accept"), new ButtonType("Decline"));
-
+                                double centerXPosition = appStage.getX() + appStage.getWidth() / 2d - alert.getDialogPane().getWidth() / 2d;
+                                double centerYPosition = appStage.getY() + appStage.getHeight() / 2d - alert.getDialogPane().getHeight() / 2d;
+                                alert.initOwner(appStage);
+                                alert.setOnShown(e -> {
+                                    alert.setX(centerXPosition);
+                                    alert.setY(centerYPosition);
+                                });
                                 Optional<ButtonType> result = alert.showAndWait();
                                 if (result.isPresent() && result.get().getText().equals("Accept")) {
                                     stage.fireEvent(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
@@ -105,13 +112,20 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
                             System.out.println("GAME_ACCEPTED");
                             Platform.runLater(() -> {
                                 AppFunctions.goToGameBoard(stage, new OnlineGameBoardController(stage, user.getName(), ClientConnection.rival, mode));
-                                    stages.get(stages.size()-1).fireEvent(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
+                                stages.get(stages.size() - 1).fireEvent(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
                             });
                             break;
                         case "GAME_DECLINED":
                             System.out.println("GAME_DECLINED");
                             Platform.runLater(() -> {
                                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Your request was declined");
+                                double centerXPosition = appStage.getX() + appStage.getWidth() / 2d - alert.getDialogPane().getWidth() / 2d;
+                                double centerYPosition = appStage.getY() + appStage.getHeight() / 2d - alert.getDialogPane().getHeight() / 2d;
+                                alert.initOwner(appStage);
+                                alert.setOnShown(e -> {
+                                    alert.setX(centerXPosition);
+                                    alert.setY(centerYPosition);
+                                });
                                 alert.showAndWait();
                                 isRivalExist = false;
 //                            AppFunctions.closeAndGo(actionEvent, stage, new FXMLHomeScreenController(stage));                           
@@ -274,6 +288,13 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
             } else {
                 Platform.runLater(() -> {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION, "Your rival Ended the game");
+                    double centerXPosition = appStage.getX() + appStage.getWidth() / 2d - alert.getDialogPane().getWidth() / 2d;
+                    double centerYPosition = appStage.getY() + appStage.getHeight() / 2d - alert.getDialogPane().getHeight() / 2d;
+                    alert.initOwner(appStage);
+                    alert.setOnShown(e -> {
+                        alert.setX(centerXPosition);
+                        alert.setY(centerYPosition);
+                    });
                     alert.showAndWait();
                 });
             }
@@ -287,7 +308,7 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
 
     @Override
     protected void handleLeaveButton(ActionEvent actionEvent) {
-        mediaPlayer.pause();       
+        mediaPlayer.pause();
         if (mode.equals("online") && isRivalExist) {
             DataModel data = new DataModel(6, user.getName(), ClientConnection.rival);
             data.setResponse("GAME_ENDED");
@@ -301,7 +322,7 @@ public class FXMLPopUpWinController extends FXMLPopUpWinBase {
             AppFunctions.closeAndGo(actionEvent, stage, new FXMLHomeScreenController(stage));
         } else {
             AppFunctions.closeAndGo(actionEvent, stage, new FXMLHomeScreenController(stage));
-        }       
+        }
     }
 
 }
