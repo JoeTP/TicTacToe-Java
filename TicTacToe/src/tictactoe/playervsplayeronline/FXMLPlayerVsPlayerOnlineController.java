@@ -72,6 +72,7 @@ public class FXMLPlayerVsPlayerOnlineController extends FXMLPlayerVsPlayerOnline
             System.out.println(rival);
             new Thread(() -> {
                 DataModel data = new DataModel(4, user.getName(), rival);
+                data.setRivalScore(user.score);
                 try {
                     synchronized (oos) {
                         oos.writeObject(data);

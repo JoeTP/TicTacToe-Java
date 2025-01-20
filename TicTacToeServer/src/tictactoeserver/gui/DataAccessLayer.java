@@ -73,6 +73,12 @@ public class DataAccessLayer {
             }
         } catch (SQLException ex) {
             Logger.getLogger(DataAccessLayer.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            try {
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DataAccessLayer.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return usersCount;
 
@@ -155,7 +161,7 @@ public class DataAccessLayer {
             pst.setInt(2, u.getWins());
             pst.setInt(3, u.getLosses());
             pst.setInt(4, u.getNumOfGames());
-            
+            pst.setString(5, u.getName());
             int isUpdate = pst.executeUpdate();
             if (isUpdate > 0) {
                 System.out.println("Updated succ.");              

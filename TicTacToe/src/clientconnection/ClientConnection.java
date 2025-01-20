@@ -119,9 +119,9 @@ public class ClientConnection {
                 System.out.println(newResponse);
 
                 if (newResponse.equals("Game_Request")) {
-                    System.out.println(rival);
+                    System.out.println(rival + newData.getRivalScore());
                     Platform.runLater(() -> {
-                        AppFunctions.openPopup(appStage, new FXMLRequestToPlayController(rival, appStage));
+                        AppFunctions.openPopup(appStage, new FXMLRequestToPlayController(rival, appStage,newData.getRivalScore()));
                     });
                     stopListeningThread();
                 }

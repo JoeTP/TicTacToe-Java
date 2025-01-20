@@ -20,6 +20,15 @@ public class DataModel implements Serializable {
     String player;
     String rival;
     String response;
+    int rivalScore;
+
+    public int getRivalScore() {
+        return rivalScore;
+    }
+
+    public void setRivalScore(int rivalScore) {
+        this.rivalScore = rivalScore;
+    }
 
     public DataModel(int state) {
         this.state = state;

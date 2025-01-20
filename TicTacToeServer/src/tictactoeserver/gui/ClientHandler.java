@@ -92,9 +92,11 @@ public class ClientHandler extends Thread {
 
                         break;
                     case 3:
-                        System.out.println("in case 3 : ");
-                        user = data.getUser();
-                        findClientHandler(user.getName()).sendActiveUsersList();
+//                        System.out.println("in case 3 : ");
+//                        user = data.getUser();
+//                        findClientHandler(user.getName()).sendActiveUsersList();
+                        DataAccessLayer.updateUserData(data.getUser());
+                        System.out.println("user updated");
                         break;
                     case 4: // send game request
                         if(!inGameUsers.contains(data.getRival())){
@@ -104,7 +106,7 @@ public class ClientHandler extends Thread {
                         } else {
                             System.out.println(data.getPlayer());
                         }
-                        op.sendRequest(data.getPlayer());
+                        op.sendRequest(data.getPlayer(),data.getRivalScore());
                         }                       
                         break;
                     case 5: // Game Accepted
@@ -115,7 +117,7 @@ public class ClientHandler extends Thread {
                             System.out.println(data.getPlayer()+" Playing "+data.getRival());
                         }
                         break;
-                    case 6:
+                    case 6: // Game Moves && play again requests
                         System.out.println(data.getRival());
                         ClientHandler gamePlayer = findClientHandler(data.getRival());
                         gamePlayer.sendGameMove(data);
@@ -127,11 +129,11 @@ public class ClientHandler extends Thread {
                             }
                         }
                         break;
-                    case 7:
+                    case 7: // request decline
                         ClientHandler ch2 = findClientHandler(data.getRival());
                         ch2.sendRequestResponseDecline(data.getPlayer());
                         break;
-                    case 8:
+                    case 8: // killing move 
                         ClientHandler ch3 = findClientHandler(data.getRival());
                         ch3.sendGameMove(data);
                         break;
@@ -263,8 +265,9 @@ public class ClientHandler extends Thread {
 
     }
 
-    private void sendRequest(String rival) throws IOException {
+    private void sendRequest(String rival, int score) throws IOException {
         DataModel data = new DataModel(rival, "Game_Request");
+        data.setRivalScore(score);
         oos.writeObject(data);
         oos.flush();
     }
