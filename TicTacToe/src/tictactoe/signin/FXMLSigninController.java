@@ -42,7 +42,7 @@ import shared.*;
 import static shared.AppConstants.CONNECTION_FLAG;
 import static shared.AppString.TOOLTIP;
 import sounds.AudioController;
-
+import static tictactoe.TicTacToe.appStage;
 
 import tictactoe.playervsplayeronline.FXMLPlayerVsPlayerOnlineController;
 import tictactoe.playervsplayerpopup.FXMLPlayerVsPlayerPopupController;
@@ -90,6 +90,13 @@ public class FXMLSigninController extends FXMLSigninBase {
             } catch (IOException ex) {
                 Platform.runLater(() -> {
                     Alert alert = new Alert(Alert.AlertType.ERROR, "Couldn't connect to server.");
+                    double centerXPosition = appStage.getX() + appStage.getWidth() / 2d - alert.getDialogPane().getWidth() / 2d;
+                    double centerYPosition = appStage.getY() + appStage.getHeight() / 2d - alert.getDialogPane().getHeight() / 2d;
+                    alert.initOwner(appStage);
+                    alert.setOnShown(e -> {
+                        alert.setX(centerXPosition);
+                        alert.setY(centerYPosition);
+                    });
                     alert.showAndWait();
                 });
                 ex.printStackTrace();
@@ -108,6 +115,13 @@ public class FXMLSigninController extends FXMLSigninBase {
                 } catch (IOException ex) {
                     Platform.runLater(() -> {
                         Alert alert = new Alert(Alert.AlertType.ERROR, "Couldn't connect to server.");
+                        double centerXPosition = appStage.getX() + appStage.getWidth() / 2d - alert.getDialogPane().getWidth() / 2d;
+                        double centerYPosition = appStage.getY() + appStage.getHeight() / 2d - alert.getDialogPane().getHeight() / 2d;
+                        alert.initOwner(appStage);
+                        alert.setOnShown(e -> {
+                            alert.setX(centerXPosition);
+                            alert.setY(centerYPosition);
+                        });
                         alert.showAndWait();
                     });
                     ex.printStackTrace();
@@ -120,6 +134,13 @@ public class FXMLSigninController extends FXMLSigninBase {
                         try {
                             Platform.runLater(() -> {
                                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "Signin was successful.");
+                                double centerXPosition = appStage.getX() + appStage.getWidth() / 2d - alert.getDialogPane().getWidth() / 2d;
+                                double centerYPosition = appStage.getY() + appStage.getHeight() / 2d - alert.getDialogPane().getHeight() / 2d;
+                                alert.initOwner(appStage);
+                                alert.setOnShown(e -> {
+                                    alert.setX(centerXPosition);
+                                    alert.setY(centerYPosition);
+                                });
                                 alert.showAndWait();
                                 if (!signInFromHomeScreen) {
 //                                    AppFunctions.closeAndGo(actionEvent, stage, new FXMLPlayerVsPlayerOnlineController(stage, client));
@@ -138,6 +159,13 @@ public class FXMLSigninController extends FXMLSigninBase {
                     case AppString.SIGNIN_ALREADY_FOUND:
                         Platform.runLater(() -> {
                             Alert alert = new Alert(Alert.AlertType.INFORMATION, "You are logged in from another device");
+                            double centerXPosition = appStage.getX() + appStage.getWidth() / 2d - alert.getDialogPane().getWidth() / 2d;
+                            double centerYPosition = appStage.getY() + appStage.getHeight() / 2d - alert.getDialogPane().getHeight() / 2d;
+                            alert.initOwner(appStage);
+                            alert.setOnShown(e -> {
+                                alert.setX(centerXPosition);
+                                alert.setY(centerYPosition);
+                            });
                             alert.showAndWait();
                             ClientConnection.terminateClient();
                         });
@@ -145,6 +173,13 @@ public class FXMLSigninController extends FXMLSigninBase {
                     default:
                         Platform.runLater(() -> {
                             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Username or password are incorrect.");
+                            double centerXPosition = appStage.getX() + appStage.getWidth() / 2d - alert.getDialogPane().getWidth() / 2d;
+                            double centerYPosition = appStage.getY() + appStage.getHeight() / 2d - alert.getDialogPane().getHeight() / 2d;
+                            alert.initOwner(appStage);
+                            alert.setOnShown(e -> {
+                                alert.setX(centerXPosition);
+                                alert.setY(centerYPosition);
+                            });
                             alert.showAndWait();
                             ClientConnection.terminateClient();
                         });
@@ -170,11 +205,25 @@ public class FXMLSigninController extends FXMLSigninBase {
                 user.setPassword(passwordField.getText());
             } else {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "Password is smaller than 6 letters.");
+                double centerXPosition = appStage.getX() + appStage.getWidth() / 2d - alert.getDialogPane().getWidth() / 2d;
+                double centerYPosition = appStage.getY() + appStage.getHeight() / 2d - alert.getDialogPane().getHeight() / 2d;
+                alert.initOwner(appStage);
+                alert.setOnShown(e -> {
+                    alert.setX(centerXPosition);
+                    alert.setY(centerYPosition);
+                });
                 alert.showAndWait();
                 valid = false;
             }
         } else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Username is smaller than 6 letters.");
+            double centerXPosition = appStage.getX() + appStage.getWidth() / 2d - alert.getDialogPane().getWidth() / 2d;
+            double centerYPosition = appStage.getY() + appStage.getHeight() / 2d - alert.getDialogPane().getHeight() / 2d;
+            alert.initOwner(appStage);
+            alert.setOnShown(e -> {
+                alert.setX(centerXPosition);
+                alert.setY(centerYPosition);
+            });
             alert.showAndWait();
             valid = false;
         }

@@ -72,8 +72,6 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
     private int NOfLoss = 0;
     private int NOfWins = 0;
 
-
-
     private Timeline timeLine;
     private int countdownTime;
     boolean isTimeOut = false;
@@ -120,14 +118,13 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
         playerOne.setChar(O_CHAR);
         playerTwo.setChar(X_CHAR);
 
-
         playerOneLabel.setText(playerTwo.getName());
         playerOneChar.setText(playerOne.getChar());
         playerTwoLabel.setText(playerOne.getName());
         playerTwoChar.setText(playerTwo.getChar());
 
         playerOne.hisTurn = true;
-        playerTwo.hisTurn = false ;
+        playerTwo.hisTurn = false;
 
         //startCountdownTimer();
     }
@@ -289,17 +286,17 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
             WinningLine.drawWinningLine(WinningLine.getStartLine(), WinningLine.getEndLine(), grid);
             saveDataToGameModel(playerOne.getName());
             System.out.println("PLAYER ONE WINNER");
-           // ClientConnection.user.updateUserData(true);
-            System.out.println("the user "+ClientConnection.user.getName() +" is win  or player one "+playerOne.getName());
+            // ClientConnection.user.updateUserData(true);
+            System.out.println("the user " + ClientConnection.user.getName() + " is win  or player one " + playerOne.getName());
             endGame();
 
             waitAndShowPopup(winner);
         } else if (playerTwo.getChar() == null ? winner == null : playerTwo.getChar().equals(winner)) {
             WinningLine.drawWinningLine(WinningLine.getStartLine(), WinningLine.getEndLine(), grid);
             saveDataToGameModel(playerTwo.getName());
-         //   ClientConnection.user.updateUserData(false);
+            //   ClientConnection.user.updateUserData(false);
             System.out.println("PLAYER TWO WINNER");
-                System.out.println("the user "+ClientConnection.user.getName() +" is win  or player Two "+playerTwo.getName());
+            System.out.println("the user " + ClientConnection.user.getName() + " is win  or player Two " + playerTwo.getName());
             endGame();
             waitAndShowPopup(winner);
         } else if (move > 9) {
@@ -436,7 +433,19 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
     protected void handleLeaveButton(ActionEvent actionEvent) {
         endGame();
         AudioController.clickSound();
-        AppFunctions.goTo(actionEvent, new FXMLHomeScreenController(stage));
+        DataModel data = new DataModel(8, user.getName(), rival);
+        System.out.println("Killing move2");
+        data.setGameMove(-2);
+        data.setResponse("GAME_MOVE");
+        try {
+            oos.writeObject(data);
+            oos.flush();
+        } catch (IOException ex) {
+            Logger.getLogger(OnlineGameBoardController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        String winner = user.getName().equals(playerOne.getName()) ? playerTwo.getName() : playerOne.getName();
+        waitAndShowPopup(winner);
+        //AppFunctions.goTo(actionEvent, new FXMLHomeScreenController(stage));
     }
 
     @Override
@@ -447,50 +456,66 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
 
     @Override
     protected void handleB20(ActionEvent actionEvent) {
-        setTurn(b20);
-        sendMove(2, 0);
+        if (b20.getText().isEmpty()) {
+            setTurn(b20);
+            sendMove(2, 0);
+        }
     }
 
     @Override
     protected void handleB12(ActionEvent actionEvent) {
-        setTurn(b12);
-        sendMove(1, 2);
+        if (b12.getText().isEmpty()) {
+            setTurn(b12);
+            sendMove(1, 2);
+        }
     }
 
     @Override
     protected void handleB02(ActionEvent actionEvent) {
-        setTurn(b02);
-        sendMove(0, 2);
+        if (b02.getText().isEmpty()) {
+            setTurn(b02);
+            sendMove(0, 2);
+        }
     }
 
     @Override
     protected void handleB21(ActionEvent actionEvent) {
-        setTurn(b21);
-        sendMove(2, 1);
+        if (b21.getText().isEmpty()) {
+            setTurn(b21);
+            sendMove(2, 1);
+        }
     }
 
     @Override
     protected void handleB01(ActionEvent actionEvent) {
-        setTurn(b01);
-        sendMove(0, 1);
+        if (b01.getText().isEmpty()) {
+            setTurn(b01);
+            sendMove(0, 1);
+        }
     }
 
     @Override
     protected void handleB10(ActionEvent actionEvent) {
-        setTurn(b10);
-        sendMove(1, 0);
+        if (b10.getText().isEmpty()) {
+            setTurn(b10);
+            sendMove(1, 0);
+        }
     }
 
     @Override
     protected void handleB11(ActionEvent actionEvent) {
-        setTurn(b11);
-        sendMove(1, 1);
+        if (b11.getText().isEmpty()) {
+            setTurn(b11);
+            sendMove(1, 1);
+        }
     }
 
     @Override
     protected void handleB00(ActionEvent actionEvent) {
-        setTurn(b00);
-        sendMove(0, 0);
+        if (b00.getText().isEmpty()) {
+            setTurn(b00);
+            sendMove(0, 0);
+        }
     }
 
     protected void sendMove(int c, int r) {
@@ -502,6 +527,7 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
                 data.setRival(rival);
                 data.setGameMove(row * 10 + col);
                 System.out.println("Sending move: " + (row * 10 + col));
+                data.setResponse("GAME_MOVE");
                 oos.writeObject(data);
                 System.out.println("Data sent");
                 oos.flush();
@@ -516,54 +542,68 @@ public class OnlineGameBoardController extends FXMLOnlineGameBoardBase {
     }
 
     protected void receiveMove() {
-        th = new Thread(() -> {
-            while (!isEndOfGame) {
-                DataModel gameMove = null;
-                int row_col = -1;
-                synchronized (ois) {
-                    try {
-                        System.out.println("waiting for move");
-                        gameMove = (DataModel) ois.readObject();
-                        System.out.println(gameMove.getGameMove());
-                        if (gameMove.getGameMove() == -1) {
-                            break;
+        th = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (!isEndOfGame) {
+                    DataModel gameMove = null;
+                    int row_col = -1;
+                    synchronized (ois) {
+                        try {
+                            System.out.println("waiting for move");
+                            gameMove = (DataModel) ois.readObject();
+                            System.out.println(gameMove.getGameMove());
+                            if (gameMove.getResponse().equals("GAME_MOVE")) {
+                                if (gameMove.getGameMove() == -1) {
+                                    isEndOfGame = true;
+                                    break;
+                                }
+                                if (gameMove.getGameMove() == -2) {
+                                    isEndOfGame = true;
+                                    DataModel data = new DataModel(8);
+                                    System.out.println("Killing move2");
+                                    data.setRival(rival);
+                                    data.setGameMove(-1);
+                                    data.setResponse("GAME_MOVE");
+                                    oos.writeObject(data);
+                                    oos.flush();
+                                    Platform.runLater(() -> {
+                                        String winner = user.getName().equals(playerOne.getName()) ? playerOne.getName() : playerTwo.getName();
+                                        waitAndShowPopup(winner);
+                                    });
+                                    break;
+                                }
+                                row_col = gameMove.getGameMove();
+                                System.out.println("Received move: " + row_col);
+                                int row = row_col / 10;
+                                int col = row_col % 10;
+                                Button b = getButtonsByRowAndColumn(col, row);
+
+                                setTurn(b);
+
+                                checkGameStatus();
+                                if (isEndOfGame) {
+                                    DataModel data = new DataModel(8);
+                                    System.out.println("Killing move");
+                                    data.setRival(rival);
+                                    data.setGameMove(-1);
+                                    data.setResponse("GAME_MOVE");
+                                    oos.writeObject(data);
+                                    oos.flush();
+                                }
+                                Platform.runLater(() -> {
+                                    enableButtons();
+                                });
+                            }
+
+                        } catch (IOException ex) {
+                            Logger.getLogger(OnlineGameBoardController.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (ClassNotFoundException ex) {
+                            Logger.getLogger(OnlineGameBoardController.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                        row_col = gameMove.getGameMove();
-                        System.out.println("Received move: " + row_col);
-                        int row = row_col / 10;
-                        int col = row_col % 10;
-                        Button b = getButtonsByRowAndColumn(col, row);
-
-                        setTurn(b);
-
-                        checkGameStatus();
-                        if (isEndOfGame) {
-                            DataModel data = new DataModel(8);
-                            System.out.println("Killing move");
-
-                            data.setRival(rival);
-                            oos.writeObject(data);
-                            oos.flush();
-                        }
-
-                    } catch (IOException ex) {
-                        break;
-//                        Logger.getLogger(OnlineGameBoardController.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (ClassNotFoundException ex) {
-                        Logger.getLogger(OnlineGameBoardController.class.getName()).log(Level.SEVERE, null, ex);
                     }
-
                 }
-                Platform.runLater(() -> {
-                    enableButtons();
-                });
             }
-//            try {
-//                oos.writeUTF("stop");
-//                oos.flush();
-//            } catch (IOException ex) {
-//                Logger.getLogger(OnlineGameBoardController.class.getName()).log(Level.SEVERE, null, ex);
-//            }
         });
         th.start();
     }

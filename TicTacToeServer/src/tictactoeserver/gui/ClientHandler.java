@@ -35,6 +35,7 @@ public class ClientHandler extends Thread {
     int state;
     static ObservableList<ClientHandler> clients = FXCollections.synchronizedObservableList(FXCollections.observableArrayList());
     static ObservableList<String> usernames = FXCollections.synchronizedObservableList(FXCollections.observableArrayList());
+    static ObservableList<String> inGameUsers = FXCollections.synchronizedObservableList(FXCollections.observableArrayList());
 
     public ClientHandler(Socket client) {
         this.client = client;
@@ -91,38 +92,54 @@ public class ClientHandler extends Thread {
 
                         break;
                     case 3:
-                        System.out.println("in case 3 : ");
-                        user = data.getUser();
-                        findClientHandler(user.getName()).sendActiveUsersList();
+//                        System.out.println("in case 3 : ");
+//                        user = data.getUser();
+//                        findClientHandler(user.getName()).sendActiveUsersList();
+                        DataAccessLayer.updateUserData(data.getUser());
+                        System.out.println("user updated");
                         break;
-                    case 4:
-                        ClientHandler op = findClientHandler(data.getRival());
-
+                    case 4: // send game request
+                        if(!inGameUsers.contains(data.getRival())){
+                            ClientHandler op = findClientHandler(data.getRival());
                         if (data.getPlayer().isEmpty()) {
                             System.out.println("player is null");
                         } else {
                             System.out.println(data.getPlayer());
                         }
-                        op.sendRequest(data.getPlayer());
+                        op.sendRequest(data.getPlayer(),data.getRivalScore());
+                        }                       
                         break;
-                    case 5:
+                    case 5: // Game Accepted
                         ClientHandler ch = findClientHandler(data.getRival());
                         ch.sendRequestResponse(data.getPlayer());
+                        synchronized (inGameUsers) {
+                            inGameUsers.addAll(data.getPlayer(), data.getRival());
+                            System.out.println(data.getPlayer()+" Playing "+data.getRival());
+                        }
                         break;
-                    case 6:
+                    case 6: // Game Moves && play again requests
                         System.out.println(data.getRival());
                         ClientHandler gamePlayer = findClientHandler(data.getRival());
                         gamePlayer.sendGameMove(data);
                         System.out.println("Sent game move");
+                        if (data.getResponse().equals("YES_ENDED")) {
+                            synchronized (inGameUsers) {
+                                inGameUsers.removeAll(data.getPlayer(), data.getRival());
+                                System.out.println(data.getPlayer()+" finshed "+data.getRival());
+                            }
+                        }
                         break;
-                    case 7:
+                    case 7: // request decline
                         ClientHandler ch2 = findClientHandler(data.getRival());
                         ch2.sendRequestResponseDecline(data.getPlayer());
                         break;
-                    case 8:
+                    case 8: // killing move 
                         ClientHandler ch3 = findClientHandler(data.getRival());
-                        data.setGameMove(-1);
                         ch3.sendGameMove(data);
+                        break;
+//                    case 9 :
+//                        ClientHandler ch4 = findClientHandler(data.getRival());
+//                        ch4.sendGameMove(data);
 //                    default:
 //                        System.out.println("Unknown state: " + state);
 //                        ps.writeUTF("Unknown request");
@@ -151,11 +168,11 @@ public class ClientHandler extends Thread {
     protected void sendActiveUsersList() {
         try {
             oos.writeObject(new DataModel("Active_Users"));
-            oos.writeInt(usernames.size());
-            System.out.println(usernames.size());
+            oos.writeInt(usernames.size() - inGameUsers.size());
+            System.out.println(usernames.size() - inGameUsers.size());
             for (String username : usernames) {
                 System.out.println(username);
-                if (!username.equals(user.getName())) {
+                if (!username.equals(user.getName()) && !inGameUsers.contains(username)) {
                     oos.writeUTF(username);
                 }
             }
@@ -248,8 +265,9 @@ public class ClientHandler extends Thread {
 
     }
 
-    private void sendRequest(String rival) throws IOException {
+    private void sendRequest(String rival, int score) throws IOException {
         DataModel data = new DataModel(rival, "Game_Request");
+        data.setRivalScore(score);
         oos.writeObject(data);
         oos.flush();
     }
@@ -262,7 +280,10 @@ public class ClientHandler extends Thread {
 
     public static void broadCastActiveUsers() {
         clients.forEach((c) -> {
-            c.sendActiveUsersList();
+            if(!inGameUsers.contains(c.user.getName())){
+                System.out.println("sending to "+c.user.getName());
+                c.sendActiveUsersList();
+            }          
         });
     }
 

@@ -1,7 +1,9 @@
 # Tic Tac Toe - Java FX Client-Server Project
 
 
+
 ## Overview
+
 
 This project is a **Tic Tac Toe** game implemented using :
         -**Java FX** for the graphical user interface (FXML).
@@ -12,14 +14,16 @@ The game supports the following modes:
 - **Player vs Computer** offline with adjustable difficulty levels.
 - **Player vs Player** both online and offline.
 
-![Uploading Local_Mode.gif…]()
 
-![Uploading offline_mode.gif…]()
-
+ <img src="TicTacToe/screenShots/LocalMode.gif" alt="Description of GIF" width="500"/> 
+ 
+ <img src="TicTacToe/screenShots/offlineMode.gif" alt="Description of GIF" width="500"/>
+ 
 ---
-## Features
+## 🌠 Features
 
-### 1. Game Modes
+### 🎮 1.  Game Modes
+
 
 - **Player vs Computer:**
   - Choose between easy, medium, and extreme difficulties.
@@ -29,18 +33,23 @@ The game supports the following modes:
   - Online mode: Connect to other active players over the network.
   - Send and accept requests to/from other players.
 
-### 2. Record and Replay
+
+### 💾 2. Record and Replay
+
 
 - Players can save a game record to review later in **history list**.
 
 
-### 3. Rematch Functionality
+
+### 🔃 3. Rematch Functionality
+
 
 - After finishing a game, players can choose to rematch the game again.
 
 ---
 
-## Built with
+## 🏗️ Built with
+
 
 ### 1. Programming Language
 
@@ -84,13 +93,11 @@ The game supports the following modes:
 
 
 
-## Contact
+## 🔗 Contacts
 
-For questions or suggestions, please reach out to us via Linked in at: 
+For questions or suggestions, please reach out to us via Linked-in at: 
 
-[https://www.linkedin.com/in/youssif-nasser/](URL)  
-[https://www.linkedin.com/in/alyaa-hussien-542814268/](URL)
-[https://www.linkedin.com/in/ayat-gamal/](URL)  
-[https://www.linkedin.com/in/mario-abdelmaseeh-b84894100/](URL)  
-
-
+1. [https://www.linkedin.com/in/alyaa-hussien-542814268/](URL)
+2. [https://www.linkedin.com/in/ayat-gamal/](URL)
+3. [https://www.linkedin.com/in/mario-abdelmaseeh-b84894100/](URL)
+4. [https://www.linkedin.com/in/youssif-nasser/](URL)  
